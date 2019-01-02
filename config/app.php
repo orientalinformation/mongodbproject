@@ -161,6 +161,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Plugins
+         */
+        Elasticquent\ElasticquentServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+
     ],
 
     /*
@@ -214,6 +220,12 @@ return [
          * Package Service
          */
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
+        /*
+         * Plugins
+         */
+        'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
+        'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
 
     ],
 
