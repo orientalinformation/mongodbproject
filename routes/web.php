@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::resource('dashboard', 'Backend\DashboardController');
+Route::resource('book', 'Backend\BookController');

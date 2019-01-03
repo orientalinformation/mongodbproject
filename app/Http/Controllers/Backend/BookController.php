@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $currentPage = 'dashboard';
-        return view('Backend.Dashboard.index', compact('currentPage'));
+        $currentPage = 'book';
+        return view('Backend.Book.index', compact('currentPage'));
     }
 
     /**
