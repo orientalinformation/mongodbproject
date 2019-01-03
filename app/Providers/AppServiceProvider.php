@@ -23,6 +23,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerBindings();
+    }
+
+    /**
+     * Register binding services
+     */
+    private function registerBindings()
+    {
+        $this->app->singleton(
+            \App\Repositories\Book\BookRepositoryInterface::class,
+            \App\Repositories\Book\BookEloquentRepository::class
+        );
     }
 }

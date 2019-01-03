@@ -15,7 +15,9 @@ class DashboardController extends Controller
     public function index()
     {
         $currentPage = 'dashboard';
-        return view('Backend.Dashboard.index', compact('currentPage'));
+
+        return view('Backend.Dashboard.index', compact(['currentPage']));
+
     }
 
     /**

@@ -14,8 +14,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $currentPage = 'book';
-        return view('Backend.Book.index', compact('currentPage'));
+        $currentPage = 'bookIndex';
+
+        return view('Backend.Dashboard.index', compact(['currentPage']));
     }
 
     /**
