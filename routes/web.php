@@ -15,4 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//====Dashboard start========
 Route::resource('dashboard', 'Backend\DashboardController');
+
+//====Dashboard end==========
+
+//====Book start=============
+Route::resource('books', 'Backend\BookController');
+
+
+//====Book end===============
