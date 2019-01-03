@@ -38,7 +38,7 @@ interface BaseRepositoryInterface
      * @param array $attributes
      * @return mixed
      */
-    public function create(array $attributes);
+    public function create(array $data);
 
 
     /**
@@ -47,7 +47,7 @@ interface BaseRepositoryInterface
      * @param array $attributes
      * @return mixed
      */
-    public function update($id, array $attributes);
+    public function update($id, array $data);
 
 
     /**

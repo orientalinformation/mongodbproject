@@ -79,9 +79,9 @@ abstract class EloquentRepository implements BaseRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function create(array $attributes)
+    public function create(array $data)
     {
-        return $this->model->create($attributes);
+        return $this->model->create($data);
     }
 
 
