@@ -4,9 +4,26 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Book\BookRepositoryInterface;
 
 class BookController extends Controller
 {
+
+    /**
+     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bookRepository;
+
+    /**
+     * BookController constructor.
+     * @param BookRepositoryInterface $bookRepository
+     */
+    public function __construct(BookRepositoryInterface $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
