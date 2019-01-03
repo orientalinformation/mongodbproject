@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
-Route::resource('dashboard', 'Backend\DashboardController');
-Route::resource('book', 'Backend\BookController');
-=======
 //====Dashboard start========
 Route::resource('dashboard', 'Backend\DashboardController');
 
@@ -29,4 +25,3 @@ Route::resource('books', 'Backend\BookController');
 
 
 //====Book end===============
->>>>>>> 36363a472325dffb89fcd18150b2107d7cd103db
