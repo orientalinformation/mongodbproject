@@ -3,7 +3,7 @@
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{ __('left-panel.navigation') }}</label>
     <div class="br-sideleft-menu">
-        <a href="{{route('dashboard.index')}}" class="br-menu-link @if($currentPage == 'dashboard') ' active' @endif">
+        <a href="{{route('dashboard.index')}}" class="br-menu-link @if($currentPage == 'dashboard') active @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
                 <span class="menu-item-label">{{ __('left-panel.dashboard') }}</span>
