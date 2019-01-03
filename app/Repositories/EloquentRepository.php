@@ -104,7 +104,7 @@ abstract class EloquentRepository implements BaseRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $result = $this->find($id);
 
