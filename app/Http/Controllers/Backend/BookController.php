@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Book\BookRepositoryInterface;
+use Modules\Box\Entities\Box;
 
 class BookController extends Controller
 {
@@ -29,11 +30,14 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $currentPage = 'bookIndex';
 
-        return view('Backend.Dashboard.index', compact(['currentPage']));
+        $limit = 2;
+        $result = $this->bookRepository->paginate($limit)->toArray();
+        return view('Backend.Book.index', compact(['currentPage', 'result']));
     }
 
     /**

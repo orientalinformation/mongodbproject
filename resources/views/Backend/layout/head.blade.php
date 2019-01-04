@@ -13,7 +13,7 @@
     <link href="{{ asset('/assets/lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/jquery-switchbutton/jquery.switchButton.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
 
 
     <!-- Bracket CSS -->
