@@ -35,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Book\BookRepositoryInterface::class,
             \App\Repositories\Book\BookEloquentRepository::class
         );
+
+        $this->app->singleton(
+          \App\Repositories\Category\CategoryRepositoryInterface::class,
+          \App\Repositories\Category\CategoryEloquentRepository::class
+        );
     }
 }

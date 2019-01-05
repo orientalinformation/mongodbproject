@@ -23,5 +23,9 @@ Route::resource('dashboard', 'Backend\DashboardController');
 //====Book start=============
 Route::resource('books', 'Backend\BookController');
 
-
 //====Book end===============
+
+//====Category start=============
+Route::resource('categories', 'Backend\CategoryController');
+
+//====Category end===============

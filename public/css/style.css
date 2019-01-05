@@ -28,3 +28,21 @@
 .pagination li.active {
     background: #f49917;
 }
+
+.pagination-bar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.main-form{
+    margin: 20px 0;
+    width: 100%;
+    background: #ffffff;
+    padding: 20px !important;
+}
+
+#blah{
+    max-width: 150px;
+    margin: 20px;
+}

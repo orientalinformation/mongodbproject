@@ -24,6 +24,12 @@ interface BaseRepositoryInterface
      */
     public function paginate();
 
+    /**
+     * Get all data pagination without sort
+     * @return mixed
+     */
+    public function paginateWithoutSort($perPage = 15);
+
 
     /**
      * Get one
@@ -56,5 +62,6 @@ interface BaseRepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
 
 }

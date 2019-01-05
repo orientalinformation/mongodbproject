@@ -12,8 +12,15 @@
 
         <a href="{{route('books.index')}}" class="br-menu-link @if ($currentPage == 'bookIndex') active @endif">
             <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
+                <i class="menu-item-icon icon ion-ios-book-outline tx-22"></i>
                 <span class="menu-item-label">{{ __('left-panel.book') }}</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+
+        <a href="{{route('categories.index')}}" class="br-menu-link @if ($currentPage == 'categoryIndex') active @endif">
+            <div class="br-menu-item">
+                <i class="menu-item-icon icon ion-ios-list-outline tx-22"></i>
+                <span class="menu-item-label">{{ __('left-panel.category') }}</span>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 

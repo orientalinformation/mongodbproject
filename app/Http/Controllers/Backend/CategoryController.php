@@ -4,27 +4,23 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Book\BookRepositoryInterface;
-use Validator;
-use App\Image;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
-class BookController extends Controller
+class CategoryController extends Controller
 {
+    /**
+     * @var CategoryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $cateogryRepository;
 
     /**
-     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     * CategoryController constructor.
+     * @param CategoryRepositoryInterface $cateogryRepository
      */
-    protected $bookRepository;
-
-    /**
-     * BookController constructor.
-     * @param BookRepositoryInterface $bookRepository
-     */
-    public function __construct(BookRepositoryInterface $bookRepository)
+    public function __construct(CategoryRepositoryInterface $cateogryRepository)
     {
-        $this->bookRepository = $bookRepository;
+        $this->cateogryRepository = $cateogryRepository;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -33,13 +29,12 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-
-        $currentPage = 'bookIndex';
+        $currentPage = 'categoryIndex';
         $limitPage = 5;
         $rowPage = 5;
-        $result = $this->bookRepository->paginateWithoutSort($rowPage)->toArray();
+        $result = $this->cateogryRepository->paginateWithoutSort($rowPage)->toArray();
         $result['limitPage'] = $limitPage;
-        return view('Backend.Book.index', compact(['currentPage', 'result']));
+        return view('Backend.Category.index', compact(['currentPage', 'result']));
     }
 
     /**
@@ -47,10 +42,9 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $currentPage = 'bookIndex';
-        return view('Backend.Book.create', compact(['currentPage']));
+        //
     }
 
     /**
@@ -61,30 +55,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->isMethod('post')) {
-            print_r('a');die;
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-
-
-            if ($validator->passes()) {
-
-
-                $input = $request->all();
-                $input['image'] = time() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->move(public_path('images'), $input['image']);
-
-
-                Image::create($input);
-
-
-                return response()->json(['success' => 'done']);
-            }
-
-
-            return response()->json(['error' => $validator->errors()->all()]);
-        }
+        //
     }
 
     /**
