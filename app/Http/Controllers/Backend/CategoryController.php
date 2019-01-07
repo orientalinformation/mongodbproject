@@ -44,7 +44,9 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $currentPage = 'categoryIndex';
+        $category_list = $this->cateogryRepository->all()->toArray();
+        return view('Backend.Category.create', compact(['currentPage', 'category_list']));
     }
 
     /**
@@ -55,7 +57,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data['parentID'] = $request->get('parentID');
+        $data['name'] = $request->get('name');
+        $data['description'] = $request->get('description');
+        $this->cateogryRepository->create($data);
+        return redirect()->to('categories');
     }
 
     /**
@@ -87,9 +93,24 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $currentPage = 'categoryIndex';
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $category_list = $this->cateogryRepository->all()->toArray();
+            $category = $this->cateogryRepository->find($id)->toArray();
+            if ($request->method() == 'POST') {
+                $data['parentID'] = $request->get('parentID');
+                $data['name'] = $request->get('name');
+                $data['description'] = $request->get('description');
+                $this->cateogryRepository->update($id, $data);
+                return redirect()->to('categories');
+            }else{
+                return view('Backend.Category.edit', compact(['currentPage', 'category', 'category_list']));
+            }
+        }
+        dd('a');
     }
 
     /**
@@ -100,6 +121,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cateogryRepository->delete($id);
+        return redirect()->to('categories');
+        return redirect()->route('catagories')->with(['succsess' => 'Delete successfully.']);
+    }
+
+    public function delete(Request $request){
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $this->cateogryRepository->delete($id);
+            return redirect()->to('categories');
+        }
     }
 }

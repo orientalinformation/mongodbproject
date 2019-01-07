@@ -33,12 +33,14 @@
                     <th scope="row">{{ $i }}</th>
                     <td>{{ $item['name'] }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-icon">
-                            <div><i class="fa fa-pencil"></i></div>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-icon">
-                            <div><i class="fa fa-trash"></i></div>
-                        </a>
+                        <div>
+                            <a href="categories/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
+                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
+                        </div>
+                        {{--<form method="POST" action="{{route('categories.destroy',$item['_id'])}}" class="delete-form" data-parsley-validate>--}}
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                        {{--</form>--}}
                     </td>
                 </tr>
                 <?php $i++ ?>
@@ -48,4 +50,33 @@
         @include('Backend.pagination.default', ['paginator' => $result])
     </div><!-- row -->
 
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Delete Category</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to delete this category?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <input type="hidden" value="" id="hid_Id" />
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    <script>
+        jQuery(".btn-ok").click(function () {
+            var id = jQuery("#hid_Id").val();
+            if (id <= 0 || id == "") {
+                return false;
+            }
+            window.location = 'categories/delete?id=' + id;
+        });
+    </script>
 @endsection

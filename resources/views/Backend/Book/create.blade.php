@@ -18,7 +18,7 @@
                 <form method="post" action="" id="book-form" data-parsley-validate>
                     <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose country" tabindex="-1" aria-hidden="true">
+                        <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
                             <option label="Choose type"></option>
                             <option value="POST" selected>Post</option>
                             <option value="DOCUMENT">Document</option>

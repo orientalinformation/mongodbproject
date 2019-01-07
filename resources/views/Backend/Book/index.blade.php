@@ -37,12 +37,16 @@
                     <td></td>
                     <td>{{ $item['price'] }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-icon">
-                            <div><i class="fa fa-pencil"></i></div>
-                        </a>
-                        <a href="#" class="btn btn-danger btn-icon">
-                            <div><i class="fa fa-trash"></i></div>
-                        </a>
+                        <form method="POST" action="{{route('categories.update',$item['_id'])}}" class="delete-form" data-parsley-validate>
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
+                            <div><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></div>
+                        </form>
+                        <form method="POST" action="{{route('categories.destroy',$item['_id'])}}" class="delete-form" data-parsley-validate>
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <div><button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button></div>
+                        </form>
                     </td>
                 </tr>
                     <?php $i++ ?>
