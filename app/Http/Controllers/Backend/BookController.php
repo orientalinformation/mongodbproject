@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Book\BookRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Validator;
 use App\Image;
 
@@ -15,14 +16,16 @@ class BookController extends Controller
      * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $bookRepository;
+    protected $cateogryRepository;
 
     /**
      * BookController constructor.
      * @param BookRepositoryInterface $bookRepository
      */
-    public function __construct(BookRepositoryInterface $bookRepository)
+    public function __construct(BookRepositoryInterface $bookRepository, CategoryRepositoryInterface $cateogryRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->cateogryRepository = $cateogryRepository;
     }
 
 
@@ -50,7 +53,8 @@ class BookController extends Controller
     public function create(Request $request)
     {
         $currentPage = 'bookIndex';
-        return view('Backend.Book.create', compact(['currentPage']));
+        $category_list = $this->cateogryRepository->all()->toArray();
+        return view('Backend.Book.create', compact(['currentPage', 'category_list']));
     }
 
     /**
@@ -61,29 +65,21 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->isMethod('post')) {
-            print_r('a');die;
-            $validator = Validator::make($request->all(), [
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-
-
-            if ($validator->passes()) {
-
-
-                $input = $request->all();
-                $input['image'] = time() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->move(public_path('images'), $input['image']);
-
-
-                Image::create($input);
-
-
-                return response()->json(['success' => 'done']);
+        if ($request->method() == 'POST') {
+            $data['type'] = $request->get('type');
+            $data['price'] = $request->get('price');
+            $data['title'] = $request->get('title');
+            $data['shortDescription'] = $request->get('shortDescription');
+            $data['description'] = $request->get('description');
+            $data['catID'] = $request->get('catID');
+            $data['image'] = $request->get('image');
+            if($request->has('status')) {
+                $data['status'] = 1;
+            }else{
+                $data['status'] = 0;
             }
-
-
-            return response()->json(['error' => $validator->errors()->all()]);
+            $this->bookRepository->create($data);
+            return redirect()->to('books');
         }
     }
 
@@ -116,9 +112,33 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $currentPage = 'bookIndex';
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $category_list = $this->cateogryRepository->all()->toArray();
+            $book = $this->bookRepository->find($id)->toArray();
+            if ($request->method() == 'POST') {
+                $data['type'] = $request->get('type');
+                $data['price'] = $request->get('price');
+                $data['title'] = $request->get('title');
+                $data['shortDescription'] = $request->get('shortDescription');
+                $data['description'] = $request->get('description');
+                $data['catID'] = $request->get('catID');
+                $data['image'] = $request->get('image');
+                if($request->has('status')) {
+                    $data['status'] = 1;
+                }else{
+                    $data['status'] = 0;
+                }
+                $this->bookRepository->update($id, $data);
+                return redirect()->to('books');
+            }else{
+                return view('Backend.Book.edit', compact(['currentPage', 'book', 'category_list']));
+            }
+        }
+        dd('a');
     }
 
     /**
@@ -130,5 +150,13 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete(Request $request){
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $this->bookRepository->delete($id);
+            return redirect()->to('books');
+        }
     }
 }

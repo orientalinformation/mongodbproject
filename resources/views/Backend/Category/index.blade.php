@@ -47,7 +47,7 @@
             @endforeach
             </tbody>
         </table>
-        @include('Backend.pagination.default', ['paginator' => $result])
+        @include('Backend.partials.paginate', ['paginator' => $result])
     </div><!-- row -->
 
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

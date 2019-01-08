@@ -9,7 +9,7 @@ class Book extends Model
     protected $collection = 'books';
     public $translatedAttributes = [];
     protected $fillable = [
-        'title', 'description', 'image'
+        'type', 'title', 'shortDescription', 'description', 'image', 'price', 'catID', 'status'
     ];
 
     static function getAllBook(){

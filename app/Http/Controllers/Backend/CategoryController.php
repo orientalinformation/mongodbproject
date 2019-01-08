@@ -57,11 +57,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $data['parentID'] = $request->get('parentID');
-        $data['name'] = $request->get('name');
-        $data['description'] = $request->get('description');
-        $this->cateogryRepository->create($data);
-        return redirect()->to('categories');
+        if ($request->method() == 'POST') {
+            $data['parentID'] = $request->get('parentID');
+            $data['name'] = $request->get('name');
+            $data['description'] = $request->get('description');
+            $this->cateogryRepository->create($data);
+            return redirect()->to('categories');
+        }
     }
 
     /**
