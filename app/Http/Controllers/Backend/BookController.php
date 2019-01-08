@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use Elasticsearch\ClientBuilder;
 use Validator;
 use App\Image;
 
@@ -78,7 +79,29 @@ class BookController extends Controller
             }else{
                 $data['status'] = 0;
             }
-            $this->bookRepository->create($data);
+            $result = $this->bookRepository->create($data);
+            $id = $result->_id;
+
+            if($id != '') {
+                $dataElastic = [
+                    'body' => [
+                        'type' => $request->get('type'),
+                        'price' => $request->get('price'),
+                        'title' => $request->get('title'),
+                        'shortDescription' => $request->get('shortDescription'),
+                        'description' => $request->get('description'),
+                        'catID' => $request->get('catID'),
+                        'image' => $request->get('image')
+                    ],
+                    'index' => 'compagnons',
+                    'type' => 'books',
+                    'id' => $id,
+                ];
+
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+            }
+
             return redirect()->to('books');
         }
     }
@@ -156,6 +179,34 @@ class BookController extends Controller
         if($request->has('id')) {
             $id = $request->get('id');
             $this->bookRepository->delete($id);
+
+            $params = [
+                'index' => 'compagnons',
+                'type' => 'books',
+                'body' => [
+                    'query' => [
+                        'match' => [
+                            '_id' => $id
+                        ]
+                    ]
+                ]
+            ];
+
+            $client = ClientBuilder::create()->build();
+            $response = $client->search($params);
+            $items = $response['hits']['hits'];
+
+            if(sizeof($items) > 0) {
+                $params = [
+                    'index' => 'compagnons',
+                    'type' => 'books',
+                    'id' => $id
+                ];
+
+                $client = ClientBuilder::create()->build();
+                $response = $client->delete($params);
+            }
+
             return redirect()->to('books');
         }
     }

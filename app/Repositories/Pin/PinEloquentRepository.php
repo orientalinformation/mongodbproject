@@ -21,7 +21,7 @@ class PinEloquentRepository extends EloquentRepository implements PinRepositoryI
     }
 
     /**
-     * @inheritdoc
+     * find Pin by multiple condition
      */
     public function findByMultiWhere($itemID, $userID, $type)
     {
