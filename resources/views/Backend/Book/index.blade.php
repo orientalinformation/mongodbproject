@@ -44,7 +44,7 @@
                         </form>
                         <form method="POST" action="{{route('categories.destroy',$item['_id'])}}" class="delete-form" data-parsley-validate>
                             {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
+                            {{ method_field('DELETE') }}{{}}
                             <div><button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button></div>
                         </form>
                     </td>
