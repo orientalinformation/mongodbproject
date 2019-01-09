@@ -35,43 +35,53 @@
             </thead>
             <tbody>
                 <?php $i = 1; ?>
-                @foreach($result['data'] as $item)
-                <tr>
-                    <th scope="row">{{ $i }}</th>
-                    <td>{{ $item['title'] }}</td>
-                    <td>{{ $item['author'] }}</td>
-                    <td></td>
-                    <td>{{ $item['price'] }}</td>
-                    <td>{{ $item['type'] }}</td>
-                    <td><span onclick="status('{{ $item['_id'] }}', this)" data-status="{{$item['status']}}">
-                        <?php
-                            if($item['status'] == 1){
-                                echo '<i class="fa fa-eye"></i>';
-                            }else{
-                                echo '<i class="fa fa-eye-slash"></i>';
-                            }
-                        ?>
-                        </span>
-                    </td>
-                    <td>{{ date("d/m/Y", strtotime($item['created_at'])) }}</td>
-                    <td>
-                        <div>
-                            <a href="books/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
-                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
+                @if(sizeof($result['data']) > 0)
+                    @foreach($result['data'] as $item)
+                    <tr>
+                        <th scope="row">{{ $i }}</th>
+                        <td>{{ $item['title'] }}</td>
+                        <td>{{ $item['author'] }}</td>
+                        <td>
                             <?php
-                                if(EnvatoBook::checkPinExist($item['_id'],1,'BOOK') == 1){
-                                    $btnPin = 'btn-light disabled';
-                                }else{
-                                    $btnPin = 'btn-warning';
+                                $imagePath = URL::to('/') . '/upload/book/' . $item['image'];
+                                echo $imagePath;
+                                if (file_exists($imagePath)) {
+                                    echo '<img src="' . $imagePath . '">';
                                 }
                             ?>
-                            <button type="submit" class="btn {{$btnPin}}" onclick="pin('{{ $item['_id'] }}',1, this);"><i class="icon ion-pin"></i></button>
-                            <button type="submit" class="btn btn-warning" id="btnPin"><i class="icon ion-clipboard"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                    <?php $i++ ?>
-                @endforeach
+                        </td>
+                        <td>{{ $item['price'] }}</td>
+                        <td>{{ $item['type'] }}</td>
+                        <td><span onclick="status('{{ $item['_id'] }}', this)" data-status="{{$item['status']}}">
+                            <?php
+                                if($item['status'] == 1){
+                                    echo '<i class="fa fa-eye"></i>';
+                                }else{
+                                    echo '<i class="fa fa-eye-slash"></i>';
+                                }
+                            ?>
+                            </span>
+                        </td>
+                        <td>{{ date("d/m/Y", strtotime($item['created_at'])) }}</td>
+                        <td>
+                            <div>
+                                <a href="books/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
+                                <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
+                                <?php
+                                    if(EnvatoBook::checkPinExist($item['_id'],1,'BOOK') == 1){
+                                        $btnPin = 'btn-light disabled';
+                                    }else{
+                                        $btnPin = 'btn-warning';
+                                    }
+                                ?>
+                                <button type="submit" class="btn {{$btnPin}}" onclick="pin('{{ $item['_id'] }}',1, this);"><i class="icon ion-pin"></i></button>
+                                <button type="submit" class="btn btn-warning" id="btnPin"><i class="icon ion-clipboard"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                        <?php $i++ ?>
+                    @endforeach
+                @endif
             </tbody>
         </table>
         @include('Backend.partials.paginate', ['paginator' => $result])

@@ -16,54 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//====Book start=============
-$router->group(['prefix' =>'/books'], function (Router $router) {
-    $router->get('/delete', [
-        'uses' => 'Backend\BookController@delete',
-    ]);
-    $router->get('/update', [
-        'uses' => 'Backend\BookController@update',
-    ]);
-    $router->post('/update', [
-        'uses' => 'Backend\BookController@update',
-    ]);
-    $router->post('/updateStatus', [
-        'uses' => 'Backend\BookController@updateStatus',
-    ]);
-});
-
-Route::resource('books', 'Backend\BookController');
-
-//====Book end===============
-
-//====Category start=============
-$router->group(['prefix' =>'/categories'], function (Router $router) {
-    $router->get('/delete', [
-        'uses' => 'Backend\CategoryController@delete',
-    ]);
-    $router->get('/update', [
-        'uses' => 'Backend\CategoryController@update',
-    ]);
-    $router->post('/update', [
-        'uses' => 'Backend\CategoryController@update',
-    ]);
-});
-
-Route::resource('categories', 'Backend\CategoryController');
-
-//====Category end===============
-
-//====Pin start=============
-$router->group(['prefix' =>'/pins'], function (Router $router) {
-    $router->post('/create', [
-        'uses' => 'Backend\PinController@create',
-    ]);
-});
-
-Route::resource('pins', 'Backend\PinController');
-
-//====Pin end===============
-
 //===========BACKEND==========
 
 Route::prefix('admin/')->group(function () {
@@ -84,5 +36,53 @@ Route::prefix('admin/')->group(function () {
 
 
     Route::resource('dashboard', 'Backend\DashboardController');
+
+    //====Book start=============
+    Route::prefix('books/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\BookController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\BookController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\BookController@update',
+        ]);
+        Route::post('/updateStatus', [
+            'uses' => 'Backend\BookController@updateStatus',
+        ]);
+    });
+
+    Route::resource('books', 'Backend\BookController');
+
+    //====Book end===============
+
+    //====Category start=============
+    Route::prefix('categories/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\CategoryController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\CategoryController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\CategoryController@update',
+        ]);
+    });
+
+    Route::resource('categories', 'Backend\CategoryController');
+
+    //====Category end===============
+
+    //====Pin start=============
+    Route::prefix('pins/')->group(function () {
+        Route::post('/create', [
+            'uses' => 'Backend\PinController@create',
+        ]);
+    });
+
+    Route::resource('pins', 'Backend\PinController');
+
+    //====Pin end===============
 });
 

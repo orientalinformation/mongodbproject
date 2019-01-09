@@ -27,6 +27,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
+        $this->middleware('auth');
     }
 
 
@@ -153,8 +154,10 @@ class BookController extends Controller
                 $data['catID'] = $request->get('catID');
                 if($request->hasFile('image')) {
                     $file = $request->image;
-                    $data['image'] = $file->getClientOriginalName();
-                    $file->move(base_path() . '/upload/',$file->getClientOriginalName());
+                    $datePath = date("Y") . '/' . date("m") . '/' . date("d");
+                    @mkdir(base_path() . '/public/upload/book/' . $datePath, 0777, true);
+                    $file->move(base_path() . '/public/upload/book/' . $datePath,$file->getClientOriginalName());
+                    $data['image'] = $datePath . '/' .$file->getClientOriginalName();
                 }
                 if($request->has('status')) {
                     $data['status'] = 1;
