@@ -50,3 +50,7 @@
 .delete-form{
     display: inline-block;
 }
+
+.bookTable thead > tr > th, .bookTable tbody > tr > td{
+    text-align: center;
+}

@@ -15,15 +15,15 @@
         </nav>
         <div class="main-form br-section-wrapper">
             <div class="form-layout form-layout-1">
-                <form method="post" action="{{Request::url() . '?id=' . $book['_id']}}" id="book-form" data-parsley-validate>
+                <form method="post" enctype="multipart/form-data" action="{{Request::url() . '?id=' . $book['_id']}}" id="book-form" data-parsley-validate>
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Type</label>
                         <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
                             <option label="Choose type"></option>
-                            <option value="POST" selected>Post</option>
-                            <option value="DOCUMENT">Document</option>
-                            <option value="VIDEO">Video</option>
+                            <option value="POST" {{ ($book['type']=='POST')?'selected':'' }}>Post</option>
+                            <option value="DOCUMENT" {{ ($book['type']=='DOCUMENT')?'selected':'' }}>Document</option>
+                            <option value="VIDEO" {{ ($book['type']=='VIDEO')?'selected':'' }}>Video</option>
                         </select>
                     </div><!-- form-group -->
                     <div class="form-group">
@@ -40,6 +40,10 @@
                         <input class="form-control" type="text" name="title" value="{{$book['title']}}" placeholder="Enter title" required>
                     </div><!-- form-group -->
                     <div class="form-group">
+                        <label>Author:</label>
+                        <input class="form-control" type="text" name="author" value="{{$book['author']}}" placeholder="Enter author">
+                    </div><!-- form-group -->
+                    <div class="form-group">
                         <label>Price:</label>
                         <input class="form-control" type="text" name="price" value="{{$book['price']}}" placeholder="Enter price">
                     </div><!-- form-group -->
@@ -49,7 +53,7 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Description:</label>
-                        <div id="summernote">{{$book['description']}}</div>
+                        <textarea rows="2" class="form-control" id="summernote" name="description">{{$book['description']}}</textarea>
                     </div><!-- form-group -->
                     <div class="form-group youtube">
                         <label>Youtube URL:</label>
@@ -59,7 +63,7 @@
                         <label>Image:</label>
                         <div class="row">
                             <div class="form-group">
-                                <input type="file" class="form-control" id="image" name="logo">
+                                <input type="file" class="form-control" id="image" name="image">
                                 <img id="blah" src="#" alt="your image" />
                             </div>
                         </div>

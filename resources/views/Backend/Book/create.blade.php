@@ -40,6 +40,10 @@
                         <input class="form-control" type="text" name="title" value="" placeholder="Enter title" required>
                     </div><!-- form-group -->
                     <div class="form-group">
+                        <label>Author:</label>
+                        <input class="form-control" type="text" name="author" value="" placeholder="Enter author">
+                    </div><!-- form-group -->
+                    <div class="form-group">
                         <label>Price:</label>
                         <input class="form-control" type="text" name="price" value="" placeholder="Enter price">
                     </div><!-- form-group -->

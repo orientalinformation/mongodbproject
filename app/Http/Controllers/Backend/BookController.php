@@ -70,6 +70,7 @@ class BookController extends Controller
             $data['type'] = $request->get('type');
             $data['price'] = $request->get('price');
             $data['title'] = $request->get('title');
+            $data['author'] = $request->get('author');
             $data['shortDescription'] = $request->get('shortDescription');
             $data['description'] = $request->get('description');
             $data['catID'] = $request->get('catID');
@@ -146,9 +147,14 @@ class BookController extends Controller
                 $data['type'] = $request->get('type');
                 $data['price'] = $request->get('price');
                 $data['title'] = $request->get('title');
+                $data['author'] = $request->get('author');
                 $data['shortDescription'] = $request->get('shortDescription');
                 $data['description'] = $request->get('description');
                 $data['catID'] = $request->get('catID');
+                if($request->hasFile('image')) {
+                    $file = $request->image;
+                    dd($file->getClientOriginalName());
+                }
                 $data['image'] = $request->get('image');
                 if($request->has('status')) {
                     $data['status'] = 1;
@@ -164,6 +170,25 @@ class BookController extends Controller
         dd('a');
     }
 
+    public function updateStatus(Request $request)
+    {
+        if($request->has('bookID')) {
+            $id = $request->get('bookID');
+            $status = $request->get('status');
+            $book = $this->bookRepository->checkStatus($id, $status)->toArray();
+            if(sizeof($book)) {
+                if ($book[0]["status"] == 1) {
+                    $data['status'] = 0;
+                    $this->bookRepository->update($id, $data);
+                    return 1;
+                } else {
+                    $data['status'] = 1;
+                    $this->bookRepository->update($id, $data);
+                    return 0;
+                }
+            }
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

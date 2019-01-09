@@ -32,6 +32,9 @@ $router->group(['prefix' =>'/books'], function (Router $router) {
     $router->post('/update', [
         'uses' => 'Backend\BookController@update',
     ]);
+    $router->post('/updateStatus', [
+        'uses' => 'Backend\BookController@updateStatus',
+    ]);
 });
 
 Route::resource('books', 'Backend\BookController');

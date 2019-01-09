@@ -19,13 +19,15 @@
             <a href="{{route('books.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Book</button></a>
         </div>
 
-        <table class="table table-bordered table-colored table-dark">
+        <table class="table table-bordered table-colored table-dark bookTable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Author</th>
                     <th>Image</th>
                     <th>Price</th>
+                    <th>Type</th>
                     <th>Status</th>
                     <th>Created</th>
                     <th>Action</th>
@@ -37,9 +39,11 @@
                 <tr>
                     <th scope="row">{{ $i }}</th>
                     <td>{{ $item['title'] }}</td>
+                    <td>{{ $item['author'] }}</td>
                     <td></td>
                     <td>{{ $item['price'] }}</td>
-                    <td>
+                    <td>{{ $item['type'] }}</td>
+                    <td><span onclick="status('{{ $item['_id'] }}', this)" data-status="{{$item['status']}}">
                         <?php
                             if($item['status'] == 1){
                                 echo '<i class="fa fa-eye"></i>';
@@ -47,6 +51,7 @@
                                 echo '<i class="fa fa-eye-slash"></i>';
                             }
                         ?>
+                        </span>
                     </td>
                     <td>{{ date("d/m/Y", strtotime($item['created_at'])) }}</td>
                     <td>
@@ -105,7 +110,6 @@
         });
 
         function pin(itemID, userID, tag){
-//            alert(itemID);
             $.ajax({
                 url: "pins/create",
                 cache: false,
@@ -116,6 +120,28 @@
                         $(tag).attr('class','btn btn-warning');
                     }else{
                         $(tag).attr('class','btn btn-light disabled');
+                    }
+                }
+            });
+        }
+
+        function status(bookID, tag){
+            let status = $(tag).attr('data-status');
+//            alert(status);
+            $.ajax({
+                url: "books/updateStatus",
+                cache: false,
+                type: "POST",
+                data: {bookID: bookID, status: status},
+                success: function(result){
+                    if(result==1){
+                        console.log(result);
+                        $(tag).attr('data-status',0)
+                        $(tag).html('<i class="fa fa-eye-slash"></i>');
+                    }else{
+                        console.log(result);
+                        $(tag).attr('data-status',1)
+                        $(tag).html('<i class="fa fa-eye"></i>');
                     }
                 }
             });
