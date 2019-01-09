@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +35,21 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Book\BookRepositoryInterface::class,
             \App\Repositories\Book\BookEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Post\PostRepositoryInterface::class,
+            \App\Repositories\Post\PostEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Topic\TopicRepositoryInterface::class,
+            \App\Repositories\Topic\TopicEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Source\SourceRepositoryInterface::class,
+            \App\Repositories\Source\SourceEloquentRepository::class
         );
     }
 }

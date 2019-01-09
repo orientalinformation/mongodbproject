@@ -25,3 +25,5 @@ Route::resource('books', 'Backend\BookController');
 
 
 //====Book end===============
+
+Route::resource('search', 'Backend\SearchController');

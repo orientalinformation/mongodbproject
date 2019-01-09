@@ -27,7 +27,7 @@ return array(
     | Elasticquent models.
     */
 
-    'default_index' => 'asgard',
+    'default_index' => 'compagnons',
 
     'post_index'    => 'posts'
 
