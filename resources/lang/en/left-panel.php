@@ -5,6 +5,7 @@ return [
     'navigation'        => 'Navigation',
     'dashboard'         => 'Dashboard',
     'book'              => 'Book',
+    'category'          => 'Category',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
 

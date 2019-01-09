@@ -19,4 +19,11 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
         return Book::class;
     }
 
+    public function allByLimit($offset, $limit)
+    {
+        return $this->model->offset($offset)
+                            ->limit($limit)
+                            ->get();
+    }
+
 }

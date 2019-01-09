@@ -75,6 +75,14 @@ abstract class EloquentRepository implements BaseRepositoryInterface
         return $this->model->orderBy('created_at', 'DESC')->paginate($perPage);
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function paginateWithoutSort($perPage = 15)
+    {
+        return $this->model->paginate($perPage);
+    }
+
 
     /**
      * @inheritdoc

@@ -166,6 +166,7 @@ return [
          */
         Elasticquent\ElasticquentServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        App\Providers\EnvatoServiceProvider::class,
 
     ],
 
@@ -226,6 +227,7 @@ return [
          */
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
         'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
+        'EnvatoBook' => App\Helpers\Envato\Book::class,
 
     ],
 

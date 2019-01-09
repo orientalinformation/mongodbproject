@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-
+s
     <div class="row row-sm">
         <div class="col-sm-6 col-xl-3">
             <div class="bg-teal rounded overflow-hidden">

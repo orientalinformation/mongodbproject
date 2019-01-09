@@ -6,7 +6,9 @@
 <script src="{{ asset('/assets/lib/jquery-ui/jquery-ui.js') }}"></script>
 <script src="{{ asset('/assets/lib/jquery-switchbutton/jquery.switchButton.js') }}"></script>
 <script src="{{ asset('/assets/lib/peity/jquery.peity.js') }}"></script>
-
+<script src="{{ asset('/assets/lib/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('/assets/lib/medium-editor/medium-editor.js') }}"></script>
+<script src="{{ asset('/js/plugins/bootstrap-alert.js') }}"></script>
 <!-- Plugins -->
 
 
