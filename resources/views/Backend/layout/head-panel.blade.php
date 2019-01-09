@@ -142,7 +142,11 @@
             </div><!-- dropdown -->
             <div class="dropdown">
                 <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-                    <span class="logged-name hidden-md-down">Katherine</span>
+                    <span class="logged-name hidden-md-down">
+                        @if(isset(Auth::user()->fullname))
+                             <strong>{{ Auth::user()->fullname }}</strong>
+                        @endif
+                    </span>
                     <img src="http://via.placeholder.com/64x64" class="wd-32 rounded-circle" alt="">
                     <span class="square-10 bg-success"></span>
                 </a>
@@ -153,7 +157,7 @@
                         <li><a href=""><i class="icon ion-ios-download"></i> {{ __('head-panel.download') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-star"></i> {{ __('head-panel.favorite') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-folder"></i> {{ __('head-panel.collection') }}</a></li>
-                        <li><a href=""><i class="icon ion-power"></i> {{ __('head-panel.signOut') }}</a></li>
+                        <li><a href="{{ route('logout') }}"><i class="icon ion-power"></i> {{ __('head-panel.signOut') }}</a></li>
                     </ul>
                 </div><!-- dropdown-menu -->
             </div><!-- dropdown -->

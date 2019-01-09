@@ -16,11 +16,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//====Dashboard start========
-Route::resource('dashboard', 'Backend\DashboardController');
-
-//====Dashboard end==========
-
 //====Book start=============
 $router->group(['prefix' =>'/books'], function (Router $router) {
     $router->get('/delete', [
@@ -68,3 +63,26 @@ $router->group(['prefix' =>'/pins'], function (Router $router) {
 Route::resource('pins', 'Backend\PinController');
 
 //====Pin end===============
+
+//===========BACKEND==========
+
+Route::prefix('admin/')->group(function () {
+
+    //default
+    Route::get('/', 'Backend\DashboardController@index');
+
+    //Login routes
+    Route::get('login', ['uses' => 'Backend\AuthController@login',     'as' => 'login']);
+    Route::post('login', ['uses' => 'Backend\AuthController@postLogin', 'as' => 'postlogin']);
+    Route::get('logout', ['uses' => 'Backend\AuthController@logout', 'as' => 'logout']);
+
+    //Password reset routes
+    Route::get('forgot-password', ['uses' => 'Backend\AuthController@showForgotForm', 'as' => 'passwordForgot']);
+    Route::post('send-mail', ['uses' => 'Backend\AuthController@sendMail', 'as' => 'sendMail']);
+    Route::get('password/reset/{token}', 'Backend\AuthController@showResetForm');
+    Route::post('password/reset', 'Backend\AuthController@resetPassword');
+
+
+    Route::resource('dashboard', 'Backend\DashboardController');
+});
+

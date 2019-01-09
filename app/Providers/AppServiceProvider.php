@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(191);
     }
 
     /**
@@ -44,6 +45,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Pin\PinRepositoryInterface::class,
             \App\Repositories\Pin\PinEloquentRepository::class
+        );
+                    
+        $this->app->singleton(
+            \App\Repositories\User\UserRepositoryInterface::class,
+            \App\Repositories\User\UserEloquentRepository::class
         );
     }
 }

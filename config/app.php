@@ -164,6 +164,7 @@ return [
         /*
          * Plugins
          */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Elasticquent\ElasticquentServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         App\Providers\EnvatoServiceProvider::class,
@@ -225,6 +226,7 @@ return [
         /*
          * Plugins
          */
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
         'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
         'EnvatoBook' => App\Helpers\Envato\Book::class,
