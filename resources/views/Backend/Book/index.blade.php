@@ -59,7 +59,7 @@
                             <a href="books/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
                             <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
                             <?php
-                                if(PinController::checkPinExist($item['_id'],1,'BOOK') == 1){
+                                if(EnvatoBook::checkPinExist($item['_id'],1,'BOOK') == 1){
                                     $btnPin = 'btn-light disabled';
                                 }else{
                                     $btnPin = 'btn-warning';

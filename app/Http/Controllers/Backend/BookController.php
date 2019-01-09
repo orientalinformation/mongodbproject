@@ -153,9 +153,9 @@ class BookController extends Controller
                 $data['catID'] = $request->get('catID');
                 if($request->hasFile('image')) {
                     $file = $request->image;
-                    dd($file->getClientOriginalName());
+                    $data['image'] = $file->getClientOriginalName();
+                    $file->move(base_path() . '/upload/',$file->getClientOriginalName());
                 }
-                $data['image'] = $request->get('image');
                 if($request->has('status')) {
                     $data['status'] = 1;
                 }else{
