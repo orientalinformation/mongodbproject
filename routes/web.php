@@ -22,6 +22,21 @@ Route::resource('dashboard', 'Backend\DashboardController');
 //====Dashboard end==========
 
 //====Book start=============
+$router->group(['prefix' =>'/books'], function (Router $router) {
+    $router->get('/delete', [
+        'uses' => 'Backend\BookController@delete',
+    ]);
+    $router->get('/update', [
+        'uses' => 'Backend\BookController@update',
+    ]);
+    $router->post('/update', [
+        'uses' => 'Backend\BookController@update',
+    ]);
+    $router->post('/updateStatus', [
+        'uses' => 'Backend\BookController@updateStatus',
+    ]);
+});
+
 Route::resource('books', 'Backend\BookController');
 
 //====Book end===============
@@ -43,4 +58,17 @@ Route::resource('categories', 'Backend\CategoryController');
 
 //====Category end===============
 
+//====Pin start=============
+$router->group(['prefix' =>'/pins'], function (Router $router) {
+    $router->post('/create', [
+        'uses' => 'Backend\PinController@create',
+    ]);
+});
+
+Route::resource('pins', 'Backend\PinController');
+
+//====Pin end===============
+
+
 Route::resource('search', 'Backend\SearchController');
+

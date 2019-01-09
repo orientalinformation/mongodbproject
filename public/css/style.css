@@ -18,11 +18,7 @@
 
 .pagination li.disabled{
     pointer-events: none;
-    background: #dee2e6;
-}
-
-.pagination li.disabled a{
-    color: #adb5bd;
+    background: #adb5bd;
 }
 
 .pagination li.active {
@@ -49,4 +45,8 @@
 
 .delete-form{
     display: inline-block;
+}
+
+.bookTable thead > tr > th, .bookTable tbody > tr > td{
+    text-align: center;
 }

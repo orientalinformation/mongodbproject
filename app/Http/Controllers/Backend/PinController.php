@@ -2,65 +2,36 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Model\PostElastic;
+use App\Repositories\BaseRepositoryInterface;
+use App\Repositories\Pin\PinRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Elasticsearch\ClientBuilder;
-use App\Helpers\Envato\Ulities;
-use Illuminate\Support\Facades\Config;
+use App\Model\Pin;
 
-class SearchController extends Controller
+class PinController extends Controller
 {
+    /**
+     * @var PinRepositoryInterface|BaseRepositoryInterface
+     */
+    protected $pinRepository;
+
+    /**
+     * PinController constructor.
+     * @param PinRepositoryInterface $pinRepository
+     */
+    public function __construct(PinRepositoryInterface $pinRepository)
+    {
+        $this->pinRepository = $pinRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $currentPage = 'bookIndex';
-
-        $searchValue = !is_null($request->get('q'))? $request->get('q'): null;
-
-        $page = $request->get('page');
-
-        $rowPage = Config::get('constants.rowPage');
-
-        if (!isset($page)) {
-            $page = 1;
-        }
-
-        $post = new PostElastic();
-        $client = ClientBuilder::create()->build();
-
-        $matchAll = [
-            'match_all' => new \stdClass()
-        ];
-
-        $matchPrefix = [
-            'match_phrase_prefix'   => [
-                'title' => $searchValue
-            ]
-        ];
-
-        $param = [
-            'index' => $post->getIndexName(),
-            'type'  => $post->getTypeName(),
-            'body'  => [
-                'from'  => ($page - 1) * $rowPage,
-                'size'  => $rowPage,
-                'query' => is_null($searchValue) ? $matchAll : $matchPrefix
-
-            ]
-        ];
-
-        $data = $client->search($param);
-
-        $paginate = Ulities::calculatorPage($searchValue, $page, $data['hits']['total'], $rowPage);
-
-        $q = $searchValue;
-
-        return view('Backend.Search.index' , compact(['currentPage', 'data', 'q', 'paginate']));
+        //
     }
 
     /**
@@ -68,9 +39,31 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $itemID = $request->get('itemID');
+        $userID = (int)$request->get('userID');
+        $type = $request->get('type');
+        $result = $this->pinRepository->findByMultiWhere($itemID, $userID, $type)->toArray();
+        if(sizeof($result) > 0){
+            $this->pinRepository->delete($result[0]['_id']);
+            return 1;
+        }else{
+            $data = [];
+            $data['itemID'] = $itemID;
+            $data['userID'] = $userID;
+            $data['type'] = $type;
+            $this->pinRepository->create($data);
+            return 0;
+        }
+    }
+
+    static function checkPinExist($itemID, $userID, $type) {
+        $result = Pin::findByMultiWhere($itemID, $userID, $type)->toArray();
+        if(sizeof($result)>0){
+            return 1;
+        }
+        return 0;
     }
 
     /**

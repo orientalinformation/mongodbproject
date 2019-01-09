@@ -24,5 +24,6 @@ class EnvatoServiceProvider extends ServiceProvider
     public function register()
     {
         require_once app_path() . '/Helpers/Envato/Book.php';
+        require_once app_path() . '/Helpers/Envato/Ulities.php';
     }
 }

@@ -228,6 +228,7 @@ return [
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
         'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
         'EnvatoBook' => App\Helpers\Envato\Book::class,
+        'EnvatoUlities' => App\Helpers\Envato\Ulities::class,
 
     ],
 

@@ -26,4 +26,10 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
                             ->get();
     }
 
+    public function checkStatus($bookID, $status)
+    {
+        return Book::where([['_id', '=', $bookID],
+            ['status', '=', (int)$status]])->get();
+    }
+
 }
