@@ -30,7 +30,7 @@
                     <th>Type</th>
                     <th>Status</th>
                     <th>Created</th>
-                    <th>Action</th>
+                    <th width="20%">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,9 +44,10 @@
                         <td>
                             <?php
                                 $imagePath = URL::to('/') . '/upload/book/' . $item['image'];
-                                echo $imagePath;
-                                if (file_exists($imagePath)) {
-                                    echo '<img src="' . $imagePath . '">';
+                                if (@getimagesize($imagePath)) {
+                                    echo '<img src="' . $imagePath . '" class="bookThumb">';
+                                }else{
+                                    echo '<img src="https://via.placeholder.com/140x100">';
                                 }
                             ?>
                         </td>
@@ -75,7 +76,33 @@
                                     }
                                 ?>
                                 <button type="submit" class="btn {{$btnPin}}" onclick="pin('{{ $item['_id'] }}',1, this);"><i class="icon ion-pin"></i></button>
-                                <button type="submit" class="btn btn-warning" id="btnPin"><i class="icon ion-clipboard"></i></button>
+                                <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#modal-{{$i}}"><i class="icon ion-clipboard"></i></button>
+
+                                <!-- LARGE MODAL -->
+                                <div id="modal-{{$i}}" class="modal fade">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content tx-size-sm">
+                                            <div class="modal-header pd-x-20">
+                                                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">{{ $item['title'] }}</h6>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body pd-20">
+                                                <?php
+                                                $a = htmlentities($item['description']);
+
+                                                $b = html_entity_decode($a);
+                                                ?>
+                                                {{ $b }}
+                                            </div><!-- modal-body -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div><!-- modal-dialog -->
+                                </div><!-- modal -->
+
                             </div>
                         </td>
                     </tr>

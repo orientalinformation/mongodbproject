@@ -37,7 +37,7 @@
                         <textarea rows="2" class="form-control" placeholder="Enter description" name="description">{{ $category['description'] }}</textarea>
                     </div><!-- form-group -->
                     <button type="submit" class="btn btn-info" formmethod="post">Save</button>
-                    <button type="cancel" class="btn btn-light active" onclick="window.location= '{{route('categories.index')}}'">Canel</button>
+                    <button type="button" class="btn btn-light active" onclick="window.location= '{{route('categories.index')}}'">Canel</button>
                 </form>
             </div>
         </div>

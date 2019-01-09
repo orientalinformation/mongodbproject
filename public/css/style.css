@@ -54,3 +54,7 @@
 .bookTable thead > tr > th, .bookTable tbody > tr > td{
     text-align: center;
 }
+
+.bookThumb{
+    max-width: 140px;
+}

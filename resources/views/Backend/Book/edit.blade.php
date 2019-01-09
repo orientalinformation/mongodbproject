@@ -63,8 +63,14 @@
                         <label>Image:</label>
                         <div class="row">
                             <div class="form-group">
+                                <?php
+                                    $imagePath = URL::to('/') . '/upload/book/' . $book['image'];
+                                    if (!@getimagesize($imagePath)) {
+                                        $imagePath = "https://via.placeholder.com/140x100";
+                                    }
+                                ?>
                                 <input type="file" class="form-control" id="image" name="image">
-                                <img id="blah" src="#" alt="your image" />
+                                <img id="blah" src="{{$imagePath}}" alt="book thumb" />
                             </div>
                         </div>
                     </div>
@@ -81,7 +87,7 @@
                         </label>
                     </div>
                     <button type="submit" class="btn btn-info">Save</button>
-                    <button type="cancel" class="btn btn-light active" onclick="window.location= '{{route('books.index')}}'">Canel</button>
+                    <button type="button" class="btn btn-light active" onclick="window.location= '{{route('books.index')}}'">Canel</button>
                 </form>
             </div>
         </div>
@@ -104,7 +110,6 @@
         })
 
         //hide image thumb
-        $('#blah').hide();
 
         // hide youtube URL input
         $('.youtube').hide();
@@ -135,7 +140,6 @@
 
         $("#image").change(function () {
             readURL(this);
-            $('#blah').show();
         });
     });
 

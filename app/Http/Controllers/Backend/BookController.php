@@ -165,7 +165,7 @@ class BookController extends Controller
                     $data['status'] = 0;
                 }
                 $this->bookRepository->update($id, $data);
-                return redirect()->to('books');
+                return redirect()->to('admin/books');
             }else{
                 return view('Backend.Book.edit', compact(['currentPage', 'book', 'category_list']));
             }
@@ -235,7 +235,7 @@ class BookController extends Controller
                 $response = $client->delete($params);
             }
 
-            return redirect()->to('books');
+            return redirect()->to('admin/books');
         }
     }
 }
