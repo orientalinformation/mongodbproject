@@ -89,12 +89,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body pd-20">
-                                                <?php
-                                                $a = htmlentities($item['description']);
-
-                                                $b = html_entity_decode($a);
-                                                ?>
-                                                {{ $b }}
+                                                {{ $item['description'] }}
                                             </div><!-- modal-body -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary tx-size-xs" data-dismiss="modal">Close</button>
@@ -183,5 +178,12 @@
                 }
             });
         }
+
+        var modalBody = $('.modal-body');
+        modalBody.map(function(){
+            let html = $(this).html();
+                html = $('<textarea />').html(html).text();
+            $(this).html(html);
+        })
     </script>
 @endsection

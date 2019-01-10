@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Elasticsearch\ClientBuilder;
+use App\Model\BookElastic;
 use Validator;
 use App\Image;
 
@@ -85,6 +86,7 @@ class BookController extends Controller
             $id = $result->_id;
 
             if($id != '') {
+                $book = new BookElastic();
                 $dataElastic = [
                     'body' => [
                         'type' => $request->get('type'),
@@ -95,16 +97,16 @@ class BookController extends Controller
                         'catID' => $request->get('catID'),
                         'image' => $request->get('image')
                     ],
-                    'index' => 'compagnons',
-                    'type' => 'books',
+                    'index' => $book->getIndexName(),
+                    'type'  => $book->getTypeName(),
                     'id' => $id,
                 ];
-
+                dd($dataElastic);
                 $client = ClientBuilder::create()->build();
                 $response = $client->index($dataElastic);
             }
 
-            return redirect()->to('books');
+            return redirect()->to('admin/books');
         }
     }
 
@@ -155,9 +157,17 @@ class BookController extends Controller
                 if($request->hasFile('image')) {
                     $file = $request->image;
                     $datePath = date("Y") . '/' . date("m") . '/' . date("d");
-                    @mkdir(base_path() . '/public/upload/book/' . $datePath, 0777, true);
-                    $file->move(base_path() . '/public/upload/book/' . $datePath,$file->getClientOriginalName());
-                    $data['image'] = $datePath . '/' .$file->getClientOriginalName();
+                    $bookPath = base_path() . '/public/upload/book/';
+                    $filePath = $bookPath . $datePath;
+                    $fileName = date('U') . '-' . $file->getClientOriginalName();
+                    //make directory
+                    @mkdir($filePath, 0777, true);
+                    //move from temp path to upload store
+                    $file->move($filePath, $fileName);
+                    $data['image'] = $datePath . '/' .$fileName;
+                    //delete old file image
+                    $oldImage = $bookPath . $book['image'];
+                    @unlink($oldImage);
                 }
                 if($request->has('status')) {
                     $data['status'] = 1;
@@ -208,9 +218,10 @@ class BookController extends Controller
             $id = $request->get('id');
             $this->bookRepository->delete($id);
 
+            $book = new BookElastic();
             $params = [
-                'index' => 'compagnons',
-                'type' => 'books',
+                'index' => $book->getIndexName(),
+                'type'  => $book->getTypeName(),
                 'body' => [
                     'query' => [
                         'match' => [
@@ -219,20 +230,18 @@ class BookController extends Controller
                     ]
                 ]
             ];
-
             $client = ClientBuilder::create()->build();
             $response = $client->search($params);
             $items = $response['hits']['hits'];
 
             if(sizeof($items) > 0) {
                 $params = [
-                    'index' => 'compagnons',
-                    'type' => 'books',
+                    'index' => $book->getIndexName(),
+                    'type'  => $book->getTypeName(),
                     'id' => $id
                 ];
 
-                $client = ClientBuilder::create()->build();
-                $response = $client->delete($params);
+                $client->delete($params);
             }
 
             return redirect()->to('admin/books');

@@ -85,4 +85,3 @@ Route::prefix('admin/')->group(function () {
 
     //====Pin end===============
 });
-

@@ -9,7 +9,9 @@ class BookElastic extends Model
 {
     use ElasticquentTrait;
 
+    protected $indexName = 'book_index';
     protected $table = 'books';
+    public $translatedAttributes = [];
     protected $fillable = [
         'type',
         'title',
@@ -20,38 +22,4 @@ class BookElastic extends Model
         'catID',
         'status'
     ];
-    protected $mappingProperties = array(
-        'type' => array(
-            'type' => 'string',
-            'analyzer' => 'standard',
-        ),
-        'title' => array(
-            'type' => 'string',
-            'analyzer' => 'standard',
-        ),
-        'shortDescription' => array(
-            'type' => 'string',
-            'analyzer' => 'standard',
-        ),
-        'description' => array(
-            'type' => 'string',
-            'analyzer' => 'standard',
-        ),
-        'image' => array(
-            'type' => 'string',
-            'analyzer' => 'standard',
-        ),
-        'price' => array(
-            'type' => 'int',
-            'analyzer' => 'standard',
-        ),
-        'catID' => array(
-            'type' => 'string',
-            'analyzer' => 'standard',
-        ),
-        'status' => array(
-            'type' => 'int',
-            'analyzer' => 'standard',
-        ),
-    );
 }
