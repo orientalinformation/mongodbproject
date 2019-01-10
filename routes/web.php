@@ -70,5 +70,3 @@ Route::resource('pins', 'Backend\PinController');
 //====Pin end===============
 
 
-Route::resource('search', 'Backend\SearchController');
-
