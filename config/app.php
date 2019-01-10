@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -230,6 +230,7 @@ return [
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
         'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
         'EnvatoBook' => App\Helpers\Envato\Book::class,
+        'EnvatoUlities' => App\Helpers\Envato\Ulities::class,
 
     ],
 
