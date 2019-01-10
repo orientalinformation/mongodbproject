@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
-class Technology extends Command
+class CrawlWeb extends Command
 {
     /**
      * @var PostRepositoryInterface|BaseRepositoryInterface
@@ -40,7 +40,7 @@ class Technology extends Command
      *
      * @var string
      */
-    protected $signature = 'get:technology';
+    protected $signature = 'get:crawlWeb';
 
     /**
      * The console command description.
@@ -82,6 +82,9 @@ class Technology extends Command
 
     }
 
+    /**
+     * get data technologies of scoop.it page
+     */
     private function getTechnologies()
     {
         $dataTopics = $this->topic->all();
@@ -121,6 +124,11 @@ class Technology extends Command
 
     }
 
+    /**
+     * get page of topic
+     * @param $url
+     * @return int
+     */
     private function getPageTopic($url)
     {
         $cURL = curl_init($url);
@@ -155,6 +163,12 @@ class Technology extends Command
 
     }
 
+    /**
+     * Get topic content
+     * @param $url
+     * @param $topicId
+     * @return array
+     */
     private function getTopicContent($url, $topicId)
     {
 
@@ -282,6 +296,10 @@ class Technology extends Command
 
     }
 
+    /**
+     * Insert data into mongoDB and ElasticSearch
+     * @param $dataPosts
+     */
     private function insertMongoToElasticSearch($dataPosts)
     {
         foreach ($dataPosts as $dataPost) {
@@ -320,6 +338,9 @@ class Technology extends Command
         }
     }
 
+    /**
+     * Delete data from mongoDB and ElasticSearch
+     */
     private function deleteDataMongoAndElasticSearch()
     {
         //Delete all document
