@@ -54,3 +54,8 @@
 .bookThumb{
     max-width: 140px;
 }
+
+#errorMsg{
+    color: red;
+    margin: 10px 0;
+}

@@ -8,6 +8,8 @@ use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Elasticsearch\ClientBuilder;
 use App\Model\BookElastic;
+use App\Helpers\Envato\Ulities;
+use Illuminate\Support\Facades\Config;
 use Validator;
 use App\Image;
 
@@ -57,7 +59,8 @@ class BookController extends Controller
     {
         $currentPage = 'bookIndex';
         $category_list = $this->cateogryRepository->all()->toArray();
-        return view('Backend.Book.create', compact(['currentPage', 'category_list']));
+        $error = "";
+        return view('Backend.Book.create', compact(['currentPage', 'category_list', 'error']));
     }
 
     /**
@@ -72,41 +75,57 @@ class BookController extends Controller
             $data['type'] = $request->get('type');
             $data['price'] = $request->get('price');
             $data['title'] = $request->get('title');
+            $data['alias'] = $request->get('alias');
             $data['author'] = $request->get('author');
             $data['shortDescription'] = $request->get('shortDescription');
             $data['description'] = $request->get('description');
             $data['catID'] = $request->get('catID');
-            $data['image'] = $request->get('image');
-            if($request->has('status')) {
-                $data['status'] = 1;
-            }else{
-                $data['status'] = 0;
-            }
-            $result = $this->bookRepository->create($data);
-            $id = $result->_id;
-
-            if($id != '') {
-                $book = new BookElastic();
-                $dataElastic = [
-                    'body' => [
-                        'type' => $request->get('type'),
-                        'price' => $request->get('price'),
-                        'title' => $request->get('title'),
-                        'shortDescription' => $request->get('shortDescription'),
-                        'description' => $request->get('description'),
-                        'catID' => $request->get('catID'),
-                        'image' => $request->get('image')
-                    ],
-                    'index' => $book->getIndexName(),
-                    'type'  => $book->getTypeName(),
-                    'id' => $id,
-                ];
-                dd($dataElastic);
-                $client = ClientBuilder::create()->build();
-                $response = $client->index($dataElastic);
+            $error = "";
+            if($request->get('title') == ""){
+                $error = "Title is not valid";
             }
 
-            return redirect()->to('admin/books');
+            if($error == "") {
+                if ($request->hasFile('image')) {
+                    $file = $request->image;
+                    $bookPath = Config::get('constants.bookPath');
+                    $path = Ulities::uploadImage($file, $bookPath);
+                    $data['image'] = $path;
+                }
+                if ($request->has('status')) {
+                    $data['status'] = 1;
+                } else {
+                    $data['status'] = 0;
+                }
+                $result = $this->bookRepository->create($data);
+                $id = $result->_id;
+
+                if ($id != '') {
+                    $book = new BookElastic();
+                    $dataElastic = [
+                        'body' => [
+                            'type' => $request->get('type'),
+                            'price' => $request->get('price'),
+                            'title' => $request->get('title'),
+                            'alias' => $request->get('alias'),
+                            'shortDescription' => $request->get('shortDescription'),
+                            'description' => $request->get('description'),
+                            'catID' => $request->get('catID'),
+                            'image' => $request->get('image')
+                        ],
+                        'index' => $book->getIndexName(),
+                        'type' => $book->getTypeName(),
+                        'id' => $id,
+                    ];
+                    $client = ClientBuilder::create()->build();
+                    $response = $client->index($dataElastic);
+                }
+                return redirect()->to('admin/books');
+            }
+
+            $currentPage = 'bookIndex';
+            $category_list = $this->cateogryRepository->all()->toArray();
+            return view('Backend.Book.create', compact(['currentPage', 'category_list', 'error']));
         }
     }
 
@@ -150,21 +169,17 @@ class BookController extends Controller
                 $data['type'] = $request->get('type');
                 $data['price'] = $request->get('price');
                 $data['title'] = $request->get('title');
+                $data['alias'] = $request->get('alias');
                 $data['author'] = $request->get('author');
                 $data['shortDescription'] = $request->get('shortDescription');
                 $data['description'] = $request->get('description');
                 $data['catID'] = $request->get('catID');
+                $image = "";
                 if($request->hasFile('image')) {
                     $file = $request->image;
-                    $datePath = date("Y") . '/' . date("m") . '/' . date("d");
-                    $bookPath = base_path() . '/public/upload/book/';
-                    $filePath = $bookPath . $datePath;
-                    $fileName = date('U') . '-' . $file->getClientOriginalName();
-                    //make directory
-                    @mkdir($filePath, 0777, true);
-                    //move from temp path to upload store
-                    $file->move($filePath, $fileName);
-                    $data['image'] = $datePath . '/' .$fileName;
+                    $bookPath = Config::get('constants.bookPath');
+                    $path = Ulities::uploadImage($file, $bookPath);
+                    $data['image'] = $path;
                     //delete old file image
                     $oldImage = $bookPath . $book['image'];
                     @unlink($oldImage);
@@ -174,7 +189,30 @@ class BookController extends Controller
                 }else{
                     $data['status'] = 0;
                 }
-                $this->bookRepository->update($id, $data);
+                $result = $this->bookRepository->update($id, $data);
+
+//                $id = $result->_id;
+
+                if($id != '') {
+                    $book = new BookElastic();
+                    $dataElastic = [
+                        'body' => [
+                            'type' => $request->get('type'),
+                            'price' => $request->get('price'),
+                            'title' => $request->get('title'),
+                            'alias' => $request->get('alias'),
+                            'shortDescription' => $request->get('shortDescription'),
+                            'description' => $request->get('description'),
+                            'catID' => $request->get('catID'),
+                            'image' => $image
+                        ],
+                        'index' => $book->getIndexName(),
+                        'type'  => $book->getTypeName(),
+                        'id' => $id,
+                    ];
+                    $client = ClientBuilder::create()->build();
+                    $response = $client->index($dataElastic);
+                }
                 return redirect()->to('admin/books');
             }else{
                 return view('Backend.Book.edit', compact(['currentPage', 'book', 'category_list']));
@@ -240,7 +278,6 @@ class BookController extends Controller
                     'type'  => $book->getTypeName(),
                     'id' => $id
                 ];
-
                 $client->delete($params);
             }
 

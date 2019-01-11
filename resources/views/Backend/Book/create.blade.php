@@ -17,6 +17,7 @@
             <div class="form-layout form-layout-1">
                 <form method="post" action="{{route('books.store')}}" id="book-form" data-parsley-validate>
                     {{ csrf_field() }}
+                    <div id="errorMsg">{{$error}}</div>
                     <div class="form-group">
                         <label>Type</label>
                         <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
@@ -37,7 +38,11 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Title: <span class="tx-danger">*</span></label>
-                        <input class="form-control" type="text" name="title" value="" placeholder="Enter title" required>
+                        <input class="form-control" type="text" name="title" value="" placeholder="Enter title" onblur="aliasCovert(this)" required>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Alias:</label>
+                        <input class="form-control" type="text" name="alias" value="" placeholder="Enter alias" id="alias">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Author:</label>
@@ -132,5 +137,10 @@
         });
     });
 
+    function aliasCovert(tag) {
+        let aliasTxt = $(tag).val();
+        aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
+        $('#alias').val(aliasTxt.replace(/\s/g, "-"));
+    }
 </script>
 @endsection

@@ -33,4 +33,6 @@ return array(
 
     'book_index'    => 'books',
 
+    'category_index'    => 'categories',
+
 );

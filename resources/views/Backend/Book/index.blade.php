@@ -43,7 +43,7 @@
                         <td>{{ $item['author'] }}</td>
                         <td>
                             <?php
-                                $imagePath = URL::to('/') . '/upload/book/' . $item['image'];
+                                $imagePath = URL::to('/') . '/storage/upload/book/' . $item['image'];
                                 if (@getimagesize($imagePath)) {
                                     echo '<img src="' . $imagePath . '" class="bookThumb">';
                                 }else{

@@ -10,11 +10,12 @@ class BookElastic extends Model
     use ElasticquentTrait;
 
     protected $indexName = 'book_index';
-    protected $table = 'books';
+    protected $table = 'book';
     public $translatedAttributes = [];
     protected $fillable = [
         'type',
         'title',
+        'alias',
         'shortDescription',
         'description',
         'image',

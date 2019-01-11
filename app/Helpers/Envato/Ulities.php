@@ -40,4 +40,18 @@ class Ulities
 
         return $paginate;
     }
+
+    public static function uploadImage($image, $bookPath)
+    {
+        $datePath = date("Y") . '/' . date("m") . '/' . date("d");
+        $bookPath = base_path() . $bookPath;
+        $filePath = $bookPath . $datePath;
+        $fileName = date('U') . '-' . $image->getClientOriginalName();
+        //make directory
+        @mkdir($filePath, 0777, true);
+        //move from temp path to upload store
+        $image->move($filePath, $fileName);
+
+        return $datePath . '/' . $fileName;
+    }
 }

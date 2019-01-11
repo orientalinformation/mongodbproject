@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use Elasticsearch\ClientBuilder;
+use App\Model\CategoryElastic;
 
 class CategoryController extends Controller
 {
@@ -61,8 +63,26 @@ class CategoryController extends Controller
             $data['parentID'] = $request->get('parentID');
             $data['name'] = $request->get('name');
             $data['description'] = $request->get('description');
-            $this->cateogryRepository->create($data);
-            return redirect()->to('categories');
+            $result = $this->cateogryRepository->create($data);
+            $id = $result->_id;
+
+            if($id != '') {
+                $category = new CategoryElastic();
+                $dataElastic = [
+                    'body' => [
+                        'parentID' => $request->get('parentID'),
+                        'name' => $request->get('name'),
+                        'description' => $request->get('description')
+                    ],
+                    'index' => $category->getIndexName(),
+                    'type'  => $category->getTypeName(),
+                    'id' => $id,
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+            }
+
+            return redirect()->to('admin/categories');
         }
     }
 

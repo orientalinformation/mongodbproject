@@ -37,7 +37,11 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Title: <span class="tx-danger">*</span></label>
-                        <input class="form-control" type="text" name="title" value="{{$book['title']}}" placeholder="Enter title" required>
+                        <input class="form-control" type="text" name="title" value="{{$book['title']}}" placeholder="Enter title" onblur="aliasCovert(this)" required>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Alias:</label>
+                        <input class="form-control" type="text" name="alias" value="{{$book['alias']}}" placeholder="Enter alias" id="alias">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Author:</label>
@@ -143,5 +147,10 @@
         });
     });
 
+    function aliasCovert(tag) {
+        let aliasTxt = $(tag).val();
+        aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
+        $('#alias').val(aliasTxt.replace(/\s/g, "-"));
+    }
 </script>
 @endsection

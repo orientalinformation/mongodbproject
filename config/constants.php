@@ -9,5 +9,6 @@
 return [
 
     'rowPage'   => 24,
+    'bookPath'  => '/storage/app/public/upload/book/'
 
 ];
