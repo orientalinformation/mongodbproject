@@ -9,10 +9,12 @@
 @section('content')
 
     <div class="row row-sm">
-        <nav class="breadcrumb pd-0 mg-0 tx-12">
-            <a class="breadcrumb-item" href="{{route('categories.index')}}">Category</a>
-            <span class="breadcrumb-item active">Category create</span>
-        </nav>
+        <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
+            <nav class="breadcrumb pd-0 mg-0 tx-12">
+                <a class="breadcrumb-item" href="{{route('categories.index')}}">Category</a>
+                <span class="breadcrumb-item active">Category create</span>
+            </nav>
+        </div>
         <div class="main-form br-section-wrapper">
             <div class="form-layout form-layout-1">
                 <form method="post" action="{{route('categories.store')}}" id="book-form" data-parsley-validate>

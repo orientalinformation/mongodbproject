@@ -80,23 +80,31 @@ class BookController extends Controller
             $data['shortDescription'] = $request->get('shortDescription');
             $data['description'] = $request->get('description');
             $data['catID'] = $request->get('catID');
+            if ($request->hasFile('image')) {
+                $file = $request->image;
+                $bookPath = Config::get('constants.bookPath');
+                $path = Ulities::uploadFile($file, $bookPath);
+                $data['image'] = $path;
+            }
+            if ($request->has('status')) {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            $data['status'] = $status;
+
+            if ($request->has('share')) {
+                $share = 1;
+            } else {
+                $share = 0;
+            }
+            $data['share'] = $share;
             $error = "";
             if($request->get('title') == ""){
                 $error = "Title is not valid";
             }
 
             if($error == "") {
-                if ($request->hasFile('image')) {
-                    $file = $request->image;
-                    $bookPath = Config::get('constants.bookPath');
-                    $path = Ulities::uploadImage($file, $bookPath);
-                    $data['image'] = $path;
-                }
-                if ($request->has('status')) {
-                    $data['status'] = 1;
-                } else {
-                    $data['status'] = 0;
-                }
                 $result = $this->bookRepository->create($data);
                 $id = $result->_id;
 
@@ -111,7 +119,9 @@ class BookController extends Controller
                             'shortDescription' => $request->get('shortDescription'),
                             'description' => $request->get('description'),
                             'catID' => $request->get('catID'),
-                            'image' => $request->get('image')
+                            'image' => $request->get('image'),
+                            'status' => $status,
+                            'image' => $share
                         ],
                         'index' => $book->getIndexName(),
                         'type' => $book->getTypeName(),
@@ -162,6 +172,7 @@ class BookController extends Controller
     {
         $currentPage = 'bookIndex';
         if($request->has('id')) {
+            $error = "";
             $id = $request->get('id');
             $category_list = $this->cateogryRepository->all()->toArray();
             $book = $this->bookRepository->find($id)->toArray();
@@ -176,20 +187,56 @@ class BookController extends Controller
                 $data['catID'] = $request->get('catID');
                 $image = "";
                 if($request->hasFile('image')) {
-                    $file = $request->image;
+                    $fileImage = $request->image;
                     $bookPath = Config::get('constants.bookPath');
-                    $path = Ulities::uploadImage($file, $bookPath);
-                    $data['image'] = $path;
-                    //delete old file image
-                    $oldImage = $bookPath . $book['image'];
-                    @unlink($oldImage);
+                    $ext = ['jpg','jpeg','gif','png','bmp'];
+                    $path = Ulities::uploadFile($fileImage, $bookPath, $ext);
+                    if($path['status'] == 1){
+                        $data['image'] = $path['data'];
+                        $image = $path['data'];
+                        //delete old file image
+                        $oldImage = $bookPath . $book['image'];
+                        @unlink($oldImage);
+                    }
+                    else{
+                        $error = $path['data'];
+                    }
+                }
+                $file = "";
+                if($request->hasFile('file')) {
+                    $file = $request->file;
+                    $bookFilePath = Config::get('constants.bookFilePath');
+                    $ext = ['doc','pdf','xlsx'];
+                    $path = Ulities::uploadFile($file, $bookFilePath, $ext);
+                    if($path['status'] == 1){
+                        $data['file'] = $path['data'];
+                        $file = $path['data'];
+                        //delete old file
+                        $oldFile = $bookFilePath . $book['file'];
+                        @unlink($oldFile);
+                    }
+                    else{
+                        $error = $path['data'];
+                    }
                 }
                 if($request->has('status')) {
-                    $data['status'] = 1;
+                    $status = 1;
                 }else{
-                    $data['status'] = 0;
+                    $status = 0;
                 }
-                $result = $this->bookRepository->update($id, $data);
+                $data['status'] = $status;
+                if($request->has('share')) {
+                    $share = 1;
+                }else{
+                    $share = 0;
+                }
+                $data['share'] = $share;
+
+                if($error == "") {
+                    $result = $this->bookRepository->update($id, $data);
+                }else{
+                    return view('Backend.Book.edit', compact(['currentPage', 'book', 'category_list', 'error']));
+                }
 
 //                $id = $result->_id;
 
@@ -204,7 +251,10 @@ class BookController extends Controller
                             'shortDescription' => $request->get('shortDescription'),
                             'description' => $request->get('description'),
                             'catID' => $request->get('catID'),
-                            'image' => $image
+                            'image' => $image,
+                            'file' => $file,
+                            'status' => $status,
+                            'share' => $share
                         ],
                         'index' => $book->getIndexName(),
                         'type'  => $book->getTypeName(),
@@ -215,7 +265,7 @@ class BookController extends Controller
                 }
                 return redirect()->to('admin/books');
             }else{
-                return view('Backend.Book.edit', compact(['currentPage', 'book', 'category_list']));
+                return view('Backend.Book.edit', compact(['currentPage', 'book', 'category_list', 'error']));
             }
         }
         dd('a');

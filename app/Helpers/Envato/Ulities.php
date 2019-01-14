@@ -41,17 +41,40 @@ class Ulities
         return $paginate;
     }
 
-    public static function uploadImage($image, $bookPath)
+    public static function uploadFile($file, $typePath, $extension)
     {
         $datePath = date("Y") . '/' . date("m") . '/' . date("d");
-        $bookPath = base_path() . $bookPath;
-        $filePath = $bookPath . $datePath;
-        $fileName = date('U') . '-' . $image->getClientOriginalName();
-        //make directory
-        @mkdir($filePath, 0777, true);
-        //move from temp path to upload store
-        $image->move($filePath, $fileName);
+        $typePath = base_path() . $typePath;
+        $filePath = $typePath . $datePath;
+        $fileName = date('U') . '-' . $file->getClientOriginalName();
+        $fileExtension = $file->getClientOriginalExtension();
+        $data = [];
+        if (in_array($fileExtension, $extension)) {
+            //make directory
+            @mkdir($filePath, 0777, true);
+            //move from temp path to upload store
+            $file->move($filePath, $fileName);
+            $data['status'] = 1;
+            $data['data'] = $datePath . '/' . $fileName;
+        }else{
+            $data['status'] = 0;
+            $data['data'] = "Extension is not valid";
+        }
+        return $data;
+    }
 
-        return $datePath . '/' . $fileName;
+    public static function is_url_exist($url){
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if($code == 200){
+            $status = true;
+        }else{
+            $status = false;
+        }
+        curl_close($ch);
+        return $status;
     }
 }

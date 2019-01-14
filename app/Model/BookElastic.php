@@ -21,6 +21,7 @@ class BookElastic extends Model
         'image',
         'price',
         'catID',
-        'status'
+        'status',
+        'share'
     ];
 }

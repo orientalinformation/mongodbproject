@@ -9,10 +9,12 @@
 @section('content')
 
     <div class="row row-sm">
-        <nav class="breadcrumb pd-0 mg-0 tx-12">
-            <a class="breadcrumb-item" href="{{route('books.index')}}">Book</a>
-            <span class="breadcrumb-item active">Book create</span>
-        </nav>
+        <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
+            <nav class="breadcrumb pd-0 mg-0 tx-12">
+                <a class="breadcrumb-item" href="{{route('books.index')}}">Book</a>
+                <span class="breadcrumb-item active">Book create</span>
+            </nav>
+        </div>
         <div class="main-form br-section-wrapper">
             <div class="form-layout form-layout-1">
                 <form method="post" action="{{route('books.store')}}" id="book-form" data-parsley-validate>
@@ -62,7 +64,7 @@
                     </div><!-- form-group -->
                     <div class="form-group youtube">
                         <label>Youtube URL:</label>
-                        <input class="form-control" type="text" name="youtube" value="" placeholder="Enter youtube URL">
+                        <input class="form-control" type="text" name="youtube" value="" placeholder="Enter youtube URL" required>
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Image:</label>
@@ -75,8 +77,14 @@
                     </div>
                     <div class="form-group">
                         <label class="ckbox">
+                            <input type="checkbox" name="share">
+                            <span>Shared</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="ckbox">
                             <input type="checkbox" name="status">
-                            <span>Publish</span>
+                            <span>Published</span>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-info">Save</button>
@@ -112,8 +120,10 @@
                 let type = $(this).val();
                 if(type == 'VIDEO'){
                     $('.youtube').show();
+                    $('.youtube input').attr("required", "required");
                 }else{
                     $('.youtube').hide();
+                    $('.youtube input').removeAttr("required");
                 }
             });
         });

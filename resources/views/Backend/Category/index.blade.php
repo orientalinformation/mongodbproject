@@ -9,10 +9,12 @@
 @section('content')
 
     <div class="row row-sm">
-        <nav class="breadcrumb pd-0 mg-0 tx-12">
-            <a class="breadcrumb-item" href="{{route('categories.index')}}">Category</a>
-            <span class="breadcrumb-item active">Category list</span>
-        </nav>
+        <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
+            <nav class="breadcrumb pd-0 mg-0 tx-12">
+                <a class="breadcrumb-item" href="{{route('categories.index')}}">Category</a>
+                <span class="breadcrumb-item active">Category list</span>
+            </nav>
+        </div>
 
         <div class="barAdd">
             <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Category</button></a>

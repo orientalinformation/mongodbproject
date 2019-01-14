@@ -9,6 +9,7 @@
 return [
 
     'rowPage'   => 24,
-    'bookPath'  => '/storage/app/public/upload/book/'
+    'bookPath'  => '/public/upload/book/',
+    'bookFilePath'  => '/public/upload/book/file/'
 
 ];

@@ -9,14 +9,17 @@
 @section('content')
 
     <div class="row row-sm">
-        <nav class="breadcrumb pd-0 mg-0 tx-12">
-            <a class="breadcrumb-item" href="{{route('books.index')}}">Book</a>
-            <span class="breadcrumb-item active">Book edit</span>
-        </nav>
+        <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
+            <nav class="breadcrumb pd-0 mg-0 tx-12">
+                <a class="breadcrumb-item" href="{{route('books.index')}}">Book</a>
+                <span class="breadcrumb-item active">Book edit</span>
+            </nav>
+        </div>
         <div class="main-form br-section-wrapper">
             <div class="form-layout form-layout-1">
                 <form method="post" enctype="multipart/form-data" action="{{Request::url() . '?id=' . $book['_id']}}" id="book-form" data-parsley-validate>
                     {{ csrf_field() }}
+                    <div id="errorMsg">{{$error}}</div>
                     <div class="form-group">
                         <label>Type</label>
                         <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
@@ -60,9 +63,23 @@
                         <textarea rows="2" class="form-control" id="summernote" name="description">{{$book['description']}}</textarea>
                     </div><!-- form-group -->
                     <div class="form-group youtube">
-                        <label>Youtube URL:</label>
+                        <label>Youtube URL: <span class="tx-danger">*</span></label>
                         <input class="form-control" type="text" name="youtube" value="" placeholder="Enter youtube URL">
                     </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>File:</label>
+                        <?php
+                            $filePath = URL::to('/') . '/upload/book/file/' . $book['file'];
+                            if (EnvatoUlities::is_url_exist($filePath)) {
+                                echo '<a href="' . $filePath . '"><i class="fa fa-download"></i></a>';
+                            }
+                        ?>
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="file" class="form-control" id="file" name="file" data-file="{{$book['file']}}">
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label>Image:</label>
                         <div class="row">
@@ -81,13 +98,25 @@
                     <div class="form-group">
                         <label class="ckbox">
                             <?php
-                                $check = "";
+                            $checkShare = "";
+                            if($book['share'] == 1){
+                                $checkShare = 'checked';
+                            }
+                            ?>
+                            <input type="checkbox" name="share" {{$checkShare}}>
+                            <span>Shared</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="ckbox">
+                            <?php
+                                $checkBook = "";
                                 if($book['status'] == 1){
-                                    $check = 'checked';
+                                    $checkBook = 'checked';
                                 }
                             ?>
-                            <input type="checkbox" name="status" {{$check}}>
-                            <span>Publish</span>
+                            <input type="checkbox" name="status" {{$checkBook}}>
+                            <span>Published</span>
                         </label>
                     </div>
                     <button type="submit" class="btn btn-info">Save</button>
@@ -123,8 +152,10 @@
                 let type = $(this).val();
                 if(type == 'VIDEO'){
                     $('.youtube').show();
+                    $('.youtube input').attr("required", "required");
                 }else{
                     $('.youtube').hide();
+                    $('.youtube input').removeAttr("required");
                 }
             });
         });
