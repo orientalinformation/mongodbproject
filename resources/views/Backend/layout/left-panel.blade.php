@@ -24,6 +24,13 @@
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
 
+        <a href="{{route('libraries.index')}}" class="br-menu-link @if ($currentPage == 'libraryIndex') active @endif">
+            <div class="br-menu-item">
+                <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
+                <span class="menu-item-label">{{ __('left-panel.library') }}</span>
+            </div><!-- menu-item -->
+        </a><!-- br-menu-link -->
+
     </div><!-- br-sideleft-menu -->
 
     <label class="sidebar-label pd-x-15 mg-t-25 mg-b-20 tx-info op-9">{{ __('left-panel.information') }}</label>

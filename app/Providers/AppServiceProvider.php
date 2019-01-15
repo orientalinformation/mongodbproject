@@ -62,6 +62,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Pin\PinRepositoryInterface::class,
             \App\Repositories\Pin\PinEloquentRepository::class
         );
+
+        $this->app->singleton(
+            \App\Repositories\Library\LibraryRepositoryInterface::class,
+            \App\Repositories\Library\LibraryEloquentRepository::class
+        );
                     
         $this->app->singleton(
             \App\Repositories\User\UserRepositoryInterface::class,

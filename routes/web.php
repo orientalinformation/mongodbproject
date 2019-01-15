@@ -84,4 +84,24 @@ Route::prefix('admin/')->group(function () {
     Route::resource('pins', 'Backend\PinController');
 
     //====Pin end===============
+
+    //====Library start=============
+    Route::prefix('libraries/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\LibraryController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\LibraryController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\LibraryController@update',
+        ]);
+        Route::post('/updateShare', [
+            'uses' => 'Backend\LibraryController@updateShare',
+        ]);
+    });
+
+    Route::resource('libraries', 'Backend\LibraryController');
+
+    //====Library end===============
 });

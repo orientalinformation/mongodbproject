@@ -22,6 +22,7 @@ class PinController extends Controller
     public function __construct(PinRepositoryInterface $pinRepository)
     {
         $this->pinRepository = $pinRepository;
+        $this->middleware('auth');
     }
 
     /**

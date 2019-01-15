@@ -12,6 +12,7 @@ use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
 use Validator;
 use App\Image;
+use Auth;
 
 class BookController extends Controller
 {
@@ -41,13 +42,13 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-
         $currentPage = 'bookIndex';
+        $userID = Auth::id();
         $limitPage = 5;
         $rowPage = 5;
         $result = $this->bookRepository->paginateWithoutSort($rowPage)->toArray();
         $result['limitPage'] = $limitPage;
-        return view('Backend.Book.index', compact(['currentPage', 'result']));
+        return view('Backend.Book.index', compact(['currentPage', 'result', 'userID']));
     }
 
     /**
@@ -80,11 +81,21 @@ class BookController extends Controller
             $data['shortDescription'] = $request->get('shortDescription');
             $data['description'] = $request->get('description');
             $data['catID'] = $request->get('catID');
+            $image = "";
             if ($request->hasFile('image')) {
-                $file = $request->image;
+                $fileImage = $request->image;
                 $bookPath = Config::get('constants.bookPath');
-                $path = Ulities::uploadFile($file, $bookPath);
+                $path = Ulities::uploadFile($fileImage, $bookPath);
                 $data['image'] = $path;
+                $image = $path;
+            }
+            $file = "";
+            if ($request->hasFile('file')) {
+                $file = $request->file;
+                $bookFilePath = Config::get('constants.bookFilePath');
+                $pathFile = Ulities::uploadFile($file, $bookFilePath);
+                $data['file'] = $pathFile;
+                $file = $pathFile;
             }
             if ($request->has('status')) {
                 $status = 1;
@@ -119,9 +130,10 @@ class BookController extends Controller
                             'shortDescription' => $request->get('shortDescription'),
                             'description' => $request->get('description'),
                             'catID' => $request->get('catID'),
-                            'image' => $request->get('image'),
+                            'image' => $image,
+                            'file' => $file,
                             'status' => $status,
-                            'image' => $share
+                            'share' => $share
                         ],
                         'index' => $book->getIndexName(),
                         'type' => $book->getTypeName(),
@@ -279,14 +291,38 @@ class BookController extends Controller
             $book = $this->bookRepository->checkStatus($id, $status)->toArray();
             if(sizeof($book)) {
                 if ($book[0]["status"] == 1) {
+                    $status = 0;
                     $data['status'] = 0;
                     $this->bookRepository->update($id, $data);
                     return 1;
                 } else {
+                    $status = 1;
                     $data['status'] = 1;
                     $this->bookRepository->update($id, $data);
                     return 0;
                 }
+
+                $book = new BookElastic();
+                $dataElastic = [
+                    'body' => [
+                        'type' => $book[0]["type"],
+                        'price' => $book[0]["price"],
+                        'title' => $book[0]["title"],
+                        'alias' => $book[0]["alias"],
+                        'shortDescription' => $book[0]["shortDescription"],
+                        'description' => $book[0]["description"],
+                        'catID' => $book[0]["catID"],
+                        'image' => $book[0]["image"],
+                        'file' => $book[0]["file"],
+                        'status' => $status,
+                        'share' => $book[0]["share"]
+                    ],
+                    'index' => $book->getIndexName(),
+                    'type'  => $book->getTypeName(),
+                    'id' => $book[0]["_id"],
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
             }
         }
     }

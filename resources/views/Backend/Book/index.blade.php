@@ -76,7 +76,7 @@
                                         $btnPin = 'btn-warning';
                                     }
                                 ?>
-                                <button type="submit" class="btn {{$btnPin}}" onclick="pin('{{ $item['_id'] }}',1, this);"><i class="icon ion-pin"></i></button>
+                                <button type="submit" class="btn {{$btnPin}}" onclick="pin('{{ $item['_id'] }}', $userID, this);"><i class="icon ion-pin"></i></button>
                                 <button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#modal-{{$i}}"><i class="icon ion-clipboard"></i></button>
 
                                 <!-- LARGE MODAL -->

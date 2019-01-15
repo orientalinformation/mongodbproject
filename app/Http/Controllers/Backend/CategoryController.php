@@ -22,6 +22,7 @@ class CategoryController extends Controller
     public function __construct(CategoryRepositoryInterface $cateogryRepository)
     {
         $this->cateogryRepository = $cateogryRepository;
+        $this->middleware('auth');
     }
 
     /**
@@ -127,6 +128,21 @@ class CategoryController extends Controller
                 $data['name'] = $request->get('name');
                 $data['description'] = $request->get('description');
                 $this->cateogryRepository->update($id, $data);
+
+                $category = new CategoryElastic();
+                $dataElastic = [
+                    'body' => [
+                        'parentID' => $request->get('parentID'),
+                        'name' => $request->get('name'),
+                        'description' => $request->get('description')
+                    ],
+                    'index' => $category->getIndexName(),
+                    'type'  => $category->getTypeName(),
+                    'id' => $id,
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+
                 return redirect()->to('categories');
             }else{
                 return view('Backend.Category.edit', compact(['currentPage', 'category', 'category_list']));
@@ -152,6 +168,32 @@ class CategoryController extends Controller
         if($request->has('id')) {
             $id = $request->get('id');
             $this->cateogryRepository->delete($id);
+
+            $category = new CategoryElastic();
+            $params = [
+                'index' => $category->getIndexName(),
+                'type'  => $category->getTypeName(),
+                'body' => [
+                    'query' => [
+                        'match' => [
+                            '_id' => $id
+                        ]
+                    ]
+                ]
+            ];
+            $client = ClientBuilder::create()->build();
+            $response = $client->search($params);
+            $items = $response['hits']['hits'];
+
+            if(sizeof($items) > 0) {
+                $params = [
+                    'index' => $category->getIndexName(),
+                    'type'  => $category->getTypeName(),
+                    'id' => $id
+                ];
+                $client->delete($params);
+            }
+
             return redirect()->to('categories');
         }
     }
