@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\Role;
+namespace App\Repositories\Permission;
 
 use App\Model\Permission;
 use App\Repositories\EloquentRepository;
@@ -10,5 +10,4 @@ class PermissionEloquentRepository extends EloquentRepository implements Permiss
     {
         return Permission::class;
     }
-
 }

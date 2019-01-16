@@ -13,11 +13,26 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
         return User::class;
     }
 
+    /**
+     * check Exists By Key
+     *
+     * @param [type] $key
+     * @param [type] $value
+     * @return void
+     */
     public function checkExistsByKey($key, $value)
     {
         return User::where($key, $value)->exists();
     }
 
+    /**
+     * get User By Key
+     *
+     * @param [type] $key
+     * @param [type] $value
+     * @param [type] $company_id
+     * @return void
+     */
     public function getUserByKey($key, $value, $company_id = null)
     {
         if (!empty($company_id)) {
@@ -34,6 +49,12 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
         return $user;
     }
 
+    /**
+     * get Users By Options
+     *
+     * @param array $options
+     * @return void
+     */
     public function getUsersByOptions($options = [])
     {
 
@@ -46,9 +67,16 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
            return User::where($options)->get();
         }
 
-        return response('User Not found', 404);
+        return false;
     }
 
+    /**
+     * reset password of user
+     *
+     * @param [type] $user
+     * @param [type] $password
+     * @return void
+     */
     public function resetPassword($user, $password) {
 
         $user->password = Hash::make($password);

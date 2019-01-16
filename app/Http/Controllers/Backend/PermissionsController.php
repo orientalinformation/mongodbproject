@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Permission\PermissionRepositoryInterface;
+use Validator;
 
 class PermissionsController extends Controller
 {
     /**
-     *
-     * 
+     * @var PermissionRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
-    public function __construct()
+    protected $permRepository;
+
+    /**
+     * BookController constructor.
+     * @param PermissionRepositoryInterface $permRepository
+     */
+    public function __construct(PermissionRepositoryInterface $permRepository)
     {
         $this->middleware('auth');
+        $this->permRepository = $permRepository;
     }
 
     /**
@@ -24,8 +32,12 @@ class PermissionsController extends Controller
     public function index()
     {
         $currentPage = 'permission';
+        $limit = 10;
 
-        return view('Backend.Permission.index', compact(['currentPage']));
+        // get all data
+        $permissions = $this->permRepository->paginate($limit);
+
+        return view('Backend.Permission.index', compact(['currentPage', 'permissions']));
     }
 
     /**
@@ -46,7 +58,30 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'key' => 'required|string',
+            'display_name' => 'required|string',
+        ];
+
+        $messages = [
+            'key.required' => __('The key field is required.'),
+            'display_name.required' => __('The display name field is required.'),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }    
+
+        // create
+        $result = $this->permRepository->create($request->all());
+
+        if ($result) {
+            return redirect()->back()->with("success",__('Successfully Added New.'));
+        }
+
+        return back()->withErrors(__('Create Failed.'))->withInput();
     }
 
     /**
@@ -67,8 +102,20 @@ class PermissionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return response()->json(['type' => 'error' ,'messages' => __('Invalid Permission ID supplied.')], 200); 
+        }
+
+        // get data
+        $result = $this->permRepository->find($id);
+        
+        if ($result) {
+            return response()->json(['type' => 'success' ,'data' => $result], 200);
+        }
+        
+        return response()->json(['type' => 'error' ,'messages' => __('Data not found.')], 200);
     }
 
     /**
@@ -80,7 +127,35 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'key' => 'required|string',
+            'display_name' => 'required|string',
+        ];
+
+        $messages = [
+            'key.required' => __('The key field is required.'),
+            'display_name.required' => __('The display name field is required.'),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }    
+
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid Permisstion ID supplied.'))->withInput();
+        }
+
+        // update
+        $result = $this->permRepository->update($id, $request->all());
+
+        if ($result) {
+            return redirect()->route("permissions.index")->with("success",__('Successfully Updated.'));
+        }
+
+        return back()->withErrors(__('Update Failed.'))->withInput();
     }
 
     /**
@@ -91,6 +166,17 @@ class PermissionsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid Permisstion ID supplied.'))->withInput();
+        }
+
+        //delete
+        $result = $this->permRepository->delete($id);
+
+        if ($result) {
+            return redirect()->route("permissions.index")->with("success",__('Successfully Deleted.'));
+        }
+        return back()->withErrors(__('Sorry it appears there was a problem deleting this.'))->withInput();
     }
 }
