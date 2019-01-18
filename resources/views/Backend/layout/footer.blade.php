@@ -11,7 +11,7 @@
 <script src="{{ asset('/js/plugins/bootstrap-alert.js') }}"></script>
 <!-- Plugins -->
 
-
+<script src="{{ asset('/js/alert-close.js') }}"></script>
 <script src="{{ asset('/assets/js/bracket.js') }}"></script>
 
 

@@ -196,7 +196,7 @@ class RolesController extends Controller
      */
     public function viewChoosePermission($roleId)
     {
-        $currentPage = 'Choose permission';
+        $currentPage = 'role';
 
         // check id
         if (empty($roleId) || (int)$roleId < 0) {

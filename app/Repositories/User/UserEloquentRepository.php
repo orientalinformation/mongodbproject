@@ -5,6 +5,7 @@ use App\Model\User;
 use App\Repositories\EloquentRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Auth;
 
 class UserEloquentRepository extends EloquentRepository implements UserRepositoryInterface
 {
@@ -89,5 +90,24 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
             return $user; 
         }
         return false;
+    }
+
+    /**
+     * list Users By Role of user login
+     *
+     * @param integer $limit
+     * @return void
+     */
+    public function listUsersByRole($limit = 15)
+    {
+        // get role of user login
+        $roleName = Auth::user()->role->name;
+        $roleId = Auth::user()->role->id;
+        $userId = Auth::user()->id;
+        
+        return User::where('id', '!=', 0)
+                    ->with('role')
+                    ->orderBy('updated_at', 'desc')
+                    ->paginate($limit);
     }
 }

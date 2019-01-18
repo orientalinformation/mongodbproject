@@ -152,7 +152,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-200">
                     <ul class="list-unstyled user-profile-nav">
-                        <li><a href=""><i class="icon ion-ios-person"></i> {{ __('head-panel.editProfile') }}</a></li>
+                        <li><a data-toggle="modal" data-target="#update_profile"><i class="icon ion-ios-person"></i> {{ __('head-panel.editProfile') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-gear"></i> {{ __('head-panel.setting') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-download"></i> {{ __('head-panel.download') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-star"></i> {{ __('head-panel.favorite') }}</a></li>
@@ -165,3 +165,45 @@
     </div><!-- br-header-right -->
 </div><!-- br-header -->
 <!-- ########## END: HEAD PANEL ########## -->
+
+<!-- Create modal -->
+<div id="update_profile" class="modal fade">
+        <div class="modal-dialog modal-dialog-vertical-center" role="document">
+            <div class="modal-content bd-0 tx-14">
+                <div class="modal-header pd-y-20 pd-x-25">
+                    <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">{{ __('Create Role') }}</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('Close') }}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pd-25">
+                    <form id="form_create" action="{{route('roles.store')}}" method="POST">
+                        {{ method_field("POST") }}
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label tx-bold">{{ __('Name') }}</label>
+                                    <input type="text" id="name" class="form-control" name="name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label tx-bold">{{ __('Display Name') }}</label>
+                                    <input type="text" id="display_name" class="form-control" name="display_name" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>    
+                </div>
+                <div class="modal-footer">
+                    <button id="btn_sub_create" type="button" class="btn btn-primary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium">
+                        {{ __('Create') }}
+                    </button>
+                    <button type="button" class="btn btn-secondary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium" data-dismiss="modal">
+                        {{ __('Close') }}
+                    </button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div><!-- END Create modal -->

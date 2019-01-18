@@ -46,6 +46,9 @@ Route::prefix('admin/')->group(function () {
     //Permissions manager routes
     Route::resource('permissions', 'Backend\PermissionsController');
 
+    //Users manager routes
+    Route::resource('users', 'Backend\UsersController');
+
     //====Book start=============
     Route::prefix('books/')->group(function () {
         Route::get('/delete', [

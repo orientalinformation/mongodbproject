@@ -6,22 +6,7 @@
 
 @section('content')
     <div class="br-section-wrapper">
-        @foreach ($errors->all() as $error)
-            <div class="alert alert-danger alert-dismissible fade show alert-close" role="alert">
-                {{ $error }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ __('Close') }}">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endforeach
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show alert-close" role="alert">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="{{ __('Close') }}">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>            
-        @endif 
+        @include('Backend.partials.alerts')
         <div class="row">
             <div class="col-md-6 tx-left">
                 <h1 class="tx-gray-800 tx-bold mg-b-10">
@@ -204,7 +189,6 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('/js/alert-close.js') }}"></script>
     <script>
         $(document).on('click', '#btn_sub_create', function(e) {
             $('#form_create').find(".error").remove();
