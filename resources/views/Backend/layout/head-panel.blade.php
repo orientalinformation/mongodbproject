@@ -177,14 +177,15 @@
                 </button>
             </div>
             <div class="modal-body pd-25">
-                <form id="form_create" action="{{route('roles.store')}}" method="POST">
+                <form id="form_update_profile" action="{{route('roles.store')}}" method="POST">
                     {{ method_field("POST") }}
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label tx-bold">{{ __('Fullname') }}</label>
-                                <input type="text" id="fullname" class="form-control" name="fullname" required>
+                                <input type="text" class="form-control" name="fullname" value="{{ Auth::user()->fullname }}">
+                                <input type="hidden" class="form-control" name="id" value="{{ Auth::id() }}">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -192,7 +193,7 @@
                                 <label class="form-control-label tx-bold">{{ __('Birthday') }}</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="icon ion-calendar tx-16 lh-0 op-6"></i></span>
-                                    <input type="text" name="birthday" class="form-control fc-datepicker" placeholder="YYYY/MM/DD">
+                                    <input type="text" name="birthday" class="form-control fc-datepicker" placeholder="YYYY/MM/DD" value="{{ date("Y/m/d", strtotime(Auth::user()->birthday)) }}">
                                 </div>
                             </div>
                         </div>
@@ -200,27 +201,27 @@
                             <div class="form-group">
                                 <label class="form-control-label tx-bold">{{ __('Gender') }}</label>
                                 <select class="form-control" name="gender" >
-                                    <option value="0">{{ __('Male') }}</option>
-                                    <option value="1">{{ __('Female') }}</option>
+                                    <option value="0" @if (Auth::user()->gender == 0) selected @endif>{{ __('Male') }}</option>
+                                    <option value="1" @if (Auth::user()->gender == 1) selected @endif>{{ __('Female') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label tx-bold">{{ __('Phone') }}</label>
-                                <input type="text" id="phone" class="form-control" name="phone" required>
+                                <input type="text" id="phone" class="form-control" name="phone" value="{{ Auth::user()->phone }}">
                             </div>
                         </div>                            
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="form-control-label tx-bold">{{ __('Email') }}</label>
-                                <input type="text" id="email" class="form-control" name="email" required>
+                                <input type="text" id="email" class="form-control" name="email" value="{{ Auth::user()->email }}">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="form-control-label tx-bold">{{ __('Address') }}</label>
-                                <input type="text" id="address" class="form-control" name="address" required>
+                                <input type="text" id="address" class="form-control" name="address" value="{{ Auth::user()->address }}">
                             </div>
                         </div>                                                                                  
                     </div>
@@ -237,3 +238,9 @@
         </div>
     </div><!-- modal-dialog -->
 </div><!-- END Update modal -->
+
+@section('script')
+    <script>
+        
+   </script>        
+@endsection         

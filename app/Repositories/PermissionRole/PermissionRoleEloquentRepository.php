@@ -22,7 +22,7 @@ class PermissionRoleEloquentRepository extends EloquentRepository implements Per
     {
         $permsArr = [];
         $actives = [];
-        $permissions = Permission::orderBy('key', 'DESC')->with('permissionRole')->get();
+        $permissions = Permission::orderBy('key', 'DESC')->with('permissionRoles')->get();
         $permissionRoles = PermissionRole::where('role_id', $roleId)->get();  
         
         // get permission of role
