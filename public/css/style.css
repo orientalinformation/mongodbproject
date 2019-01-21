@@ -1,3 +1,7 @@
+#ui-datepicker-div {
+    z-index: 100001 !important;
+}
+
 .barAdd{
     width: 100%;
 }
@@ -6,7 +10,7 @@
     margin: 10px 0;
 }
 
-.pagination li{
+/*.pagination li{
     padding: 5px 10px;
     background: #dee2e6;
     margin: 0 2px;
@@ -29,7 +33,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-}
+}*/
 
 .main-form{
     margin: 20px 0;

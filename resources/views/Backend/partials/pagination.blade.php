@@ -1,16 +1,24 @@
 <?php
 $flag = false;
+$checkShowPage = false;
 $limitPage = 6;
-$leftLimitPage =3;
-$rightLimitPage = $paginate['pageNum'] - 2;
-if ($paginate['page'] >= $leftLimitPage && $paginate['page'] <= $limitPage) {
-    $leftLimitPage = $paginate['page'] + 1;
+
+if ($paginate['pageNum'] > $limitPage) {
+    $leftLimitPage =3;
+    $rightLimitPage = $paginate['pageNum'] - 2;
+    if ($paginate['page'] >= $leftLimitPage && $paginate['page'] <= $limitPage) {
+        $leftLimitPage = $paginate['page'] + 1;
+    }
+    if (($paginate['pageNum'] - $paginate['page']) <= $limitPage) {
+        $rightLimitPage = $paginate['page'] - 1;
+    } elseif (($paginate['pageNum'] - $paginate['page']) > $limitPage && $paginate['page'] > $limitPage) {
+        $flag = true;
+    }
+    $checkShowPage = true;
+} else {
+    $leftLimitPage = $paginate['pageNum'];
 }
-if (($paginate['pageNum'] - $paginate['page']) <= $limitPage) {
-    $rightLimitPage = $paginate['page'] - 1;
-} elseif (($paginate['pageNum'] - $paginate['page']) > $limitPage && $paginate['page'] > $limitPage) {
-    $flag = true;
-}
+
 ?>
 
 <div class="pagination-bar">
@@ -39,12 +47,14 @@ if (($paginate['pageNum'] - $paginate['page']) <= $limitPage) {
                 <a href="{{ $paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . ($paginate['page'] + 1) }}" class="" > {{ $paginate['page'] + 1 }}</a>
             </li>
         @endif
+        @if($checkShowPage)
             <li>...</li>
-        @for( $i = $rightLimitPage; $i <= $paginate['pageNum']; $i++)
-            <li class="{{ ($paginate['page'] == $i) ? 'disabled' : '' }}">
-                <a href="{{ ($paginate['page']) == $i ? '#' : ($paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . $i) }}" class="" > {{ $i }}</a>
-            </li>
-        @endfor
+            @for( $i = $rightLimitPage; $i <= $paginate['pageNum']; $i++)
+                <li class="{{ ($paginate['page'] == $i) ? 'disabled' : '' }}">
+                    <a href="{{ ($paginate['page']) == $i ? '#' : ($paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . $i) }}" class="" > {{ $i }}</a>
+                </li>
+            @endfor
+        @endif
         @if(!is_null($paginate['next']))
             <li>
                 <a href="{{ $paginate['next'] }}" class="">Next</a>

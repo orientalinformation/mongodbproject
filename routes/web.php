@@ -34,8 +34,20 @@ Route::prefix('admin/')->group(function () {
     Route::get('password/reset/{token}', 'Backend\AuthController@showResetForm');
     Route::post('password/reset', 'Backend\AuthController@resetPassword');
 
-
     Route::resource('dashboard', 'Backend\DashboardController');
+
+    //Roles manager routes
+    Route::prefix('roles/')->group(function () {
+        Route::get('{roleId}/choosePermission', ['uses' => 'Backend\RolesController@viewChoosePermission',])->name('roles.choosePermission');
+        Route::post('{roleId}/assignRole', ['uses' => 'Backend\RolesController@assignRole',])->name('roles.assignRole');
+    });    
+    Route::resource('roles', 'Backend\RolesController');
+
+    //Permissions manager routes
+    Route::resource('permissions', 'Backend\PermissionsController');
+
+    //Users manager routes
+    Route::resource('users', 'Backend\UsersController');
 
     //====Book start=============
     Route::prefix('books/')->group(function () {

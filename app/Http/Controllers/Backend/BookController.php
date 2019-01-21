@@ -44,11 +44,19 @@ class BookController extends Controller
     {
         $currentPage = 'bookIndex';
         $userID = Auth::id();
-        $limitPage = 5;
-        $rowPage = 5;
+        $rowPage = Config::get('constants.rowPage');
+        //Searching value
+        $q = null;
+
+        $page = $request->get('page');
+        if (is_null($page)) {
+            $page = 1;
+        }
         $result = $this->bookRepository->paginateWithoutSort($rowPage)->toArray();
-        $result['limitPage'] = $limitPage;
-        return view('Backend.Book.index', compact(['currentPage', 'result', 'userID']));
+
+        $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
+
+        return view('Backend.Book.index', compact(['currentPage', 'result', 'userID', 'paginate', 'q']));
     }
 
     /**

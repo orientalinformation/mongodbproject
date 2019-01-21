@@ -67,7 +67,22 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Library\LibraryRepositoryInterface::class,
             \App\Repositories\Library\LibraryEloquentRepository::class
         );
-                    
+
+        $this->app->singleton(
+            \App\Repositories\Role\RoleRepositoryInterface::class,
+            \App\Repositories\Role\RoleEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Permission\PermissionRepositoryInterface::class,
+            \App\Repositories\Permission\PermissionEloquentRepository::class
+        );               
+
+        $this->app->singleton(
+            \App\Repositories\PermissionRole\PermissionRoleRepositoryInterface::class,
+            \App\Repositories\PermissionRole\PermissionRoleEloquentRepository::class
+        );
+
         $this->app->singleton(
             \App\Repositories\User\UserRepositoryInterface::class,
             \App\Repositories\User\UserEloquentRepository::class
