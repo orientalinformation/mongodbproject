@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Elasticsearch\ClientBuilder;
 use App\Model\CategoryElastic;
+use App\Helpers\Envato\Ulities;
+use Illuminate\Support\Facades\Config;
 
 class CategoryController extends Controller
 {
@@ -34,10 +36,16 @@ class CategoryController extends Controller
     {
         $currentPage = 'categoryIndex';
         $limitPage = 5;
-        $rowPage = 5;
+        $rowPage = Config::get('constants.rowPage');
+        //Searching value
+        $q = null;
+        $page = $request->get('page');
+        if (is_null($page)) {
+            $page = 1;
+        }
         $result = $this->cateogryRepository->paginateWithoutSort($rowPage)->toArray();
-        $result['limitPage'] = $limitPage;
-        return view('Backend.Category.index', compact(['currentPage', 'result']));
+        $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
+        return view('Backend.Category.index', compact(['currentPage', 'result', 'paginate', 'q']));
     }
 
     /**
