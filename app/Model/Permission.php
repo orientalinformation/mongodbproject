@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $updated_at
  * @property string $deleted_at
  * @property string $key
- * @property PermissionRole $permissionRole
+ * @property PermissionRole[] $permissionRoles
  */
 class Permission extends Model
 {
@@ -29,12 +29,12 @@ class Permission extends Model
      * @var array
      */
     protected $hidden = ['deleted_at'];
-    
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function permissionRole()
+    public function permissionRoles()
     {
-        return $this->hasOne('App\Model\PermissionRole', 'permission_id');
+        return $this->hasMany('App\Model\PermissionRole');
     }
 }
