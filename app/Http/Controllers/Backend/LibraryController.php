@@ -6,6 +6,9 @@ use App\Model\LibraryElastic;
 use App\Repositories\Library\LibraryRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Elasticsearch\ClientBuilder;
+use App\Helpers\Envato\Ulities;
+use Illuminate\Support\Facades\Config;
 use Auth;
 
 class LibraryController extends Controller
@@ -22,7 +25,7 @@ class LibraryController extends Controller
     public function __construct(LibraryRepositoryInterface $libraryRepository)
     {
         $this->libraryRepository = $libraryRepository;
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -30,15 +33,21 @@ class LibraryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $currentPage = 'libraryIndex';
         $limitPage = 5;
-        $rowPage = 5;
+        $rowPage = Config::get('constants.rowPage');
+        //Searching value
+        $q = null;
+        $page = $request->get('page');
+        if (is_null($page)) {
+            $page = 1;
+        }
         $userID = Auth::id();
         $result = $this->libraryRepository->getLibraryByUserID(Auth::id(), $limitPage)->toArray();
-        $result['limitPage'] = $limitPage;
-        return view('Backend.Library.index', compact(['currentPage', 'result', 'userID']));
+        $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
+        return view('Backend.Library.index', compact(['currentPage', 'result', 'userID', 'paginate', 'q']));
     }
 
     /**
@@ -48,7 +57,8 @@ class LibraryController extends Controller
      */
     public function create()
     {
-        //
+        $currentPage = 'libraryIndex';
+        return view('Backend.Library.create', compact(['currentPage']));
     }
 
     /**
@@ -59,7 +69,39 @@ class LibraryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userID = Auth::id();
+        if ($request->method() == 'POST') {
+            $data['name'] = $request->get('name');
+            $data['alias'] = $request->get('alias');
+            if ($request->has('share')) {
+                $share = 1;
+            } else {
+                $share = 0;
+            }
+            $data['share'] = $share;
+            $data['userID'] = $userID;
+            $result = $this->libraryRepository->create($data);
+            $id = $result->_id;
+
+            if($id != '') {
+                $library = new LibraryElastic();
+                $dataElastic = [
+                    'body' => [
+                        'name' => $request->get('name'),
+                        'alias' => $request->get('alias'),
+                        'share' => $share,
+                        'userID' => $userID
+                    ],
+                    'index' => $library->getIndexName(),
+                    'type'  => $library->getTypeName(),
+                    'id' => $id,
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+            }
+
+            return redirect()->to('admin/libraries');
+        }
     }
 
     /**
@@ -91,9 +133,45 @@ class LibraryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $currentPage = 'categoryIndex';
+        $userID = Auth::id();
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $library = $this->libraryRepository->find($id)->toArray();
+            if ($request->method() == 'POST') {
+                $data['name'] = $request->get('name');
+                $data['alias'] = $request->get('alias');
+                if($request->has('share')) {
+                    $share = 1;
+                }else{
+                    $share = 0;
+                }
+                $data['share'] = $share;
+                $data['userID'] = $userID;
+                $this->libraryRepository->update($id, $data);
+
+                $library = new LibraryElastic();
+                $dataElastic = [
+                    'body' => [
+                        'name' => $request->get('name'),
+                        'alias' => $request->get('alias'),
+                        'share' => $share
+                    ],
+                    'index' => $library->getIndexName(),
+                    'type'  => $library->getTypeName(),
+                    'id' => $id,
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+
+                return redirect()->to('admin/libraries');
+            }else{
+                return view('Backend.Library.edit', compact(['currentPage', 'library']));
+            }
+        }
+        dd('a');
     }
 
     public function updateShare(Request $request)
@@ -140,6 +218,41 @@ class LibraryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->libraryRepository->delete($id);
+        return redirect()->to('admin/libraries');
+    }
+
+    public function delete(Request $request){
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $this->libraryRepository->delete($id);
+
+            $library = new LibraryElastic();
+            $params = [
+                'index' => $library->getIndexName(),
+                'type'  => $library->getTypeName(),
+                'body' => [
+                    'query' => [
+                        'match' => [
+                            '_id' => $id
+                        ]
+                    ]
+                ]
+            ];
+            $client = ClientBuilder::create()->build();
+            $response = $client->search($params);
+            $items = $response['hits']['hits'];
+
+            if(sizeof($items) > 0) {
+                $params = [
+                    'index' => $library->getIndexName(),
+                    'type'  => $library->getTypeName(),
+                    'id' => $id
+                ];
+                $client->delete($params);
+            }
+
+            return redirect()->to('admin/libraries');
+        }
     }
 }

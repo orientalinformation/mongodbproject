@@ -40,27 +40,33 @@
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
         <!-- =======End user manager======= -->
-   
-        <a href="{{route('books.index')}}" class="br-menu-link @if ($currentPage == 'bookIndex') active @endif">
+
+        <!-- =======Book manager======= -->
+        <a href="#" class="br-menu-link @if ($currentPage == 'role' || $currentPage == 'permission') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-book-outline tx-22"></i>
-                <span class="menu-item-label">{{ __('left-panel.book') }}</span>
+                <span class="menu-item-label">{{ __('left-panel.bookManager') }}</span>
+                <i class="menu-item-arrow fa fa-angle-down"></i>
             </div><!-- menu-item -->
         </a><!-- br-menu-link -->
-
-        <a href="{{route('categories.index')}}" class="br-menu-link @if ($currentPage == 'categoryIndex') active @endif">
-            <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-list-outline tx-22"></i>
-                <span class="menu-item-label">{{ __('left-panel.category') }}</span>
-            </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
-
-        <a href="{{route('libraries.index')}}" class="br-menu-link @if ($currentPage == 'libraryIndex') active @endif">
-            <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
-                <span class="menu-item-label">{{ __('left-panel.library') }}</span>
-            </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
+        <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item">
+                <a href="{{ route('books.index') }}" class="nav-link @if ($currentPage == 'bookIndex') active @endif">
+                    {{ __('left-panel.book') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('categories.index') }}" class="nav-link @if ($currentPage == 'categoryIndex') active @endif">
+                    {{ __('left-panel.category') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('libraries.index') }}" class="nav-link @if ($currentPage == 'libraryIndex') active @endif">
+                    {{ __('left-panel.library') }}
+                </a>
+            </li>
+        </ul>
+        <!-- =======End book manager======= -->
 
     </div><!-- br-sideleft-menu -->
 

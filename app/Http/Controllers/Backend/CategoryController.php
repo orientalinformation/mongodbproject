@@ -24,7 +24,7 @@ class CategoryController extends Controller
     public function __construct(CategoryRepositoryInterface $cateogryRepository)
     {
         $this->cateogryRepository = $cateogryRepository;
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -43,7 +43,7 @@ class CategoryController extends Controller
         if (is_null($page)) {
             $page = 1;
         }
-        $result = $this->cateogryRepository->paginateWithoutSort($rowPage)->toArray();
+        $result = $this->cateogryRepository->paginate($rowPage)->toArray();
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
         return view('Backend.Category.index', compact(['currentPage', 'result', 'paginate', 'q']));
     }
@@ -151,7 +151,7 @@ class CategoryController extends Controller
                 $client = ClientBuilder::create()->build();
                 $response = $client->index($dataElastic);
 
-                return redirect()->to('categories');
+                return redirect()->to('admin/categories');
             }else{
                 return view('Backend.Category.edit', compact(['currentPage', 'category', 'category_list']));
             }
@@ -168,7 +168,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $this->cateogryRepository->delete($id);
-        return redirect()->to('categories');
+        return redirect()->to('admin/categories');
         return redirect()->route('catagories')->with(['succsess' => 'Delete successfully.']);
     }
 
@@ -202,7 +202,7 @@ class CategoryController extends Controller
                 $client->delete($params);
             }
 
-            return redirect()->to('categories');
+            return redirect()->to('admin/categories');
         }
     }
 }

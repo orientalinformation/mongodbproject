@@ -31,7 +31,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
 
@@ -52,7 +52,7 @@ class BookController extends Controller
         if (is_null($page)) {
             $page = 1;
         }
-        $result = $this->bookRepository->paginateWithoutSort($rowPage)->toArray();
+        $result = $this->bookRepository->paginate($rowPage)->toArray();
 
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
 

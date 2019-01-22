@@ -17,7 +17,7 @@
         </div>
 
         <div class="barAdd">
-            <a href="{{route('libraries.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Category</button></a>
+            <a href="{{route('libraries.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Library</button></a>
         </div>
 
         <table class="table table-bordered table-colored table-dark">
@@ -46,7 +46,7 @@
                     </td>
                     <td>
                         <div>
-                            <a href="categories/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
+                            <a href="libraries/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
                             <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
                         </div>
                         {{--<form method="POST" action="{{route('categories.destroy',$item['_id'])}}" class="delete-form" data-parsley-validate>--}}
@@ -59,7 +59,7 @@
             @endforeach
             </tbody>
         </table>
-        @include('Backend.partials.paginate', ['paginator' => $result])
+        @include('Backend.partials.pagination', ['paginator' => $result])
     </div><!-- row -->
 
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
