@@ -9,14 +9,14 @@
 namespace App\Repositories\Post;
 
 
-use App\Model\Post;
+use App\Model\Web;
 use App\Repositories\EloquentRepository;
 
 class PostEloquentRepository extends EloquentRepository implements PostRepositoryInterface
 {
     public function getModel()
     {
-        return Post::class;
+        return Web::class;
     }
 
 }

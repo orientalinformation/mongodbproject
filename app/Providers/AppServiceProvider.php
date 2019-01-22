@@ -43,14 +43,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Post\PostEloquentRepository::class
         );
 
-        $this->app->singleton(
-            \App\Repositories\Topic\TopicRepositoryInterface::class,
-            \App\Repositories\Topic\TopicEloquentRepository::class
-        );
 
         $this->app->singleton(
-            \App\Repositories\Source\SourceRepositoryInterface::class,
-            \App\Repositories\Source\SourceEloquentRepository::class
+            \App\Repositories\Rss\RssRepositoryInterface::class,
+            \App\Repositories\Rss\RssEloquentRepository::class
         );
 
         $this->app->singleton(
