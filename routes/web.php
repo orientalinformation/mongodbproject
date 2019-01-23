@@ -63,6 +63,9 @@ Route::prefix('admin/')->group(function () {
         Route::post('/updateStatus', [
             'uses' => 'Backend\BookController@updateStatus',
         ]);
+        Route::post('/getChildCat', [
+            'uses' => 'Backend\BookController@getChildCat',
+        ]);
     });
 
     Route::resource('books', 'Backend\BookController');
