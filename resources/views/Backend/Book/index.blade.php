@@ -21,7 +21,7 @@
         </div>
 
         <table class="table table-bordered table-colored table-dark bookTable">
-            <thead>
+            <thead class="thead-colored thead-primary">
                 <tr>
                     <th>ID</th>
                     <th>Title</th>

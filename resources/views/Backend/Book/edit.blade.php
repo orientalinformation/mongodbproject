@@ -31,11 +31,21 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control select2 select2-hidden-accessible type" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true">
+                        <select class="form-control select2 select2-hidden-accessible type" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
                                 <option value="{{ $item['_id'] }}" {{ ($item['_id']==$book['catID'])?'selected':'' }}>{{ $item['name'] }}</option>
                             @endforeach
+                        </select>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <select class="form-control select2 select2-hidden-accessible type catIDSub1" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat_2(this)" disabled>
+                            <option label="Choose sub category"></option>
+                        </select>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <select class="form-control select2 select2-hidden-accessible type catIDSub2" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" disabled>
+                            <option label="Choose sub category"></option>
                         </select>
                     </div><!-- form-group -->
                     <div class="form-group">
@@ -146,6 +156,8 @@
 
         // hide youtube URL input
         $('.youtube').hide();
+        $('.catIDSub1').hide();
+        $('.catIDSub2').hide();
         // event change of type selector
         $(document).ready(function(){
             $('.type').change(function(){
@@ -182,6 +194,62 @@
         let aliasTxt = $(tag).val();
         aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
         $('#alias').val(aliasTxt.replace(/\s/g, "-"));
+    }
+
+    function getChildCat(tag) {
+        let catID = $(tag).val();
+        $.ajax({
+            url:"<?= URL::to('/'); ?>/admin/books/getChildCat",
+            type: 'POST',
+            cache: false,
+            data: {catID: catID},
+            success: function (result) {
+                let data = JSON.parse(result);
+                if(data['status']==1){
+                    $('.catIDSub1').removeAttr('disabled');
+                    let html = '<option label="Choose sub category"></option>';
+                    data['data'].map(function (item) {
+                        html += '<option value="' + item._id + '">' + item.name + '</option>';
+                    })
+                    if(data['data'].length > 0){
+                        $('.catIDSub1').show();
+                        $('.catIDSub1').html(html);
+                    }
+                }else{
+                    $('.catIDSub1').hide();
+                    $('.catIDSub2').hide();
+                }
+            }
+
+        });
+    }
+
+    function getChildCat_2(tag) {
+        let catID = $(tag).val();
+        $.ajax({
+            url:"<?= URL::to('/'); ?>/admin/books/getChildCat",
+            type: 'POST',
+            cache: false,
+            data: {catID: catID},
+            success: function (result) {
+                let data = JSON.parse(result);
+                if(data['status']==1){
+                    $('.catIDSub2').removeAttr('disabled');
+                    let html = '<option label="Choose sub category"></option>';
+                    data['data'].map(function (item) {
+                        html += '<option value="' + item._id + '">' + item.name + '</option>';
+                    })
+                    if(data['data'].length > 0){
+                        $('.catIDSub2').show();
+                        $('.catIDSub2').html(html);
+                    }
+                }else{
+                    $('.catIDSub1').hide();
+                    $('.catIDSub2').hide();
+                }
+            }
+
+        });
     }
 </script>
 @endsection

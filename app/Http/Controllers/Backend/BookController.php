@@ -334,6 +334,20 @@ class BookController extends Controller
             }
         }
     }
+
+    public function getChildCat(Request $request){
+        if($request->has('catID')) {
+            $catID = $request->get('catID');
+            $result = $this->cateogryRepository->getChildCat($catID)->toArray();
+            $data = [];
+            $data['status'] = 1;
+            $data['data'] = $result;
+        }else{
+            $data['status'] = 0;
+            $data['data'] = '';
+        }
+        return json_encode($data);
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -26,4 +26,8 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
             ->get();
     }
 
+    public function getChildCat($catID)
+    {
+        return Category::where([['parentID', '=', $catID]])->get();
+    }
 }
