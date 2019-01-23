@@ -16,7 +16,7 @@ function submit_from_data() {
                 dataType: 'html',
                 data: formData,
                 processData: false,
-                contentType: false,
+                contentType: false
 
             }).done(function (response) {
                 console.log(response);
@@ -26,9 +26,17 @@ function submit_from_data() {
                 // });
                 window.location.reload();
             }).fail(function (messages) {
+
+                $('.error').each(function (index, value) {
+                    console.log(index);
+                    console.log(value);
+                })
+
+
                 var errors = $.parseJSON(messages.responseText);
 
                 $.each(errors.errors, function(index, value) {
+                    console.log(value);
                    $('.' + index).text(value);
                 });
             })

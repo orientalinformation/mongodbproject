@@ -13,6 +13,7 @@ return [
     'library'           => 'Library',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
+    'rss'               => 'Rss Management'
 
 
 ];

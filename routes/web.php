@@ -116,4 +116,8 @@ Route::prefix('admin/')->group(function () {
     Route::resource('libraries', 'Backend\LibraryController');
 
     //====Library end===============
+
+    //====Rss start=============
+    Route::resource('rss', 'Backend\RssController');
+    //====Rss end=============
 });

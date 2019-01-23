@@ -77,3 +77,7 @@
 .ion-share.active{
     color: #868e96;
 }
+
+.error {
+    color: red;
+}
