@@ -20,6 +20,12 @@
             <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Category</button></a>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <table class="table table-bordered table-colored table-dark">
             <thead class="thead-colored thead-primary">
             <tr>

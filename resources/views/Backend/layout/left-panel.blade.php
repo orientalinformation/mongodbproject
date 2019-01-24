@@ -68,6 +68,33 @@
         </ul>
         <!-- =======End book manager======= -->
 
+        <a href="#" class="br-menu-link">
+            <div class="br-menu-item">
+                <i class="menu-item-icon icon ion-ios-book-outline tx-22"></i>
+                <span class="menu-item-label">Management des base de données</span>
+                <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+        </a>
+        <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="#" class="nav-link">Biblithèque personnelle</a></li>
+            <li class="nav-item">
+                <a href="{{ route('books.index') }}" class="nav-link @if ($currentPage == 'bookIndex') active @endif">{{ __('left-panel.book') }}</a>
+                <ul style="list-style-type: none">
+                    <li><a href="#" class="nav-link">Brouillons</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link">Produit</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Evénement</a></li>
+        </ul>
+
+        <a href="#" class="br-menu-link">
+            <div class="br-menu-item">
+                <i class="menu-item-icon icon ion-ios-book-outline tx-22"></i>
+                <span class="menu-item-label">Managements des base de données</span>
+                <i class="menu-item-arrow fa fa-angle-down"></i>
+            </div><!-- menu-item -->
+        </a>
+
     </div><!-- br-sideleft-menu -->
 
     <label class="sidebar-label pd-x-15 mg-t-25 mg-b-20 tx-info op-9">{{ __('left-panel.information') }}</label>
