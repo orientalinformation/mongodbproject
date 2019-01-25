@@ -2,5 +2,5 @@
 
 return [
 
-    'title' => 'Dashboard'
+    'title' => 'Tableau de bord'
 ];

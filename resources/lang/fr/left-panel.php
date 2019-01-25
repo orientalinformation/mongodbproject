@@ -7,10 +7,10 @@ return [
     'accessControl'     => 'Access Control',
     'roles'             => 'Roles',
     'permissions'       => 'Permissions',
-    'users'             => 'Users',
+    'users'             => 'Gestion des utilisateurs',
     'book'              => 'Etude/Synthèse',
-    'category'          => 'Category',
-    'library'           => 'Library',
+    'category'          => 'Managements des metiers',
+    'library'           => 'Management librairies',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
     'bookManager'       => 'Book Manager'
