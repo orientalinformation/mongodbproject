@@ -39,6 +39,7 @@ return array(
     'App\\Model\\CategoryElastic' => $baseDir . '/app/Model/CategoryElastic.php',
     'App\\Model\\Library' => $baseDir . '/app/Model/Library.php',
     'App\\Model\\LibraryElastic' => $baseDir . '/app/Model/LibraryElastic.php',
+    'App\\Model\\Partner' => $baseDir . '/app/Model/Partner.php',
     'App\\Model\\PasswordReset' => $baseDir . '/app/Model/PasswordReset.php',
     'App\\Model\\Permission' => $baseDir . '/app/Model/Permission.php',
     'App\\Model\\PermissionRole' => $baseDir . '/app/Model/PermissionRole.php',

@@ -14,7 +14,9 @@ class LibraryElastic extends Model
     public $translatedAttributes = [];
     protected $fillable = [
         'name',
+        'alias',
         'share',
-        'userID'
+        'userID',
+        'view'
     ];
 }

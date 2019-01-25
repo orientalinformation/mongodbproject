@@ -41,6 +41,7 @@
                             <span>Shared</span>
                         </label>
                     </div>
+                    <input type="hidden" name="view" value="{{ $library['view'] }}">
                     <button type="submit" class="btn btn-info" formmethod="post">Save</button>
                     <button type="button" class="btn btn-light active" onclick="window.location= '{{route('libraries.index')}}'">Canel</button>
                 </form>
