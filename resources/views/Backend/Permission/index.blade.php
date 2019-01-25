@@ -29,7 +29,7 @@
                         <th>{{ __('Display Name') }}</th>
                         <th>{{ __('Created at') }}</th>
                         <th>{{ __('Updated at') }}</th>
-                        <th class="tx-center">{{ __('Actions') }}</th>
+                        <th>{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
                             <td>{{ $permission->display_name }}</td>
                             <td>{{ date("Y/m/d", strtotime($permission->created_at)) }}</td>
                             <td>{{ date("Y/m/d", strtotime($permission->updated_at)) }}</td>
-                            <td class="tx-18 tx-center">
+                            <td>
                                 <a href="javascript:void(0)" data-url="{{ route('permissions.edit', $permission->id) }}" class="btn btn-primary" id="btn_edit" title="{{ __('Edit') }}">
                                     <i class="fa fa-pencil"  aria-hidden="true"></i>
                                 </a>
