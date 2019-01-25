@@ -29,7 +29,7 @@
                         <th>{{ __('Display Name') }}</th>
                         <th>{{ __('Created at') }}</th>
                         <th>{{ __('Updated at') }}</th>
-                        <th class="tx-center">{{ __('Actions') }}</th>
+                        <th>{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
                             <td>{{ $role->display_name }}</td>
                             <td>{{ date("Y/m/d", strtotime($role->created_at)) }}</td>
                             <td>{{ date("Y/m/d", strtotime($role->updated_at)) }}</td>
-                            <td class="tx-18 tx-center">
+                            <td>
                                 <a href="{{ route('roles.choosePermission', $role->id) }}" class="btn btn-warning" id="btn_choose_permission" title="{{ __('Choose permission') }}">
                                     <i class="fa fa-sitemap" aria-hidden="true"></i>
                                 </a>
