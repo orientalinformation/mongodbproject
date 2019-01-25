@@ -47,6 +47,9 @@ Route::prefix('admin/')->group(function () {
     Route::resource('permissions', 'Backend\PermissionsController');
 
     //Users manager routes
+    Route::prefix('users/')->group(function () {
+        Route::put('updateProfile/{userId}', ['uses' => 'Backend\UsersController@updateProfile',])->name('users.updateProfile');
+    });    
     Route::resource('users', 'Backend\UsersController');
 
     //====Book start=============

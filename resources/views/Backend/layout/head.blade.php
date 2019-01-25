@@ -16,6 +16,7 @@
     <link href="{{ asset('/assets/lib/summernote/summernote-bs4.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/SpinKit/spinkit.css') }}" rel="stylesheet">
+    <link href="{{ asset('/assets/lib/select2/css/select2.min.css') }}" rel="stylesheet">
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('/assets/css/bracket.css') }}">
