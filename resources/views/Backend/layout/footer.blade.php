@@ -25,7 +25,7 @@
     $(document).ready(function () {
         // Datepicker
         $('.fc-datepicker').datepicker({
-            dateFormat: 'yy/mm/dd',
+            dateFormat: 'yy-mm-dd',
             showOtherMonths: true,
             selectOtherMonths: true,
             changeMonth: true,

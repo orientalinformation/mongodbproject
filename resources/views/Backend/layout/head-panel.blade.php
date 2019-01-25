@@ -13,7 +13,14 @@
                              <strong>{{ Auth::user()->fullname }}</strong>
                         @endif
                     </span>
-                    <img src="http://via.placeholder.com/64x64" class="wd-32 rounded-circle" alt="">
+                    <?php
+                        if (Auth::user()->avatar) {
+                            $imagePath = URL::to('/upload/avatar').'/'.Auth::user()->avatar;
+                        } else {
+                            $imagePath = "http://via.placeholder.com/64x64";
+                        }
+                    ?>
+                    <img src="{{ $imagePath }}" class="wd-32 rounded-circle" alt="">
                     <span class="square-10 bg-success"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-200">

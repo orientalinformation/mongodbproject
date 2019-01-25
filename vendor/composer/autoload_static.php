@@ -483,6 +483,7 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'App\\Model\\CategoryElastic' => __DIR__ . '/../..' . '/app/Model/CategoryElastic.php',
         'App\\Model\\Library' => __DIR__ . '/../..' . '/app/Model/Library.php',
         'App\\Model\\LibraryElastic' => __DIR__ . '/../..' . '/app/Model/LibraryElastic.php',
+        'App\\Model\\Partner' => __DIR__ . '/../..' . '/app/Model/Partner.php',
         'App\\Model\\PasswordReset' => __DIR__ . '/../..' . '/app/Model/PasswordReset.php',
         'App\\Model\\Permission' => __DIR__ . '/../..' . '/app/Model/Permission.php',
         'App\\Model\\PermissionRole' => __DIR__ . '/../..' . '/app/Model/PermissionRole.php',
