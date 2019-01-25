@@ -107,8 +107,17 @@ class UsersController extends Controller
             return back()->withErrors(__('The username already exists.'))->withInput();  
         }
 
+        // check role
+        $role = $this->roleRepository->find($data['role_id']);
+
+        if (!$role) {
+            return back()->withErrors(__('Role does not exist.'))->withInput();
+        }
+
+        
+
         // create
-        $result = $this->roleRepository->create($request->all());
+        $result = $this->userRepository->create($request->all());
 
         if ($result) {
             return redirect()->back()->with("success",__('Successfully Added New.'));
