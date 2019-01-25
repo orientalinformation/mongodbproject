@@ -124,19 +124,6 @@
 
     </div><!-- br-sideleft-menu -->
 
-    <label class="sidebar-label pd-x-15 mg-t-25 mg-b-20 tx-info op-9">{{ __('left-panel.information') }}</label>
-
-    <div class="info-list">
-        <div class="d-flex align-items-center justify-content-between pd-x-15">
-            <div>
-                <p class="tx-10 tx-roboto tx-uppercase tx-spacing-1 tx-white op-3 mg-b-2 space-nowrap">{{ __('left-panel.memoryUsage') }}</p>
-                <h5 class="tx-lato tx-white tx-normal mg-b-0">32.3%</h5>
-            </div>
-            <span class="peity-bar" data-peity='{ "fill": ["#336490"], "height": 35, "width": 60 }'>8,6,5,9,8,4,9,3,5,9</span>
-        </div><!-- d-flex -->
-
-    </div><!-- info-lst -->
-
     <br>
 </div><!-- br-sideleft -->
 <!-- ########## END: LEFT PANEL ########## -->
