@@ -20,18 +20,14 @@ function submit_from_data() {
 
             }).done(function (response) {
                 console.log(response);
-                // var message = JSON.parse(response);
-                // $.each(message, function () {
-                //
-                // });
+                var message = JSON.parse(response);
+                $.each(message, function(index, value) {
+                    toastr.success(value);
+                });
+
                 window.location.reload();
             }).fail(function (messages) {
-
-                $('.error').each(function (index, value) {
-                    console.log(index);
-                    console.log(value);
-                })
-
+                $('.error').text('');
 
                 var errors = $.parseJSON(messages.responseText);
 
@@ -44,5 +40,6 @@ function submit_from_data() {
         }
     });
 }
+
 
 

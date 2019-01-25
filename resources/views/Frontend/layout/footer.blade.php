@@ -9,7 +9,6 @@
 
 <!-- Plugins -->
 
-
 <script src="{{ asset('/assets/js/bracket.js') }}"></script>
 
 

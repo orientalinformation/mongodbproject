@@ -2,12 +2,40 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Repositories\BaseRepositoryInterface;
+use App\Repositories\Rss\RssRepositoryInterface;
+use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class RssController extends Controller
 {
+    /**
+     * @var RssRepositoryInterface|BaseRepositoryInterface
+     */
+    protected $rss;
+
+    /**
+     * @var UserRepositoryInterface|BaseRepositoryInterface
+     */
+    protected $user;
+
+    /**
+     * RssController constructor.
+     * @param RssRepositoryInterface $rssRepository
+     */
+    public function __construct(
+        RssRepositoryInterface $rssRepository,
+        UserRepositoryInterface $userRepository
+    )
+    {
+        $this->rss = $rssRepository;
+
+        $this->user = $userRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +44,11 @@ class RssController extends Controller
     public function index()
     {
         $currentPage = 'rssIndex';
-        $data = [];
+        $data = $this->rss->all()->toArray();
+
+        $users = $this->user->findByColumn('is_admin', '=', 1)->pluck('id', 'id');
+
+        dd($users);
 
         return view('Backend.Rss.index', compact(['currentPage', 'data']));
     }
@@ -39,17 +71,30 @@ class RssController extends Controller
      */
     public function store(Request $request)
     {
-        $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+        $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.rss)$/';
         $validator = Validator::make($request->all(), [
-            'name'  =>  'sometimes|required',
             'rss'   =>  'sometimes|required|regex:'.$regex
         ]);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
+            return response()->json(compact(['errors']) , 422);
         }
 
-        return response()->json(compact(['errors']) , 422);
+        $input  = $request->only(['rss', 'description']);
+
+        $input['userId'] = Auth::user()->id;
+
+//        $this->rss->create($input);
+
+        $request->session()->flash('success', __('common.Addsuccess'));
+
+        $message = __('common.Addsuccess');
+
+        return response()->json(compact(['message']), 200);
+
+
+
     }
 
     /**

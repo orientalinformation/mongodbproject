@@ -13,7 +13,8 @@ return [
     'library'           => 'Management librairies',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
-    'bookManager'       => 'Book Manager'
+    'bookManager'       => 'Book Manager',
+    'rss'               => 'Management veille',
 
 
 ];

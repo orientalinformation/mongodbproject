@@ -7,13 +7,11 @@
  */
 
 return [
-    'No'                => 'No.',
+    'no'                => 'No.',
     'name'              => 'Name',
     'action'            => 'Action',
     'description'       => 'Description',
-    'welldone'          => 'Bien joué',
-    'Addsuccess'        => 'Vous ajoutez avec succès',
+    'action'            => 'Actions',
     'createDate'        => 'Date',
     'updateDate'        => 'Mise à jour'
-
 ];

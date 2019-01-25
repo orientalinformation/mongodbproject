@@ -23,21 +23,30 @@
                 </a>
             </div>
         </div>
+        @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong class="d-block d-sm-inline-block-force">{{ __('common.welldone') }}!</strong> {{ session('success') }}
+            </div><!-- alert -->
+        @endif
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped">
                 <thead class="thead-colored thead-primary">
                     <tr>
-                        <th>{{ __('common.name') }}</th>
-                        <th>{{ __('rss.rss') }}</th>
+                        <th>{{ __('common.no') }}</th>
+                        <th>{{ __('rss.header') }}</th>
                         <th>{{ __('common.description') }}</th>
                         <th>{{ __('rss.userName') }}</th>
+                        <th></th>
                         <th class="tx-center">{{ __('common.action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach($data as $item)
                     <tr>
-                        <td>{{ $item->name }}</td>
+                        <td>1</td>
                         <td>{{ $item->rss }}</td>
                         <td>{{ $item->description }}</td>
                         <td>{{ $item->userName }}</td>

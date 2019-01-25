@@ -38,6 +38,43 @@ interface BaseRepositoryInterface
      */
     public function find($id);
 
+    /**
+     * Find by column
+     * @param $columnName
+     * @param $operator
+     * @param $value
+     * @return mixed
+     */
+    public function findByColumn($columnName, $operator, $value);
+
+    /**
+     * Check record exists
+     * @param $columnName
+     * @param $value
+     * @return mixed
+     */
+    public function checkRecordExists($columnName, $value);
+
+    /**
+     * find and get first record
+     * @param $columnName
+     * @param $value
+     * @return mixed
+     */
+    public function findFirst($columnName, $value);
+
+
+    /**
+     * Get name and id
+     * @return mixed
+     */
+    public function getNameAndId();
+
+    /**
+     * Get id array
+     * @return mixed
+     */
+    public function getIdArr();
 
     /**
      * Create
