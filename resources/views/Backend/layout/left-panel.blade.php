@@ -44,7 +44,7 @@
             <li class="nav-item"><a href="#" class="nav-link">Gestion des parternaires</a></li>
         </ul>
 
-        <a href="#" class="br-menu-link">
+        <a href="#" class="br-menu-link @if ($currentPage == 'user') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-people-outline tx-24"></i>
                 <span class="menu-item-label">Management des utilisateurs</span>
