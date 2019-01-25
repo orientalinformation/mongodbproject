@@ -10,7 +10,7 @@
 
     <div class="row row-sm">
         <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
-            <nav class="breadcrumb pd-0 mg-0 tx-12">
+            <nav class="breadcrumb pd-0 mg-0 tx-12" style="width: 100%">
                 <a class="breadcrumb-item" href="{{route('books.index')}}">Book</a>
                 <span class="breadcrumb-item active">Book list</span>
             </nav>
@@ -21,17 +21,16 @@
         </div>
 
         <table class="table table-bordered table-colored table-dark bookTable">
-            <thead>
+            <thead class="thead-colored thead-primary">
                 <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Image</th>
-                    <th>Price</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                    <th width="20%">Action</th>
+                    <th>{{ __('book.number') }}</th>
+                    <th>{{ __('book.title') }}</th>
+                    <th>{{ __('book.author') }}</th>
+                    <th>{{ __('book.job') }}</th>
+                    <th>{{ __('book.image') }}</th>
+                    <th>{{ __('book.status') }}</th>
+                    <th>{{ __('book.uploaded date') }}</th>
+                    <th width="20%">{{ __('book.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,6 +41,7 @@
                         <th scope="row">{{ $i }}</th>
                         <td>{{ $item['title'] }}</td>
                         <td>{{ $item['author'] }}</td>
+                        <td></td>
                         <td>
                             <?php
                                 $imagePath = URL::to('/') . '/upload/book/' . $item['image'];
@@ -52,9 +52,8 @@
                                 }
                             ?>
                         </td>
-                        <td>{{ $item['price'] }}</td>
-                        <td>{{ $item['type'] }}</td>
-                        <td><span onclick="status('{{ $item['_id'] }}', this)" data-status="{{$item['status']}}">
+                        <td>
+                            <span onclick="status('{{ $item['_id'] }}', this)" data-status="{{$item['status']}}">
                             <?php
                                 if($item['status'] == 1){
                                     echo '<i class="fa fa-eye"></i>';

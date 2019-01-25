@@ -26,7 +26,7 @@
                         <select class="form-control select2 select2-hidden-accessible type" name="parentID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
-                                <option value="{{ $item['_id'] }}">{{ $item['name'] }}</option>
+                                <option value="{{ $item['_id'] }}" {{ ($item['_id']==$category['parentID'])?'selected':'' }}>{{ $item['name'] }}</option>
                             @endforeach
                         </select>
                     </div><!-- form-group -->

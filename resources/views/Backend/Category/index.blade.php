@@ -20,11 +20,23 @@
             <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Category</button></a>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ session('success') }}
+            </div><!-- alert -->
+        @endif
+
         <table class="table table-bordered table-colored table-dark">
-            <thead>
+            <thead class="thead-colored thead-primary">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>{{ __('category.job') }}</th>
+                <th>{{ __('category.short description') }}</th>
+                <th>{{ __('category.created') }}</th>
+                <th>{{ __('category.modified') }}</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -34,6 +46,9 @@
                 <tr>
                     <th scope="row">{{ $i }}</th>
                     <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['description'] }}</td>
+                    <td>{{ $item['created_at'] }}</td>
+                    <td>{{ $item['updated_at'] }}</td>
                     <td>
                         <div>
                             <a href="categories/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>

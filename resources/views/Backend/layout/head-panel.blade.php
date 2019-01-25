@@ -211,7 +211,7 @@
                                 <label class="form-control-label tx-bold">{{ __('Phone') }}</label>
                                 <input type="text" id="phone" class="form-control" name="phone" value="{{ Auth::user()->phone }}">
                             </div>
-                        </div>                            
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="form-control-label tx-bold">{{ __('Email') }}</label>
@@ -223,7 +223,7 @@
                                 <label class="form-control-label tx-bold">{{ __('Address') }}</label>
                                 <input type="text" id="address" class="form-control" name="address" value="{{ Auth::user()->address }}">
                             </div>
-                        </div>                                                                                  
+                        </div>
                     </div>
                 </form>    
             </div>

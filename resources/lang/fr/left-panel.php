@@ -7,13 +7,13 @@ return [
     'accessControl'     => 'Access Control',
     'roles'             => 'Roles',
     'permissions'       => 'Permissions',
-    'users'             => 'Users',
-    'book'              => 'Book',
-    'category'          => 'Category',
-    'library'           => 'Library',
+    'users'             => 'Gestion des utilisateurs',
+    'book'              => 'Etude/Synthèse',
+    'category'          => 'Managements des metiers',
+    'library'           => 'Management librairies',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
-    'rss'               => 'Rss Management',
     'bookManager'       => 'Book Manager'
+
 
 ];

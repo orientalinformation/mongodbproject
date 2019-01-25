@@ -9,6 +9,7 @@ use Elasticsearch\ClientBuilder;
 use App\Model\CategoryElastic;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -43,7 +44,7 @@ class CategoryController extends Controller
         if (is_null($page)) {
             $page = 1;
         }
-        $result = $this->cateogryRepository->paginateWithoutSort($rowPage)->toArray();
+        $result = $this->cateogryRepository->paginate($rowPage)->toArray();
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
         return view('Backend.Category.index', compact(['currentPage', 'result', 'paginate', 'q']));
     }
@@ -91,7 +92,7 @@ class CategoryController extends Controller
                 $response = $client->index($dataElastic);
             }
 
-            return redirect()->to('admin/categories');
+            return redirect('admin/categories')->with('success', 'Category saved!');
         }
     }
 
@@ -151,7 +152,7 @@ class CategoryController extends Controller
                 $client = ClientBuilder::create()->build();
                 $response = $client->index($dataElastic);
 
-                return redirect()->to('categories');
+                return redirect()->to('admin/categories');
             }else{
                 return view('Backend.Category.edit', compact(['currentPage', 'category', 'category_list']));
             }
@@ -168,8 +169,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $this->cateogryRepository->delete($id);
-        return redirect()->to('categories');
-        return redirect()->route('catagories')->with(['succsess' => 'Delete successfully.']);
+        return redirect()->to('admin/categories');
     }
 
     public function delete(Request $request){
@@ -202,7 +202,7 @@ class CategoryController extends Controller
                 $client->delete($params);
             }
 
-            return redirect()->to('categories');
+            return redirect('admin/categories')->with('success', 'Category deleted!');
         }
     }
 }

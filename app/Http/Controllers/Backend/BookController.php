@@ -31,7 +31,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
 
@@ -52,7 +52,7 @@ class BookController extends Controller
         if (is_null($page)) {
             $page = 1;
         }
-        $result = $this->bookRepository->paginateWithoutSort($rowPage)->toArray();
+        $result = $this->bookRepository->paginate($rowPage)->toArray();
 
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
 
@@ -333,6 +333,20 @@ class BookController extends Controller
                 $response = $client->index($dataElastic);
             }
         }
+    }
+
+    public function getChildCat(Request $request){
+        if($request->has('catID')) {
+            $catID = $request->get('catID');
+            $result = $this->cateogryRepository->getChildCat($catID)->toArray();
+            $data = [];
+            $data['status'] = 1;
+            $data['data'] = $result;
+        }else{
+            $data['status'] = 0;
+            $data['data'] = '';
+        }
+        return json_encode($data);
     }
     /**
      * Remove the specified resource from storage.

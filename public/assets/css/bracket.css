@@ -13351,7 +13351,7 @@ textarea.parsley-success:focus {
   left: -230px;
   bottom: 0;
   z-index: 100;
-  width: 230px;
+  width: 300px;
   background-color: #1D2939;
   padding-left: 10px;
   padding-right: 10px;
@@ -13474,7 +13474,7 @@ textarea.parsley-success:focus {
 .menu-item-label {
   white-space: nowrap;
   margin-left: 10px;
-  margin-right: auto;
+  margin-right: 10px;
 }
 
 .menu-item-label,
@@ -13805,7 +13805,7 @@ textarea.parsley-success:focus {
 }
 @media (min-width: 992px) {
   .br-mainpanel {
-    margin-left: 230px;
+    margin-left: 300px;
   }
 }
 

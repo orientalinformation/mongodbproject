@@ -31,5 +31,4 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
         return Book::where([['_id', '=', $bookID],
             ['status', '=', (int)$status]])->get();
     }
-
 }
