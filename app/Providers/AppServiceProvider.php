@@ -83,5 +83,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\User\UserRepositoryInterface::class,
             \App\Repositories\User\UserEloquentRepository::class
         );
+
+        $this->app->singleton(
+            \App\Repositories\Discussion\DiscussionRepositoryInterface::class,
+            \App\Repositories\Discussion\DiscussionEloquentRepository::class
+        );
     }
 }

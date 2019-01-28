@@ -13,7 +13,14 @@
                              <strong>{{ Auth::user()->fullname }}</strong>
                         @endif
                     </span>
-                    <img src="http://via.placeholder.com/64x64" class="wd-32 rounded-circle" alt="">
+                    <?php
+                        if (Auth::user()->avatar) {
+                            $imagePath = URL::to('/upload/avatar').'/'.Auth::user()->avatar;
+                        } else {
+                            $imagePath = "http://via.placeholder.com/64x64";
+                        }
+                    ?>
+                    <img src="{{ $imagePath }}" class="wd-32 rounded-circle" alt="">
                     <span class="square-10 bg-success"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-200">
@@ -32,7 +39,7 @@
 </div><!-- br-header -->
 <!-- ########## END: HEAD PANEL ########## -->
 
-<!-- Update modal -->
+{{-- <!-- Update modal -->
 <div id="update_profile" class="modal fade">
     <div class="modal-dialog modal-lg modal-dialog-vertical-center" role="document">
         <div class="modal-content bd-0 tx-14">
@@ -123,4 +130,4 @@
             </div><!-- modal-body -->
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
-</div><!-- END Error modal -->
+</div><!-- END Error modal --> --}}

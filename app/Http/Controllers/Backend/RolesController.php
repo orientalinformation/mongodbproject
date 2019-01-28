@@ -153,7 +153,7 @@ class RolesController extends Controller
 
         // check id
         if (empty($id) || (int)$id < 0) {
-            return back()->withErrors(__('Invalid Role ID supplied.'))->withInput();
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
         }
 
         // update
@@ -200,7 +200,7 @@ class RolesController extends Controller
 
         // check id
         if (empty($roleId) || (int)$roleId < 0) {
-            return back()->withErrors(__('Invalid Role ID supplied.'))->withInput();
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
         }
 
         //active permission of role
@@ -220,7 +220,7 @@ class RolesController extends Controller
     {
         // check id
         if (empty($roleId) || (int)$roleId < 0) {
-            return back()->withErrors(__('Invalid Role ID supplied.'))->withInput();
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
         }
 
         // check role exist

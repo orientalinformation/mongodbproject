@@ -3,13 +3,6 @@
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{ __('left-panel.navigation') }}</label>
     <div class="br-sideleft-menu">
-        <a href="{{route('dashboard.index')}}" class="br-menu-link @if($currentPage == 'dashboard') active @endif">
-            <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-home-outline tx-22"></i>
-                <span class="menu-item-label">{{ __('left-panel.dashboard') }}</span>
-            </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
-        
         <!-- =======Role manager======= -->
         <a href="#" class="br-menu-link @if ($currentPage == 'role' || $currentPage == 'permission') active show-sub @endif">
             <div class="br-menu-item">
@@ -32,7 +25,7 @@
         </ul>
         <!-- =======End role manager======= -->
 
-        <a href="#" class="br-menu-link">
+        <a href="#" class="br-menu-link @if ($currentPage == 'dashboard') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-contact-outline tx-24"></i>
                 <span class="menu-item-label">Administratif</span>
@@ -40,8 +33,14 @@
             </div><!-- menu-item -->
         </a>
         <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Tableau de bord</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Gestion des parternaires</a></li>
+            <li class="nav-item">
+                <a href="{{route('dashboard.index')}}" class="nav-link @if ($currentPage == 'dashboard') active @endif">
+                    {{ __('left-panel.dashboard') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Gestion des parternaires</a>
+            </li>
         </ul>
 
         <a href="#" class="br-menu-link @if ($currentPage == 'user') active show-sub @endif">
@@ -72,7 +71,7 @@
             </div><!-- menu-item -->
         </a>
         <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Biblithèque personnelle</a></li>
+            <li class="nav-item"><a href="{{ route('libraries.index') }}" class="nav-link @if ($currentPage == 'libraryIndex') active @endif">Biblithèque personnelle</a></li>
             <li class="nav-item">
                 <a href="{{ route('books.index') }}" class="nav-link @if ($currentPage == 'bookIndex') active @endif">{{ __('left-panel.book') }}</a>
                 <ul style="list-style-type: none">
@@ -91,7 +90,7 @@
             </div><!-- menu-item -->
         </a>
         <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Gestion des causeries</a></li>
+            <li class="nav-item"><a href="{{ route('discussions.index') }}" class="nav-link @if ($currentPage == 'discussionIndex') active @endif">Gestion des causeries</a></li>
         </ul>
 
         <a href="" class="br-menu-link">

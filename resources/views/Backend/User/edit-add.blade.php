@@ -39,7 +39,11 @@
                         {{ __('user.username') }} : <span class="tx-danger">*</span>
                     </label>
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
-                        <input type="text" class="form-control" name="username" required>
+                        <input type="text" 
+                            class="form-control" 
+                            name="username" 
+                            value="@if(isset($user)) {{ $user->username }}@endif"
+                            @if($dataType == 'edit') disabled @else required @endif>
                     </div>
                 </div><!-- row -->
                 <div class="row mg-t-20">
@@ -47,7 +51,11 @@
                         {{ __('user.password') }} : <span class="tx-danger">*</span> 
                     </label>
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="password" 
+                            class="form-control" 
+                            name="password"
+                            value="" 
+                            @if($dataType == 'add') required @endif>
                     </div>
                 </div><!-- row -->
                 <div class="row mg-t-20">
@@ -57,7 +65,9 @@
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
                         <select class="form-control select2-show-search" name="role_id" required>
                             @foreach($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->display_name }}</option>
+                                <option  @if(isset($user) && $user->role_id == $role->id) selected @endif value="{{ $role->id }}">
+                                    {{ $role->display_name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -67,7 +77,11 @@
                         {{ __('user.fullname') }} : <span class="tx-danger">*</span> 
                     </label>
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
-                        <input type="text" class="form-control" name="fullname" required>
+                        <input type="text" 
+                            class="form-control" 
+                            name="fullname"
+                            value="@if(isset($user)) {{ $user->fullname }}@endif" 
+                            required>
                     </div>
                 </div><!-- row -->
                 <div class="row mg-t-20">
@@ -75,7 +89,11 @@
                         {{ __('user.email') }} : <span class="tx-danger">*</span> 
                     </label>
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" 
+                            class="form-control" 
+                            name="email" 
+                            value="@if(isset($user)) {{ $user->email }}@endif"
+                            required>
                     </div>
                 </div><!-- row -->
                 <div class="row mg-t-20">
@@ -83,7 +101,10 @@
                         {{ __('user.phone') }} :
                     </label>
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
-                        <input type="text" class="form-control" name="phone">
+                        <input type="text" 
+                            class="form-control" 
+                            name="phone"
+                            value="@if(isset($user)) {{ $user->email }}@endif">
                     </div>
                 </div><!-- row -->        
                 <div class="row mg-t-20">

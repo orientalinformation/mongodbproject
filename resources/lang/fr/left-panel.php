@@ -3,7 +3,7 @@
 return [
     'logoName'          => 'Compagnons du devoir',
     'navigation'        => 'Navigation',
-    'dashboard'         => 'Dashboard',
+    'dashboard'         => 'Tableau de bord',
     'accessControl'     => 'Access Control',
     'roles'             => 'Roles',
     'permissions'       => 'Permissions',

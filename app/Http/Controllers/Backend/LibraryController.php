@@ -80,6 +80,7 @@ class LibraryController extends Controller
             }
             $data['share'] = $share;
             $data['userID'] = $userID;
+            $data['view'] = 0;
             $result = $this->libraryRepository->create($data);
             $id = $result->_id;
 
@@ -90,7 +91,8 @@ class LibraryController extends Controller
                         'name' => $request->get('name'),
                         'alias' => $request->get('alias'),
                         'share' => $share,
-                        'userID' => $userID
+                        'userID' => $userID,
+                        'view' => $request->get('view'),
                     ],
                     'index' => $library->getIndexName(),
                     'type'  => $library->getTypeName(),
@@ -150,6 +152,7 @@ class LibraryController extends Controller
                 }
                 $data['share'] = $share;
                 $data['userID'] = $userID;
+                $data['view'] = $request->get('view');
                 $this->libraryRepository->update($id, $data);
 
                 $library = new LibraryElastic();
@@ -157,7 +160,9 @@ class LibraryController extends Controller
                     'body' => [
                         'name' => $request->get('name'),
                         'alias' => $request->get('alias'),
-                        'share' => $share
+                        'share' => $share,
+                        'userID' => $userID,
+                        'view' => $request->get('view')
                     ],
                     'index' => $library->getIndexName(),
                     'type'  => $library->getTypeName(),
@@ -176,6 +181,7 @@ class LibraryController extends Controller
 
     public function updateShare(Request $request)
     {
+        $userID = Auth::id();
         if($request->has('libraryID')) {
             $id = $request->get('libraryID');
             $share = $request->get('share');
@@ -197,8 +203,10 @@ class LibraryController extends Controller
                 $dataElastic = [
                     'body' => [
                         'name' => $library[0]["name"],
-                        'status' => $share,
-                        'userID' => $library[0]["userID"]
+                        'alias' => $library[0]["alias"],
+                        'share' => $share,
+                        'userID' => $userID,
+                        'view' => $library[0]["view"]
                     ],
                     'index' => $book->getIndexName(),
                     'type'  => $book->getTypeName(),

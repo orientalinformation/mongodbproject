@@ -21,6 +21,7 @@ class UserTableSeeder extends Seeder
         $user->username = 'admin';
         $user->password = Hash::make('password');
         $user->gender = 1;
+        $user->is_admin = 1;
         $user->role_id = $role->id;
         $user->save();
     }
