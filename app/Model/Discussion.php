@@ -4,12 +4,12 @@ namespace App\Model;
 
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class Library extends Model
+class Discussion extends Model
 {
     protected $connection = 'mongodb';
-    protected $collection = 'libraries';
+    protected $collection = 'discussions';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name', 'alias', 'share', 'userID', 'view'
+        'name', 'type', 'moderator', 'start', 'end'
     ];
 }

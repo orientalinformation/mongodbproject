@@ -11,12 +11,13 @@
     <div class="row row-sm">
         <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
             <nav class="breadcrumb pd-0 mg-0 tx-12" style="width: 100%">
-                <a class="breadcrumb-item" href="{{route('books.index')}}">Book</a>
-                <span class="breadcrumb-item active">Book list</span>
+                <a class="breadcrumb-item" href="{{route('books.index')}}">{{ __('book.home') }}</a>
+                <span class="breadcrumb-item">{{ __('book.database management') }}</span>
+                <span class="breadcrumb-item active">{{ __('book.study/synthesis') }}</span>
             </nav>
 
             <div class="barAdd">
-                <a href="{{route('books.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Book</button></a>
+                <a href="{{route('books.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('book.create a document') }}</button></a>
             </div>
         </div>
 
@@ -24,7 +25,7 @@
             <thead class="thead-colored thead-primary">
                 <tr>
                     <th>{{ __('book.number') }}</th>
-                    <th>{{ __('book.title') }}</th>
+                    <th>{{ __('book.title_menu') }}</th>
                     <th>{{ __('book.author') }}</th>
                     <th>{{ __('book.job') }}</th>
                     <th>{{ __('book.image') }}</th>

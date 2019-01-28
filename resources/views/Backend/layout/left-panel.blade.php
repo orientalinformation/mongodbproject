@@ -44,7 +44,7 @@
             <li class="nav-item"><a href="#" class="nav-link">Gestion des parternaires</a></li>
         </ul>
 
-        <a href="#" class="br-menu-link">
+        <a href="#" class="br-menu-link @if ($currentPage == 'user') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-people-outline tx-24"></i>
                 <span class="menu-item-label">Management des utilisateurs</span>
@@ -72,7 +72,7 @@
             </div><!-- menu-item -->
         </a>
         <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Biblithèque personnelle</a></li>
+            <li class="nav-item"><a href="{{ route('libraries.index') }}" class="nav-link @if ($currentPage == 'libraryIndex') active @endif">Biblithèque personnelle</a></li>
             <li class="nav-item">
                 <a href="{{ route('books.index') }}" class="nav-link @if ($currentPage == 'bookIndex') active @endif">{{ __('left-panel.book') }}</a>
                 <ul style="list-style-type: none">
@@ -91,7 +91,7 @@
             </div><!-- menu-item -->
         </a>
         <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link">Gestion des causeries</a></li>
+            <li class="nav-item"><a href="{{ route('discussions.index') }}" class="nav-link @if ($currentPage == 'discussionIndex') active @endif">Gestion des causeries</a></li>
         </ul>
 
         <a href="" class="br-menu-link">

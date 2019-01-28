@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
+class ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -17,8 +17,8 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
     );
 
@@ -151,8 +151,8 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -483,6 +483,7 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'App\\Model\\CategoryElastic' => __DIR__ . '/../..' . '/app/Model/CategoryElastic.php',
         'App\\Model\\Library' => __DIR__ . '/../..' . '/app/Model/Library.php',
         'App\\Model\\LibraryElastic' => __DIR__ . '/../..' . '/app/Model/LibraryElastic.php',
+        'App\\Model\\Partner' => __DIR__ . '/../..' . '/app/Model/Partner.php',
         'App\\Model\\PasswordReset' => __DIR__ . '/../..' . '/app/Model/PasswordReset.php',
         'App\\Model\\Permission' => __DIR__ . '/../..' . '/app/Model/Permission.php',
         'App\\Model\\PermissionRole' => __DIR__ . '/../..' . '/app/Model/PermissionRole.php',
@@ -4897,10 +4898,10 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$classMap;
 
         }, null, ClassLoader::class);
     }

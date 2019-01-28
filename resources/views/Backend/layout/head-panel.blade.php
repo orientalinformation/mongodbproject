@@ -32,7 +32,7 @@
 </div><!-- br-header -->
 <!-- ########## END: HEAD PANEL ########## -->
 
-<!-- Update modal -->
+{{-- <!-- Update modal -->
 <div id="update_profile" class="modal fade">
     <div class="modal-dialog modal-lg modal-dialog-vertical-center" role="document">
         <div class="modal-content bd-0 tx-14">
@@ -123,4 +123,4 @@
             </div><!-- modal-body -->
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
-</div><!-- END Error modal -->
+</div><!-- END Error modal --> --}}

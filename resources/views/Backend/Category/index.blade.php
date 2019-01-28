@@ -11,13 +11,13 @@
     <div class="row row-sm">
         <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
             <nav class="breadcrumb pd-0 mg-0 tx-12">
-                <a class="breadcrumb-item" href="{{route('categories.index')}}">Category</a>
-                <span class="breadcrumb-item active">Category list</span>
+                <a class="breadcrumb-item" href="{{route('categories.index')}}">{{ __('category.home') }}</a>
+                <span class="breadcrumb-item active">{{ __('category.business management') }}</span>
             </nav>
         </div>
 
         <div class="barAdd">
-            <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Category</button></a>
+            <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('category.create a document') }}</button></a>
         </div>
 
         @if (session('success'))
