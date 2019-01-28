@@ -24,6 +24,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property string $created_at
  * @property string $updated_at
+ * @property boolean $civility
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $postal_code
+ * @property string $city
+ * @property string $country
+ * @property string $sector
+ * @property string $interested
+ * @property boolean $status
+ * @property string $type
+ * @property string $society
+ * @property string $avatar
+ * @property boolean $is_admin
  * @property Role $role
  */
 class User extends Authenticatable implements JWTSubject
@@ -33,7 +46,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @var array
      */
-    protected $fillable = ['role_id', 'company_id', 'username', 'password', 'email', 'fullname', 'birthday', 'address', 'gender', 'phone', 'remember_token', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['role_id', 'company_id', 'username', 'password', 'email', 'fullname', 'birthday', 'address', 'gender', 'phone', 'remember_token', 'deleted_at', 'created_at', 'updated_at', 'civility', 'first_name', 'last_name', 'postal_code', 'city', 'country', 'sector', 'interested', 'status', 'type', 'society', 'is_admin', 'avatar'];
 
     /**
      * The attributes that should be hidden for arrays.

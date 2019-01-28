@@ -9,6 +9,7 @@ use Elasticsearch\ClientBuilder;
 use App\Model\CategoryElastic;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -24,7 +25,7 @@ class CategoryController extends Controller
     public function __construct(CategoryRepositoryInterface $cateogryRepository)
     {
         $this->cateogryRepository = $cateogryRepository;
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -91,7 +92,7 @@ class CategoryController extends Controller
                 $response = $client->index($dataElastic);
             }
 
-            return redirect()->to('admin/categories');
+            return redirect('admin/categories')->with('success', 'Category saved!');
         }
     }
 
@@ -169,7 +170,6 @@ class CategoryController extends Controller
     {
         $this->cateogryRepository->delete($id);
         return redirect()->to('admin/categories');
-        return redirect()->route('catagories')->with(['succsess' => 'Delete successfully.']);
     }
 
     public function delete(Request $request){
@@ -202,7 +202,7 @@ class CategoryController extends Controller
                 $client->delete($params);
             }
 
-            return redirect()->to('admin/categories');
+            return redirect('admin/categories')->with('success', 'Category deleted!');
         }
     }
 }

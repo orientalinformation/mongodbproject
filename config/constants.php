@@ -10,6 +10,7 @@ return [
 
     'rowPage'   => 20,
     'bookPath'  => '/public/upload/book/',
-    'bookFilePath'  => '/public/upload/book/file/'
+    'bookFilePath'  => '/public/upload/book/file/',
+    'avatarPath'  => '/public/upload/avatar/',
 
 ];

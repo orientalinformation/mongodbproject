@@ -98,7 +98,7 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
      * @param integer $limit
      * @return void
      */
-    public function listUsersByRole($limit = 15)
+    public function listUsersByRole($limit = 20)
     {
         // get role of user login
         $roleName = Auth::user()->role->name;

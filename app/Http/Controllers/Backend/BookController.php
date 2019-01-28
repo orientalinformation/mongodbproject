@@ -93,7 +93,8 @@ class BookController extends Controller
             if ($request->hasFile('image')) {
                 $fileImage = $request->image;
                 $bookPath = Config::get('constants.bookPath');
-                $path = Ulities::uploadFile($fileImage, $bookPath);
+                $ext = ['jpg','jpeg','gif','png','bmp'];
+                $path = Ulities::uploadFile($fileImage, $bookPath, $ext);
                 $data['image'] = $path;
                 $image = $path;
             }
@@ -101,7 +102,8 @@ class BookController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file;
                 $bookFilePath = Config::get('constants.bookFilePath');
-                $pathFile = Ulities::uploadFile($file, $bookFilePath);
+                $ext = ['doc','pdf','xlsx'];
+                $pathFile = Ulities::uploadFile($file, $bookFilePath, $ext);
                 $data['file'] = $pathFile;
                 $file = $pathFile;
             }

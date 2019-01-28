@@ -47,6 +47,9 @@ Route::prefix('admin/')->group(function () {
     Route::resource('permissions', 'Backend\PermissionsController');
 
     //Users manager routes
+    Route::prefix('users/')->group(function () {
+        Route::put('updateProfile/{userId}', ['uses' => 'Backend\UsersController@updateProfile',])->name('users.updateProfile');
+    });    
     Route::resource('users', 'Backend\UsersController');
 
     //====Book start=============
@@ -119,4 +122,24 @@ Route::prefix('admin/')->group(function () {
     Route::resource('libraries', 'Backend\LibraryController');
 
     //====Library end===============
+
+    //====Discussion start=============
+    Route::prefix('discussions/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\DiscussionController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\DiscussionController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\DiscussionController@update',
+        ]);
+        Route::post('/updateShare', [
+            'uses' => 'Backend\DiscussionController@updateShare',
+        ]);
+    });
+
+    Route::resource('discussions', 'Backend\DiscussionController');
+
+    //====Discussion end===============
 });

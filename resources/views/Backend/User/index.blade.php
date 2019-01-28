@@ -11,29 +11,25 @@
             <div class="col-md-6 tx-left">
                 <h1 class="tx-gray-800 tx-bold mg-b-10">
                     <i class="icon ion-person-stalker" aria-hidden="true"></i>
-                    <span class="menu-item-label">{{ __('List Users') }}</span>
+                    <span class="menu-item-label">{{ __('user.listUsers') }}</span>
                 </h1>
             </div>
             <div class="col-md-6 tx-right">
-                <button class="btn btn-teal mg-b-20 pd-r-20" data-toggle="modal" data-target="#create_role_modal">
-                    <i class="fa fa-plus mg-r-5"></i> {{ __('Add user') }}
-                </button>
+                <a href="{{ route('users.create') }}" class="btn btn-teal mg-b-20 pd-r-20">
+                    <i class="fa fa-plus mg-r-5"></i> {{ __('user.addUser') }}
+                </a>
             </div>
         </div>
         <div class="table-responsive"> 
             <table class="table table-bordered table-hover table-striped">
                 <thead class="thead-colored thead-primary">
                     <tr>
-                        <th>{{ __('No.') }}</th>
-                        <th>{{ __('Fullname') }}</th>
-                        <th>{{ __('Role') }}</th>
-                        <th>{{ __('Birthday') }}</th>
-                        <th>{{ __('Email') }}</th>
-                        <th>{{ __('Phone') }}</th>
-                        <th>{{ __('Gender') }}</th>
-                        <th>{{ __('Created at') }}</th>
-                        <th>{{ __('Updated at') }}</th>
-                        <th class="tx-center">{{ __('Actions') }}</th>
+                        <th>{{ __('user.number') }}</th>
+                        <th>{{ __('user.username') }}</th>
+                        <th>{{ __('user.role') }}</th>
+                        <th>{{ __('user.email') }}</th>
+                        <th>{{ __('user.date') }}</th>
+                        <th>{{ __('user.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,20 +39,10 @@
                             <th class="tx-right" scope="row"> {{ $index += 1 }}</th>
                             <td>{{ $user->fullname }}</td>
                             <td>{{ $user->role->display_name }}</td>
-                            <td>{{ date("Y/m/d", strtotime($user->birthday)) }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone }}</td>
-                            <td> 
-                                @if($user->gender == 0)
-                                    male
-                                @else
-                                    female   
-                                @endif
-                            </td>
-                            <td>{{ date("Y/m/d", strtotime($user->created_at)) }}</td>
-                            <td>{{ date("Y/m/d", strtotime($user->updated_at)) }}</td>
-                            <td class="tx-18 tx-center">                       
-                                <a href="javascript:void(0)" data-url="" class="btn btn-primary" id="btn_edit" title="{{ __('Edit') }}">
+                            <td>{{ date("Y/m/d H:i:s", strtotime($user->updated_at)) }}</td>
+                            <td>                       
+                                <a href="{{ route('users.edit', $user->id) }}" data-url="" class="btn btn-primary" id="btn_edit" title="{{ __('Edit') }}">
                                     <i class="fa fa-pencil"  aria-hidden="true"></i>
                                 </a>
                                 &nbsp;
