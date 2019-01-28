@@ -14,8 +14,8 @@ return [
     'fullname' => 'Nom et prénom',
     'phone' => 'Numéro téléphone',
     'avatar' => 'Image du profil',
-    'create' => 'Création',
-    'update' => 'Modification',
+    'create' => 'Créer un nouveau utilisateur',
+    'update' => 'Mettre à jour utilisateur',
     'btnCreate' => 'Créer',
     'btnUpdate' => 'Mettre à jour',
 ];
