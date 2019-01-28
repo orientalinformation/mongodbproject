@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'Category',
+    'title' => 'Métier',
     'number' => 'No.',
     'job' => 'Métier',
     'short description' => 'Short Description',
@@ -10,5 +10,5 @@ return [
     'modified' => 'Date de la modification',
     'home' => 'Accueil',
     'business management' => 'management des métiers',
-    'create a document' => 'Créer un document'
+    'create a document' => 'Créer un métier'
 ];

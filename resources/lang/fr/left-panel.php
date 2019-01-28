@@ -9,7 +9,7 @@ return [
     'permissions'       => 'Permissions',
     'users'             => 'Gestion des utilisateurs',
     'book'              => 'Etude/Synthèse',
-    'category'          => 'Managements des metiers',
+    'category'          => 'Managements des métier',
     'library'           => 'Management librairies',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',

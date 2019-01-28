@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'Library',
+    'title' => 'Bibliothèque personnelle',
     'title_menu' => 'Title',
     'author' => 'Auteur',
     'date' => 'Date',
@@ -10,5 +10,5 @@ return [
     'home' => 'Accueil',
     'database management' => 'Management des bases de données',
     'personal library' => 'Bibliothèque personnelle',
-    'create a document' => 'Créer un document'
+    'create a document' => 'Créer un Bibliothèque personnelle'
 ];

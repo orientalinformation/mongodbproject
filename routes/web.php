@@ -142,4 +142,55 @@ Route::prefix('admin/')->group(function () {
     Route::resource('discussions', 'Backend\DiscussionController');
 
     //====Discussion end===============
+
+    //====Event start=============
+    Route::prefix('events/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\EventController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\EventController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\EventController@update',
+        ]);
+    });
+
+    Route::resource('events', 'Backend\EventController');
+
+    //====Event end===============
+
+    //====Product start=============
+    Route::prefix('products/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\ProductController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\ProductController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\ProductController@update',
+        ]);
+    });
+
+    Route::resource('products', 'Backend\ProductController');
+
+    //====Product end===============
+
+    //====Draft start=============
+    Route::prefix('drafts/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\DraftController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\DraftController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\DraftController@update',
+        ]);
+    });
+
+    Route::resource('drafts', 'Backend\DraftController');
+
+    //====Draft end===============
 });
