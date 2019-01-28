@@ -145,7 +145,7 @@ class PermissionsController extends Controller
 
         // check id
         if (empty($id) || (int)$id < 0) {
-            return back()->withErrors(__('Invalid Permisstion ID supplied.'))->withInput();
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
         }
 
         // update
@@ -168,7 +168,7 @@ class PermissionsController extends Controller
     {
         // check id
         if (empty($id) || (int)$id < 0) {
-            return back()->withErrors(__('Invalid Permisstion ID supplied.'))->withInput();
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
         }
 
         //delete
