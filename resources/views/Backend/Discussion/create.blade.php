@@ -25,7 +25,7 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>{{ __('discussion.type') }}</label>
-                        <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
+                        <select class="form-control select2 type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
                             <option label="Choose type"></option>
                             <option value="PUBLIC" selected>Publique</option>
                             <option value="PRIVATE">Privée</option>
