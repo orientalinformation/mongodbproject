@@ -93,12 +93,17 @@
             <li class="nav-item"><a href="{{ route('discussions.index') }}" class="nav-link @if ($currentPage == 'discussionIndex') active @endif">Gestion des causeries</a></li>
         </ul>
 
-        <a href="" class="br-menu-link">
+        <a href="#" class="br-menu-link @if ($currentPage == 'rssIndex' || $currentPage == 'rssUserIndex') active show-sub @endif">
             <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-bookmarks-outline tx-22"></i>
-                <span class="menu-item-label">Management veille</span>
+                <i class="menu-item-icon icon ion-ios-flame-outline tx-20"></i>
+                <span class="menu-item-label">{{ __('rss.rssMenu') }}</span>
+                <i class="menu-item-arrow fa fa-angle-down"></i>
             </div><!-- menu-item -->
         </a>
+        <ul class="br-menu-sub nav flex-column">
+            <li class="nav-item"><a href="{{ route('rss.index') }}" class="nav-link @if ($currentPage == 'rssIndex') active @endif">{{ __('rss.rssAdminMenu') }}</a></li>
+            <li class="nav-item"><a href="{{ route('rss.user') }}" class="nav-link @if ($currentPage == 'rssUserIndex') active @endif">{{ __('rss.rssUserMenu') }}</a></li>
+        </ul>
 
         <a href="" class="br-menu-link">
             <div class="br-menu-item">
@@ -121,12 +126,6 @@
             </div><!-- menu-item -->
         </a>
 
-        <a href="{{route('rss.index')}}" class="br-menu-link @if ($currentPage == 'rssIndex') active @endif">
-            <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
-                <span class="menu-item-label">{{ __('left-panel.rss') }}</span>
-            </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
 
     </div><!-- br-sideleft-menu -->
 

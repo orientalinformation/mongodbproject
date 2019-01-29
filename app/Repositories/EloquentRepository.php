@@ -62,6 +62,16 @@ abstract class EloquentRepository implements BaseRepositoryInterface
     /**
      * @inheritdoc
      */
+    public function findByColumnManyValue($columnName, array $ids)
+    {
+        $query = $this->model->query();
+
+        return $query->whereIn($columnName, $ids)->get();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function findByColumn($columnName, $operator, $value)
     {
         return $this->model->where($columnName, $operator, $value)->get();
@@ -112,7 +122,7 @@ abstract class EloquentRepository implements BaseRepositoryInterface
      */
     public function paginate($perPage = 15)
     {
-        return $this->model->orderBy('created_at', 'DESC')->paginate($perPage);
+        return $this->model->orderBy('updated_at', 'DESC')->paginate($perPage);
     }
 
     /**

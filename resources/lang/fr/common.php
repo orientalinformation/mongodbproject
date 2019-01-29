@@ -11,7 +11,11 @@ return [
     'name'              => 'Name',
     'action'            => 'Action',
     'description'       => 'Description',
-    'action'            => 'Actions',
+    'actions'            => 'Actions',
     'createDate'        => 'Date',
-    'updateDate'        => 'Mise à jour'
+    'updateDate'        => 'Mise à jour',
+    'welldone'          => 'Bien joué',
+    'home'              => 'Accueil',
+    'btnSave'           => 'Ajouter',
+    'btnCancel'         => 'Annuler',
 ];

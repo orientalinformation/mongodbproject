@@ -19,20 +19,14 @@ function submit_from_data() {
                 contentType: false
 
             }).done(function (response) {
-                console.log(response);
-                var message = JSON.parse(response);
-                $.each(message, function(index, value) {
-                    toastr.success(value);
-                });
 
                 window.location.reload();
             }).fail(function (messages) {
                 $('.error').text('');
 
                 var errors = $.parseJSON(messages.responseText);
-
+                console.log(errors);
                 $.each(errors.errors, function(index, value) {
-                    console.log(value);
                    $('.' + index).text(value);
                 });
             })

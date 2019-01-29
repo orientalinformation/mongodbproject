@@ -39,6 +39,21 @@ interface BaseRepositoryInterface
     public function find($id);
 
     /**
+     * Get data with id array
+     * @param array $ids
+     * @return mixed
+     */
+    public function findByMany(array $ids);
+
+    /**
+     * Get data from columnName with many values
+     * @param $columnName
+     * @param array $ids
+     * @return mixed
+     */
+    public function findByColumnManyValue($columnName, array $ids);
+
+    /**
      * Find by column
      * @param $columnName
      * @param $operator

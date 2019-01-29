@@ -22,4 +22,11 @@ class RssEloquentRepository extends EloquentRepository implements RssRepositoryI
         return Rss::class;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function mongoPaginate($columnName, array $ids, $perPage = 20)
+    {
+        return $this->model->whereIn($columnName, $ids)->orderBy('updated_at', 'DESC')->paginate($perPage);
+    }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Envato\Ulities;
 use App\Repositories\BaseRepositoryInterface;
 use App\Repositories\Rss\RssRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 
 class RssController extends Controller
@@ -41,16 +43,72 @@ class RssController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $currentPage = 'rssIndex';
-        $data = $this->rss->all()->toArray();
 
-        $users = $this->user->findByColumn('is_admin', '=', 1)->pluck('id', 'id');
+        $q = !is_null($request->get('q'))? $request->get('q'): null;
 
-        dd($users);
+        $page = $request->get('page');
 
-        return view('Backend.Rss.index', compact(['currentPage', 'data']));
+        $rowPage = Config::get('constants.rowPage');
+
+        if (!isset($page)) {
+            $page = 1;
+        }
+
+        $users = $this->user->findByColumn('is_admin', '=', 1);
+
+        $userIds = $users->pluck('id')->toArray();
+
+        $userNames = $users->pluck('username', 'id')->toArray();
+
+        $data = $this->rss->mongoPaginate('userId', $userIds, $rowPage)->toArray();
+
+        for($i = 0 ; $i < count($data['data']); $i++) {
+            $data['data'][$i]['username'] = $userNames[$data['data'][$i]['userId']];
+        }
+
+        $paginate = Ulities::calculatorPage($q, $page, $data['total'], $rowPage);
+
+        return view('Backend.Rss.index', compact(['currentPage', 'data', 'q', 'paginate']));
+    }
+
+    /**
+     * Show rss list of user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function rssUserIndex(Request $request)
+    {
+        $currentPage = 'rssUserIndex';
+
+        $q = !is_null($request->get('q'))? $request->get('q'): null;
+
+        $page = $request->get('page');
+
+        $rowPage = Config::get('constants.rowPage');
+
+        if (!isset($page)) {
+            $page = 1;
+        }
+
+        $users = $this->user->findByColumn('is_admin', '=', 0);
+
+        $userIds = $users->pluck('id')->toArray();
+
+        $userNames = $users->pluck('username', 'id')->toArray();
+
+        $data = $this->rss->mongoPaginate('userId', $userIds, $rowPage)->toArray();
+
+        for($i = 0 ; $i < count($data['data']); $i++) {
+            $data['data'][$i]['username'] = $userNames[$data['data'][$i]['userId']];
+        }
+
+        $paginate = Ulities::calculatorPage($q, $page, $data['total'], $rowPage);
+
+        return view('Backend.Rss.user-index', compact(['currentPage', 'data', 'q', 'paginate']));
+
+
     }
 
     /**
@@ -73,7 +131,7 @@ class RssController extends Controller
     {
         $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.rss)$/';
         $validator = Validator::make($request->all(), [
-            'rss'   =>  'sometimes|required|regex:'.$regex
+            'rss'   =>  'sometimes|required|regex:'. $regex
         ]);
 
         if ($validator->fails()) {
@@ -85,15 +143,19 @@ class RssController extends Controller
 
         $input['userId'] = Auth::user()->id;
 
-//        $this->rss->create($input);
+        $response= $this->rss->create($input);
 
-        $request->session()->flash('success', __('common.Addsuccess'));
+        if ($response) {
+            $request->session()->flash('success', __('message.msg_create_successfully'));
 
-        $message = __('common.Addsuccess');
+            $status = 'ok';
 
-        return response()->json(compact(['message']), 200);
+            return response()->json(compact(['status']), 200);
+        }
 
+        $status = 'error';
 
+        return response()->json(compact(['status']), 500);
 
     }
 
@@ -116,7 +178,9 @@ class RssController extends Controller
      */
     public function edit($id)
     {
-        //
+        $rss = $this->rss->find($id);
+
+        return view('Backend.Rss.edit', compact(['rss']));
     }
 
     /**
@@ -128,7 +192,51 @@ class RssController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.rss)$/';
+        $validator = Validator::make($request->all(), [
+            'rss'   =>  'sometimes|required|regex:'. $regex
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(compact(['errors']) , 422);
+        }
+        $input  = $request->only(['rss', 'description']);
+
+        $response = $this->rss->update($id, $input);
+
+        if($response) {
+            $request->session()->flash('success', __('message.msg_edit_successfully'));
+
+            $status = 'ok';
+
+            return  response()->json(compact(['status']), 200);
+        }
+
+        $status = 'error';
+
+        return response()->json(compact(['status']), 500);
+
+
+    }
+
+    /**
+     * Show message delete
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function delete(Request $request, $id)
+    {
+        $rss = $this->rss->find($id);
+
+        if(is_null($rss)) {
+            $errors = __('message.msg_error_delete');
+
+            return response()->json(compact(['error']), 422);
+        }
+
+        return view('Backend.Rss.delete', compact(['rss']));
     }
 
     /**
@@ -137,8 +245,27 @@ class RssController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $rss = $this->rss->find($id);
+
+        if(is_null($rss)) {
+            $errors = __('message.msg_error_delete');
+
+            return response()->json(compact(['error']), 422);
+        }
+
+        $response = $this->rss->delete($id);
+        if($response) {
+            $request->session()->flash('success', __('msg_delete_successfully'));
+
+            $status = 'ok';
+
+            return  response()->json(compact(['status']), 200);
+        }
+
+        $status = 'error';
+
+        return response()->json(compact(['status']), 500);
     }
 }

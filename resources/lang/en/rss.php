@@ -7,11 +7,11 @@
  */
 
 return [
-    'header'    => 'Rss List',
-    'addRss'    => 'Add Rss',
-    'titleAdd'  => 'Create new Rss',
-    'rss'       => 'Rss',
-    'userName'  => 'User Name',
-    'rssRequired'  => 'The link rss field is required',
-    'notRegex'  => 'The link rss format is invalid'
+    'header'            => 'Rss List',
+    'addRss'            => 'Add Rss',
+    'titleAdd'          => 'Create new Rss',
+    'rss'               => 'Rss',
+    'userName'          => 'User Name',
+    'rssRequired'       => 'The link rss field is required',
+    'rssInvalid'        => 'The link rss format is invalid'
 ];

@@ -14,7 +14,7 @@ return [
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
     'bookManager'       => 'Book Manager',
-    'rss'               => 'Management veille',
+    'rssManagement'     => 'Management veille',
 
 
 ];
