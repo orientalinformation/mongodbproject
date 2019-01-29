@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'Book',
+    'title' => 'Etude/Synthèse',
     'number' => 'No.',
     'title_menu' => 'title',
     'author' => 'Auteur',
@@ -14,5 +14,5 @@ return [
     'home' => 'Accueil',
     'database management' => 'Management des bases de données',
     'study/synthesis'=> 'Etude/Synthèse',
-    'create a document' => 'Créer un document'
+    'create a document' => 'Créer un Etude/Synthèse'
 ];

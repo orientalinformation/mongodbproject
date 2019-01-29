@@ -13,5 +13,6 @@ return [
     'chat management_2' => 'Gestion des causeries',
     'id' => 'ID',
     'actions' => 'Actions',
-    'create a document' => 'Créer un document'
+    'create a document' => 'Créer un document',
+    'home' => 'Accueil',
 ];

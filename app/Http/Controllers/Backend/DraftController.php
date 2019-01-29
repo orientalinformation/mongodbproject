@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Repositories\Discussion\DiscussionRepositoryInterface;
-use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Repositories\Discussion\DiscussionRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
 
-class DiscussionController extends Controller
+class DraftController extends Controller
 {
     /**
      * @var DiscussionRepositoryInterface|\App\Repositories\BaseRepositoryInterface
@@ -33,7 +32,7 @@ class DiscussionController extends Controller
      */
     public function index(Request $request)
     {
-        $currentPage = 'discussionIndex';
+        $currentPage = 'draftIndex';
         $limitPage = 5;
         $rowPage = Config::get('constants.rowPage');
         //Searching value
@@ -44,7 +43,7 @@ class DiscussionController extends Controller
         }
         $result = $this->discussionRepository->paginate($rowPage)->toArray();
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
-        return view('Backend.Discussion.index', compact(['currentPage', 'result', 'paginate', 'q']));
+        return view('Backend.Draft.index', compact(['currentPage', 'result', 'paginate', 'q']));
     }
 
     /**
@@ -54,8 +53,7 @@ class DiscussionController extends Controller
      */
     public function create()
     {
-        $currentPage = 'discussionIndex';
-        return view('Backend.Discussion.create', compact(['currentPage']));
+        //
     }
 
     /**

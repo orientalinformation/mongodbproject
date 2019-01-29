@@ -63,7 +63,7 @@
             </div><!-- menu-item -->
         </a>
 
-        <a href="#" class="br-menu-link">
+        <a href="#" class="br-menu-link @if ($currentPage == 'libraryIndex' || $currentPage == 'bookIndex' || $currentPage == 'eventIndex' || $currentPage == 'productIndex' || $currentPage == 'draftIndex') show-sub @endif"">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-book-outline tx-22"></i>
                 <span class="menu-item-label">Management des base de données</span>
@@ -75,14 +75,14 @@
             <li class="nav-item">
                 <a href="{{ route('books.index') }}" class="nav-link @if ($currentPage == 'bookIndex') active @endif">{{ __('left-panel.book') }}</a>
                 <ul style="list-style-type: none">
-                    <li><a href="#" class="nav-link">Brouillons</a></li>
+                    <li><a href="{{ route('drafts.index') }}" class="nav-link @if ($currentPage == 'draftIndex') active @endif">Brouillons</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a href="#" class="nav-link">Produit</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Evénement</a></li>
+            <li class="nav-item"><a href="{{ route('products.index') }}" class="nav-link @if ($currentPage == 'productIndex') active @endif">Produit</a></li>
+            <li class="nav-item"><a href="{{ route('events.index') }}" class="nav-link @if ($currentPage == 'eventIndex') active @endif">Evénement</a></li>
         </ul>
 
-        <a href="#" class="br-menu-link">
+        <a href="#" class="br-menu-link @if ($currentPage == 'discussionIndex') show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-pie-outline tx-20"></i>
                 <span class="menu-item-label">Management des causeries</span>

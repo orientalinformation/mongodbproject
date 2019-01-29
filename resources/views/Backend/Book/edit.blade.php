@@ -22,7 +22,7 @@
                     <div id="errorMsg">{{$error}}</div>
                     <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control select2 select2-hidden-accessible type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
+                        <select class="form-control select2 type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
                             <option label="Choose type"></option>
                             <option value="POST" {{ ($book['type']=='POST')?'selected':'' }}>Post</option>
                             <option value="DOCUMENT" {{ ($book['type']=='DOCUMENT')?'selected':'' }}>Document</option>
@@ -31,7 +31,7 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control select2 select2-hidden-accessible type" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
+                        <select class="form-control select2 type" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
                                 <option value="{{ $item['_id'] }}" {{ ($item['_id']==$book['catID'])?'selected':'' }}>{{ $item['name'] }}</option>
@@ -39,12 +39,12 @@
                         </select>
                     </div><!-- form-group -->
                     <div class="form-group">
-                        <select class="form-control select2 select2-hidden-accessible type catIDSub1" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat_2(this)" disabled>
+                        <select class="form-control select2 type catIDSub1" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat_2(this)" disabled>
                             <option label="Choose sub category"></option>
                         </select>
                     </div><!-- form-group -->
                     <div class="form-group">
-                        <select class="form-control select2 select2-hidden-accessible type catIDSub2" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" disabled>
+                        <select class="form-control select2 type catIDSub2" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" disabled>
                             <option label="Choose sub category"></option>
                         </select>
                     </div><!-- form-group -->
