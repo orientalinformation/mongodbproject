@@ -23,12 +23,22 @@
                     <input type="hidden" name="id" value="{{ $category['_id'] }}">
                     <div class="form-group">
                         <label>Parent</label>
-                        <select class="form-control select2 type" name="parentID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true">
+                        <select class="form-control select2 type" name="parentID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getPathCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
-                                <option value="{{ $item['_id'] }}" {{ ($item['_id']==$category['parentID'])?'selected':'' }}>{{ $item['name'] }}</option>
+                                <option value="{{ $item['_id'] }}" data-path="{{ $item['path'] }}" {{ ($item['_id']==$category['parentID'])?'selected':'' }}>
+                                    <?php
+                                    $path = explode("/",$item['path']);
+                                    $path_html = "";
+                                    foreach($path as $path_item){
+                                        echo '<i style="color: #a5a5a5;font-weight: bold;margin-right: 5px; font-style: normal;">|—</i>';
+                                    }
+                                    echo $item['name'];
+                                    ?>
+                                </option>
                             @endforeach
                         </select>
+                        <input type="hidden" name="path" id="path">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Name: <span class="tx-danger">*</span></label>
@@ -45,4 +55,13 @@
         </div>
     </div><!-- row -->
 
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        function getPathCat(tag){
+            let path = $('option:selected', tag).attr('data-path')
+            $('#path').val(path);
+        }
+    </script>
 @endsection

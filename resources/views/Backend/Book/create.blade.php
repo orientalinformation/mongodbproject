@@ -31,22 +31,16 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Category</label>
-                        <select class="form-control select2 type" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
+                        <select class="form-control select2" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
                                 <option value="{{ $item['_id'] }}">{{ $item['name'] }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <select class="form-control select2 type catIDSub1" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat_2(this)" disabled>
-                            <option label="Choose sub category"></option>
-                        </select>
+                    <div class="form-group catIDSub1">
                     </div><!-- form-group -->
-                    <div class="form-group">
-                        <select class="form-control select2 type catIDSub2" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" disabled>
-                            <option label="Choose sub category"></option>
-                        </select>
+                    <div class="form-group catIDSub2">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Title: <span class="tx-danger">*</span></label>
@@ -97,7 +91,10 @@
                             <span>Published</span>
                         </label>
                     </div>
+                    <input type="hidden" id="status">
                     <button type="submit" class="btn btn-info">Save</button>
+                    <button type="button" class="btn btn-warning" id="btnDraft">Draft</button>
+                    <button type="button" class="btn btn-light active" onclick="window.location= '{{route('books.index')}}'">Canel</button>
                 </form>
             </div>
         </div>
@@ -175,14 +172,18 @@
             success: function (result) {
                 let data = JSON.parse(result);
                 if(data['status']==1){
-                    $('.catIDSub1').removeAttr('disabled');
-                    let html = '<option label="Choose sub category"></option>';
-                    data['data'].map(function (item) {
-                        html += '<option value="' + item._id + '">' + item.name + '</option>';
-                    })
+                    let html = '<select class="form-control select2" name="catID" data-placeholder="Choose category" onchange="getChildCat_2(this)">';
+                        html += '<option label="Choose sub category"></option>';
                     if(data['data'].length > 0){
+                        data['data'].map(function (item) {
+                            html += '<option value="' + item._id + '">' + item.name + '</option>';
+                        })
+                            html += '</select>';
                         $('.catIDSub1').show();
                         $('.catIDSub1').html(html);
+                    }else{
+                        $('.catIDSub1').hide();
+                        $('.catIDSub2').hide();
                     }
                 }else{
                     $('.catIDSub1').hide();
@@ -203,22 +204,29 @@
             success: function (result) {
                 let data = JSON.parse(result);
                 if(data['status']==1){
-                    $('.catIDSub2').removeAttr('disabled');
-                    let html = '<option label="Choose sub category"></option>';
-                    data['data'].map(function (item) {
-                        html += '<option value="' + item._id + '">' + item.name + '</option>';
-                    })
+                    let html = '<select class="form-control select2 catIDSub2" name="catID" data-placeholder="Choose category"';
+                        html += '<option label="Choose sub category"></option>';
                     if(data['data'].length > 0){
+                        data['data'].map(function (item) {
+                            html += '<option value="' + item._id + '">' + item.name + '</option>';
+                        })
+                        html += '</select';
                         $('.catIDSub2').show();
                         $('.catIDSub2').html(html);
+                    }else{
+                        $('.catIDSub2').hide();
                     }
                 }else{
-                    $('.catIDSub1').hide();
                     $('.catIDSub2').hide();
                 }
             }
 
         });
     }
+
+    $('#btnDraft').click(function () {
+        $('#status').val('DRAFT');
+//        $('form#book-form').submit();
+    })
 </script>
 @endsection
