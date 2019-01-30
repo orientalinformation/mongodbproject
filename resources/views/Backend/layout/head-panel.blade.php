@@ -14,7 +14,7 @@
                         @endif
                     </span>
                     <?php
-                        if (Auth::user()->avatar) {
+                        if (!empty(Auth::user()->avatar)) {
                             $imagePath = URL::to('/upload/avatar').'/'.Auth::user()->avatar;
                         } else {
                             $imagePath = "http://via.placeholder.com/64x64";

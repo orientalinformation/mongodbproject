@@ -5,6 +5,7 @@ return [
     'navigation'        => 'Navigation',
     'dashboard'         => 'Dashboard',
     'accessControl'     => 'Access Control',
+    'accountManagement' => 'Account management',    
     'roles'             => 'Roles',
     'permissions'       => 'Permissions',
     'users'             => 'Users',

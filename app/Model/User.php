@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @property int $id
  * @property int $role_id
+ * @property int $account_id
  * @property int $company_id
  * @property string $username
  * @property string $password
@@ -46,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @var array
      */
-    protected $fillable = ['role_id', 'company_id', 'username', 'password', 'email', 'fullname', 'birthday', 'address', 'gender', 'phone', 'remember_token', 'deleted_at', 'created_at', 'updated_at', 'civility', 'first_name', 'last_name', 'postal_code', 'city', 'country', 'sector', 'interested', 'status', 'type', 'society', 'is_admin', 'avatar'];
+    protected $fillable = ['role_id', 'account_id', 'company_id', 'username', 'password', 'email', 'fullname', 'birthday', 'address', 'gender', 'phone', 'civility', 'first_name', 'last_name', 'postal_code', 'city', 'country', 'sector', 'interested', 'status', 'type', 'society', 'is_admin', 'avatar', 'remember_token', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -72,4 +73,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo('App\Model\Role');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function accountManager()
+    {
+        return $this->belongsTo('App\Model\AccountManager', 'account_id');
+    }    
 }

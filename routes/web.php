@@ -52,6 +52,9 @@ Route::prefix('admin/')->group(function () {
     });
     Route::resource('users', 'Backend\UsersController');
 
+    //Account Managers routes
+    Route::resource('accounts', 'Backend\AccountManagersController');    
+
     //====Book start=============
     Route::prefix('books/')->group(function () {
         Route::get('/delete', [
