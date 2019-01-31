@@ -31,9 +31,9 @@ class CreateAccountManagersTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('account_id')->unsigned()->nullable()->index('lnk_account_managers_users');
+            $table->integer('account_id')->unsigned()->nullable()->index('account_id');
             $table->foreign('account_id', 'lnk_account_managers_users')->references('id')->on('account_managers')->onUpdate('CASCADE')->onDelete('CASCADE');
-        });         
+        });
     }
 
     /**
@@ -47,7 +47,7 @@ class CreateAccountManagersTable extends Migration
         Schema::table('users', function(Blueprint $table)
 		{
             $table->dropForeign('lnk_account_managers_users');
-            $table->dropIndex('lnk_account_managers_users');
+            $table->dropIndex('account_id');
         });
         
         Schema::dropIfExists('account_managers');
