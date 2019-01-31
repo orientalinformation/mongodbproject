@@ -19,9 +19,6 @@
             <li class="nav-item">
                 <a href="#" class="nav-link">{{ __('left-panel.partnerManagement') }}</a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link">{{ __('left-panel.accountManagement') }}</a>
-            </li>
         </ul>
 
         <a href="#" class="br-menu-link @if ($currentPage == 'user' || $currentPage == 'role' || $currentPage == 'permission' || $currentPage == 'account') active show-sub @endif">

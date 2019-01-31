@@ -26,7 +26,7 @@
         <div class="form-layout form-layout-5">
         <!-- form start -->
             <form role="form" class="form-edit-add" method="POST" enctype="multipart/form-data" 
-                action="@if($dataType == 'edit'){{ route('users.update', 1) }}@else{{ route('users.store') }}@endif"> 
+                action="@if($dataType == 'edit'){{ route('users.update', $user->id) }}@else{{ route('users.store') }}@endif"> 
 
                 <!-- PUT Method if we are editing -->
                 @if ($dataType == 'edit')
@@ -74,6 +74,20 @@
                 </div><!-- row -->
                 <div class="row mg-t-20">
                     <label class="col-sm-4 form-control-label">
+                        {{ __('user.account') }} : <span class="tx-danger">*</span> 
+                    </label>
+                    <div class="col-sm-6 mg-t-10 mg-sm-t-0">
+                        <select class="form-control select2-show-search" name="account_id" required>
+                            @foreach($accounts as $account)
+                                <option  @if(isset($user) && $user->account_id == $account->id) selected @endif value="{{ $account->id }}">
+                                    {{ $account->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div><!-- row -->                
+                <div class="row mg-t-20">
+                    <label class="col-sm-4 form-control-label">
                         {{ __('user.fullname') }} : <span class="tx-danger">*</span> 
                     </label>
                     <div class="col-sm-6 mg-t-10 mg-sm-t-0">
@@ -104,7 +118,7 @@
                         <input type="text" 
                             class="form-control" 
                             name="phone"
-                            value="@if(isset($user)) {{ $user->email }}@endif">
+                            value="@if(isset($user)) {{ $user->phone }}@endif">
                     </div>
                 </div><!-- row -->        
                 <div class="row mg-t-20">

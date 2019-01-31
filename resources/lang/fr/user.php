@@ -5,6 +5,7 @@ return [
     'username' => 'Pseudo',
     'number' => 'No.',
     'role' => 'Role',
+    'account' => 'Compte',
     'email' => 'Email',
     'date' => 'Date',
     'actions' => 'Actions',
