@@ -5,7 +5,7 @@
         <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href=""><i class="icon ion-navicon-round"></i></a></div>
     </div><!-- br-header-left -->
     <div class="br-header-right">
-        <nav class="nav">
+        <nav class="nav">`
             <div class="dropdown">
                 <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
                     <span class="logged-name hidden-md-down">
@@ -20,7 +20,7 @@
                             $imagePath = "http://via.placeholder.com/64x64";
                         }
                     ?>
-                    <img src="{{ $imagePath }}" class="wd-32 rounded-circle" alt="">
+                    <img src="{{ $imagePath }}" class="wd-32 ht-32 rounded-circle" alt="">
                     <span class="square-10 bg-success"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-200">
