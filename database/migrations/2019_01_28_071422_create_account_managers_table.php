@@ -43,11 +43,12 @@ class CreateAccountManagersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_managers');
-
+        
         Schema::table('users', function(Blueprint $table)
 		{
-			$table->dropForeign('lnk_account_managers_users');
-		});
+            $table->dropForeign('lnk_account_managers_users');
+        });
+        
+        Schema::dropIfExists('account_managers');
     }
 }
