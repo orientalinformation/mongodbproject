@@ -36,9 +36,15 @@ class AuthController extends Controller
     {   
         // check login
         $user = Auth::user();
-
+        
         if ($user) {
-            return redirect()->intended('/admin/dashboard');
+
+            if ($user->is_admin == 0) {
+                Auth::logout();
+                return response('Unauthorized action.', 403);
+            } else {
+                return redirect()->intended('/admin/dashboard');
+            }
         }
 
         return view('Backend.Auth.signin');
@@ -73,7 +79,13 @@ class AuthController extends Controller
         );
 
         if (Auth::attempt($userData)) {
-            return redirect()->intended('/admin/dashboard');
+            
+            if (Auth::user()->is_admin == 0) {
+                Auth::logout();
+                return response('Unauthorized action.', 403);
+            } else {
+                return redirect()->intended('/admin/dashboard');
+            }
         } else {
             return back()->with('error', __('Username or password is incorrect.'));
         }
