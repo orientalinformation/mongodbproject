@@ -2,7 +2,7 @@
 
 return [
 
-    'title' => 'Discussion',
+    'title' => 'Gestion des causeries',
     'title_menu' => 'Title',
     'type' => 'Type',
     'moderator' => 'Moderateur',
