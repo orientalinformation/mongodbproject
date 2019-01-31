@@ -21,7 +21,7 @@ class RolesController extends Controller
     protected $permsRoleRepository;
 
     /**
-     * BookController constructor.
+     * RolesController constructor.
      * @param RoleRepositoryInterface $roleRepository
      * @param PermissionRoleRepositoryInterface $permsRoleRepository
      */
