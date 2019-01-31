@@ -1,5 +1,9 @@
 <!-- ########## START: LEFT PANEL ########## -->
-<div class="br-logo"><a href="{{route('dashboard.index')}}"><span>[</span>{{ __('left-panel.logoName') }}<span>]</span></a></div>
+<div class="br-logo">
+    <a href="{{route('dashboard.index')}}">
+        <img src="{{ URL::to('/image/logo-compagnons.png')}}" class="wd-150">
+    </a>
+</div>
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{ __('left-panel.navigation') }}</label>
     <div class="br-sideleft-menu">
