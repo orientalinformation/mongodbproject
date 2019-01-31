@@ -5,7 +5,7 @@ return [
     'title' => 'Gestion des causeries',
     'title_menu' => 'Title',
     'type' => 'Type',
-    'moderator' => 'Moderateur',
+    'moderator' => 'Modérateur',
     'start' => 'Début',
     'end' => 'Fin',
     'actions' => 'Actions',
@@ -15,4 +15,7 @@ return [
     'actions' => 'Actions',
     'create a document' => 'Créer un document',
     'home' => 'Accueil',
+    'enterTitle' => 'Entrer le titre',
+    'enterStartDate' => 'Entrer la date de début',
+    "enterEndDate" => 'Entrer la date de fin'
 ];

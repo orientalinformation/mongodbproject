@@ -38,7 +38,7 @@
             @foreach($result['data'] as $item)
                 <tr>
                     <th scope="row">{{ $i }}</th>
-                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['title'] }}</td>
                     <td>{{ $item['type'] }}</td>
                     <td>{{ $item['moderator'] }}</td>
                     <td>{{ $item['start'] }}</td>

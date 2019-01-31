@@ -31,7 +31,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
 
