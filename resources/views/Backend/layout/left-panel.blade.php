@@ -17,6 +17,9 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="#" class="nav-link">{{ __('left-panel.partnerManagement') }}</a>
+            </li>
+            <li class="nav-item">
                 <a href="#" class="nav-link">{{ __('left-panel.accountManagement') }}</a>
             </li>
         </ul>
