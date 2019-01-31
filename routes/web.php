@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Route::prefix('admin/')->group(function () {
 
+    //404
+    Route::get('/404', 'Backend\NotFoundController@index');
+
     //default
     Route::get('/', 'Backend\DashboardController@index');
 

@@ -18,7 +18,7 @@
         </div>
 
         <div class="barAdd">
-            <a href="{{route('events.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('event.create a event') }}</button></a>
+            <a href="404"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('event.create a event') }}</button></a>
         </div>
 
         <table class="table table-bordered table-colored table-dark">
