@@ -19,4 +19,5 @@ return [
     'optionAccess'                  => 'Option ACCESS',
     'optionPremium'                 => 'Option PREMIUM',
     'optionClub'                    => 'Option CLUB',
+    'canvas'                        => 'canvas',
 ];
