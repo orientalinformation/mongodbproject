@@ -3,28 +3,6 @@
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{ __('left-panel.navigation') }}</label>
     <div class="br-sideleft-menu">
-        <!-- =======Role manager======= -->
-        <a href="#" class="br-menu-link @if ($currentPage == 'role' || $currentPage == 'permission') active show-sub @endif">
-            <div class="br-menu-item">
-                <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
-                <span class="menu-item-label">{{ __('left-panel.accessControl') }}</span>
-                <i class="menu-item-arrow fa fa-angle-down"></i>
-            </div><!-- menu-item -->
-        </a><!-- br-menu-link -->
-        <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item">
-                <a href="{{ route('roles.index') }}" class="nav-link @if ($currentPage == 'role') active @endif">
-                    {{ __('left-panel.roles') }}
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('permissions.index') }}" class="nav-link @if ($currentPage == 'permission') active @endif">
-                    {{ __('left-panel.permissions') }}
-                </a>
-            </li>
-        </ul>
-        <!-- =======End role manager======= -->
-
         <a href="#" class="br-menu-link @if ($currentPage == 'dashboard') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-contact-outline tx-24"></i>
@@ -39,11 +17,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">Gestion des parternaires</a>
+                <a href="#" class="nav-link">{{ __('left-panel.accountManagement') }}</a>
             </li>
         </ul>
 
-        <a href="#" class="br-menu-link @if ($currentPage == 'user') active show-sub @endif">
+        <a href="#" class="br-menu-link @if ($currentPage == 'user' || $currentPage == 'role' || $currentPage == 'permission' || $currentPage == 'account') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-people-outline tx-24"></i>
                 <span class="menu-item-label">Management des utilisateurs</span>
@@ -51,9 +29,26 @@
             </div><!-- menu-item -->
         </a>
         <ul class="br-menu-sub nav flex-column">
-            <li class="nav-item"><a href="{{ route('users.index') }}" class="nav-link @if ($currentPage == 'user') active @endif">{{ __('left-panel.users') }}</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Gestion ces comptes</a></li>
-            <li class="nav-item"><a href="{{ route('permissions.index') }}" class="nav-link @if ($currentPage == 'permission') active @endif">{{ __('left-panel.permissions') }}</a></li>
+            <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link @if ($currentPage == 'user') active @endif">
+                    {{ __('left-panel.users') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('accounts.index') }}" class="nav-link @if ($currentPage == 'account') active @endif">
+                    {{ __('left-panel.accountManagement') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('roles.index') }}" class="nav-link @if ($currentPage == 'role') active @endif">
+                    {{ __('left-panel.roles') }}
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('permissions.index') }}" class="nav-link @if ($currentPage == 'permission') active @endif">
+                    {{ __('left-panel.permissions') }}
+                </a>
+            </li>
         </ul>
 
         <a href="{{ route('categories.index') }}" class="br-menu-link @if ($currentPage == 'categoryIndex') active @endif">
