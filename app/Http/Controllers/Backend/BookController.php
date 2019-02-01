@@ -147,7 +147,7 @@ class BookController extends Controller
                             'catID' => $request->get('catID'),
                             'image' => $image,
                             'file' => $file,
-                            'status' => $status,
+                            'status' => $data['status'],
                             'share' => $share
                         ],
                         'index' => $book->getIndexName(),
@@ -285,7 +285,7 @@ class BookController extends Controller
                             'catID' => $request->get('catID'),
                             'image' => $image,
                             'file' => $file,
-                            'status' => $status,
+                            'status' => $data['status'],
                             'share' => $share
                         ],
                         'index' => $book->getIndexName(),
