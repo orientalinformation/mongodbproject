@@ -25,11 +25,11 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-header wd-200">
                     <ul class="list-unstyled user-profile-nav">
-                        <li><a data-toggle="modal" data-target="#update_profile"><i class="icon ion-ios-person"></i> {{ __('head-panel.editProfile') }}</a></li>
+                        {{-- <li><a data-toggle="modal" data-target="#update_profile"><i class="icon ion-ios-person"></i> {{ __('head-panel.editProfile') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-gear"></i> {{ __('head-panel.setting') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-download"></i> {{ __('head-panel.download') }}</a></li>
                         <li><a href=""><i class="icon ion-ios-star"></i> {{ __('head-panel.favorite') }}</a></li>
-                        <li><a href=""><i class="icon ion-ios-folder"></i> {{ __('head-panel.collection') }}</a></li>
+                        <li><a href=""><i class="icon ion-ios-folder"></i> {{ __('head-panel.collection') }}</a></li> --}}
                         <li><a href="{{ route('logout') }}"><i class="icon ion-power"></i> {{ __('head-panel.signOut') }}</a></li>
                     </ul>
                 </div><!-- dropdown-menu -->

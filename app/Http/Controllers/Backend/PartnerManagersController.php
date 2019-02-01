@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\PartnerManager\PartnerManagerRepositoryInterface;
+use Validator;
 
 class PartnerManagersController extends Controller
 {
@@ -46,7 +47,10 @@ class PartnerManagersController extends Controller
      */
     public function create()
     {
-        //
+        $currentPage = 'partner';
+        $dataType = 'add';
+
+        return view('Backend.Partner.edit-add', compact(['currentPage', 'dataType']));
     }
 
     /**
@@ -57,7 +61,32 @@ class PartnerManagersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'web' => 'required|string',
+        ];
+
+        $messages = [      
+            'name.required'      => __('The name field is required.'),  
+            'address.required'      => __('The address field is required.'),  
+            'web.required'      => __('The web field is required.'),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+
+        // create
+        $result = $this->partnerRepository->create($request->all());
+
+        if ($result) {
+            return redirect()->route("partners.index")->with("success",__('Successfully Added New.'));
+        }
+
+        return back()->withErrors(__('Create Failed.'))->withInput();        
     }
 
     /**
@@ -79,7 +108,17 @@ class PartnerManagersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $currentPage = 'partner';
+        $dataType = 'edit';
+
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
+        }
+        // get partner by id
+        $partner = $this->partnerRepository->find($id);
+
+        return view('Backend.Partner.edit-add', compact(['currentPage', 'dataType', 'partner']));
     }
 
     /**
@@ -91,7 +130,37 @@ class PartnerManagersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid ID supplied.'))->withInput();
+        }
+
+        $rules = [
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'web' => 'required|string',
+        ];
+
+        $messages = [      
+            'name.required'      => __('The name field is required.'),  
+            'address.required'      => __('The address field is required.'),  
+            'web.required'      => __('The web field is required.'),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+
+        // update
+        $result = $this->partnerRepository->update($id, $request->all());
+
+        if ($result) {
+            return redirect()->route("partners.index")->with("success",__('Successfully Updated.'));
+        }
+
+        return back()->withErrors(__('Update Failed.'))->withInput();
     }
 
     /**
@@ -102,6 +171,17 @@ class PartnerManagersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid Role ID supplied.'))->withInput();
+        }
+
+        //delete
+        $result = $this->partnerRepository->delete($id);
+
+        if ($result) {
+            return redirect()->route("partners.index")->with("success",__('Successfully Deleted.'));
+        }
+        return back()->withErrors(__('Sorry it appears there was a problem deleting this.'))->withInput();        
     }
 }
