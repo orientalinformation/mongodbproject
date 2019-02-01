@@ -32,7 +32,7 @@ class PermissionsController extends Controller
     public function index()
     {
         $currentPage = 'permission';
-        $limit = 10;
+        $limit = 20;
 
         // get all data
         $permissions = $this->permRepository->paginate($limit);
