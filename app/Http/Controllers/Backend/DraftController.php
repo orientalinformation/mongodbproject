@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use App\Repositories\Discussion\DiscussionRepositoryInterface;
+use App\Repositories\Book\BookRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
@@ -11,17 +11,17 @@ use App\Helpers\Envato\Ulities;
 class DraftController extends Controller
 {
     /**
-     * @var DiscussionRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
-    protected $discussionRepository;
+    protected $bookRepository;
 
     /**
-     * DiscussionController constructor.
-     * @param DiscussionRepositoryInterface $discussionRepository
+     * BookController constructor.
+     * @param BookRepositoryInterface $bookRepository
      */
-    public function __construct(DiscussionRepositoryInterface $discussionRepository)
+    public function __construct(BookRepositoryInterface $bookRepository)
     {
-        $this->discussionRepository = $discussionRepository;
+        $this->bookRepository = $bookRepository;
         $this->middleware('auth');
     }
 
@@ -41,7 +41,7 @@ class DraftController extends Controller
         if (is_null($page)) {
             $page = 1;
         }
-        $result = $this->discussionRepository->paginate($rowPage)->toArray();
+        $result = $this->bookRepository->getDraft($rowPage)->toArray();
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
         return view('Backend.Draft.index', compact(['currentPage', 'result', 'paginate', 'q']));
     }

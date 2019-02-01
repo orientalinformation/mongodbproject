@@ -214,9 +214,29 @@ Route::prefix('admin/')->group(function () {
 
     //====Draft end===============
 
+    //====Libraries API start=============
+    Route::prefix('libraries_api/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Libraries API end===============
 
+    //====Web start=============
+    Route::prefix('web/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Web end===============
 
-
+    //====QCM start=============
+    Route::prefix('qcm/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====QCM end===============
 });
 
 

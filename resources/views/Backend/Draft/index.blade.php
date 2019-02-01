@@ -38,7 +38,7 @@
             @foreach($result['data'] as $item)
                 <tr>
                     <th scope="row">{{ $i }}</th>
-                    <td></td>
+                    <td>{{ $item['title'] }}</td>
                     <td></td>
                     <td></td>
                     <td>{{ $item['created_at'] }}</td>

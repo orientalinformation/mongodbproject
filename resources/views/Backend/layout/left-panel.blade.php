@@ -104,21 +104,21 @@
             <li class="nav-item"><a href="{{ route('rss.user') }}" class="nav-link @if ($currentPage == 'rssUserIndex') active @endif">{{ __('rss.rssUserMenu') }}</a></li>
         </ul>
 
-        <a href="404" class="br-menu-link">
+        <a href="qcm/index" class="br-menu-link">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-archive tx-20"></i>
                 <span class="menu-item-label">Management QCM</span>
             </div><!-- menu-item -->
         </a>
 
-        <a href="404" class="br-menu-link">
+        <a href="web/index" class="br-menu-link">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
                 <span class="menu-item-label">Management pages web</span>
             </div><!-- menu-item -->
         </a>
 
-        <a href="404" class="br-menu-link @if ($currentPage == 'libraryIndex') active @endif">
+        <a href="libraries_api/index" class="br-menu-link @if ($currentPage == 'libraryIndex') active @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-albums-outline tx-22"></i>
                 <span class="menu-item-label">{{ __('left-panel.library') }}</span>
