@@ -27,6 +27,20 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
     }
 
     /**
+     * check Email Exists
+     *
+     * @param [type] $id
+     * @param [type] $email
+     * @return void
+     */
+    public function checkEmailExistsById($id, $email)
+    {
+        return User::where('email', $email)
+                ->where('id', '!=', $id)
+                ->exists();
+    }
+
+    /**
      * get User By Key
      *
      * @param [type] $key

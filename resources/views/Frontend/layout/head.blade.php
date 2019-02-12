@@ -14,7 +14,7 @@
     <link href="{{ asset('/assets/lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/jquery-switchbutton/jquery.switchButton.css') }}" rel="stylesheet">
 
-
+    <!-- Plugins -->
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('/assets/css/bracket.css') }}">

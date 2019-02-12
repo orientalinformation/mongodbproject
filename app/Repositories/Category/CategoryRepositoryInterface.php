@@ -11,5 +11,9 @@ namespace App\Repositories\Category;
 
 interface CategoryRepositoryInterface
 {
+    public function getChildCat($catID);
 
+    public function paginateOrderByPath($perPage = 15);
+
+    public function allOrderByPath();
 }

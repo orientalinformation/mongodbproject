@@ -42,27 +42,25 @@
         <div class="d-flex align-items-center justify-content-center bg-br-primary ht-100v">
             <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 bg-white rounded shadow-base">
                 <div class="signin-logo tx-center tx-28 tx-bold tx-inverse">
-                    <span class="tx-normal">[</span> 
-                    {{ __('left-panel.logoName') }} 
-                    <span class="tx-normal">]</span>
+                    <img src="{{ URL::to('/image/logo-compagnons.png')}}" class="">
                 </div>
                 <div class="tx-center mg-b-60"></div>
 
                 <form action="{{ route('login') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input type="text" required class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" placeholder="Enter your username">
+                        <input type="text" required class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" placeholder="{{ __('login.username') }}">
                         @if ($errors->has('username'))
                             <p style="color:red">{{ $errors->first('username') }}</p>
                         @endif    
                     </div><!-- form-group -->
 
                     <div class="form-group">
-                        <input type="password" required name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="Enter your password">
+                        <input type="password" required name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('login.password') }}">
                         @if ($errors->has('password'))
                             <p style="color:red">{{ $errors->first('password') }}</p>
                         @endif
-                        <a href="{{ route('passwordForgot') }}" class="tx-info tx-12 d-block mg-t-10">Forgot password?</a>
+                        <a href="{{ route('passwordForgot') }}" class="tx-info tx-12 d-block mg-t-10">{{ __('login.forgotPassword') }}</a>
                     </div><!-- form-group -->
 
                     @if ($message = Session::get('error'))
@@ -72,7 +70,7 @@
                         </div>
                     @endif
 
-                    <button type="submit" class="btn btn-info btn-block">Sign In</button>
+                    <button type="submit" class="btn btn-info btn-block">{{ __('login.signIn') }}</button>
                 </form>    
 <!--                 <div class="mg-t-60 tx-center">
                     Not yet a member? <a href="" class="tx-info">Sign Up</a>

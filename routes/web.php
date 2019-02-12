@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Route::prefix('admin/')->group(function () {
 
+    //404
+    Route::get('/404', 'Backend\NotFoundController@index');
+
     //default
     Route::get('/', 'Backend\DashboardController@index');
 
@@ -40,7 +43,7 @@ Route::prefix('admin/')->group(function () {
     Route::prefix('roles/')->group(function () {
         Route::get('{roleId}/choosePermission', ['uses' => 'Backend\RolesController@viewChoosePermission',])->name('roles.choosePermission');
         Route::post('{roleId}/assignRole', ['uses' => 'Backend\RolesController@assignRole',])->name('roles.assignRole');
-    });    
+    });
     Route::resource('roles', 'Backend\RolesController');
 
     //Permissions manager routes
@@ -49,8 +52,14 @@ Route::prefix('admin/')->group(function () {
     //Users manager routes
     Route::prefix('users/')->group(function () {
         Route::put('updateProfile/{userId}', ['uses' => 'Backend\UsersController@updateProfile',])->name('users.updateProfile');
-    });    
+    });
     Route::resource('users', 'Backend\UsersController');
+
+    //Account Managers routes
+    Route::resource('accounts', 'Backend\AccountManagersController');    
+
+    //Partner Managers routes
+    Route::resource('partners', 'Backend\PartnerManagersController');
 
     //====Book start=============
     Route::prefix('books/')->group(function () {
@@ -122,4 +131,118 @@ Route::prefix('admin/')->group(function () {
     Route::resource('libraries', 'Backend\LibraryController');
 
     //====Library end===============
+
+    //====Rss start=============
+
+    Route::get('rss/delete/{rss_id}', [
+        'as' => 'rss.delete', 'uses' => 'Backend\RssController@delete'
+    ]);
+
+    Route::get('rss/user',[
+        'as' => 'rss.user', 'uses' => 'Backend\RssController@rssUserIndex'
+    ]);
+
+    Route::resource('rss', 'Backend\RssController');
+
+    //====Rss end===============
+
+    //====Discussion start=============
+    Route::prefix('discussions/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\DiscussionController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\DiscussionController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\DiscussionController@update',
+        ]);
+        Route::post('/updateShare', [
+            'uses' => 'Backend\DiscussionController@updateShare',
+        ]);
+    });
+
+    Route::resource('discussions', 'Backend\DiscussionController');
+
+    //====Discussion end===============
+
+    //====Event start=============
+    Route::prefix('events/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\EventController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\EventController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\EventController@update',
+        ]);
+    });
+
+    Route::resource('events', 'Backend\EventController');
+
+    //====Event end===============
+
+    //====Product start=============
+    Route::prefix('products/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\ProductController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\ProductController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\ProductController@update',
+        ]);
+    });
+
+    Route::resource('products', 'Backend\ProductController');
+
+    //====Product end===============
+
+    //====Draft start=============
+    Route::prefix('drafts/')->group(function () {
+        Route::get('/delete', [
+            'uses' => 'Backend\DraftController@delete',
+        ]);
+        Route::get('/update', [
+            'uses' => 'Backend\DraftController@update',
+        ]);
+        Route::post('/update', [
+            'uses' => 'Backend\DraftController@update',
+        ]);
+    });
+
+    Route::resource('drafts', 'Backend\DraftController');
+
+    //====Draft end===============
+
+    //====Libraries API start=============
+    Route::prefix('libraries_api/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Libraries API end===============
+
+    //====Web start=============
+    Route::prefix('web/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Web end===============
+
+    //====QCM start=============
+    Route::prefix('qcm/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====QCM end===============
 });
+
+
+
+
+

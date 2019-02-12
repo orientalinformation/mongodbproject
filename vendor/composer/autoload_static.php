@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
+class ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -17,9 +17,10 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -135,6 +136,7 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'C' => 
         array (
             'Cron\\' => 5,
+            'Collective\\Html\\' => 16,
             'Carbon\\' => 7,
         ),
         'B' => 
@@ -151,8 +153,8 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -386,6 +388,10 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Collective\\Html\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/laravelcollective/html/src',
+        ),
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
@@ -450,6 +456,7 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
     );
 
     public static $classMap = array (
+        'AccountManagerTableSeeder' => __DIR__ . '/../..' . '/database/seeds/AccountManagerTableSeeder.php',
         'App\\Console\\Commands\\CrawlWeb' => __DIR__ . '/../..' . '/app/Console/Commands/CrawlWeb.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -459,14 +466,20 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
+        'App\\Http\\Controllers\\Backend\\AccountManagersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/AccountManagersController.php',
         'App\\Http\\Controllers\\Backend\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/AuthController.php',
         'App\\Http\\Controllers\\Backend\\BookController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/BookController.php',
         'App\\Http\\Controllers\\Backend\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/CategoryController.php',
         'App\\Http\\Controllers\\Backend\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/DashboardController.php',
+        'App\\Http\\Controllers\\Backend\\DiscussionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/DiscussionController.php',
+        'App\\Http\\Controllers\\Backend\\DraftController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/DraftController.php',
+        'App\\Http\\Controllers\\Backend\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/EventController.php',
         'App\\Http\\Controllers\\Backend\\LibraryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/LibraryController.php',
         'App\\Http\\Controllers\\Backend\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PermissionsController.php',
         'App\\Http\\Controllers\\Backend\\PinController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PinController.php',
+        'App\\Http\\Controllers\\Backend\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/ProductController.php',
         'App\\Http\\Controllers\\Backend\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/RolesController.php',
+        'App\\Http\\Controllers\\Backend\\RssController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/RssController.php',
         'App\\Http\\Controllers\\Backend\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/UsersController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Frontend\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Frontend/HomeController.php',
@@ -477,33 +490,40 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'App\\Http\\Middleware\\TrimStrings' => __DIR__ . '/../..' . '/app/Http/Middleware/TrimStrings.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Model\\AccountManager' => __DIR__ . '/../..' . '/app/Model/AccountManager.php',
         'App\\Model\\Book' => __DIR__ . '/../..' . '/app/Model/Book.php',
         'App\\Model\\BookElastic' => __DIR__ . '/../..' . '/app/Model/BookElastic.php',
         'App\\Model\\Category' => __DIR__ . '/../..' . '/app/Model/Category.php',
         'App\\Model\\CategoryElastic' => __DIR__ . '/../..' . '/app/Model/CategoryElastic.php',
+        'App\\Model\\Discussion' => __DIR__ . '/../..' . '/app/Model/Discussion.php',
+        'App\\Model\\DiscussionElastic' => __DIR__ . '/../..' . '/app/Model/DiscussionElastic.php',
         'App\\Model\\Library' => __DIR__ . '/../..' . '/app/Model/Library.php',
         'App\\Model\\LibraryElastic' => __DIR__ . '/../..' . '/app/Model/LibraryElastic.php',
+        'App\\Model\\Partner' => __DIR__ . '/../..' . '/app/Model/Partner.php',
         'App\\Model\\PasswordReset' => __DIR__ . '/../..' . '/app/Model/PasswordReset.php',
         'App\\Model\\Permission' => __DIR__ . '/../..' . '/app/Model/Permission.php',
         'App\\Model\\PermissionRole' => __DIR__ . '/../..' . '/app/Model/PermissionRole.php',
         'App\\Model\\Pin' => __DIR__ . '/../..' . '/app/Model/Pin.php',
-        'App\\Model\\Post' => __DIR__ . '/../..' . '/app/Model/Post.php',
-        'App\\Model\\PostElastic' => __DIR__ . '/../..' . '/app/Model/PostElastic.php',
         'App\\Model\\Role' => __DIR__ . '/../..' . '/app/Model/Role.php',
-        'App\\Model\\Source' => __DIR__ . '/../..' . '/app/Model/Source.php',
-        'App\\Model\\Topic' => __DIR__ . '/../..' . '/app/Model/Topic.php',
+        'App\\Model\\Rss' => __DIR__ . '/../..' . '/app/Model/Rss.php',
         'App\\Model\\User' => __DIR__ . '/../..' . '/app/Model/User.php',
+        'App\\Model\\Web' => __DIR__ . '/../..' . '/app/Model/Web.php',
+        'App\\Model\\WebElastic' => __DIR__ . '/../..' . '/app/Model/WebElastic.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EnvatoServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EnvatoServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Repositories\\AccountManager\\AccountManagerRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/AccountManager/AccountManagerRepositoryInterface.php',
+        'App\\Repositories\\AccountManager\\AccountmanagerEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/AccountManager/AccountmanagerEloquentRepository.php',
         'App\\Repositories\\BaseRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/BaseRepositoryInterface.php',
         'App\\Repositories\\Book\\BookEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Book/BookEloquentRepository.php',
         'App\\Repositories\\Book\\BookRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Book/BookRepositoryInterface.php',
         'App\\Repositories\\Category\\CategoryEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Category/CategoryEloquentRepository.php',
         'App\\Repositories\\Category\\CategoryRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Category/CategoryRepositoryInterface.php',
+        'App\\Repositories\\Discussion\\DiscussionEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Discussion/DiscussionEloquentRepository.php',
+        'App\\Repositories\\Discussion\\DiscussionRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Discussion/DiscussionRepositoryInterface.php',
         'App\\Repositories\\EloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/EloquentRepository.php',
         'App\\Repositories\\Library\\LibraryEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Library/LibraryEloquentRepository.php',
         'App\\Repositories\\Library\\LibraryRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Library/LibraryRepositoryInterface.php',
@@ -517,8 +537,8 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'App\\Repositories\\Post\\PostRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Post/PostRepositoryInterface.php',
         'App\\Repositories\\Role\\RoleEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Role/RoleEloquentRepository.php',
         'App\\Repositories\\Role\\RoleRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Role/RoleRepositoryInterface.php',
-        'App\\Repositories\\Source\\SourceEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Source/SourceEloquentRepository.php',
-        'App\\Repositories\\Source\\SourceRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Source/SourceRepositoryInterface.php',
+        'App\\Repositories\\Rss\\RssEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Rss/RssEloquentRepository.php',
+        'App\\Repositories\\Rss\\RssRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Rss/RssRepositoryInterface.php',
         'App\\Repositories\\Topic\\TopicEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Topic/TopicEloquentRepository.php',
         'App\\Repositories\\Topic\\TopicRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Topic/TopicRepositoryInterface.php',
         'App\\Repositories\\User\\UserEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/User/UserEloquentRepository.php',
@@ -563,6 +583,13 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
         'Carbon\\Translator' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Translator.php',
+        'Collective\\Html\\Componentable' => __DIR__ . '/..' . '/laravelcollective/html/src/Componentable.php',
+        'Collective\\Html\\Eloquent\\FormAccessible' => __DIR__ . '/..' . '/laravelcollective/html/src/Eloquent/FormAccessible.php',
+        'Collective\\Html\\FormBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/FormBuilder.php',
+        'Collective\\Html\\FormFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/FormFacade.php',
+        'Collective\\Html\\HtmlBuilder' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlBuilder.php',
+        'Collective\\Html\\HtmlFacade' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlFacade.php',
+        'Collective\\Html\\HtmlServiceProvider' => __DIR__ . '/..' . '/laravelcollective/html/src/HtmlServiceProvider.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
         'Cron\\DayOfMonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/DayOfMonthField.php',
@@ -944,6 +971,7 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'Dotenv\\Exception\\InvalidPathException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/InvalidPathException.php',
         'Dotenv\\Exception\\ValidationException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ValidationException.php',
         'Dotenv\\Loader' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Loader.php',
+        'Dotenv\\Parser' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Parser.php',
         'Dotenv\\Validator' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Validator.php',
         'Egulias\\EmailValidator\\EmailLexer' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/EmailLexer.php',
         'Egulias\\EmailValidator\\EmailParser' => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator/EmailParser.php',
@@ -3973,6 +4001,7 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
         'React\\Promise\\RejectedPromise' => __DIR__ . '/..' . '/react/promise/src/RejectedPromise.php',
         'React\\Promise\\UnhandledRejectionException' => __DIR__ . '/..' . '/react/promise/src/UnhandledRejectionException.php',
         'RoleTableSeeder' => __DIR__ . '/../..' . '/database/seeds/RoleTableSeeder.php',
+        'RssTableSeeder' => __DIR__ . '/../..' . '/database/seeds/RssTableSeeder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
@@ -4897,10 +4926,10 @@ class ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd7e9f08f6bdbcea1665ef12d820986fb::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit631a66b5072d7b1c1a632476e89bf3bb::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -2,16 +2,20 @@
 
 namespace App\Model;
 
-
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Topic extends Eloquent
+class Web extends Eloquent
 {
-    protected $collection = 'topic';
+    protected $collection = 'web';
     protected $connection = 'mongodb';
     public $translatedAttributes = [];
     protected $fillable = [
         'id',
-        'name'
+        'title',
+        'url',
+        'image',
+        'description',
+        'pubDate',
+        'status',
     ];
 }

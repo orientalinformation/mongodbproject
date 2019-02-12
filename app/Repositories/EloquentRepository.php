@@ -62,6 +62,56 @@ abstract class EloquentRepository implements BaseRepositoryInterface
     /**
      * @inheritdoc
      */
+    public function findByColumnManyValue($columnName, array $ids)
+    {
+        $query = $this->model->query();
+
+        return $query->whereIn($columnName, $ids)->get();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function findByColumn($columnName, $operator, $value)
+    {
+        return $this->model->where($columnName, $operator, $value)->get();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function checkRecordExists($columnName, $value)
+    {
+        return $this->model->where($columnName, '=', $value)->exists();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function findFirst($columnName, $value)
+    {
+        return $this->model->where($columnName, '=', $value)->first();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getNameAndId()
+    {
+        return $this->model->pluck('name', 'id')->all();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getIdArr()
+    {
+        return $this->model->pluck('id')->all();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function all()
     {
         return $this->model->orderBy('created_at', 'DESC')->get();
@@ -72,7 +122,7 @@ abstract class EloquentRepository implements BaseRepositoryInterface
      */
     public function paginate($perPage = 15)
     {
-        return $this->model->orderBy('created_at', 'DESC')->paginate($perPage);
+        return $this->model->orderBy('updated_at', 'DESC')->paginate($perPage);
     }
 
     /**

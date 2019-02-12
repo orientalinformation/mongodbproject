@@ -10,6 +10,6 @@ class Library extends Model
     protected $collection = 'libraries';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name', 'bookID', 'status', 'share'
+        'name', 'alias', 'share', 'userID', 'view'
     ];
 }

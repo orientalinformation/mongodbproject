@@ -29,12 +29,13 @@ if ($paginate['pageNum'] > $limitPage) {
                     <a class="page-link" href="{{ $paginate['prev'] }}" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
                 </li>
             @endif
-
-            @for( $i = 1; $i <= $leftLimitPage; $i++)
-                <li class="page-item {{ ($paginate['page'] == $i) ? 'active' : '' }}">
-                    <a class="page-link" href="{{ $paginate['page'] == $i ? '#' : ($paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . $i) }}" class="" > {{ $i }}</a>
-                </li>
-            @endfor
+            @if($leftLimitPage > 1)
+                @for( $i = 1; $i <= $leftLimitPage; $i++)
+                    <li class="page-item {{ ($paginate['page'] == $i) ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $paginate['page'] == $i ? '#' : ($paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . $i) }}" class="" > {{ $i }}</a>
+                    </li>
+                @endfor
+            @endif
 
             @if($flag)
                 <li class="page-item disabled"><span class="page-link">...</span></li>

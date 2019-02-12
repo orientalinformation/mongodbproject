@@ -44,7 +44,7 @@ class CategoryController extends Controller
         if (is_null($page)) {
             $page = 1;
         }
-        $result = $this->cateogryRepository->paginate($rowPage)->toArray();
+        $result = $this->cateogryRepository->paginateOrderByPath($rowPage)->toArray();
         $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
         return view('Backend.Category.index', compact(['currentPage', 'result', 'paginate', 'q']));
     }
@@ -57,7 +57,7 @@ class CategoryController extends Controller
     public function create()
     {
         $currentPage = 'categoryIndex';
-        $category_list = $this->cateogryRepository->all()->toArray();
+        $category_list = $this->cateogryRepository->allOrderByPath()->toArray();
         return view('Backend.Category.create', compact(['currentPage', 'category_list']));
     }
 
@@ -73,8 +73,17 @@ class CategoryController extends Controller
             $data['parentID'] = $request->get('parentID');
             $data['name'] = $request->get('name');
             $data['description'] = $request->get('description');
+            $data['path'] = $request->get('path');
             $result = $this->cateogryRepository->create($data);
             $id = $result->_id;
+
+            $this->cateogryRepository->find($id)->toArray();
+            if($data['path'] != ''){
+                $data['path'] = $data['path'] . '/' . $id;
+            }else{
+                $data['path'] = $id;
+            }
+            $this->cateogryRepository->update($id, $data);
 
             if($id != '') {
                 $category = new CategoryElastic();
@@ -82,7 +91,8 @@ class CategoryController extends Controller
                     'body' => [
                         'parentID' => $request->get('parentID'),
                         'name' => $request->get('name'),
-                        'description' => $request->get('description')
+                        'description' => $request->get('description'),
+                        'path' => $data['path']
                     ],
                     'index' => $category->getIndexName(),
                     'type'  => $category->getTypeName(),
@@ -130,12 +140,20 @@ class CategoryController extends Controller
         $currentPage = 'categoryIndex';
         if($request->has('id')) {
             $id = $request->get('id');
-            $category_list = $this->cateogryRepository->all()->toArray();
+            $category_list = $this->cateogryRepository->allOrderByPath()->toArray();
             $category = $this->cateogryRepository->find($id)->toArray();
             if ($request->method() == 'POST') {
                 $data['parentID'] = $request->get('parentID');
                 $data['name'] = $request->get('name');
                 $data['description'] = $request->get('description');
+                $data['path'] = $request->get('path');
+
+                if($data['path'] != ''){
+                    $data['path'] = $data['path'] . '/' . $id;
+                }else{
+                    $data['path'] = $id;
+                }
+
                 $this->cateogryRepository->update($id, $data);
 
                 $category = new CategoryElastic();
@@ -143,7 +161,8 @@ class CategoryController extends Controller
                     'body' => [
                         'parentID' => $request->get('parentID'),
                         'name' => $request->get('name'),
-                        'description' => $request->get('description')
+                        'description' => $request->get('description'),
+                        'path' => $data['path']
                     ],
                     'index' => $category->getIndexName(),
                     'type'  => $category->getTypeName(),

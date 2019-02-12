@@ -11,13 +11,13 @@
     <div class="row row-sm">
         <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
             <nav class="breadcrumb pd-0 mg-0 tx-12">
-                <a class="breadcrumb-item" href="{{route('categories.index')}}">Category</a>
-                <span class="breadcrumb-item active">Category list</span>
+                <a class="breadcrumb-item" href="{{route('categories.index')}}">{{ __('category.home') }}</a>
+                <span class="breadcrumb-item active">{{ __('category.business management') }}</span>
             </nav>
         </div>
 
         <div class="barAdd">
-            <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Category</button></a>
+            <a href="{{route('categories.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('category.create a document') }}</button></a>
         </div>
 
         @if (session('success'))
@@ -25,7 +25,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                {{ session('success') }}
+                {{ session('success') }} 
             </div><!-- alert -->
         @endif
 
@@ -45,7 +45,16 @@
             @foreach($result['data'] as $item)
                 <tr>
                     <th scope="row">{{ $i }}</th>
-                    <td>{{ $item['name'] }}</td>
+                    <td>
+                    <?php
+                        $path = explode("/",$item['path']);
+                        $path_html = "";
+                        foreach($path as $path_item){
+                            echo '<i style="color: #a5a5a5;font-weight: bold;margin-right: 5px; font-style: normal;">|—</i>';
+                        }
+                        echo $item['name'];
+                    ?>
+                    </td>
                     <td>{{ $item['description'] }}</td>
                     <td>{{ $item['created_at'] }}</td>
                     <td>{{ $item['updated_at'] }}</td>

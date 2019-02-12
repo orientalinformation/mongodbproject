@@ -43,14 +43,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Post\PostEloquentRepository::class
         );
 
-        $this->app->singleton(
-            \App\Repositories\Topic\TopicRepositoryInterface::class,
-            \App\Repositories\Topic\TopicEloquentRepository::class
-        );
 
         $this->app->singleton(
-            \App\Repositories\Source\SourceRepositoryInterface::class,
-            \App\Repositories\Source\SourceEloquentRepository::class
+            \App\Repositories\Rss\RssRepositoryInterface::class,
+            \App\Repositories\Rss\RssEloquentRepository::class
         );
 
         $this->app->singleton(
@@ -86,6 +82,21 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\User\UserRepositoryInterface::class,
             \App\Repositories\User\UserEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\AccountManager\AccountManagerRepositoryInterface::class,
+            \App\Repositories\AccountManager\AccountmanagerEloquentRepository::class
+        );    
+
+        $this->app->singleton(
+            \App\Repositories\PartnerManager\PartnerManagerRepositoryInterface::class,
+            \App\Repositories\PartnerManager\PartnermanagerEloquentRepository::class
+        );   
+
+        $this->app->singleton(
+            \App\Repositories\Discussion\DiscussionRepositoryInterface::class,
+            \App\Repositories\Discussion\DiscussionEloquentRepository::class
         );
     }
 }

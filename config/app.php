@@ -231,6 +231,9 @@ return [
         'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
         'EnvatoBook' => App\Helpers\Envato\Book::class,
         'EnvatoUlities' => App\Helpers\Envato\Ulities::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Input' => Illuminate\Support\Facades\Input::class
 
     ],
 

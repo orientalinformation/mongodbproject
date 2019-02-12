@@ -5,6 +5,7 @@ return [
     'navigation'        => 'Navigation',
     'dashboard'         => 'Dashboard',
     'accessControl'     => 'Access Control',
+    'accountManagement' => 'Account management',    
     'roles'             => 'Roles',
     'permissions'       => 'Permissions',
     'users'             => 'Users',
@@ -13,7 +14,7 @@ return [
     'library'           => 'Library',
     'information'       => 'Information Summary',
     'memoryUsage'       => 'Memory Usage',
+    'rss'               => 'Rss Management',
     'bookManager'       => 'Book Manager'
-
 
 ];

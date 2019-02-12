@@ -31,7 +31,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
 
@@ -81,6 +81,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         if ($request->method() == 'POST') {
+            $submitType = $request->get('submitType');
             $data['type'] = $request->get('type');
             $data['price'] = $request->get('price');
             $data['title'] = $request->get('title');
@@ -93,7 +94,8 @@ class BookController extends Controller
             if ($request->hasFile('image')) {
                 $fileImage = $request->image;
                 $bookPath = Config::get('constants.bookPath');
-                $path = Ulities::uploadFile($fileImage, $bookPath);
+                $ext = ['jpg','jpeg','gif','png','bmp'];
+                $path = Ulities::uploadFile($fileImage, $bookPath, $ext);
                 $data['image'] = $path;
                 $image = $path;
             }
@@ -101,7 +103,8 @@ class BookController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file;
                 $bookFilePath = Config::get('constants.bookFilePath');
-                $pathFile = Ulities::uploadFile($file, $bookFilePath);
+                $ext = ['doc','pdf','xlsx'];
+                $pathFile = Ulities::uploadFile($file, $bookFilePath, $ext);
                 $data['file'] = $pathFile;
                 $file = $pathFile;
             }
@@ -111,6 +114,10 @@ class BookController extends Controller
                 $status = 0;
             }
             $data['status'] = $status;
+
+            if($submitType=='DRAFT'){
+                $data['status'] = 'DRAFT';
+            }
 
             if ($request->has('share')) {
                 $share = 1;
@@ -140,7 +147,7 @@ class BookController extends Controller
                             'catID' => $request->get('catID'),
                             'image' => $image,
                             'file' => $file,
-                            'status' => $status,
+                            'status' => $data['status'],
                             'share' => $share
                         ],
                         'index' => $book->getIndexName(),
@@ -197,6 +204,7 @@ class BookController extends Controller
             $category_list = $this->cateogryRepository->all()->toArray();
             $book = $this->bookRepository->find($id)->toArray();
             if ($request->method() == 'POST') {
+                $submitType = $request->get('submitType');
                 $data['type'] = $request->get('type');
                 $data['price'] = $request->get('price');
                 $data['title'] = $request->get('title');
@@ -245,6 +253,10 @@ class BookController extends Controller
                     $status = 0;
                 }
                 $data['status'] = $status;
+                if($submitType=='DRAFT'){
+                    $data['status'] = 'DRAFT';
+                }
+
                 if($request->has('share')) {
                     $share = 1;
                 }else{
@@ -273,7 +285,7 @@ class BookController extends Controller
                             'catID' => $request->get('catID'),
                             'image' => $image,
                             'file' => $file,
-                            'status' => $status,
+                            'status' => $data['status'],
                             'share' => $share
                         ],
                         'index' => $book->getIndexName(),

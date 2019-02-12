@@ -11,20 +11,24 @@
     <div class="row row-sm">
         <div class="br-pageheader pd-y-15 pd-l-20" style="width: 100%;">
             <nav class="breadcrumb pd-0 mg-0 tx-12">
-                <a class="breadcrumb-item" href="{{route('libraries.index')}}">Library</a>
-                <span class="breadcrumb-item active">Library list</span>
+                <a class="breadcrumb-item" href="{{route('libraries.index')}}">{{ __('library.home') }}</a>
+                <span class="breadcrumb-item">{{ __('library.database management') }}</span>
+                <span class="breadcrumb-item active">{{ __('library.personal library') }}</span>
             </nav>
         </div>
 
         <div class="barAdd">
-            <a href="{{route('libraries.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> Add Library</button></a>
+            <a href="{{route('libraries.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('library.create a document') }}</button></a>
         </div>
 
         <table class="table table-bordered table-colored table-dark">
             <thead class="thead-colored thead-primary">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>{{ __('library.title_menu') }}</th>
+                <th>{{ __('library.author') }}</th>
+                <th>{{ __('library.date') }}</th>
+                <th>{{ __('library.number of views') }}</th>
                 <th>Share</th>
                 <th>Action</th>
             </tr>
@@ -35,6 +39,9 @@
                 <tr>
                     <th scope="row">{{ $i }}</th>
                     <td>{{ $item['name'] }}</td>
+                    <td></td>
+                    <td>{{ $item['created_at'] }}</td>
+                    <td>{{ $item['view'] }}</td>
                     <td><span onclick="share('{{$item['_id']}}', this)" data-share="{{$item['share']}}">
                         <?php
                             if($item['share']==1){
