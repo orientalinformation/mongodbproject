@@ -3,47 +3,19 @@
 namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use App\Repositories\Book\BookRepositoryInterface;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Config;
-use App\Helpers\Envato\Ulities;
 
-class DraftController extends Controller
+class NotFoundController extends Controller
 {
-    /**
-     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
-     */
-    protected $bookRepository;
-
-    /**
-     * BookController constructor.
-     * @param BookRepositoryInterface $bookRepository
-     */
-    public function __construct(BookRepositoryInterface $bookRepository)
-    {
-        $this->bookRepository = $bookRepository;
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $currentPage = 'draftIndex';
-        $limitPage = 5;
-        $rowPage = Config::get('constants.rowPage');
-        //Searching value
-        $q = null;
-        $page = $request->get('page');
-        if (is_null($page)) {
-            $page = 1;
-        }
-        $result = $this->bookRepository->getDraft($rowPage)->toArray();
-        $paginate = Ulities::calculatorPage(null, $page, $result['total'], $rowPage);
-        return view('Backend.Draft.index', compact(['currentPage', 'result', 'paginate', 'q']));
+        $currentPage = 'notfoundIndex';
+        return view('Backend.NotFound.index', compact(['currentPage']));
     }
 
     /**

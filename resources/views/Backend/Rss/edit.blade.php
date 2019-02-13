@@ -7,7 +7,7 @@
 {{ Form::model($rss, ['route'=>['rss.update', $rss->_id], 'class' => 'form-horizontal submit-form', 'method' => 'patch', 'enctype' => 'multipart/form-data']) }}
 <div class="modal-body">
     <div class="form-group row">
-        <label for="rss" class="col-md-2 col-sm-2 col-form-label">{{ __('rss.rss') }}</label>
+        <label for="rss" class="col-md-2 col-sm-2 col-form-label">{{ __('rss.linkRss') }}</label>
         <div class="col-md-10 col-sm-10">
             {{ Form::text('rss', null, array_merge(['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'rss'], [])) }}
             <span class="error rss"></span>

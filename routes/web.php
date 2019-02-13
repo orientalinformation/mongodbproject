@@ -20,6 +20,9 @@ Route::get('/', function () {
 
 Route::prefix('admin/')->group(function () {
 
+    //404
+    Route::get('/404', 'Backend\NotFoundController@index');
+
     //default
     Route::get('/', 'Backend\DashboardController@index');
 
@@ -54,6 +57,9 @@ Route::prefix('admin/')->group(function () {
 
     //Account Managers routes
     Route::resource('accounts', 'Backend\AccountManagersController');    
+
+    //Partner Managers routes
+    Route::resource('partners', 'Backend\PartnerManagersController');
 
     //====Book start=============
     Route::prefix('books/')->group(function () {
@@ -211,9 +217,29 @@ Route::prefix('admin/')->group(function () {
 
     //====Draft end===============
 
+    //====Libraries API start=============
+    Route::prefix('libraries_api/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Libraries API end===============
 
+    //====Web start=============
+    Route::prefix('web/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Web end===============
 
-
+    //====QCM start=============
+    Route::prefix('qcm/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====QCM end===============
 });
 
 

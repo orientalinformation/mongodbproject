@@ -11,5 +11,7 @@ namespace App\Repositories\Book;
 
 interface BookRepositoryInterface
 {
+    public function checkStatus($bookID, $status);
 
+    public function getDraft($perPage = 15);
 }

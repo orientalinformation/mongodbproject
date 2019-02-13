@@ -31,7 +31,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
-//        $this->middleware('auth');
+        $this->middleware('auth');
     }
 
 
@@ -81,6 +81,7 @@ class BookController extends Controller
     public function store(Request $request)
     {
         if ($request->method() == 'POST') {
+            $submitType = $request->get('submitType');
             $data['type'] = $request->get('type');
             $data['price'] = $request->get('price');
             $data['title'] = $request->get('title');
@@ -114,6 +115,10 @@ class BookController extends Controller
             }
             $data['status'] = $status;
 
+            if($submitType=='DRAFT'){
+                $data['status'] = 'DRAFT';
+            }
+
             if ($request->has('share')) {
                 $share = 1;
             } else {
@@ -142,7 +147,7 @@ class BookController extends Controller
                             'catID' => $request->get('catID'),
                             'image' => $image,
                             'file' => $file,
-                            'status' => $status,
+                            'status' => $data['status'],
                             'share' => $share
                         ],
                         'index' => $book->getIndexName(),
@@ -199,6 +204,7 @@ class BookController extends Controller
             $category_list = $this->cateogryRepository->all()->toArray();
             $book = $this->bookRepository->find($id)->toArray();
             if ($request->method() == 'POST') {
+                $submitType = $request->get('submitType');
                 $data['type'] = $request->get('type');
                 $data['price'] = $request->get('price');
                 $data['title'] = $request->get('title');
@@ -247,6 +253,10 @@ class BookController extends Controller
                     $status = 0;
                 }
                 $data['status'] = $status;
+                if($submitType=='DRAFT'){
+                    $data['status'] = 'DRAFT';
+                }
+
                 if($request->has('share')) {
                     $share = 1;
                 }else{
@@ -275,7 +285,7 @@ class BookController extends Controller
                             'catID' => $request->get('catID'),
                             'image' => $image,
                             'file' => $file,
-                            'status' => $status,
+                            'status' => $data['status'],
                             'share' => $share
                         ],
                         'index' => $book->getIndexName(),

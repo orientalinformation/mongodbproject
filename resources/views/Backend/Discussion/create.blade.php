@@ -20,21 +20,25 @@
                 <form method="post" action="{{route('discussions.store')}}" id="book-form" data-parsley-validate>
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label>{{ __('discussion.title') }}: <span class="tx-danger">*</span></label>
-                        <input class="form-control" type="text" name="name" placeholder="Enter name" required>
+                        <label>{{ __('discussion.title_menu') }}: <span class="tx-danger">*</span></label>
+                        <input class="form-control" type="text" name="title" placeholder="{{ __('discussion.enterTitle') }}" required>
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>{{ __('discussion.type') }}</label>
                         <select class="form-control select2 type" name="type" data-placeholder="Choose type" tabindex="-1" aria-hidden="true">
                             <option label="Choose type"></option>
-                            <option value="PUBLIC" selected>Publique</option>
+                            <option value="PUBLIC">Publique</option>
                             <option value="PRIVATE">Privée</option>
                             <option value="CONFIDENTIAL">Confidentielle</option>
                         </select>
                     </div><!-- form-group -->
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea rows="2" class="form-control" placeholder="Enter description" name="description"></textarea>
+                        <label>Début</label>
+                        <input id="start" class="form-control" name="start" placeholder="{{ __('discussion.enterStartDate') }}"/>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Fin</label>
+                        <input id="end" class="form-control" name="end" placeholder="{{ __('discussion.enterEndDate') }}"/>
                     </div><!-- form-group -->
                     <button type="submit" class="btn btn-info" formmethod="post">Save</button>
                     <button type="cancel" class="btn btn-light active" onclick="window.location= '{{route('discussions.index')}}'">Canel</button>
@@ -43,4 +47,15 @@
         </div>
     </div><!-- row -->
 
+@endsection
+
+@section('script')
+    <script>
+        $('#start').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+        $('#end').datepicker({
+            uiLibrary: 'bootstrap4'
+        });
+    </script>
 @endsection

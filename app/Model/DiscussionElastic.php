@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Elasticquent\ElasticquentTrait;
 
 class DiscussionElastic extends Model
 {
@@ -12,7 +13,7 @@ class DiscussionElastic extends Model
     protected $table = 'discussion';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name',
+        'title',
         'type',
         'moderator',
         'start',

@@ -7,13 +7,12 @@
  */
 
 return [
-    'header'            => 'Liste admin de Rss',
-    'userRssHeader'     => 'Liste use de Rss',
+    'header'            => 'Liste des fils RSS d\'Admin',
+    'userRssHeader'     => 'Liste des fils RSS des utilisateurs',
     'createRss'         => 'Ajouter un nouveau fil Rss',
     'editRss'           => 'Modifier un fil Rss',
     'deleteRss'         => 'Supprimer un Rss',
-    'rss'               => 'Fil Rss',
-    'linkRss'           => 'Lien Rss',
+    'linkRss'           => 'Fil Rss',
     'userName'          => 'Pseudo',
     'rssMenu'           => 'Management veille',
     'rssAdminTitle'     => 'Management admin veille',
@@ -22,5 +21,5 @@ return [
     'rssUserMenu'       => 'Utilisateur',
     'msg_rssRequired'   => 'Le champ de rss est obligatoire.',
     'msg_rssInvalid'    => 'Le format de lien rss est invalide.',
-    'btnCreateRss'      => 'Ajouter un Rss',
+    'btnCreateRss'      => 'Ajouter un fil Rss',
 ];

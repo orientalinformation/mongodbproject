@@ -10,6 +10,6 @@ class Discussion extends Model
     protected $collection = 'discussions';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name', 'type', 'moderator', 'start', 'end'
+        'title', 'type', 'moderator', 'start', 'end'
     ];
 }

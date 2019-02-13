@@ -15,7 +15,7 @@ class CreateDiscussionsCollection extends Migration
     {
         Schema::connection('mongodb')->table('discussions', function (Blueprint $collection) {
             $collection->index('id');
-            $collection->string('name');
+            $collection->string('title');
             $collection->string('type');
             $collection->string('moderator');
             $collection->dateTime('start');
