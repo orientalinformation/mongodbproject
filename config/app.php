@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'fr',
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'fr',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Plugins
+         */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Elasticquent\ElasticquentServiceProvider::class,
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        App\Providers\EnvatoServiceProvider::class,
+
     ],
 
     /*
@@ -214,6 +222,18 @@ return [
          * Package Service
          */
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
+        /*
+         * Plugins
+         */
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
+        'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
+        'EnvatoBook' => App\Helpers\Envato\Book::class,
+        'EnvatoUlities' => App\Helpers\Envato\Ulities::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Input' => Illuminate\Support\Facades\Input::class
 
     ],
 
