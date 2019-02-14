@@ -1,5 +1,8 @@
 @extends('Frontend.layout.master')
 
+@section('title', __('Home'))
+
+@section('content')
 <header class="header-fixed">
     <div class="container-fluid">
         <div class="row">
@@ -35,6 +38,7 @@
         </div>
     </div>
 </header>
+
 <div class="container-fluid container-home">
     <div class="row slide">
         <div class="col-12"><img src="{{ URL::to('/image/front/slider.png')}}" class="img-slide"></div>
@@ -124,11 +128,13 @@
                         <div class="point-more">...</div>
                         <p class="title"><strong>Web -</strong> Title</p>
                     </div>
+                
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
 
 @section('script')
     <script>
