@@ -14,7 +14,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
+        $currentPage = 'home';
+
+        return view('Frontend.Home.index', compact(['currentPage']));
     }
 
     /**

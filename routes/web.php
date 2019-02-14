@@ -16,6 +16,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//===========FONTEND==========
+Route::namespace('Frontend')->group(function () {
+
+    Route::get('/', 'HomeController@index');
+
+});
+
 //===========BACKEND==========
 
 Route::prefix('admin/')->group(function () {

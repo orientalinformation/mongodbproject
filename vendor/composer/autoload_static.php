@@ -4,21 +4,21 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
+class ComposerStaticInit9d9f9e025bb4ea691d174e281afdab3e
 {
     public static $files = array (
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '3a37ebac017bc098e9a86b35401e7a68' => __DIR__ . '/..' . '/mongodb/mongodb/src/functions.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '801c31d8ed748cfa537fa45402288c95' => __DIR__ . '/..' . '/psy/psysh/src/functions.php',
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
@@ -153,8 +153,8 @@ class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -475,6 +475,8 @@ class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
         'App\\Http\\Controllers\\Backend\\DraftController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/DraftController.php',
         'App\\Http\\Controllers\\Backend\\EventController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/EventController.php',
         'App\\Http\\Controllers\\Backend\\LibraryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/LibraryController.php',
+        'App\\Http\\Controllers\\Backend\\NotFoundController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/NotFoundController.php',
+        'App\\Http\\Controllers\\Backend\\PartnerManagersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PartnerManagersController.php',
         'App\\Http\\Controllers\\Backend\\PermissionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PermissionsController.php',
         'App\\Http\\Controllers\\Backend\\PinController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PinController.php',
         'App\\Http\\Controllers\\Backend\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/ProductController.php',
@@ -527,6 +529,8 @@ class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
         'App\\Repositories\\EloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/EloquentRepository.php',
         'App\\Repositories\\Library\\LibraryEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Library/LibraryEloquentRepository.php',
         'App\\Repositories\\Library\\LibraryRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/Library/LibraryRepositoryInterface.php',
+        'App\\Repositories\\PartnerManager\\PartnerManagerRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/PartnerManager/PartnerManagerRepositoryInterface.php',
+        'App\\Repositories\\PartnerManager\\PartnermanagerEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/PartnerManager/PartnermanagerEloquentRepository.php',
         'App\\Repositories\\PermissionRole\\PermissionRoleEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/PermissionRole/PermissionRoleEloquentRepository.php',
         'App\\Repositories\\PermissionRole\\PermissionRoleRepositoryInterface' => __DIR__ . '/../..' . '/app/Repositories/PermissionRole/PermissionRoleRepositoryInterface.php',
         'App\\Repositories\\Permission\\PermissionEloquentRepository' => __DIR__ . '/../..' . '/app/Repositories/Permission/PermissionEloquentRepository.php',
@@ -549,6 +553,7 @@ class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
         'Barryvdh\\Debugbar\\Controllers\\BaseController' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Controllers/BaseController.php',
         'Barryvdh\\Debugbar\\Controllers\\CacheController' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Controllers/CacheController.php',
         'Barryvdh\\Debugbar\\Controllers\\OpenHandlerController' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Controllers/OpenHandlerController.php',
+        'Barryvdh\\Debugbar\\Controllers\\TelescopeController' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/Controllers/TelescopeController.php',
         'Barryvdh\\Debugbar\\DataCollector\\CacheCollector' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/DataCollector/CacheCollector.php',
         'Barryvdh\\Debugbar\\DataCollector\\EventCollector' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/DataCollector/EventCollector.php',
         'Barryvdh\\Debugbar\\DataCollector\\FilesCollector' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/DataCollector/FilesCollector.php',
@@ -2760,7 +2765,11 @@ class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV7' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV7.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerTrait' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerTrait.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
+        'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditionsForV7AndPrevious' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditionsForV7AndPrevious.php',
+        'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditionsForV8' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditionsForV8.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
+        'Mockery\\Adapter\\Phpunit\\MockeryTestCaseSetUpForV7AndPrevious' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCaseSetUpForV7AndPrevious.php',
+        'Mockery\\Adapter\\Phpunit\\MockeryTestCaseSetUpForV8' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCaseSetUpForV8.php',
         'Mockery\\Adapter\\Phpunit\\TestListener' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php',
         'Mockery\\ClosureWrapper' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/ClosureWrapper.php',
         'Mockery\\CompositeExpectation' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CompositeExpectation.php',
@@ -4926,10 +4935,10 @@ class ComposerStaticInit9cd9b830abe40521927ae092ada041e8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9cd9b830abe40521927ae092ada041e8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9cd9b830abe40521927ae092ada041e8::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit9cd9b830abe40521927ae092ada041e8::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit9cd9b830abe40521927ae092ada041e8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9d9f9e025bb4ea691d174e281afdab3e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9d9f9e025bb4ea691d174e281afdab3e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit9d9f9e025bb4ea691d174e281afdab3e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit9d9f9e025bb4ea691d174e281afdab3e::$classMap;
 
         }, null, ClassLoader::class);
     }
