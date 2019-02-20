@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Middleware\CheckAdmin;
 
 class RssController extends Controller
 {

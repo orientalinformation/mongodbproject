@@ -8,7 +8,9 @@
         <div class="row">
             <div class="col-lg-8">
                 <div class="logo">
-                    <img src="{{ URL::to('/image/front/logo.png')}}" class="img-logo">
+                    <a href="/">
+                        <img src="{{ URL::to('/image/front/logo.png')}}" class="img-logo">
+                    </a>
                     <span class="logo-title">Compagnons Du Devoir</span>
                 </div>
             </div>
@@ -31,7 +33,42 @@
                         </ul>
                     </div>
                     <div class="dropdown">
-                        <button class="btnConnect">CONNEXION</button>
+                        @if(!isset(Auth::user()->fullname))
+                            <a href="{{ route('frontLogin') }}" class="btnConnect">CONNEXION</a>
+                        @else
+                            <span class="name-avatar-home dropdown-toggle" data-toggle="dropdown">{{ Auth::user()->fullname }}</span>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">MON PROFIL</a></li>
+                                <li><a href="#">MA VEILLE</a></li>
+                                <li>
+                                    <a href="#">MES OUTILS</a>
+                                    <ul class="sub-menu-home">
+                                        <li>Calendrier des événements</li>
+                                        <li>Lien de stockage</li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">MES NOTIFICATIONS</a></li>
+                                <li><a href="#">MES ARTICLES</a></li>
+                                <li><a href="#">MES ENQUETES</a></li>
+                                <li><a href="#">MES PARAMÉTRES</a></li>
+                                <li><a href="{{ route('frontLogout') }}">LOGOUT</a></li>
+                            </ul>
+                            <?php
+                                if (!empty(Auth::user()->avatar)) {
+
+                                    $url = parse_url(Auth::user()->avatar);
+                                    if (isset($url['scheme']) && ($url['scheme'] == 'https' || $url['scheme'] == 'http')) {
+                                        $imagePath = Auth::user()->avatar;
+                                    } else {
+                                        $imagePath = URL::to('/upload/avatar').'/'.Auth::user()->avatar;
+                                    }
+
+                                } else {
+                                    $imagePath = URL::to('/image/front/avatar-home.png');
+                                }
+                            ?>
+                            <img src="{{ $imagePath }}" width="50" height="50" class="avatar-home">
+                        @endif
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ use App\Repositories\Pin\PinRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Pin;
+use App\Http\Middleware\CheckAdmin;
 
 class PinController extends Controller
 {
@@ -22,6 +23,7 @@ class PinController extends Controller
     public function __construct(PinRepositoryInterface $pinRepository)
     {
         $this->pinRepository = $pinRepository;
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 
