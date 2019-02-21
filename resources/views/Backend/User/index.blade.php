@@ -60,11 +60,36 @@
         </div>
     </div><!-- br-section-wrapper -->
 
+    <!-- Single delete modal -->
+    <div class="modal fade" tabindex="-1" id="delete_modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content bd-0">
+                <div class="modal-header pd-y-20 pd-x-25">
+                    <h4 class="tx-16 mg-b-0 tx-uppercase tx-inverse tx-bold">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        {{ __('Are you sure you want to delete this ?') }}
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <form action="{{route('users.index')}}" id="form_delete" method="POST">
+                        {{ method_field("DELETE") }}
+                        {{ csrf_field() }}
+                        <input type="submit" class="btn btn-danger float-right delete-confirm" value="{{ __('Yes, Delete it!') }}">
+                    </form>
+                    <button type="button" class="btn btn-secondary tx-11 tx-uppercase pd-y-12 pd-x-25 tx-mont tx-medium" data-dismiss="modal">
+                        {{ __('Close') }}
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal --> 
 @endsection
 
 @section('script')
-    <script src="{{ asset('/js/alert-close.js') }}"></script>
     <script>
-              
+        $('td').on('click', '.delete', function (e) {
+            $('#form_delete')[0].action = '{{ route('users.destroy', ['id' => '__id']) }}'.replace('__id', $(this).data('id'));            
+            $('#delete_modal').modal('show');
+        });                   
    </script>        
 @endsection    

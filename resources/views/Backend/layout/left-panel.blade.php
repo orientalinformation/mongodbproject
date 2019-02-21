@@ -1,9 +1,13 @@
 <!-- ########## START: LEFT PANEL ########## -->
-<div class="br-logo"><a href="{{route('dashboard.index')}}"><span>[</span>{{ __('left-panel.logoName') }}<span>]</span></a></div>
+<div class="br-logo">
+    <a href="{{route('dashboard.index')}}">
+        <img src="{{ URL::to('/image/logo-compagnons.png')}}" class="wd-150">
+    </a>
+</div>
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{ __('left-panel.navigation') }}</label>
     <div class="br-sideleft-menu">
-        <a href="#" class="br-menu-link @if ($currentPage == 'dashboard') active show-sub @endif">
+        <a href="#" class="br-menu-link @if ($currentPage == 'dashboard' || $currentPage == 'partner') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-contact-outline tx-24"></i>
                 <span class="menu-item-label">Administratif</span>
@@ -17,7 +21,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">{{ __('left-panel.partnerManagement') }}</a>
+                <a href="{{route('partners.index')}}" class="nav-link @if ($currentPage == 'partner') active @endif">
+                    {{ __('left-panel.partnerManagement') }}
+                </a>
             </li>
         </ul>
 

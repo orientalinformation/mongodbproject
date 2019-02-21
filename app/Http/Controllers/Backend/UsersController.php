@@ -377,6 +377,17 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid Role ID supplied.'))->withInput();
+        }
+
+        //delete
+        $result = $this->userRepository->delete($id);
+
+        if ($result) {
+            return redirect()->route("users.index")->with("success",__('Successfully Deleted.'));
+        }
+        return back()->withErrors(__('Sorry it appears there was a problem deleting this.'))->withInput();        
     }
 }
