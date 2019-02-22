@@ -21,7 +21,6 @@
 </header>
 <div class="container-fluid">
     <div class="row slide">
-        <!-- <div class="col-lg-12 nopadding"><img src="image/background_login.png" class="img-slide img-background-login"></div> -->
         <div class="bg-login"></div>
         <div class="col-lg-12 title-background-login">
             <span>Connectez Vous</span>
@@ -46,7 +45,7 @@
                         @endif 
                         <p class="login-form-foot">
                             <a href="#"><span class="caret"></span> <span>Mot de passe oublié</span></a>
-                            <a href="#" class="float-right"><span class="caret"></span> <span>Créer un compte</span></a>
+                            <a href="{{ route('register') }}" class="float-right"><span class="caret"></span> <span>Créer un compte</span></a>
                         </p>
                         <button class="btnLogin">Me Connecter</button>
                     </div>

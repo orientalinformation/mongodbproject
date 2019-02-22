@@ -406,7 +406,7 @@ button:active, button:focus {
 
 .register-form{
     font-family: sans-serif;
-    margin: 0 100px;
+    margin: 0 auto;
 }
 
 .login-form input[type="text"]{
@@ -435,7 +435,7 @@ button:active, button:focus {
     height: 35px;
 }
 
-.register-form input[type="text"]{
+.register-form input[type="text"], .register-form input[type="password"]{
     display: block;
     border-radius: 5px;
     padding: 5px; 
@@ -463,6 +463,11 @@ button:active, button:focus {
    	-webkit-padding: 3px;
    	border: 1px solid #797979;
     height: 35px;
+}
+
+.choose-form{
+    top: -100px;
+    text-align: center;
 }
 
 .register-form input{
@@ -501,7 +506,7 @@ button:active, button:focus {
     font-size: 13px;
     font-weight: 500;
     margin: 15px 0;
-    width: 100px;
+    width: 110px;
 }
 
 .forgot-form label{
@@ -524,7 +529,7 @@ button:active, button:focus {
 }
 
 .register-form .inlineRow{
-    width: 100px;
+    width: 75px;
 }
 
 .register-form span.label{
@@ -545,7 +550,6 @@ button:active, button:focus {
 }
 
 .chkbox {
-    padding-left: 10px;
     font-weight: bold;
     width: auto !important;
     margin: 10px !important;
@@ -574,13 +578,19 @@ button:active, button:focus {
 }
 
 .register-form .inputField{
-	width: 450px;
+	width: 400px;
 }
 
 .input-table{
     display: table;
     margin: 0 auto;
     width: 700px;
+}
+
+.input-table-choose{
+    display: inline-block;
+    text-align: left;
+    width: auto;
 }
 
 .input-table-register{
@@ -614,9 +624,14 @@ button:active, button:focus {
     color: #ffffff;
     font-size: 12px;
     text-transform: uppercase;
-    margin: 10px -95px 50px;
+    margin: 40px -95px 80px;
     position: relative;
     left: 50%;
+}
+
+.require{
+    font-size: 14px;
+    color: red;
 }
 
 .txt-login-with{
@@ -698,10 +713,18 @@ input.chkAgree{
 	/*-webkit-appearance: none;*/
 	border: 1px solid #000000;
 	float: none;
+    left: 0;
+    position: absolute;
+    top: 3px;
+}
+
+.wrap_agree{
+    position: relative;
+    padding-left: 30px;
+    top: 20px;
 }
 
 .groupAgree{
-	text-align: center;
     font-size: 13px;
     width: 600px;
     margin: 0 auto;
@@ -1157,6 +1180,8 @@ ul.horizontal-menu-library > li a{
 
 #groupType{
 	margin: 10px 0;
+    display: inline-block;
+    width: 68%;
 }
 
 .typeTab{
@@ -1165,6 +1190,10 @@ ul.horizontal-menu-library > li a{
 
 .typeTab > .nav-tabs>li.active>a{
     border: none
+}
+
+.typeTab > .nav-tabs>li>a{
+    font-size: 13px;
 }
 
 .typeTab > .nav-tabs {
@@ -1192,6 +1221,448 @@ ul.horizontal-menu-library > li a{
     margin: 10px 0
 }
 
+.bg_discussion{
+    margin: 0 -48px;
+    font-size: 12px;
+    background: url(../../image/front/bg_message.png) no-repeat center;
+    background-position: left;
+    background-size: auto 80px;
+    padding: 12px 18px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.bg_message{
+    margin: 0 -50px;
+    font-size: 12px;
+    background: url(../../image/front/bg_discussion.png) no-repeat center;
+    background-position: left;
+    background-size: auto 80px;
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.thumb_discussion{
+    width: 48px;
+    height: 48px;
+    border-radius: 10%;
+}
+
+.group_thumb_notification{
+    margin: 20px 0;
+    position: relative;
+}
+
+.group_thumb_notification i{
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 5px;
+    color: #979797;
+    float: right;
+    margin: 15px 0;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+}
+
+.red-point{
+    padding: 8px 8px;
+    background: red;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    left: 40px;
+    top: -5px;
+}
+
+.btn_public{
+    background: url(../../image/front/rounded_public.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    padding: 20px;
+    color: #ffffff;
+    width: 200px;
+    text-align: left;
+}
+
+.btn_public i{
+    border-radius: 50%;
+    border: 1px solid;
+    padding: 5px;
+    background: #c4c4c4;
+}
+
+.btn_private{
+    background: url(../../image/front/rounded_private.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    padding: 20px;
+    color: #989898;
+    width: 200px;
+    text-align: left;
+}
+
+.btn_private i{
+    border-radius: 50%;
+    border: 1px solid;
+    padding: 5px;
+    background: #c4c4c4;
+    height: 24px;
+    width: 24px;
+    color: #ffffff;
+}
+
+.group_btn{
+    margin: -5px 0;
+}
+
+.group_input_discussion input{
+    display: block;
+    border-radius: 5px;
+    width: 600px;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.group_input_discussion{
+    margin: 20px 0;
+}
+
+.group_input_discussion span{
+    font-weight: 400;
+    font-style: italic;
+}
+
+.group_date{
+    color: #989898;
+}
+
+.group_date > .date{
+    margin: 0 10px;
+}
+
+.group_btn_search button{
+    background: url(../../image/front/rounded_private.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    padding: 20px;
+    color: #989898;
+    width: 150px;
+    text-align: center;
+}
+
+.group_btn_search button.active{
+    background: url(../../image/front/rounded_public.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    padding: 20px;
+    color: #ffffff;
+    width: 150px;
+    text-align: center;
+}
+
+.result_search{
+    font-size: 25px;
+    margin: 10px 0;
+}
+
+.label_search{
+    color: #ff7609;
+}
+
+.group_box_search{
+    border: 1px solid #989898;
+    border-radius: 5px;
+}
+
+.headline_img{
+    border-radius: 3px;
+    height: 25px;
+    width: 25px;
+    margin: 5px 0px 5px 0;
+}
+
+.tag_search{
+    color: #4a7ade;
+    margin: 5px 10px;
+}
+
+.group_headline_search span{
+    font-size: 14px;
+    margin: 0 10px;
+}
+
+.group_headline_search i{
+    color: #979797;
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 5px 3px;
+    height: 24px;
+    width: 24px;
+    text-align: center;
+}
+
+.group_headline_search p{
+    margin: 10px 0;
+    color: #979797;
+}
+
+.group_paragraph{
+    border-bottom: 1px solid #979797;
+    margin: 10px;
+}
+
+.group_paragraph:last-child{
+    border-bottom: none;
+}
+
+.group_radio_seach label{
+    margin: 0 10px;
+    font-weight: 100;
+}
+
+.group_radio_seach input[type="radio"] {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+    transform: scale(1.5);
+}
+
+.group_radio_seach{
+    margin: 10px 0;
+}
+
+.date_search{
+    display: block;
+    margin: 5px 0;
+    width: 180px;
+}
+
+.group_result_search{
+    padding: 15px 0;
+}
+
+.input-group-addon{
+    background: none;
+    border: none;
+    position: absolute;
+    right: 7px;
+    top: 3px;
+}
+
+.btn_create_chat{
+    background: url(../../image/front/rounded_public.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    color: #ffffff;
+    width: 200px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.panel_chat img{
+    height: 80px;
+    width: 80px;
+    margin-left: 30px;
+}
+
+.panel_chat{
+    position: absolute;
+    width: 100%;
+    background: #ffffff;
+    height: 100px;
+    z-index: 10;
+}
+
+.panel_chat > .panel_name_chat{
+    top: 0;
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.panel_chat > .panel_description_chat{
+    margin-left: 15px;
+    font-style: italic;
+    font-weight: 200;
+}
+
+.panel_chat .panel_icon_chat{
+    color: #4a7ade;
+    position: absolute;
+    top: 60px;
+    left: 130px;
+}
+
+.panel_chat .panel_icon_chat span{
+    margin: 0 10px;
+}
+
+.group_chat{
+    overflow-y: scroll;
+    height: 400px;
+    top: 100px;
+    position: relative;
+}
+
+.group_chat .name{
+    font-weight: 600;
+    margin: 0 10px;
+}
+
+.group_chat .time{
+    color: #979797;
+}
+
+.group_chat img{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}
+
+.group_chat .text{
+    background: #f4f2f3;
+    padding: 20px;
+    margin: 0 45px;
+    border-radius: 5px;
+}
+
+.group_chat .chat_text{
+    margin: 15px 0;
+}
+
+.owner .text{
+    background: #ffffff;
+    border: 1px solid #979797;
+}
+
+.chat_editor{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.chat_editor input{
+    width: 96%;
+    position: absolute;
+    height: 42px;
+    margin-left: 0;
+    border: 1px solid #c89776;
+    padding-left: 50px;
+    padding-right: 80px;
+    border-radius: 3px;
+}
+
+.chat_editor input:focus {
+    outline: none;
+}
+
+.chat_editor button:focus,
+.chat_editor button:active {
+    border: 1px solid #c89776;
+}
+
+.chat_editor .add{
+    padding: 10px;
+    display: block;
+    position: absolute;
+    border: 1px solid #c99677;
+    color: #c89776;
+    border-left: 3px solid #c99677;
+    border-radius: 3px;
+}
+
+.col-register-left{
+    border-right: 1px solid;
+}
+
+.chat_tool{
+    position: absolute;
+    right: 50px;
+    top: 0;
+    font-size: 30px;
+    color: #c99774;
+}
+
+.chat_tool span{
+    top: -2px;
+    position: absolute;
+    right: 30px;
+}
+
+.btn_invite{
+    background: url(../../image/front/rounded_public.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    color: #ffffff;
+    padding: 30px;
+    right: 40px;
+    position: absolute;
+}
+
+.website_preview{
+    background: #f9f0e9;
+    border: 1px solid #ff7709;
+    border-left: 3px solid #ff7709;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 10px 0;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.website_preview .logo{
+    text-transform: uppercase;
+    font-weight: bold;
+    display: inline-block;
+    margin: 0;
+}
+
+.website_preview .title{
+    text-transform: uppercase;
+    font-weight: 200;
+}
+
+.website_preview .description{
+    font-weight: 200;
+    margin-top: 5px;
+}
+
+.link{
+    color: #85a5d8;
+}
+
+.text{
+    font-family: sans-serif;
+}
+
+.thumb_list{
+    list-style-type: none;
+    display: inline-flex;
+    padding: 0;
+}
+
+.thumb_list img{
+    border-radius: unset;
+}
+
+.thumb_list li{
+    margin: 0 5px;
+}
+
+.thumb_list li img{
+    height: 50px;
+    width: 50px;
+}
 
 @media only screen and (max-width: 1338px) {
   .title-background-login span {
@@ -1302,7 +1773,7 @@ ul.horizontal-menu-library > li a{
 
 .menu-tooltips {
     position: relative;
-    right: -155px;
+    right: -100px;
     bottom: 37px;
     width: 28px;
     height: 28px;
@@ -1317,3 +1788,353 @@ ul.horizontal-menu-library > li a{
 .menu-tooltips:after {
     content: "...";
 }
+
+.btn-upload {
+    margin-top: 23px;
+    background-color: #ff7600 !important;
+    border: none !important;
+}
+
+.container-fluid-head {
+    height: 150px;
+}
+
+.title-header-hide {
+    font-size: 57px;
+    font-weight: bold;
+    display: block;
+    margin-top: 61px;
+    position: relative;
+    color: #e9e9e9;
+}
+
+.title-header-show {
+    font-size: 45px;
+    position: relative;
+    top: -59px;
+    left: 13px;
+}
+
+.input-left-menu {
+    position: relative;
+    padding: 0 0 0 20px;
+    margin: 15px -50px;
+    width: 90%;
+}
+
+.row-header-search {
+    padding: 12px 0 0 0;
+}
+
+.label-header-search {
+    padding: 6px 0 0 0;
+    font-weight: 400;
+}
+
+#input-img-right {
+    position: absolute;
+    bottom: 7px;
+    right: 20px;
+    color: #949494;
+    font-size: 20px;
+}
+
+.btn-chat-header-discussion {
+    margin: 11px 0 0 50px;
+    background-color: #ff7600 !important;
+    border: none !important;
+    width: 207px;
+
+}
+
+.header-line {
+    margin-top: 37px;
+    border-top: 1px solid #c99777;
+    top: -13px;
+    height: 5px;
+    padding: 10px 0;
+
+}
+
+.text-line{
+    text-transform: uppercase;
+    color: #ff7609;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.title-discussion{
+    margin: 20px 0;
+    color: #ff7600;
+    font-size: 20px;
+}
+
+.title-chat-dicussion {
+    font-size: 27px;
+}
+
+.distance-title-chat-discussion {
+    margin-top: -7px;
+}
+
+.distance-content-chat-discussion {
+    margin-top: 19px;
+}
+
+.distance-bottom-chat-discussion {
+    margin-right: 10px;
+    color: #3c62d8;
+}
+
+.chat-notification {
+    position: relative;
+    top: -155px;
+    right: -124px;
+    width: 28px;
+    height: 28px;
+    background-color: #f90303;
+    border-radius: 50%;
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+}
+.number-chat-notification {
+    padding: 4px 0 0 0;
+    display: block;
+}
+
+.group-chat-box {
+    margin: 0 0 0 -29px;
+    padding: 10px 0;
+}
+
+.group-message-box {
+    margin: -18px 0 0 -29px;
+    padding: 45px 0;
+}
+
+.thumb-message {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+.thumb-large-message {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+.red-point-article{
+    padding: 8px 8px;
+    background: red;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    left: 34px;
+    top: -1px;
+}
+
+.red-point-article-message{
+    padding: 5px;
+    background: red;
+    border-radius: 50%;
+    height: 28px;
+    width: 28px;
+    position: absolute;
+    left: 44px;
+    top: -8px;
+    color: #f3f3f4;
+    text-align: center;
+}
+
+.group-thumb-chat-notification{
+    margin: -29px 0 0 14px;
+    position: relative;
+}
+
+.message-name {
+    margin: 5px;
+}
+
+.btn-chat-message {
+    background-color: #ff7600;
+    color: #f3f3f4;
+    float: right;
+}
+
+.content-chat-message {
+    margin-left: -14px;
+}
+
+.group-chat-nouvelle-message {
+    margin: 20px 0 0 -28px;
+
+}
+
+.name-chat-nouvelle {
+    margin-left: 7px;
+}
+
+.input-read-chat-nouvelle {
+    margin-left: 57px;
+    width: 97%;
+}
+
+.time-chat-nouvelle {
+    padding: 16px 0 0 0;
+    text-align: right;
+    color: #ff7600;
+    font-style: italic;
+}
+
+/* register */
+.switch-field {
+  font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+  display: inline-block;
+  overflow: hidden;
+  height: 45px;
+  position: relative;
+  top: 5px;
+}
+
+.switch-title {
+  margin-bottom: 6px;
+}
+
+.switch-field input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.switch-field label {
+  float: left;
+}
+
+.switch-field label {
+  display: inline-block;
+  width: 120px;
+  background-color: #e4e4e4;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 10px;
+  font-weight: normal;
+  text-align: center;
+  text-shadow: none;
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition:    all 0.1s ease-in-out;
+  -ms-transition:     all 0.1s ease-in-out;
+  -o-transition:      all 0.1s ease-in-out;
+  transition:         all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+  cursor: pointer;
+}
+
+.switch-field input:checked + label {
+  background-color: #ff7600;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+  border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+  border-radius: 0 4px 4px 0;
+}
+
+/* end register */
+
+.text-shadow{
+    color: #eeeeee;
+    font-size: 40px;
+    font-weight: 300;
+}
+
+.text-main{
+    color: #ff770b;
+    font-size: 30px;
+    font-weight: 300;
+    position: relative;
+    top: -40px;
+}
+
+.panel_editor label{
+    font-weight: 400;
+    font-size: 13px;
+    margin: 0 20px;
+}
+
+.panel_editor input{
+    width: 400px;
+    border-radius: 3px;
+    border: 1px solid #c7c7c7;
+}
+
+.panel_editor button{
+    background: url(../../image/front/rounded_public.png) no-repeat center;
+    background-size: contain;
+    border: none;
+    text-transform: uppercase;
+    color: #ffffff;
+    padding: 14px;
+    width: 100px;
+    margin: 0 10px;
+}
+
+.panel_editor .type{
+    width: 200px;
+    height: 20px;
+}
+
+.panel_editor .input_right{
+    display: inline-block;
+    width: 250px;
+}
+
+.panel_editor .panel_group{
+    margin: 10px 0;
+}
+
+.invalid-feedback{
+    font-size: 10px;
+    left: 110px;
+    position: relative;
+    display: block;
+}
+
+.input-group > .form-control:not(:first-child), .input-group > .custom-select:not(:first-child){
+    border-radius: 5px;
+}
+
+.label-civ{
+    position: relative;
+    top: -3px;
+}
+
+.label-civ{
+    position: relative;
+    top: -3px;
+}
+
+.label-fil{
+    position: relative;
+    top: 10px;
+}
+
+.label-sta{
+    position: relative;
+    top: 10px;
+    display: inline-block;
+}
+
+
