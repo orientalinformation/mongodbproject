@@ -77,6 +77,7 @@ class CrawlWeb extends Command
 //     */
     public function handle()
     {
+        //abc
 //        $this->getTechnologies();
 
     }
