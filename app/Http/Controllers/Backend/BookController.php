@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Config;
 use Validator;
 use App\Image;
 use Auth;
+use App\Http\Middleware\CheckAdmin;
 
 class BookController extends Controller
 {
@@ -31,6 +32,7 @@ class BookController extends Controller
     {
         $this->bookRepository = $bookRepository;
         $this->cateogryRepository = $cateogryRepository;
+        $this->middleware(CheckAdmin::class);        
         $this->middleware('auth');
     }
 

@@ -51,4 +51,16 @@ class RoleEloquentRepository extends EloquentRepository implements RoleRepositor
         }
         return false;
     }
+
+    /**
+     * Get Role By Key
+     *
+     * @param [type] $key
+     * @param [type] $value
+     * @return void
+     */
+    public function getRoleByKey($key, $value)
+    {
+        return Role::where($key, $value)->first();
+    }
 }

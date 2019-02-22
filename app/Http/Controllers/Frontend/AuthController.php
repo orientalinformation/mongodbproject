@@ -1,0 +1,211 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\AccountManager\AccountManagerRepositoryInterface;
+use App\Repositories\Role\RoleRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
+use Validator;
+use Auth;
+
+class AuthController extends Controller
+{
+    /**
+     * @var UserRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $userRepository;
+
+    /**
+     * @var AccountManagerRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $accountRepository;
+
+    /**
+     * @var RoleRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $roleRepository;
+
+    /**
+     * AuthController constructor.
+     * @param UserRepositoryInterface $userRepository
+     * @param AccountManagerRepositoryInterface $accountRepository
+     * @param RoleRepositoryInterface $roleRepository
+     */
+    public function __construct(UserRepositoryInterface $userRepository, AccountManagerRepositoryInterface $accountRepository, RoleRepositoryInterface $roleRepository)
+    {
+        $this->userRepository = $userRepository;
+        $this->accountRepository = $accountRepository;
+        $this->roleRepository = $roleRepository;
+    }
+
+    /**
+     * show Registration Form
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        return view('Frontend.Auth.register');
+    }
+
+    /**
+     * register
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function register(Request $request)
+    {
+        $rules = [
+            'first_name'            => 'required|string|max:255',
+            'last_name'             => 'required|string|max:255',
+            'email'                 => 'required|email|string|confirmed',
+            'email_confirmation'    => 'required|email|string',
+            'password'              => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
+            'career'                => 'required|integer|min:0',
+            'association'           => 'required|integer|min:0',
+            'status'                => 'required|integer|min:0',
+            'type'                  => 'required|array',
+        ];
+
+        $messages = [
+            'first_name.required'           => __('validation.required', ['attribute' => "nom"]),
+            'last_name.required'            => __('validation.required', ['attribute' => "prénom"]),
+            'email.required'                => __('validation.required', ['attribute' => "email"]),
+            'email.email'                   => __('validation.email', ['attribute' => "email"]),
+            'email.confirmed'               => __('validation.confirmed', ['attribute' => "email"]),
+            'email_confirmation.required'   => __('validation.required', ['attribute' => "confirmation de l'émail"]),
+            'email_confirmation.email'      => __('validation.email', ['attribute' => "confirmation de l'émail"]),
+            'password.required'             => __('validation.required', ['attribute' => "mot de passe"]),
+            'password.min'                  => __('validation.min.numeric', ['attribute' => "mot de passe", 'min' => 6]),
+            'password.confirmed'            => __('validation.confirmed', ['attribute' => "mot de passe"]),
+            'password_confirmation.required'=> __('validation.required', ['attribute' => "confirmation mot de passe"]),
+            'password_confirmation.min'     => __('validation.min.numeric', ['attribute' => "confirmation mot de passe", 'min' => 6]),
+            'career.required'               => __('validation.required', ['attribute' => "filière"]),
+            'career.min'                    => __('validation.min.numeric', ['attribute' => "filière", 'min' => 0]),
+            'association.required'          => __('validation.required', ['attribute' => "membre de l'association"]),
+            'association.min'               => __('validation.min.numeric', ['attribute' => "membre de l'association", 'min' => 0]),
+            'status.required'               => __('validation.required', ['attribute' => "status"]),
+            'status.min'                    => __('validation.min.numeric', ['attribute' => "status", 'min' => 0]),
+            'type.required'                 => __('validation.required', ['attribute' => "type"]),
+            'type.array'                    => __('validation.array', ['attribute' => "type"]),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+
+        // check username and email exists       
+        $data = $request->all();
+        
+        if ($this->userRepository->checkExistsByKey('email', trim($data['email']))) {
+            return back()->withErrors(__('Le mail existe déjà.'))->withInput();  
+        }
+
+        // get account and role
+        $account = $this->accountRepository->getAccountByKey('name', 'Premium');
+
+        if (empty($account)) {
+            return back()->with('error', __('Échec de la création.'));  
+        }
+
+        $role = $this->roleRepository->getRoleByKey('name', 'user');
+
+        if (empty($role)) {
+            return back()->with('error', __('Échec de la création.'));  
+        }
+
+        // Hash password
+        $data["role_id"] = $role->id;
+        $data["account_id"] = $account->id;
+        $data["is_admin"] = 0;
+        $data["gender"] = 0;
+        $data["fullname"] = $data['first_name'].' '.$data['last_name'];
+        $data["birthday"] = date("Y-m-d");
+        $data["password"] = Hash::make($data["password"]);
+        $data["type"] = json_encode($data["type"]);
+
+        // create
+        $result = $this->userRepository->create($data);
+
+        if ($result) {
+            auth()->login($result);
+            return redirect('/home');
+        }
+
+        return back()->with('error', __('Échec de la création.'));
+    }
+
+    /**
+     * register
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function login(Request $request)
+    {
+        return view('Frontend.Auth.login');
+    }
+
+    /**
+     * register
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function postLogin(Request $request)
+    {
+        $rules = [
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ];
+
+        $messages = [
+            'username.required' => __('validation.required', ['attribute' => "courriel ou pseudo"]),
+            'password.required' => __('validation.required', ['attribute' => "mot de passe"]),
+            'password.min'      => __('validation.min.numeric', ['attribute' => "mot de passe", 'min' => 6]),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+        
+        $userAndPass = array(
+            'username'  => $request->get('username'),
+            'password' => $request->get('password')
+        );
+        
+        $emailAndPass = array(
+            'email'  => $request->get('username'),
+            'password' => $request->get('password')
+        );
+
+        if (Auth::attempt($userAndPass) || Auth::attempt($emailAndPass)) {
+            return redirect("/home");
+        } else {
+            return back()->with('error', __('Username or password is incorrect.'));
+        }
+    }   
+
+    /**
+     * register
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/home');
+    }
+
+}

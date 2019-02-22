@@ -11,6 +11,7 @@ use App\Helpers\Envato\Ulities;
 use Elasticsearch\ClientBuilder;
 use App\Model\DiscussionElastic;
 use Auth;
+use App\Http\Middleware\CheckAdmin;
 
 class DiscussionController extends Controller
 {
@@ -26,6 +27,7 @@ class DiscussionController extends Controller
     public function __construct(DiscussionRepositoryInterface $discussionRepository)
     {
         $this->discussionRepository = $discussionRepository;
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 
