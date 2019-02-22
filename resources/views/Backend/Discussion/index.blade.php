@@ -38,14 +38,14 @@
             @foreach($result['data'] as $item)
                 <tr>
                     <th scope="row">{{ $i }}</th>
-                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['title'] }}</td>
                     <td>{{ $item['type'] }}</td>
                     <td>{{ $item['moderator'] }}</td>
                     <td>{{ $item['start'] }}</td>
                     <td>{{ $item['end'] }}</td>
                     <td>
                         <div>
-                            <a href="libraries/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
+                            <a href="discussions/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
                             <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
                         </div>
                         {{--<form method="POST" action="{{route('categories.destroy',$item['_id'])}}" class="delete-form" data-parsley-validate>--}}

@@ -10,6 +10,7 @@ use App\Model\CategoryElastic;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
+use App\Http\Middleware\CheckAdmin;
 
 class CategoryController extends Controller
 {
@@ -25,6 +26,7 @@ class CategoryController extends Controller
     public function __construct(CategoryRepositoryInterface $cateogryRepository)
     {
         $this->cateogryRepository = $cateogryRepository;
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 

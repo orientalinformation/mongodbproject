@@ -31,4 +31,9 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
         return Book::where([['_id', '=', $bookID],
             ['status', '=', (int)$status]])->get();
     }
+
+    public function getDraft($perPage = 15)
+    {
+        return Book::where([['status', '=', 'DRAFT']])->paginate($perPage);;
+    }
 }

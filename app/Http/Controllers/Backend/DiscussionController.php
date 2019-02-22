@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
+use Elasticsearch\ClientBuilder;
+use App\Model\DiscussionElastic;
+use Auth;
+use App\Http\Middleware\CheckAdmin;
 
 class DiscussionController extends Controller
 {
@@ -23,6 +27,7 @@ class DiscussionController extends Controller
     public function __construct(DiscussionRepositoryInterface $discussionRepository)
     {
         $this->discussionRepository = $discussionRepository;
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 
@@ -66,7 +71,36 @@ class DiscussionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userID = Auth::id();
+        if ($request->method() == 'POST') {
+            $data['title'] = $request->get('title');
+            $data['type'] = $request->get('type');
+            $data['start'] = $request->get('start');
+            $data['end'] = $request->get('end');
+            $data['moderator'] = $userID;
+            $result = $this->discussionRepository->create($data);
+            $id = $result->_id;
+
+            if($id != '') {
+                $discussion = new DiscussionElastic();
+                $dataElastic = [
+                    'body' => [
+                        'title' => $request->get('title'),
+                        'type' => $request->get('type'),
+                        'start' => $request->get('start'),
+                        'end' => $data['end'],
+                        'moderator' => $userID
+                    ],
+                    'index' => $discussion->getIndexName(),
+                    'type'  => $discussion->getTypeName(),
+                    'id' => $id,
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+            }
+
+            return redirect('admin/discussions')->with('success', 'Disccussion saved!');
+        }
     }
 
     /**
@@ -98,9 +132,43 @@ class DiscussionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $currentPage = 'discussionIndex';
+        $userID = Auth::id();
+        if($request->has('id')) {
+            $id = $request->get('id');
+            $discussion = $this->discussionRepository->find($id)->toArray();
+            if ($request->method() == 'POST') {
+                $data['title'] = $request->get('title');
+                $data['type'] = $request->get('type');
+                $data['start'] = $request->get('start');
+                $data['end'] = $request->get('end');
+                $data['moderator'] = $userID;
+                $this->discussionRepository->update($id, $data);
+
+                $discussion = new DiscussionElastic();
+                $dataElastic = [
+                    'body' => [
+                        'title' => $request->get('title'),
+                        'type' => $request->get('type'),
+                        'start' => $request->get('start'),
+                        'end' => $data['end'],
+                        'moderator' => $userID
+                    ],
+                    'index' => $discussion->getIndexName(),
+                    'type'  => $discussion->getTypeName(),
+                    'id' => $id,
+                ];
+                $client = ClientBuilder::create()->build();
+                $response = $client->index($dataElastic);
+
+                return redirect()->to('admin/discussions');
+            }else{
+                return view('Backend.Discussion.edit', compact(['currentPage', 'discussion']));
+            }
+        }
+        dd('a');
     }
 
     /**

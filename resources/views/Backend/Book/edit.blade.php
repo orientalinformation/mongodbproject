@@ -129,7 +129,9 @@
                             <span>Published</span>
                         </label>
                     </div>
+                    <input type="hidden" id="submitType" name="submitType">
                     <button type="submit" class="btn btn-info">Save</button>
+                    <button type="button" class="btn btn-warning" id="btnDraft">Draft</button>
                     <button type="button" class="btn btn-light active" onclick="window.location= '{{route('books.index')}}'">Canel</button>
                 </form>
             </div>
@@ -251,5 +253,10 @@
 
         });
     }
+
+    $('#btnDraft').click(function () {
+        $('#submitType').val('DRAFT');
+        $('form#book-form').submit();
+    })
 </script>
 @endsection

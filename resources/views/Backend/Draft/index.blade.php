@@ -19,7 +19,7 @@
         </div>
 
         <div class="barAdd">
-            <a href="{{route('discussions.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('draft.create a document') }}</button></a>
+            <a href="{{route('books.create')}}"><button class="btn btn-info btnAdd"><i class="fa fa-stack-overflow"></i> {{ __('draft.create a document') }}</button></a>
         </div>
 
         <table class="table table-bordered table-colored table-dark">
@@ -38,7 +38,7 @@
             @foreach($result['data'] as $item)
                 <tr>
                     <th scope="row">{{ $i }}</th>
-                    <td>{{ $item['name'] }}</td>
+                    <td>{{ $item['title'] }}</td>
                     <td></td>
                     <td></td>
                     <td>{{ $item['created_at'] }}</td>

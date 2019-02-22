@@ -10,6 +10,7 @@ use App\Repositories\AccountManager\AccountManagerRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
+use App\Http\Middleware\CheckAdmin;
 use Validator;
 
 class UsersController extends Controller
@@ -37,6 +38,7 @@ class UsersController extends Controller
      */
     public function __construct(RoleRepositoryInterface $roleRepository, UserRepositoryInterface $userRepository, AccountManagerRepositoryInterface $accountRepository)
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
         $this->roleRepository = $roleRepository;
         $this->userRepository = $userRepository;

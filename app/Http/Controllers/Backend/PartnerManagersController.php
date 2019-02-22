@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\PartnerManager\PartnerManagerRepositoryInterface;
 use Validator;
+use App\Http\Middleware\CheckAdmin;
 
 class PartnerManagersController extends Controller
 {
@@ -20,6 +21,7 @@ class PartnerManagersController extends Controller
      */
     public function __construct(PartnerManagerRepositoryInterface $partnerRepository)
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
         $this->partnerRepository = $partnerRepository;
     }

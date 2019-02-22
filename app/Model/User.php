@@ -34,6 +34,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $sector
  * @property string $interested
  * @property boolean $status
+ * @property boolean $career
+ * @property boolean $association
  * @property string $type
  * @property string $society
  * @property string $avatar
@@ -47,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * @var array
      */
-    protected $fillable = ['role_id', 'account_id', 'company_id', 'username', 'password', 'email', 'fullname', 'birthday', 'address', 'gender', 'phone', 'civility', 'first_name', 'last_name', 'postal_code', 'city', 'country', 'sector', 'interested', 'status', 'type', 'society', 'is_admin', 'avatar', 'remember_token', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['role_id', 'account_id', 'company_id', 'username', 'password', 'email', 'fullname', 'birthday', 'address', 'gender', 'phone', 'civility', 'first_name', 'last_name', 'postal_code', 'city', 'country', 'sector', 'interested', 'status', 'career', 'association', 'type', 'society', 'is_admin', 'avatar', 'remember_token', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * The attributes that should be hidden for arrays.
