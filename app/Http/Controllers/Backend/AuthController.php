@@ -19,7 +19,7 @@ class AuthController extends Controller
     protected $userRepository;
 
     /**
-     * BookController constructor.
+     * AuthController constructor.
      * @param UserRepositoryInterface $userRepository
      */
     public function __construct(UserRepositoryInterface $userRepository)

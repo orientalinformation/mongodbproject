@@ -7,6 +7,7 @@ use App\Repositories\Discussion\DiscussionRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
+use App\Http\Middleware\CheckAdmin;
 
 class ProductController extends Controller
 {
@@ -22,6 +23,7 @@ class ProductController extends Controller
     public function __construct(DiscussionRepositoryInterface $discussionRepository)
     {
         $this->discussionRepository = $discussionRepository;
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 

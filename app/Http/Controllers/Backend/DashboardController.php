@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\CheckAdmin;
 
 class DashboardController extends Controller
 {
@@ -13,6 +14,7 @@ class DashboardController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 

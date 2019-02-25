@@ -168,6 +168,7 @@ return [
         Elasticquent\ElasticquentServiceProvider::class,
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         App\Providers\EnvatoServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class, 
 
     ],
 

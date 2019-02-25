@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col align-self-center">
                     <div class="card">
-                        <div class="card-header bg-success text-dark">Reset Password</div>
+                        <div class="card-header bg-success text-dark">{{ __('login.forgotPassword') }}</div>
                         <div class="card-body">
 
                             @if (session('status'))
@@ -63,7 +63,7 @@
                                 <input type="hidden" name="token" value="{{ $token }}">
 
                                 <div class="form-group row {{ $errors->has('email') ? ' has-error' : '' }}">
-                                    <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                                    <label for="email" class="col-md-4 control-label">{{ __('login.email') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>

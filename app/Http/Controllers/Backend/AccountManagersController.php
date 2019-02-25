@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\AccountManager\AccountManagerRepositoryInterface;
+use App\Http\Middleware\CheckAdmin;
 
 class AccountManagersController extends Controller
 {
@@ -18,6 +19,7 @@ class AccountManagersController extends Controller
      */
     public function __construct(AccountManagerRepositoryInterface $accountRepository)
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
         $this->accountRepository = $accountRepository;
     }

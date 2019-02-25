@@ -85,9 +85,19 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
+            \App\Repositories\UserSocial\UserSocialRepositoryInterface::class,
+            \App\Repositories\UserSocial\UserSocialEloquentRepository::class
+        );        
+
+        $this->app->singleton(
             \App\Repositories\AccountManager\AccountManagerRepositoryInterface::class,
             \App\Repositories\AccountManager\AccountmanagerEloquentRepository::class
-        );        
+        );    
+
+        $this->app->singleton(
+            \App\Repositories\PartnerManager\PartnerManagerRepositoryInterface::class,
+            \App\Repositories\PartnerManager\PartnermanagerEloquentRepository::class
+        );   
 
         $this->app->singleton(
             \App\Repositories\Discussion\DiscussionRepositoryInterface::class,

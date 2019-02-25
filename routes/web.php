@@ -12,13 +12,28 @@
 */
 use Illuminate\Routing\Router;
 
-Route::get('/', function () {
-    return view('welcome');
+//===========FONTEND==========
+Route::namespace('Frontend')->group(function () {
+
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
+
+    //register routes
+    Route::get('register', 'AuthController@showRegistrationForm');
+    Route::post('register', 'AuthController@register')->name('register');
+
+    //Login routes
+    Route::get('login', ['uses' => 'AuthController@login',     'as' => 'frontLogin']);
+    Route::post('login', ['uses' => 'AuthController@postLogin', 'as' => 'frontPostLogin']);
+    Route::get('logout', ['uses' => 'AuthController@logout', 'as' => 'frontLogout']);
+   
+    Route::get('auth/{driver}', ['as' => 'socialAuth', 'uses' => 'SocialController@redirectToProvider']);
+    Route::get('auth/{driver}/callback', ['as' => 'socialAuthCallback', 'uses' => 'SocialController@handleProviderCallback']);
 });
 
 //===========BACKEND==========
 
-Route::prefix('admin/')->group(function () {
+Route::group(['prefix' => 'admin'], function () {
 
     //404
     Route::get('/404', 'Backend\NotFoundController@index');
@@ -57,6 +72,9 @@ Route::prefix('admin/')->group(function () {
 
     //Account Managers routes
     Route::resource('accounts', 'Backend\AccountManagersController');    
+
+    //Partner Managers routes
+    Route::resource('partners', 'Backend\PartnerManagersController');
 
     //====Book start=============
     Route::prefix('books/')->group(function () {
@@ -214,9 +232,29 @@ Route::prefix('admin/')->group(function () {
 
     //====Draft end===============
 
+    //====Libraries API start=============
+    Route::prefix('libraries_api/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Libraries API end===============
 
+    //====Web start=============
+    Route::prefix('web/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====Web end===============
 
-
+    //====QCM start=============
+    Route::prefix('qcm/')->group(function () {
+        Route::get('/index', [
+            'uses' => 'Backend\NotFoundController@index',
+        ]);
+    });
+    //====QCM end===============
 });
 
 

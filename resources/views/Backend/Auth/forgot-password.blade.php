@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col align-self-center">
                     <div class="card">
-                        <div class="card-header bg-success text-dark">Reset Password</div>
+                        <div class="card-header bg-success text-dark">{{ __('login.forgotPassword') }}</div>
                         <div class="card-body">
                             @if (session('status'))
                                 <div class="alert alert-success" role="alert">
@@ -61,7 +61,7 @@
                                 
                                 <div class="form-group row {{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label for="email" class="col-md-3 col-form-label">
-                                        E-Mail Address :
+                                        {{ __('login.email') }} :
                                     </label>
                                     <div class="col-md-8">
                                         <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <div class="text-center">
                                         <a href="{{ route('login') }}" class="btn btn-danger">
-                                            Cancel
+                                            {{ __('common.btnCancel') }}
                                         </a>
                                         <button type="submit" class="btn btn-success">
                                             Send Password Reset Link

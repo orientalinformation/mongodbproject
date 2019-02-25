@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Permission\PermissionRepositoryInterface;
 use Validator;
+use App\Http\Middleware\CheckAdmin;
 
 class PermissionsController extends Controller
 {
@@ -20,6 +21,7 @@ class PermissionsController extends Controller
      */
     public function __construct(PermissionRepositoryInterface $permRepository)
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
         $this->permRepository = $permRepository;
     }
@@ -32,7 +34,7 @@ class PermissionsController extends Controller
     public function index()
     {
         $currentPage = 'permission';
-        $limit = 10;
+        $limit = 20;
 
         // get all data
         $permissions = $this->permRepository->paginate($limit);

@@ -10,6 +10,7 @@ use App\Repositories\AccountManager\AccountManagerRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
+use App\Http\Middleware\CheckAdmin;
 use Validator;
 
 class UsersController extends Controller
@@ -37,6 +38,7 @@ class UsersController extends Controller
      */
     public function __construct(RoleRepositoryInterface $roleRepository, UserRepositoryInterface $userRepository, AccountManagerRepositoryInterface $accountRepository)
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
         $this->roleRepository = $roleRepository;
         $this->userRepository = $userRepository;
@@ -377,6 +379,17 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // check id
+        if (empty($id) || (int)$id < 0) {
+            return back()->withErrors(__('Invalid Role ID supplied.'))->withInput();
+        }
+
+        //delete
+        $result = $this->userRepository->delete($id);
+
+        if ($result) {
+            return redirect()->route("users.index")->with("success",__('Successfully Deleted.'));
+        }
+        return back()->withErrors(__('Sorry it appears there was a problem deleting this.'))->withInput();        
     }
 }

@@ -7,7 +7,7 @@
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{ __('left-panel.navigation') }}</label>
     <div class="br-sideleft-menu">
-        <a href="#" class="br-menu-link @if ($currentPage == 'dashboard') active show-sub @endif">
+        <a href="#" class="br-menu-link @if ($currentPage == 'dashboard' || $currentPage == 'partner') active show-sub @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-contact-outline tx-24"></i>
                 <span class="menu-item-label">Administratif</span>
@@ -21,7 +21,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">{{ __('left-panel.partnerManagement') }}</a>
+                <a href="{{route('partners.index')}}" class="nav-link @if ($currentPage == 'partner') active @endif">
+                    {{ __('left-panel.partnerManagement') }}
+                </a>
             </li>
         </ul>
 
@@ -104,21 +106,21 @@
             <li class="nav-item"><a href="{{ route('rss.user') }}" class="nav-link @if ($currentPage == 'rssUserIndex') active @endif">{{ __('rss.rssUserMenu') }}</a></li>
         </ul>
 
-        <a href="404" class="br-menu-link">
+        <a href="qcm/index" class="br-menu-link">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-archive tx-20"></i>
                 <span class="menu-item-label">Management QCM</span>
             </div><!-- menu-item -->
         </a>
 
-        <a href="404" class="br-menu-link">
+        <a href="web/index" class="br-menu-link">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
                 <span class="menu-item-label">Management pages web</span>
             </div><!-- menu-item -->
         </a>
 
-        <a href="404" class="br-menu-link @if ($currentPage == 'libraryIndex') active @endif">
+        <a href="libraries_api/index" class="br-menu-link @if ($currentPage == 'libraryIndex') active @endif">
             <div class="br-menu-item">
                 <i class="menu-item-icon icon ion-ios-albums-outline tx-22"></i>
                 <span class="menu-item-label">{{ __('left-panel.library') }}</span>
