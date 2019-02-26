@@ -448,7 +448,7 @@ button:active, button:focus {
 }
 
 .forgot-form{
-	top: -100px;
+	top: 50px;
 }
 
 .forgot-form input{
@@ -2078,6 +2078,7 @@ ul.horizontal-menu-library > li a{
     width: 400px;
     border-radius: 3px;
     border: 1px solid #c7c7c7;
+    display: inline-block;
 }
 
 .panel_editor button{
@@ -2137,4 +2138,29 @@ ul.horizontal-menu-library > li a{
     display: inline-block;
 }
 
+.panel_editor .place{
+    width: 200px;
+}
 
+.panel_group .date{
+    width: 50px;
+    text-align: center;
+}
+
+.panel_editor .condition{
+    width: 150px;
+}
+
+.panel_group #editor, .cke_chrome{
+    margin: 10px 0 !important;
+}
+
+.related{
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.related_all{
+    color: #ff7600;
+    margin: 0 10px;
+}

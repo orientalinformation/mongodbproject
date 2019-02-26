@@ -1,6 +1,6 @@
 @extends('Frontend.layout.master')
 
-@section('title', __('Register'))
+@section('title', __('Registre'))
 
 @section('css')
 <link href="{{ asset('/assets/lib/gentleSelect/jquery-gentleSelect.css') }}" rel="stylesheet">
