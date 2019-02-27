@@ -47,13 +47,6 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="row col-register-left">
-                                <?php 
-                                    $checked = false;
-
-                                    if (old('civility')) {
-
-                                    }
-                                ?>
                                 <div class="col-lg-12">
                                     <label class="form-control-label label-civ">Civilité <strong class="require">*</strong></label>
                                     <div class="switch-field">
