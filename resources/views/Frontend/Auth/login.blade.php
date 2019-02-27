@@ -44,7 +44,7 @@
                             <p style="color:red">{{ $errors->first('password') }}</p>
                         @endif 
                         <p class="login-form-foot">
-                            <a href="#"><span class="caret"></span> <span>Mot de passe oublié</span></a>
+                            <a href="{{ route('frontPasswordForgot') }}"><span class="caret"></span> <span>Mot de passe oublié</span></a>
                             <a href="{{ route('register') }}" class="float-right"><span class="caret"></span> <span>Créer un compte</span></a>
                         </p>
                         <button class="btnLogin">Me Connecter</button>

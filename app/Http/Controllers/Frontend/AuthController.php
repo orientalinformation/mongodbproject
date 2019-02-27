@@ -10,6 +10,7 @@ use App\Repositories\Role\RoleRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
+use Mail;
 
 class AuthController extends Controller
 {
@@ -207,5 +208,134 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/home');
     }
+
+    /**
+     * show Forgot Form
+     *
+     * @return void
+     */
+    public function showForgotForm()
+    {
+        return view('Frontend.Auth.forgot-password');
+    }
+
+    /**
+     * send Mail
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function sendMail(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email|string',
+        ];
+
+        $messages = [
+            'email.required' => __('validation.required', ['attribute' => "email"]),
+            'email.email' => __('validation.email', ['attribute' => "email"]),
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+
+        // get data
+        $email = $request->get('email');
+        $user = $this->userRepository->getUserByKey('email', $email);
+
+        if (!$user) {
+            return back()->with('error', __("Nous ne pouvons pas trouver d'utilisateur avec cette adresse électronique."));
+        }
+
+        // create token and get url 
+        $token = app(\Illuminate\Auth\Passwords\PasswordBroker::class)->createToken($user);
+        $url = route('frontShowResetForm', $token);
+
+        Mail::send('Frontend.Auth.emails.send', [
+                'title' => "Hi", 
+                'content' => "You are receiving this email because we received a password reset request for your account.",
+                'contentEnd' => "If you did not request a password reset, no further action is required.",
+                'url' => $url
+            ], function ($message) use ($email)  {
+            $message->from('laravel5.7.co.vn@gmail.com', 'Administrator');
+            $message->to($email);
+            $message->subject('Reset Password');
+        });
+
+        return back()->with('status', __('Nous avons envoyé votre lien de réinitialisation de mot de passe par courrier électronique.'));         
+    }
+
+    /**
+     * show Reset Form
+     *
+     * @param [type] $token
+     * @return void
+     */
+    public function showResetForm($token = null)
+    {
+        return view('Frontend.Auth.form-reset-password')->with(['token' => $token]);
+    }
+
+    /**
+     * reset Password
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function resetPassword(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email|string',
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
+        ];
+
+        $messages = [
+            'email.required'                => __('validation.required', ['attribute' => "email"]),
+            'email.email'                   => __('validation.email', ['attribute' => "email"]),
+            'password.required'             => __('validation.required', ['attribute' => "mot de passe"]),
+            'password.min'                  => __('validation.min.numeric', ['attribute' => "mot de passe", 'min' => 6]),
+            'password.confirmed'            => __('validation.confirmed', ['attribute' => "mot de passe"]),
+            'password_confirmation.required'=> __('validation.required', ['attribute' => "confirmation mot de passe"]),
+            'password_confirmation.min'     => __('validation.min.numeric', ['attribute' => "confirmation mot de passe", 'min' => 6]),            
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator->messages())->withInput();
+        }
+
+        // get data
+        $token = $request->get('token');
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        // check user by email
+        $user = $this->userRepository->getUserByKey('email', $email);
+
+        if (!$user) {
+            return back()->with('error', __("Nous ne pouvons pas trouver d'utilisateur avec cette adresse électronique."));
+        }
+
+        // check token
+        $result = app(\Illuminate\Auth\Passwords\PasswordBroker::class)->tokenExists($user, $token);
+
+        if (!$result) {
+            return back()->with('error', __('Ce jeton de réinitialisation de mot de passe n\'est pas valide.'));
+        }
+
+        // reset password
+        $user = $this->userRepository->resetPassword($user, $password);
+
+        if ($user) {
+            return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+        }
+
+        return back()->with('error', __('La réinitialisation du mot de passe a échoué.'));
+    }    
 
 }
