@@ -64,7 +64,7 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Nom <strong class="require">*</strong></label>
-                                        <input type="text" name="first_name" placeholder="Nom" class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}" required>
+                                        <input type="text" name="first_name" placeholder="Nom" class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
                                     </div>    
                                     @if ($errors->has('first_name'))
                                         <div class="invalid-feedback">
@@ -75,7 +75,7 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Prénom <strong class="require">*</strong></label>
-                                        <input type="text" name="last_name" placeholder="Prénom" class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}" required>
+                                        <input type="text" name="last_name" placeholder="Prénom" class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" required>
                                     </div>    
                                     @if ($errors->has('last_name'))
                                         <div class="invalid-feedback">
@@ -86,25 +86,25 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Adresse</label>
-                                        <input type="text" name="address" placeholder="Adresse" class="form-control inputField">
+                                        <input type="text" name="address" placeholder="Adresse" class="form-control inputField" value="{{ old('address') }}">
                                     </div>    
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Code Postal</label>
-                                        <input type="text" name="postal_code" placeholder="Code Postal" class="form-control inputField">
+                                        <input type="text" name="postal_code" placeholder="Code Postal" class="form-control inputField" value="{{ old('postal_code') }}">
                                     </div>    
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Pays</label>
-                                        <input type="text" name="country" placeholder="Pays" class="form-control inputField">
+                                        <input type="text" name="country" placeholder="Pays" class="form-control inputField" value="{{ old('country') }}">
                                     </div>    
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Addresse e-mail <strong class="require">*</strong></label>
-                                        <input type="text" name="email" placeholder="Addresse e-mail" class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}" required>
+                                        <input type="text" name="email" placeholder="Addresse e-mail" class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" required>
                                     </div>    
                                     @if ($errors->has('email'))
                                         <div class="invalid-feedback">
@@ -115,7 +115,7 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Confirmer votre adresse e-mail <strong class="require">*</strong></label>
-                                        <input type="text" name="email_confirmation" placeholder="Confirmer votre adresse e-mail" class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}" required>
+                                        <input type="text" name="email_confirmation" placeholder="Confirmer votre adresse e-mail" class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}" value="{{ old('email_confirmation') }}" required>
                                     </div>    
                                     @if ($errors->has('email_confirmation'))
                                         <div class="invalid-feedback">
