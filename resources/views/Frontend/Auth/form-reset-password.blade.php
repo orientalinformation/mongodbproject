@@ -44,7 +44,7 @@
                         </div>
                     @endif
                     <label>Saisissez votre addresse e-mail</label>
-                    <input type="text" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="email" required>
+                    <input type="text" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="email" value="{{ old('email') }}" required>
                     @if ($errors->has('email'))
                         <p class="forgot-form-foot" style="color:red">{{ $errors->first('email') }}</p>
                     @endif 
@@ -52,13 +52,13 @@
                     <label>Nouveau mot de passe</label>
                     <input type="password" class="{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Nouveau mot de passe" required>
                     @if ($errors->has('password'))
-                        <p class="forgot-form-foot" style="color:red">{{ $errors->first('email') }}</p>
+                        <p class="forgot-form-foot" style="color:red">{{ $errors->first('password') }}</p>
                     @endif 
 
                     <label>Confirmation mot de passe</label>
                     <input type="password" class="{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirmation mot de passe" required>
                     @if ($errors->has('password_confirmation'))
-                        <p class="forgot-form-foot" style="color:red">{{ $errors->first('email') }}</p>
+                        <p class="forgot-form-foot" style="color:red">{{ $errors->first('password_confirmation') }}</p>
                     @endif 
 
                     <button type="submit" class="btnLogin">Envoyer</button>

@@ -43,7 +43,7 @@
                         </div>
                     @endif
                     <label>Saisissez votre addresse e-mail</label>
-                    <input type="text" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="email" required>
+                    <input type="text" class="{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="email" value="{{ old('email') }}" required>
                     @if ($errors->has('email'))
                         <p class="forgot-form-foot" style="color:red">{{ $errors->first('email') }}</p>
                     @endif 
