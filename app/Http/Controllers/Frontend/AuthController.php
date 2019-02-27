@@ -256,8 +256,8 @@ class AuthController extends Controller
 
         Mail::send('Frontend.Auth.emails.send', [
                 'title' => "Hi", 
-                'content' => "You are receiving this email because we received a password reset request for your account.",
-                'contentEnd' => "If you did not request a password reset, no further action is required.",
+                'content' => "Vous recevez cet email car nous avons reçu une demande de réinitialisation du mot de passe pour votre compte.",
+                'contentEnd' => "Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune autre action n'est requise.",
                 'url' => $url
             ], function ($message) use ($email)  {
             $message->from('laravel5.7.co.vn@gmail.com', 'Administrator');
@@ -332,7 +332,8 @@ class AuthController extends Controller
         $user = $this->userRepository->resetPassword($user, $password);
 
         if ($user) {
-            return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+            // return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+            return redirect("/home");
         }
 
         return back()->with('error', __('La réinitialisation du mot de passe a échoué.'));

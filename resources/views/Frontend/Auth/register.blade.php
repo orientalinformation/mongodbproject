@@ -47,12 +47,19 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="row col-register-left">
+                                <?php 
+                                    $checked = false;
+
+                                    if (old('civility')) {
+
+                                    }
+                                ?>
                                 <div class="col-lg-12">
                                     <label class="form-control-label label-civ">Civilité <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_left" name="civility" value="0" checked/>
+                                        <input type="radio" id="switch_left" name="civility" value="0" @if (!old('civility') || old('civility') == '0') checked @endif />
                                         <label for="switch_left">M.</label>
-                                        <input type="radio" id="switch_right" name="civility" value="1" />
+                                        <input type="radio" id="switch_right" name="civility" value="1" @if (old('civility') == '1') checked @endif />
                                         <label for="switch_right">Mme</label>
                                     </div>
                                     @if ($errors->has('civility'))
@@ -152,9 +159,9 @@
                                 <div class="input-group">
                                     <label class="form-control-label label-fil">Filière <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_2_left" name="career" value="0" checked/>
+                                        <input type="radio" id="switch_2_left" name="career" value="0" @if (!old('career') || old('career') == '0') checked @endif />
                                         <label for="switch_2_left">Bois</label>
-                                        <input type="radio" id="switch_2_right" name="career" value="1" />
+                                        <input type="radio" id="switch_2_right" name="career" value="1" @if (old('career') == '1') checked @endif />
                                         <label for="switch_2_right">Pierre</label>
                                     </div>
                                 </div>    
@@ -168,13 +175,13 @@
                                 <div class="input-group">
                                     <span class="headLine">Intéressé par les métiers:</span>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_3_1" name="interested" value="0" />
+                                        <input type="radio" id="switch_3_1" name="interested" value="0" @if (old('interested') == '0') checked @endif />
                                         <label for="switch_3_1">Menuisier</label>
-                                        <input type="radio" id="switch_3_2" name="interested" value="1" />
+                                        <input type="radio" id="switch_3_2" name="interested" value="1" @if (old('interested') == '1') checked @endif />
                                         <label for="switch_3_2">Agenceur</label>
-                                        <input type="radio" id="switch_3_3" name="interested" value="2" />
+                                        <input type="radio" id="switch_3_3" name="interested" value="2" @if (old('interested') == '2') checked @endif />
                                         <label for="switch_3_3">Charpentier</label>
-                                        <input type="radio" id="switch_3_4" name="interested" value="3" />
+                                        <input type="radio" id="switch_3_4" name="interested" value="3" @if (old('interested') == '3') checked @endif />
                                         <label for="switch_3_4">Constructeur Bois</label>
                                     </div>
                                 </div>    
@@ -183,9 +190,9 @@
                                 <div class="input-group">
                                     <label style="display: inline-block; width: 220px">Membre de l'association des Compagnons du Deviort du Tour de France <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_4_1" name="association" value="0" checked/>
+                                        <input type="radio" id="switch_4_1" name="association" value="0" @if (!old('association') || old('association') == '0') checked @endif />
                                         <label for="switch_4_1">Oui</label>
-                                        <input type="radio" id="switch_4_2" name="association" value="1" />
+                                        <input type="radio" id="switch_4_2" name="association" value="1" @if (old('association') == '1') checked @endif />
                                         <label for="switch_4_2">Non</label>
                                     </div>
                                 </div>    
@@ -199,9 +206,9 @@
                                 <div class="input-group">
                                     <label style="display: inline-block;">Statut <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_5_1" name="status" value="0" checked/>
+                                        <input type="radio" id="switch_5_1" name="status" value="0" @if (!old('status') || old('status') == '0') checked @endif />
                                         <label for="switch_5_1" style="width: 200px;">Professionnel du secteur</label>
-                                        <input type="radio" id="switch_5_2" name="status" value="1" />
+                                        <input type="radio" id="switch_5_2" name="status" value="1" @if (old('status') == '1') checked @endif />
                                         <label for="switch_5_2">Passionné(e)</label>
                                     </div>
                                 </div>    
