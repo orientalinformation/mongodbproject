@@ -333,6 +333,7 @@ class AuthController extends Controller
 
         if ($user) {
             // return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+            auth()->login($user);
             return redirect("/home");
         }
 
