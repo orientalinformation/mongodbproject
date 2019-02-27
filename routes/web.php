@@ -29,6 +29,12 @@ Route::namespace('Frontend')->group(function () {
    
     Route::get('auth/{driver}', ['as' => 'socialAuth', 'uses' => 'SocialController@redirectToProvider']);
     Route::get('auth/{driver}/callback', ['as' => 'socialAuthCallback', 'uses' => 'SocialController@handleProviderCallback']);
+
+    //Password reset routes
+    Route::get('forgot-password', ['uses' => 'AuthController@showForgotForm', 'as' => 'frontPasswordForgot']);
+    Route::post('send-mail', ['uses' => 'AuthController@sendMail', 'as' => 'frontSendMail']);
+    Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
+    Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 });
 
 //===========BACKEND==========
