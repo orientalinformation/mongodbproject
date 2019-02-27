@@ -47,9 +47,6 @@
                     @if ($errors->has('email'))
                         <p class="forgot-form-foot" style="color:red">{{ $errors->first('email') }}</p>
                     @endif 
-                    <p class="forgot-form-foot">
-                        <a href="#"><span class="caret"></span> <span>Mot de passe oublié</span></a>
-                    </p>
                     <button class="btnLogin">Valider</button>
                 </div>
             </form>    

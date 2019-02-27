@@ -56,7 +56,7 @@
                     @endif 
 
                     <label>Confirmer votre mot de passe</label>
-                    <input type="password" class="{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirmation mot de passe" required>
+                    <input type="password" class="{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirmer votre mot de passe" required>
                     @if ($errors->has('password_confirmation'))
                         <p class="forgot-form-foot" style="color:red">{{ $errors->first('password_confirmation') }}</p>
                     @endif 

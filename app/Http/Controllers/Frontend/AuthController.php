@@ -193,7 +193,7 @@ class AuthController extends Controller
         if (Auth::attempt($userAndPass) || Auth::attempt($emailAndPass)) {
             return redirect("/home");
         } else {
-            return back()->with('error', __('Username or password is incorrect.'));
+            return back()->with('error', __('L\'identifiant ou le mot de passe est incorrect.'));
         }
     }   
 
@@ -333,6 +333,7 @@ class AuthController extends Controller
 
         if ($user) {
             // return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+            auth()->login($user);
             return redirect("/home");
         }
 
