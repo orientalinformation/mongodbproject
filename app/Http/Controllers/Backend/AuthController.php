@@ -134,8 +134,8 @@ class AuthController extends Controller
 
         Mail::send('Backend.Auth.emails.send', [
                 'title' => "Hi", 
-                'content' => "You are receiving this email because we received a password reset request for your account.",
-                'contentEnd' => "If you did not request a password reset, no further action is required.",
+                'content' => "Vous recevez cet email car nous avons reçu une demande de réinitialisation du mot de passe pour votre compte.",
+                'contentEnd' => "Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune autre action n'est requise.",
                 'url' => $url
             ], function ($message) use ($email)  {
             $message->from('laravel5.7.co.vn@gmail.com', 'Administrator');
