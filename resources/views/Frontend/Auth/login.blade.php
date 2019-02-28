@@ -34,7 +34,7 @@
                 <div class="input-table">
                     <div class="input-table-group">
                         <label>Courriel</label>
-                        <input type="text" name="username" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="courriel ou pseudo">
+                        <input type="text" name="username" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('username') }}" placeholder="courriel ou pseudo">
                         @if ($errors->has('username'))
                             <p style="color:red">{{ $errors->first('username') }}</p>
                         @endif 
