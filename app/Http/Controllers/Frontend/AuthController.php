@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\UserSocial\UserSocialRepositoryInterface;
 use App\Repositories\AccountManager\AccountManagerRepositoryInterface;
 use App\Repositories\Role\RoleRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,11 @@ class AuthController extends Controller
     protected $userRepository;
 
     /**
+     * @var UserSocialRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $userSocialRepository;    
+
+    /**
      * @var AccountManagerRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $accountRepository;
@@ -32,12 +38,14 @@ class AuthController extends Controller
     /**
      * AuthController constructor.
      * @param UserRepositoryInterface $userRepository
+     * @param UserSocialRepositoryInterface $userSocialRepository
      * @param AccountManagerRepositoryInterface $accountRepository
      * @param RoleRepositoryInterface $roleRepository
      */
-    public function __construct(UserRepositoryInterface $userRepository, AccountManagerRepositoryInterface $accountRepository, RoleRepositoryInterface $roleRepository)
+    public function __construct(UserRepositoryInterface $userRepository, UserSocialRepositoryInterface $userSocialRepository, AccountManagerRepositoryInterface $accountRepository, RoleRepositoryInterface $roleRepository)
     {
         $this->userRepository = $userRepository;
+        $this->userSocialRepository = $userSocialRepository;
         $this->accountRepository = $accountRepository;
         $this->roleRepository = $roleRepository;
     }
@@ -50,7 +58,11 @@ class AuthController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
-        return view('Frontend.Auth.register');
+        $dataSocial = null;
+        $type = 'web';
+        
+        return view('Frontend.Auth.register', compact(['dataSocial', 'type']));
+    
     }
 
     /**
@@ -62,6 +74,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $rules = [
+            'civility'              => 'required|integer|min:0',
             'first_name'            => 'required|string|max:255',
             'last_name'             => 'required|string|max:255',
             'email'                 => 'required|email|string|confirmed',
@@ -75,6 +88,8 @@ class AuthController extends Controller
         ];
 
         $messages = [
+            'civility.required'             => __('validation.required', ['attribute' => "civilité"]),
+            'civility.min'                  => __('validation.min.numeric', ['attribute' => "civilité", 'min' => 0]),
             'first_name.required'           => __('validation.required', ['attribute' => "nom"]),
             'last_name.required'            => __('validation.required', ['attribute' => "prénom"]),
             'email.required'                => __('validation.required', ['attribute' => "email"]),
@@ -102,10 +117,10 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator->messages())->withInput();
         }
-
+        
         // check username and email exists       
         $data = $request->all();
-        
+
         if ($this->userRepository->checkExistsByKey('email', trim($data['email']))) {
             return back()->withErrors(__('Le mail existe déjà.'))->withInput();  
         }
@@ -193,7 +208,7 @@ class AuthController extends Controller
         if (Auth::attempt($userAndPass) || Auth::attempt($emailAndPass)) {
             return redirect("/home");
         } else {
-            return back()->with('error', __('Username or password is incorrect.'));
+            return back()->with('error', __('L\'identifiant ou le mot de passe est incorrect.'));
         }
     }   
 
@@ -256,8 +271,8 @@ class AuthController extends Controller
 
         Mail::send('Frontend.Auth.emails.send', [
                 'title' => "Hi", 
-                'content' => "You are receiving this email because we received a password reset request for your account.",
-                'contentEnd' => "If you did not request a password reset, no further action is required.",
+                'content' => "Vous recevez cet email car nous avons reçu une demande de réinitialisation du mot de passe pour votre compte.",
+                'contentEnd' => "Si vous n'avez pas demandé de réinitialisation de mot de passe, aucune autre action n'est requise.",
                 'url' => $url
             ], function ($message) use ($email)  {
             $message->from('laravel5.7.co.vn@gmail.com', 'Administrator');
@@ -332,7 +347,9 @@ class AuthController extends Controller
         $user = $this->userRepository->resetPassword($user, $password);
 
         if ($user) {
-            return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+            // return back()->with('status', __('Réinitialiser le mot de passe avec succès.'));
+            auth()->login($user);
+            return redirect("/home");
         }
 
         return back()->with('error', __('La réinitialisation du mot de passe a échoué.'));

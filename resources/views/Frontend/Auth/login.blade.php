@@ -34,7 +34,7 @@
                 <div class="input-table">
                     <div class="input-table-group">
                         <label>Courriel</label>
-                        <input type="text" name="username" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" placeholder="courriel ou pseudo">
+                        <input type="text" name="username" class="form-control {{ $errors->has('username') ? ' is-invalid' : '' }}" value="{{ old('username') }}" placeholder="courriel ou pseudo">
                         @if ($errors->has('username'))
                             <p style="color:red">{{ $errors->first('username') }}</p>
                         @endif 
@@ -47,6 +47,11 @@
                             <a href="{{ route('frontPasswordForgot') }}"><span class="caret"></span> <span>Mot de passe oublié</span></a>
                             <a href="{{ route('register') }}" class="float-right"><span class="caret"></span> <span>Créer un compte</span></a>
                         </p>
+                        @if (session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <button class="btnLogin">Me Connecter</button>
                     </div>
                     <div style="text-align: center;">

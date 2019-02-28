@@ -23,10 +23,10 @@
     <div class="row slide">
         <div class="bg-login"></div>
         <div class="col-lg-12 title-background-forgot">
-            <span>Mot De Passe Oublié</span>
+            <span>Renouveler mot de passe</span>
         </div>
         <div class="col-lg-12 title-background-small-forgot">
-            <span>Mot De Passe Oublié</span>
+            <span>Renouveler mot de passe</span>
         </div>
         <div class="col-lg-12 forgot-form">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('frontResetPassword') }}">
@@ -55,8 +55,8 @@
                         <p class="forgot-form-foot" style="color:red">{{ $errors->first('password') }}</p>
                     @endif 
 
-                    <label>Confirmation mot de passe</label>
-                    <input type="password" class="{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirmation mot de passe" required>
+                    <label>Confirmer votre mot de passe</label>
+                    <input type="password" class="{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" placeholder="Confirmer votre mot de passe" required>
                     @if ($errors->has('password_confirmation'))
                         <p class="forgot-form-foot" style="color:red">{{ $errors->first('password_confirmation') }}</p>
                     @endif 
