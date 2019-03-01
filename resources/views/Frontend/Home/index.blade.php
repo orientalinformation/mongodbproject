@@ -1,6 +1,8 @@
 @extends('Frontend.layout.master')
 
-@section('title', __('Home'))
+@section('title')
+    {{ __('home.frontEnd.title') }}
+@endsection
 
 @section('content')
 <header class="header-fixed">

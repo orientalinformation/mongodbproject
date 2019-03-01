@@ -7,4 +7,8 @@ return [
     'password' => 'mot de passe',
     'signIn' => 'Se connecter',
     'email' => 'Courriel',
+
+    'frontEnd'  => [
+        'title' => 'Login'
+    ]
 ];

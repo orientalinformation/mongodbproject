@@ -5,7 +5,7 @@
     <meta name="author" content="">
     <link rel="icon" href="logo.ico">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title')</title>
+    <title>@yield('title','Accueil')</title>
 
     <!-- vendor css -->
     <link href="{{ asset('/assets/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
