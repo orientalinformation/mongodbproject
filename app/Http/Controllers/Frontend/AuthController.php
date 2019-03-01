@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Mail;
+use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
 {
@@ -77,7 +78,7 @@ class AuthController extends Controller
             'civility'              => 'required|integer|min:0',
             'first_name'            => 'required|string|max:255',
             'last_name'             => 'required|string|max:255',
-            'email'                 => 'required|email|string|confirmed',
+            'email'                 => ['required', 'email','string', 'confirmed', Rule::unique('users')],
             'email_confirmation'    => 'required|email|string',
             'password'              => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|string|min:6',
@@ -95,6 +96,7 @@ class AuthController extends Controller
             'email.required'                => __('validation.required', ['attribute' => "email"]),
             'email.email'                   => __('validation.email', ['attribute' => "email"]),
             'email.confirmed'               => __('validation.confirmed', ['attribute' => "email"]),
+            'email.unique'                  => __('validation.unique', ['attribute' => "l'email existe déjà"]),
             'email_confirmation.required'   => __('validation.required', ['attribute' => "confirmation de l'émail"]),
             'email_confirmation.email'      => __('validation.email', ['attribute' => "confirmation de l'émail"]),
             'password.required'             => __('validation.required', ['attribute' => "mot de passe"]),

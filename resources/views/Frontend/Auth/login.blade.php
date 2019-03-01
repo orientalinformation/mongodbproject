@@ -1,6 +1,6 @@
 @extends('Frontend.layout.master')
 
-@section('title', __('Login'))
+{{-- @section('title', __('Login')) --}}
 
 @section('content')
 <header class="header-login">

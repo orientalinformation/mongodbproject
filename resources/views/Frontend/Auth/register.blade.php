@@ -271,6 +271,10 @@
                 // maxDisplay: 3,
                 hideOnMouseOut: true
             });
+
+            if($('#switch_2_left').is(':checked')) {
+                $('#interested_group').show();
+            }
         });
 
         $(document).on('click', '.btnLogin', function () {
