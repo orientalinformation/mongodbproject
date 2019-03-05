@@ -11,12 +11,13 @@
     <link href="{{ asset('/assets/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/assets/lib/bootstrap/bootstrap.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('/assets/lib/bootstrap/bootstrap.css') }}" rel="stylesheet"> -->
 
     <!-- Plugins -->
 
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('/assets/css/front-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/front-product.css') }}">
 
 
     <!-- Stylesheets -->

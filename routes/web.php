@@ -35,6 +35,9 @@ Route::namespace('Frontend')->group(function () {
     Route::post('send-mail', ['uses' => 'AuthController@sendMail', 'as' => 'frontSendMail']);
     Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
+
+    // Product routes
+    Route::get('product/search', ['uses' => 'ProductController@search', 'as' => 'frontProductSearch'])->middleware('auth');
 });
 
 //===========BACKEND==========
