@@ -68,7 +68,7 @@ abstract class AbstractServiceProvider
                     ->where('provider_id', '=', $data['provider_id'])->first();
 
         if (!empty($social)) {
-
+            // already have account
             $user = User::find($social->user_id);
             return $this->login($user);
         } else {
@@ -85,20 +85,39 @@ abstract class AbstractServiceProvider
             $data['gender'] = 1;
             $data['is_admin'] = 0;
             $data['email'] = $data['email'] ?? null;
-
-            if (!empty($data['email'])) {
-                $user = User::firstOrCreate(['email'=>$data['email']], $data);
-            } else {
-                $user = User::create($data);    
+            $data['last_name'] = '';
+            $data['first_name'] = '';
+            // TODO: redirect to register new user, put data in it.
+            if ($data['fullname']) {
+                $nom = explode(" ", $data['fullname']);
+                $data['last_name'] = end($nom);
+                array_pop($nom);
+                $data['first_name'] = implode(' ', $nom);
             }
 
-            if (!empty($user->id)) {
-                $data['user_id'] = $user->id;
+            return $this->preRegister($data);
 
-                if (UserSocial::create($data)) {
-                    return $this->login($user);
-                }
-            }
+            // if (!empty($data['email'])) {
+            //     $user = User::firstOrCreate(['email'=>$data['email']], $data);
+            // } else {
+            //     $user = User::create($data);    
+            // }
+
+            // if (!empty($user->id)) {
+            //     $data['user_id'] = $user->id;
+
+            //     if (UserSocial::create($data)) {
+            //         return $this->login($user);
+            //     }
+            // }
         }
     }
-};
+
+    protected function preRegister($data)
+    {
+        $dataSocial = null;
+        $type = 'web';
+
+        return view('Frontend.Auth.register', compact(['dataSocial', 'type', 'data']));
+    }
+}

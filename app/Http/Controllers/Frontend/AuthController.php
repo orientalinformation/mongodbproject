@@ -13,6 +13,7 @@ use Validator;
 use Auth;
 use Mail;
 use Illuminate\Validation\Rule;
+use App\Model\UserSocial;
 
 class AuthController extends Controller
 {
@@ -152,6 +153,12 @@ class AuthController extends Controller
 
         // create
         $result = $this->userRepository->create($data);
+
+        if ($data['provider'] && !empty($result->id)) {
+            // social account
+            $data['user_id'] = $user->id;
+            UserSocial::create($data)
+        }
 
         if ($result) {
             auth()->login($result);

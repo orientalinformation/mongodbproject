@@ -9,6 +9,23 @@
 @stop
 
 @section('content')
+@php
+    // user signup with social account
+    $provider = $data['provider'] ?? '';
+    $provider_id = $data['provider_id'] ?? '';
+    $nom = $data['name'] ?? '';
+    $email = $data['email'] ?? '';
+    $avatar_social = $data['avatar_social'] ?? '';
+    $fullname = $data['fullname'] ?? '';
+    $role_id = $data['role_id'] ?? '';
+    $account_id = $data['account_id'] ?? '';
+    $username = $data['username'] ?? '';
+    // $password = $data['password'] ?? '';
+    $gender   = $data['gender'] ?? '';
+    $is_admin = $data['is_admin'] ?? '';
+    $first_name = $data['first_name'] ?? '';
+    $last_name = $data['last_name'] ?? '';
+@endphp
 <header class="header-login">
     <div class="container-fluid">
         <div class="row">
@@ -66,7 +83,12 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Nom <strong class="require">*</strong></label>
-                                        <input type="text" name="first_name" placeholder="Nom" class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
+                                        <input type="text"
+                                            name="first_name"
+                                            placeholder="Nom"
+                                            class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
+                                            value="@if($first_name) {{$first_name}} @else {{ old('first_name') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('first_name'))
                                         <div class="invalid-feedback">
@@ -77,7 +99,13 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Prénom <strong class="require">*</strong></label>
-                                        <input type="text" name="last_name" placeholder="Prénom" class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" required>
+                                        <input
+                                            type="text"
+                                            name="last_name"
+                                            placeholder="Prénom"
+                                            class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
+                                            value="@if($last_name) {{$last_name}} @else {{ old('last_name') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('last_name'))
                                         <div class="invalid-feedback">
@@ -106,7 +134,13 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Addresse e-mail <strong class="require">*</strong></label>
-                                        <input type="text" name="email" placeholder="Addresse e-mail" class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" required>
+                                        <input
+                                            type="text"
+                                            name="email"
+                                            placeholder="Addresse e-mail"
+                                            class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                            value="@if($email) {{$email}} @else {{ old('email') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('email'))
                                         <div class="invalid-feedback">
@@ -117,7 +151,13 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Confirmer votre adresse e-mail <strong class="require">*</strong></label>
-                                        <input type="text" name="email_confirmation" placeholder="Confirmer votre adresse e-mail" class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}" value="{{ old('email_confirmation') }}" required>
+                                        <input
+                                            type="text"
+                                            name="email_confirmation"
+                                            placeholder="Confirmer votre adresse e-mail"
+                                            class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}"
+                                            value="@if($email) {{$email}} @else {{ old('email_confirmation') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('email_confirmation'))
                                         <div class="invalid-feedback">
@@ -251,6 +291,16 @@
                             </div>
                         </div>   
                     </div>
+                    <input type="hidden" name="provider" value="{{$provider}}">
+                    <input type="hidden" name="provider_id" value="{{$provider_id}}">
+                    <input type="hidden" name="nom" value="{{$nom}}">
+                    <input type="hidden" name="avatar_social" value="{{$avatar_social}}">
+                    <input type="hidden" name="fullname" value="{{$fullname}}">
+                    <input type="hidden" name="role_id" value="{{$role_id}}">
+                    <input type="hidden" name="account_id" value="{{$account_id}}">
+                    <input type="hidden" name="username" value="{{$username}}">
+                    <input type="hidden" name="gender" value="{{$gender}}">
+                    <input type="hidden" name="is_admin" value="{{$is_admin}}">
                     <button type="button" class="btnLogin">S'EnRegistrer</button>
                 </div>
             </form>    
