@@ -7,6 +7,7 @@ use App\Repositories\Book\BookRepositoryInterface;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
+use App\Http\Middleware\CheckAdmin;
 
 class DraftController extends Controller
 {
@@ -22,6 +23,7 @@ class DraftController extends Controller
     public function __construct(BookRepositoryInterface $bookRepository)
     {
         $this->bookRepository = $bookRepository;
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
     }
 

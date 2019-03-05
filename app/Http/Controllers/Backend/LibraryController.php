@@ -10,6 +10,7 @@ use Elasticsearch\ClientBuilder;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
 use Auth;
+use App\Http\Middleware\CheckAdmin;
 
 class LibraryController extends Controller
 {

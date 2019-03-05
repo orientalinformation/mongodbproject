@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\PermissionRole\PermissionRoleRepositoryInterface;
 use Validator;
+use App\Http\Middleware\CheckAdmin;
 
 class RolesController extends Controller
 {
@@ -27,6 +28,7 @@ class RolesController extends Controller
      */
     public function __construct(RoleRepositoryInterface $roleRepository, PermissionRoleRepositoryInterface $permsRoleRepository)
     {
+        $this->middleware(CheckAdmin::class);
         $this->middleware('auth');
         $this->roleRepository = $roleRepository;
         $this->permsRoleRepository = $permsRoleRepository;

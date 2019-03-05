@@ -12,13 +12,34 @@
 */
 use Illuminate\Routing\Router;
 
-Route::get('/', function () {
-    return view('welcome');
+//===========FONTEND==========
+Route::namespace('Frontend')->group(function () {
+
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
+
+    //register routes
+    Route::get('register', 'AuthController@showRegistrationForm');
+    Route::post('register', 'AuthController@register')->name('register');
+
+    //Login routes
+    Route::get('login', ['uses' => 'AuthController@login',     'as' => 'frontLogin']);
+    Route::post('login', ['uses' => 'AuthController@postLogin', 'as' => 'frontPostLogin']);
+    Route::get('logout', ['uses' => 'AuthController@logout', 'as' => 'frontLogout']);
+   
+    Route::get('auth/{driver}', ['as' => 'socialAuth', 'uses' => 'SocialController@redirectToProvider']);
+    Route::get('auth/{driver}/callback', ['as' => 'socialAuthCallback', 'uses' => 'SocialController@handleProviderCallback']);
+
+    //Password reset routes
+    Route::get('forgot-password', ['uses' => 'AuthController@showForgotForm', 'as' => 'frontPasswordForgot']);
+    Route::post('send-mail', ['uses' => 'AuthController@sendMail', 'as' => 'frontSendMail']);
+    Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
+    Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 });
 
 //===========BACKEND==========
 
-Route::prefix('admin/')->group(function () {
+Route::group(['prefix' => 'admin'], function () {
 
     //404
     Route::get('/404', 'Backend\NotFoundController@index');

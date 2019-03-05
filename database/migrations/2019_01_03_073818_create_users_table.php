@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('company_id')->unsigned()->nullable();
             $table->integer('role_id')->unsigned()->nullable()->index('lnk_roles_users');
-            $table->string('username', 150);
+            $table->string('username', 150)->nullable();
             $table->string('password');
             $table->string('email')->nullable();
             $table->string('fullname', 100)->nullable();
@@ -34,6 +34,8 @@ class CreateUsersTable extends Migration
             $table->string('sector')->nullable();
             $table->string('interested')->nullable();
             $table->tinyInteger('status')->nullable();
+            $table->tinyInteger('career')->nullable();
+            $table->tinyInteger('association')->nullable();
             $table->string('type')->nullable();
             $table->string('society')->nullable();
             $table->tinyInteger('is_admin')->nullable();

@@ -56,7 +56,7 @@
                                 </div>
                             @endif
 
-                            <form class="form-horizontal" role="form" method="POST" action="{{ route('sendMail') }}"">
+                            <form class="form-horizontal" role="form" method="POST" action="{{ route('sendMail') }}">
                                 {{ csrf_field() }}
                                 
                                 <div class="form-group row {{ $errors->has('email') ? ' has-error' : '' }}">
