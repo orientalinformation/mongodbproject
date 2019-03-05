@@ -10,6 +10,6 @@ class Category extends Model
     protected $collection = 'categories';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name', 'description', 'parentID', 'path'
+        'name', 'description', 'parent_id', 'path'
     ];
 }

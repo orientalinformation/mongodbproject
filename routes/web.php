@@ -18,6 +18,8 @@ Route::namespace('Frontend')->group(function () {
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
 
+    Route::get('/book', 'BookController@index');
+
     //register routes
     Route::get('register', 'AuthController@showRegistrationForm');
     Route::post('register', 'AuthController@register')->name('register');

@@ -8236,6 +8236,7 @@ a.text-dark:focus, a.text-dark:hover {
   border-width: 0;
   padding: 15px 20px;
   position: relative;
+  width: 100%;
 }
 .alert .close {
   opacity: .25;
