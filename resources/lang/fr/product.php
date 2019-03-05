@@ -11,5 +11,7 @@ return [
     'create a event' => 'Créer un Produit',
     'company' => 'Société',
     'occupation' => 'Métier',
-    'uploaded date' => 'Uploaded Date'
+    'uploaded date' => 'Uploaded Date',
+    'views' => 'vues',
+    'no_result' => 'Aucun résultat trouvé',
 ];
