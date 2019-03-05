@@ -12,10 +12,11 @@
         <div class="container-fluid">
             <div class="col-lg-3 col-sm-3">
                 <div id="input_container">
-                    <input type="text" name="keyword" id="input" value="{{ app('request')->input('keyword') }}">
-                    <i class="fa fa-search" aria-hidden="true" id="input_img"></i>
-                    <button id="btnSearch">Recherche avancée</button>
-
+                	<form method="Get" action="{{ route('frontProductSearch') }}">
+	                    <input type="text" name="keyword" id="input" value="{{ app('request')->input('keyword') }}">
+	                    <i class="fa fa-search" aria-hidden="true" id="input_img"></i>
+	                    <button id="btnSearch">Recherche avancée</button>
+					</form>
                 </div>
 
             </div>
