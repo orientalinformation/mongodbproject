@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLibraryCollection extends Migration
+class CreateResearchCollection extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateLibraryCollection extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->table('libraries', function (Blueprint $collection) {
+        Schema::connection('mongodb')->table('researches', function (Blueprint $collection) {
             $collection->index('id');
             $collection->string('name');
-            $collection->string('alias');
-            $collection->integer('view');
-            $collection->string('user_id');
+            $collection->string('keyword');
+            $collection->integer('user_id');
             $collection->boolean('is_delete');
             $collection->timestamps();
-
         });
     }
 
@@ -32,6 +30,6 @@ class CreateLibraryCollection extends Migration
      */
     public function down()
     {
-        Schema::connection('mongodb')->dropIfExists('libraries');
+        Schema::connection('mongodb')->dropIfExists('researches');
     }
 }
