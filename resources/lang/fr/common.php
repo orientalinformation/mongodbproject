@@ -18,4 +18,5 @@ return [
     'home'              => 'Accueil',
     'btnSave'           => 'Ajouter',
     'btnCancel'         => 'Annuler',
+    'noResult'          => 'Aucun résultat trouvé',
 ];

@@ -117,24 +117,24 @@
                 <div class="container-fluid group-box">
                     @foreach ($productItem as $key => $product)
                     <div class="col-lg-2 col-sm-2">
-                        <img src="/image/front/Bibliotheque_Web_1.jpg" class="library-thumb">
+                        <img src="{{ $product['_source']['image'] }}" class="library-thumb">
                         <div class="menu-tooltips"></div>
                         <div class="thumb-title">
                             <span class="title"><strong>{{ $product['_source']['title'] }}</strong></span>
                             <img src="/image/front/cdd-icon.png" class="cdd-icon">
                         </div>
                         <div class="">
-                            {{ $product['_source']['short_description'] }}
+                            {!! str_limit($product['_source']['description'], $limit = 30, $end = '...') !!}
                         </div>
                         <div class="">
-                            {{ $product['_source']['views'] }} @lang('product.views') . ily a 5 ans
+                            {{ $product['_source']['view'] }} @lang('product.views') . ily a 5 ans
                         </div>
                     </div>
                     @endforeach
                 </div>
                 @endforeach
                 @else 
-                <div class="alert alert-warning">@lang('product.no_result')</div>
+                <div class="alert alert-warning">@lang('common.noResult')</div>
                 @endif
             </div>
         </div>

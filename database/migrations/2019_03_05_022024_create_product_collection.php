@@ -16,18 +16,12 @@ class CreateProductCollection extends Migration
         Schema::connection('mongodb')->table('products', function (Blueprint $collection) {
             $collection->index('id');
             $collection->string('title');
-            $collection->string('alias');
-            $collection->string('short_description');
             $collection->string('description');
             $collection->string('image');
-            $collection->double('price');
-            $collection->integer('views');
+            $collection->double('url');
+            $collection->integer('view');
             $collection->integer('like');
-            $collection->string('cat_id');
-            $collection->bigInteger('user_id');
-            $collection->boolean('status');
-            $collection->boolean('share');
-            $collection->boolean('is_public');
+            $collection->string('category_id');
             $collection->boolean('is_delete');
             $collection->timestamps();
 

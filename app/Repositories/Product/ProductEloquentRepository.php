@@ -29,16 +29,31 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
     	$offset = ($page > 1) ? ($page - 1) * $limit : 0;
     	$productElastic = new ProductElastic();
         if ($keyword != null) {
-            $query = [
-                'match_phrase_prefix'   => [
-	                'title' => $keyword
-	            ]
+            $should = [
+                'match_phrase_prefix' => [
+                    'title' => $keyword
+                ]
             ];
         } else {
-            $query = [
-                  'match_all' => new \stdClass()
-            ];
+            $should = ['match_all' => new \stdClass()];
         }
+
+        $query = [
+            'constant_score' => [
+                'filter' => [
+                    'bool' => [
+                        'must' => [
+                            'match' => [
+                                'is_delete' => 0
+                            ]
+                        ],
+                        'should' => [
+                            $should
+                        ]
+                    ]
+                ]
+            ]
+        ];
 
         $params = [
             'index' => $productElastic->getIndexName(),

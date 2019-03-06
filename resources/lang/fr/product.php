@@ -13,5 +13,4 @@ return [
     'occupation' => 'Métier',
     'uploaded date' => 'Uploaded Date',
     'views' => 'vues',
-    'no_result' => 'Aucun résultat trouvé',
 ];
