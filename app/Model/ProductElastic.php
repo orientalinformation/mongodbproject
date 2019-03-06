@@ -13,6 +13,6 @@ class ProductElastic extends Model
     protected $table = 'product';
     public $translatedAttributes = [];
     protected $fillable = [
-        'title', 'alias', 'short_description', 'description', 'image', 'price', 'views', 'like', 'cat_id', 'user_id', 'status', 'share', 'is_public', 'is_delete', 'created_at', 'updated_at'
+        'title', 'description', 'image', 'url', 'view', 'like', 'category_id', 'is_delete', 'created_at', 'updated_at'
     ];
 }
