@@ -19,8 +19,11 @@ class CreateWebCollection extends Migration
             $collection->index('url');
             $collection->string('image');
             $collection->text('description');
-            $collection->dateTime('pubDate');
+            $collection->dateTime('pub_date');
             $collection->smallInteger('status');  // 0: old, 1: new, 2: update
+            $collection->integer('like');
+            $collection->integer('view');
+            $collection->boolean('is_delete');
             $collection->timestamps();
 
         });
