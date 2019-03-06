@@ -157,7 +157,7 @@ class AuthController extends Controller
         if ($data['provider'] && !empty($result->id)) {
             // social account
             $data['user_id'] = $user->id;
-            UserSocial::create($data)
+            UserSocial::create($data);
         }
 
         if ($result) {
