@@ -114,9 +114,16 @@
                 <div class="row">
                     <div class="col-md-9 hidden-xs hidden-sm"></div>
                     <div class="col-md-3 box-trier">
-                        <select class="selectpicker" title="Trier" onchange="window.open(this.value,'_self');">
-                          <option value="{{ $urlSort['latest'] }}">Dernière</option>
-                          <option value="{{ $urlSort['oldest'] }}">Le plus ancien</option>
+                        <select class="selectpicker" title="@lang('common.sort')" onchange="window.open(this.value,'_self');">
+                          <option value="{{ $urlSort['latest'] }}" 
+                          @if (app('request')->input('sort') == 'desc') 
+                          selected
+                          @endif>@lang('common.latest')</option>
+                          <option value="{{ $urlSort['oldest'] }}"
+                          @if (app('request')->input('sort') == 'asc') 
+                          selected
+                          @endif
+                          >@lang('common.oldest')</option>
                         </select>
                     </div>
                 </div>

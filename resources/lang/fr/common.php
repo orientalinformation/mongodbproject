@@ -19,4 +19,7 @@ return [
     'btnSave'           => 'Ajouter',
     'btnCancel'         => 'Annuler',
     'noResult'          => 'Aucun résultat trouvé',
+    'sort'              => 'Trier',
+    'latest'            => 'Dernière',
+    'oldest'            => 'Le plus ancien',
 ];
