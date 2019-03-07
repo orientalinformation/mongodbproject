@@ -13,4 +13,26 @@ return [
     'bookFilePath'  => '/public/upload/book/file/',
     'avatarPath'  => '/public/upload/avatar/',
 
+    'elasticsearch' => [
+        'web'       =>  [
+            'index' =>  'web_compagnons',
+            'type'  =>  'web'
+        ],
+        'book'      =>  [
+            'index' =>  'book_compagnons',
+            'type'  =>  'book'
+        ],
+        'product'   =>  [
+            'index' =>  'product_compagnons',
+            'type'  =>  'product'
+        ],
+        'reporting' =>  [
+            'index' =>  'reporting_compagnons',
+            'type'  =>  'reporting'
+        ],
+        'event'     =>  [
+            'index' =>  'event_compagnons',
+            'type'  =>  'event'
+        ]
+    ]
 ];
