@@ -1,38 +1,31 @@
 <ul class="profile-menu-left menu-home menu-library">
-    <li class="accordion-toggle"><a href="#colMenu1" data-toggle="collapse"><i class="fa fa-desktop" aria-hidden="true"></i> Métier</a></li>
-    <div id="colMenu1" class="panel-collapse collapse in">
-        <ul class="sub-menu-library">
-            <li>Bois</li>
-        </ul>
-    </div>
-    <li><a class="accordion-toggle" href="#colMenu2" data-toggle="collapse">Thématique</a></li>
-    <div id="colMenu2" class="panel-collapse collapse in">
-        <ul class="sub-menu-library">
-            <li><a class="accordion-toggle-sub" href="#colMenuSub2" data-toggle="collapse">Logiciel</a></li>
-            <div id="colMenuSub2" class="panel-collapse collapse in">
+    <?php if(sizeof($category) >0 ): ?>
+        @foreach($category as $item)
+        <li><a class="accordion-toggle" href="#colMenu<?= $item['_id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
+        <?php $subCat = EnvatoCategory::getSubCategory($item['_id']); ?>
+            <?php if(sizeof($subCat) > 0): ?>
+            <div id="colMenu<?= $item['_id'] ?>" class="panel-collapse collapse">
                 <ul class="sub-menu-library">
-                    <li>CAO</li>
-                    <li>DAO</li>
+                    @foreach($subCat as $subItem)
+                        <?php $sub2Cat = EnvatoCategory::getSubCategory($subItem['_id']); ?>
+                        <?php if(sizeof($sub2Cat) > 0): ?>
+                            <li><a class="accordion-toggle-sub" href="#colMenuSub<?= $subItem['_id'] ?>" data-toggle="collapse">{{ $subItem['name'] }}</a></li>
+                            <div id="colMenuSub<?= $subItem['_id'] ?>" class="panel-collapse collapse in">
+                                <ul class="sub-menu-library">
+                                    @foreach($sub2Cat as $sub2Item)
+                                        <li>{{ $sub2Item['name'] }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        <?php else: ?>
+                            <li>{{ $subItem['name'] }}</li>
+                        <?php endif;?>
+                    @endforeach
                 </ul>
             </div>
-            <li>Outil</li>
-            <li>Règlementaires et normes</li>
-            <li>Transition</li>
-            <li>Matériaux</li>
-            <li>Produit</li>
-        </ul>
-    </div>
-    <li><a class="accordion-toggle collapsed" href="#colMenu3" data-toggle="collapse">Année</a></li>
-    <div id="colMenu3" class="panel-collapse collapse">
-        <ul class="sub-menu-library">
-            <li>Logiciel</li>
-            <li>Outil</li>
-            <li>Règlementaires et normes</li>
-            <li>Transition</li>
-            <li>Matériaux</li>
-            <li>Produit</li>
-        </ul>
-    </div>
+            <?php endif;?>
+        @endforeach
+    <?php endif; ?>
     <li>
         <img src="{{ URL::to('/image/front/video-checked.png')}}" class="library-video-icon">
         <img src="{{ URL::to('/image/front/video-remove.png')}}" class="library-video-icon">

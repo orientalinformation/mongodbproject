@@ -4,9 +4,27 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Book\BookRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 
 class BookController extends Controller
 {
+    /**
+     * @var CategoryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $cateogryRepository;
+
+    /**
+     * CategoryController constructor.
+     * @param CategoryRepositoryInterface $cateogryRepository
+     */
+    public function __construct(CategoryRepositoryInterface $cateogryRepository, BookRepositoryInterface $bookRepository)
+    {
+        $this->cateogryRepository = $cateogryRepository;
+        $this->bookRepository = $bookRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +32,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('Frontend.Book.index');
+        $rowPage = Config::get('constants.rowPageBook');
+        $category = $this->cateogryRepository->parentOrderByPath()->toArray();
+        $book = $this->bookRepository->paginate($rowPage)->toArray();
+        return view('Frontend.Book.index', compact(['category','book']));
     }
 
     /**

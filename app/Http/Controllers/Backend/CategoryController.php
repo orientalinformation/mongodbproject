@@ -72,7 +72,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         if ($request->method() == 'POST') {
-            $data['parentID'] = $request->get('parentID');
+            $data['parent_id'] = $request->get('parent_id');
             $data['name'] = $request->get('name');
             $data['description'] = $request->get('description');
             $data['path'] = $request->get('path');

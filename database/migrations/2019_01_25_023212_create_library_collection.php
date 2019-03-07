@@ -18,7 +18,7 @@ class CreateLibraryCollection extends Migration
             $collection->string('name');
             $collection->string('alias');
             $collection->integer('share');
-            $collection->string('userID');
+            $collection->string('user_id');
             $collection->integer('view');
             $collection->timestamps();
 

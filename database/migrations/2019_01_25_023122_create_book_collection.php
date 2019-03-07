@@ -19,14 +19,14 @@ class CreateBookCollection extends Migration
             $collection->string('alias');
             $collection->string('author');
             $collection->string('type');
-            $collection->string('shortDescription');
             $collection->string('description');
             $collection->string('image');
             $collection->string('file');
             $collection->double('price');
             $collection->integer('status');
             $collection->integer('share');
-            $collection->string('catID');
+            $collection->string('cat_id');
+            $collection->integer('view');
             $collection->timestamps();
 
         });
