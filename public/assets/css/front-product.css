@@ -1,12 +1,12 @@
-.filter-option{
+.box-trier .filter-option{
 	text-align: right!important;
 	font-weight: 700;
 	color: #FF5500FF
 }
-.dropdown.show{
+.box-trier.dropdown.show{
 	width: 100%!important;
 }
-.dropdown-toggle::after{
+.box-trier .dropdown-toggle::after{
 	display: inline-block;
     width: 0;
     height: 0;
@@ -20,7 +20,7 @@
     border-left: 4px solid transparent;
     color: #FF5500FF;
 }
-.bootstrap-select .dropdown-menu li a.active{
+.box-trier .bootstrap-select .dropdown-menu li a.active{
 	background: none;
 	color: #FF5500FF;
 }
