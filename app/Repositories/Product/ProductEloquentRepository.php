@@ -19,11 +19,12 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
 	 * Search Product By Keyword
 	 *
 	 * @param $keyword
-	 * @param $page
+     * @param $page
+	 * @param $options
 	 * @return array
 	 *
 	 */
-    public function searchByKeyword($keyword = null, $page = 1)
+    public function searchByKeyword($keyword = null, $page = 1, $options = null)
     {
     	$limit = 24;
     	$offset = ($page > 1) ? ($page - 1) * $limit : 0;
@@ -55,6 +56,11 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
             ]
         ];
 
+        $sort = ['_id' => 'desc'];
+        if (isset($options['sort'])) {
+            $sort = ['_id' => $options['sort']];
+        }
+
         $params = [
             'index' => $productElastic->getIndexName(),
             'type'  => $productElastic->getTypeName(),
@@ -62,9 +68,7 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
                 'from' => $offset,
                 'size' => $limit,
                 'query' => $query,
-                'sort' => [
-                    '_id' => 'desc'
-                ]
+                'sort' => $sort
             ]
         ];
 

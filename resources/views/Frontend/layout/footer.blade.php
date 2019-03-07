@@ -44,6 +44,7 @@
 <script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
 <script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script>
 <script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script>
+<script src="{{ asset('/assets/lib/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/web-animations.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/hammer.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/muuri.min.js') }}"></script>
@@ -56,4 +57,8 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    // Set version Bootstrap default with Bootstrap select
+    $.fn.selectpicker.Constructor.BootstrapVersion = '3';
+    $('.selectpicker').selectpicker();
 </script>

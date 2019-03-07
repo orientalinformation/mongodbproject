@@ -1,0 +1,29 @@
+.filter-option{
+	text-align: right!important;
+	font-weight: 700;
+	color: #FF5500FF
+}
+.dropdown.show{
+	width: 100%!important;
+}
+.dropdown-toggle::after{
+	display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    margin-top: 6px;
+    border-top: 6px solid;
+    border-right: 4px solid transparent;
+    border-bottom: 0;
+    border-left: 4px solid transparent;
+    color: #FF5500FF;
+}
+.bootstrap-select .dropdown-menu li a.active{
+	background: none;
+	color: #FF5500FF;
+}
+.box-trier .bootstrap-select .dropdown-menu li a{
+	text-align: right;
+}

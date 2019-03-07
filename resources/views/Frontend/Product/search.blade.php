@@ -111,6 +111,15 @@
                 </ul>
             </div>
             <div class="col-lg-9 col-sm-9">
+                <div class="row">
+                    <div class="col-md-9 hidden-xs hidden-sm"></div>
+                    <div class="col-md-3 box-trier">
+                        <select class="selectpicker" title="Trier" onchange="window.open(this.value,'_self');">
+                          <option value="{{ $urlSort['latest'] }}">Dernière</option>
+                          <option value="{{ $urlSort['oldest'] }}">Le plus ancien</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="head-menu"><span><strong>@lang('product.title')</strong></span>({{ $products['total'] }})</div>
                 @if (!empty($productItems))
                 @foreach($productItems as $key => $productItem)
@@ -140,3 +149,4 @@
         </div>
     </div>
 </div>
+@endsection

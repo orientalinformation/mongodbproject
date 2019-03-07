@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductRepositoryInterface;
+use Illuminate\Support\Facades\Route;
 
 
 class ProductController extends Controller
@@ -38,7 +39,22 @@ class ProductController extends Controller
     	$input = $this->request->all();
 		$keyword = (isset($input['keyword'])) ? $input['keyword'] : null;
 		$page = (isset($input['page'])) ? $input['page'] : 1;
-		$products = $this->productRepository->searchByKeyword($keyword, $page);
+		$currentPath = Route::getFacadeRoot()->current()->uri();
+		// url ordering
+		$urlSort = [];
+		$urlSort['latest'] = '/' . $currentPath . '?sort=desc';
+		$urlSort['oldest'] = '/' . $currentPath . '?sort=asc';
+		if ($keyword != null) {
+			$urlSort['latest'] = '/' . $currentPath . '?keyword=' . $keyword . '&sort=desc';
+			$urlSort['oldest'] = '/' . $currentPath . '?keyword=' . $keyword . '&sort=asc';  
+		}
+
+		$options = null;
+		if (isset($input['sort'])) {
+			$options['sort'] = $input['sort'];
+		}
+
+		$products = $this->productRepository->searchByKeyword($keyword, $page, $options);
 		$productItems = [];
 		if(!empty($products['hits'])){ 
 			if (count($products['hits']) > 6) {
@@ -54,7 +70,7 @@ class ProductController extends Controller
 		    }
 		}
 
-		return view('Frontend.Product.search', compact('keyword', 'products', 'productItems'));
+		return view('Frontend.Product.search', compact('keyword', 'products', 'productItems', 'urlSort'));
     }
 
 

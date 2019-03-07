@@ -11,9 +11,10 @@ interface ProductRepositoryInterface
 	 *
 	 * @param $keyword
 	 * @param $page
+	 * @param $options
 	 * @return mixed
 	 *
 	 */
 	
-	public function searchByKeyword($keyword, $page);
+	public function searchByKeyword($keyword, $page, $options = null);
 }
