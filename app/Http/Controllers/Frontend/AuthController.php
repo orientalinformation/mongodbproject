@@ -12,8 +12,10 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Mail;
+use Storage;
 use Illuminate\Validation\Rule;
 use App\Model\UserSocial;
+use File;
 
 class AuthController extends Controller
 {
@@ -123,7 +125,6 @@ class AuthController extends Controller
         
         // check username and email exists       
         $data = $request->all();
-
         if ($this->userRepository->checkExistsByKey('email', trim($data['email']))) {
             return back()->withErrors(__('Le mail existe déjà.'))->withInput();  
         }
@@ -152,6 +153,19 @@ class AuthController extends Controller
         $data["type"]          = json_encode($data["type"]);
         if(array_key_exists('avatar_social', $data)) {
             $data['avatar'] = $data['avatar_social'];
+        }
+        // upload avatar
+        if(!empty($data['image_data'])) {
+            $encoded    = $data['image_data'];
+            $path       = storage_path().'/avatar';
+            $filename   = time() . '_' . $data['original_image'];
+            $base64Str  = substr($encoded, strpos($encoded, ",") + 1);
+            $image      = base64_decode($base64Str);
+            File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+            // file_put_contents($path. '/' . $filename, $image);
+            File::put($path. '/' . $filename, $image);
+            symlink(storage_path().'/avatar', public_path(). '/storage/avatar');
+            $data['avatar'] = '/storage/avatar/' . $filename;
         }
         // create
         $result = $this->userRepository->create($data);
