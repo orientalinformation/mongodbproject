@@ -6,19 +6,8 @@
 .box-trier.dropdown.show{
 	width: 100%!important;
 }
-.box-trier .dropdown-toggle::after{
-	display: inline-block;
-    width: 0;
-    height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    margin-top: 6px;
-    border-top: 6px solid;
-    border-right: 4px solid transparent;
-    border-bottom: 0;
-    border-left: 4px solid transparent;
-    color: #FF5500FF;
+.bootstrap-select .dropdown-toggle .caret{
+	color: #FF5500FF;
 }
 .box-trier .bootstrap-select .dropdown-menu li a.active{
 	background: none;
@@ -26,4 +15,18 @@
 }
 .box-trier .bootstrap-select .dropdown-menu li a{
 	text-align: right;
+}
+.btn-research{
+	margin-top: 44px
+}
+.btn-research .btn{
+	border-radius: 25px;
+	background: #FF7505FF;
+	font-size: 12px;
+	padding: 10px 15px
+}
+.btn-research .btn i {font-size: 14px}
+#btn-save-keyword{
+	background: #ff7600;
+	border-color: #ff7600
 }

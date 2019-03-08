@@ -11,7 +11,7 @@ return [
     'name'              => 'Name',
     'action'            => 'Action',
     'description'       => 'Description',
-    'actions'            => 'Actions',
+    'actions'           => 'Actions',
     'createDate'        => 'Date',
     'updateDate'        => 'Mise à jour',
     'welldone'          => 'Bien joué',
@@ -22,4 +22,5 @@ return [
     'sort'              => 'Trier',
     'latest'            => 'Dernière',
     'oldest'            => 'Le plus ancien',
+    'saveSearch'        => 'Enregistrer La Recherche',
 ];

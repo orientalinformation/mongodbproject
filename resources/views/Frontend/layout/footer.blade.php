@@ -42,13 +42,15 @@
 </footer>
 
 <script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
-<script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script>
-<script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script>
+<!-- <script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script> -->
+<!-- <script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script> -->
+<script src="{{ asset('/assets/lib/bootstrap/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('/assets/lib/toast/jquery.toast.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/web-animations.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/hammer.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/muuri.min.js') }}"></script>
-
+<script src="{{ asset('/assets/js/front-product.js') }}"></script>
 
 <!-- Plugins -->
 <script type="text/javascript">

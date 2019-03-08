@@ -15,6 +15,7 @@
 
     <!-- Plugins -->
     <link href="{{ asset('/assets/lib/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/assets/lib/toast/jquery.toast.min.css') }}" rel="stylesheet">
     <!-- Bracket CSS -->
     <link rel="stylesheet" href="{{ asset('/assets/css/front-style.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/front-product.css') }}">
