@@ -12,10 +12,9 @@ class Web extends Eloquent
     protected $fillable = [
         'id',
         'title',
-        'url',
-        'image',
+        'link',
+        'enclosure',
         'description',
-        'pubDate',
-        'status',
+        'pub_date'
     ];
 }

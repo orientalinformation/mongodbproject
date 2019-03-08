@@ -6,6 +6,7 @@ use App\Helpers\Envato\Ulities;
 use App\Repositories\BaseRepositoryInterface;
 use App\Repositories\Rss\RssRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Rules\CheckRssRule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -64,10 +65,10 @@ class RssController extends Controller
 
         $userNames = $users->pluck('username', 'id')->toArray();
 
-        $data = $this->rss->mongoPaginate('userId', $userIds, $rowPage)->toArray();
+        $data = $this->rss->mongoPaginate('user_id', $userIds, $rowPage)->toArray();
 
         for($i = 0 ; $i < count($data['data']); $i++) {
-            $data['data'][$i]['username'] = $userNames[$data['data'][$i]['userId']];
+            $data['data'][$i]['username'] = $userNames[$data['data'][$i]['user_id']];
         }
 
         $paginate = Ulities::calculatorPage($q, $page, $data['total'], $rowPage);
@@ -99,10 +100,10 @@ class RssController extends Controller
 
         $userNames = $users->pluck('username', 'id')->toArray();
 
-        $data = $this->rss->mongoPaginate('userId', $userIds, $rowPage)->toArray();
+        $data = $this->rss->mongoPaginate('user_id', $userIds, $rowPage)->toArray();
 
         for($i = 0 ; $i < count($data['data']); $i++) {
-            $data['data'][$i]['username'] = $userNames[$data['data'][$i]['userId']];
+            $data['data'][$i]['username'] = $userNames[$data['data'][$i]['user_id']];
         }
 
         $paginate = Ulities::calculatorPage($q, $page, $data['total'], $rowPage);
@@ -130,17 +131,26 @@ class RssController extends Controller
      */
     public function store(Request $request)
     {
-        $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.rss)$/';
-        $validator = Validator::make($request->all(), [
-            'rss'   =>  'sometimes|required|regex:'. $regex
-        ]);
+        $regex = '/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/';
+
+        $rules = [
+            'url'   => [
+                'sometimes',
+                'required',
+                'regex:'. $regex,
+                new CheckRssRule()
+            ]
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             return response()->json(compact(['errors']) , 422);
         }
 
-        $input  = $request->only(['rss', 'description']);
+        $input  = $request->only(['url', 'description']);
 
         $input['userId'] = Auth::user()->id;
 
@@ -193,16 +203,26 @@ class RssController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.rss)$/';
-        $validator = Validator::make($request->all(), [
-            'rss'   =>  'sometimes|required|regex:'. $regex
-        ]);
+        $regex = '/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/';
+
+        $rules = [
+            'url'   => [
+                'sometimes',
+                'required',
+                'regex:'. $regex,
+                new CheckRssRule()
+            ]
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             $errors = $validator->errors();
             return response()->json(compact(['errors']) , 422);
         }
-        $input  = $request->only(['rss', 'description']);
+
+        $input  = $request->only(['url', 'description']);
 
         $response = $this->rss->update($id, $input);
 
@@ -217,7 +237,6 @@ class RssController extends Controller
         $status = 'error';
 
         return response()->json(compact(['status']), 500);
-
 
     }
 

@@ -19,7 +19,5 @@ return [
     'rssUserTitle'      => 'Management user veille',
     'rssAdminMenu'      => 'Admin',
     'rssUserMenu'       => 'Utilisateur',
-    'msg_rssRequired'   => 'Le champ de rss est obligatoire.',
-    'msg_rssInvalid'    => 'Le format de lien rss est invalide.',
     'btnCreateRss'      => 'Ajouter un fil Rss',
 ];
