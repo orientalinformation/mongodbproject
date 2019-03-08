@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use Illuminate\Support\Facades\Config;
+use App\Helpers\Envato\Ulities;
+
 
 class BookController extends Controller
 {
@@ -30,12 +32,26 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $rowPage = Config::get('constants.rowPageBook');
+        //Searching value
+        $q = null;
+
+        $page = $request->get('page');
+        if (is_null($page)) {
+            $page = 1;
+        }
         $category = $this->cateogryRepository->parentOrderByPath()->toArray();
-        $book = $this->bookRepository->paginate($rowPage)->toArray();
-        return view('Frontend.Book.index', compact(['category','book']));
+        if($request->has('start_year') && $request->has('end_year')) {
+            $start_year = $request->get('start_year');
+            $end_year = $request->get('end_year');
+            $book = $this->bookRepository->getRange($start_year, $end_year, $rowPage)->toArray();
+        }else{
+            $book = $this->bookRepository->paginate($rowPage)->toArray();
+        }
+        $paginate = Ulities::calculatorPage(null, $page, $book['total'], $rowPage);
+        return view('Frontend.Book.index', compact(['category', 'book', 'paginate', 'q']));
     }
 
     /**

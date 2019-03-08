@@ -12,10 +12,23 @@
             <div class="container-fluid">
                 <div class="col-lg-3 col-sm-3">
                     <div id="input_container">
-                        <input type="text" id="input" value="">
+                        <input type="text" id="input" value="" class="normanSearch">
                         <i class="fa fa-search" aria-hidden="true" id="input_img"></i>
                         <button id="btnSearch">Recherche avancée</button>
-
+                        @section('script')
+                            <script type="text/javascript">
+                                $('input').bind("enterKey",function(e){
+                                    let normanSearch = $('.normanSearch').val();
+                                    alert('a');
+                                });
+                                $('input').keyup(function(e){
+                                    if(e.keyCode == 13)
+                                    {
+                                        $(this).trigger("enterKey");
+                                    }
+                                });
+                            </script>
+                        @endsection
                     </div>
 
                 </div>
@@ -64,6 +77,7 @@
                         <?php endif; ?>
                         <?php $i++; $j++ ?>
                     @endforeach
+                    @include('Backend.partials.pagination', ['paginator' => $book])
                 </div>
             </div>
         </div>

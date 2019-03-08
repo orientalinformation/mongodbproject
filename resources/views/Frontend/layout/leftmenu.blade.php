@@ -30,6 +30,9 @@
         <img src="{{ URL::to('/image/front/video-checked.png')}}" class="library-video-icon">
         <img src="{{ URL::to('/image/front/video-remove.png')}}" class="library-video-icon">
     </li>
+    <li>
+        <input type="hidden" id="slider_range" class="flat-slider" />
+    </li>
     <li><a class="accordion-toggle" href="#colMenu4" data-toggle="collapse">Mes bibliothèques</a></li>
     <div id="colMenu4" class="panel-collapse collapse in">
         <ul class="sub-menu-library">
@@ -73,3 +76,23 @@
         <div class="link-menu"><a href="#">voir plus</a></div>
     </div>
 </ul>
+
+@section('script')
+    <script type="text/javascript">
+        jQuery(function() {
+            jQuery( "#slider_range" ).flatslider({
+                min: 1990, max: 2100,
+                step: 1,
+                values: [2010, 2020],
+                range: true,
+                einheit: '',
+                stop: function( event, ui ) {
+                    currentMinValue = ui.values[ 0 ];
+                    currentMaxValue = ui.values[ 1 ];
+                    window.location.href = "{{ URL::to('/') . '/book' }}" + "?start_year=" + currentMinValue + "&end_year=" + currentMaxValue;
+                    // alert('currentMinValue = '+currentMinValue+' currentMaxValue = '+currentMaxValue);
+                }
+            });
+        });
+    </script>
+@endsection

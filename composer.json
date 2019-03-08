@@ -14,7 +14,8 @@
         "laravel/socialite": "^3.2.0",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.6",
-        "socialiteproviders/microsoft-live": "^3.0"
+        "socialiteproviders/microsoft-live": "^3.0",
+        "nesbot/carbon": "^1.33"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

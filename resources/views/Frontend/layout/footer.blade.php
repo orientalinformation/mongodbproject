@@ -48,6 +48,10 @@
 <script src="{{ asset('/assets/lib/frontend/hammer.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/muuri.min.js') }}"></script>
 
+<script src="{{ asset('/assets/lib/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('/assets/lib/jquery/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('/assets/lib/slider/slider.js') }}"></script>
+
 
 <!-- Plugins -->
 <script type="text/javascript">
