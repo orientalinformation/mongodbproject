@@ -5,7 +5,6 @@ namespace App\Repositories\Product;
 use App\Repositories\EloquentRepository;
 use Elasticsearch\ClientBuilder;
 use App\Model\Product;
-use App\Model\ProductElastic;
 
 class ProductEloquentRepository extends EloquentRepository implements ProductRepositoryInterface
 {
@@ -28,7 +27,6 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
     {
     	$limit = 24;
     	$offset = ($page > 1) ? ($page - 1) * $limit : 0;
-    	$productElastic = new ProductElastic();
         if ($keyword != null) {
             $should = [
                 'match_phrase_prefix' => [
@@ -62,8 +60,8 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
         }
 
         $params = [
-            'index' => $productElastic->getIndexName(),
-            'type'  => $productElastic->getTypeName(),
+            'index' => config('constants.elasticsearch.product.index'),
+            'type' => config('constants.elasticsearch.product.type'),
             'body' => [
                 'from' => $offset,
                 'size' => $limit,

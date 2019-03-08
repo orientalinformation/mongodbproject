@@ -5,7 +5,6 @@ use Faker\Factory as Faker;
 use Carbon\Carbon;
 use App\Model\Product;
 use App\Model\ProductDetail;
-use App\Model\ProductElastic;
 use Elasticsearch\ClientBuilder;
 use App\Repositories\Product\ProductRepositoryInterface;
 
@@ -21,9 +20,8 @@ class ProductTableSeeder extends Seeder
     	Product::truncate();
 
         // delete Elastic Product Index
-        $productElastic = new ProductElastic();
         $param = [
-            'index' => $productElastic->getIndexName()
+            'index' => Config::get('constants.elasticsearch.product.index')
         ];
         $client = ClientBuilder::create()->build();
         // check index exists before delete
@@ -108,8 +106,8 @@ class ProductTableSeeder extends Seeder
                             'updated_at'        => $product->updated_at,
                             'product_detail'    => $productDetailElatic
                         ],
-                        'index' => $productElastic->getIndexName(),
-                        'type' => $productElastic->getTypeName(),
+                        'index' => Config::get('constants.elasticsearch.product.index'),
+                        'type' => Config::get('constants.elasticsearch.product.type'),
                         'id' => $product->id,
                     ];
 
