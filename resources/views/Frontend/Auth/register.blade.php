@@ -107,8 +107,13 @@
                         <input type="range" class="cropit-image-zoom-input" />
                         
                         <!-- This is where user selects new image -->
-                        <input type="file" class="cropit-image-input" name="original_image" />
+                        <input type="file" class="cropit-image-input" name="original_image" accept="image/*" />
                     </div>
+                    @if ($errors->has('original_image'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('original_image') }}
+                        </div>
+                    @endif
                 </div>
                 
                 @if ($message = Session::get('error'))
@@ -338,6 +343,18 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="col-lg-12" style="margin: 10px 0;">
+                                <div class="input-group">
+                                    <div class="g-recaptcha" data-sitekey={!!env('RECAPTCHA_SITE_KEY')!!}></div>
+                                </div>
+                                <div id="html_element"></div>
+                            </div>
+                            
+                            @if ($errors->has('g-recaptcha-response'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="row groupAgree">
@@ -360,7 +377,8 @@
                     <input type="hidden" name="is_admin" value="{{$is_admin}}">
                     <input type="hidden" name="image_data" class="hidden-image-data" />
                     <input type="hidden" name="image_name" class="hidden-image-name" />
-                    <button type="button" class="btnLogin">S'EnRegistrer</button>
+                    
+                    <button type="button" class="btnLogin g-recaptcha"  data-callback="onSubmit">S'EnRegistrer</button>
                 </div>
             </form>    
         </div>
@@ -371,6 +389,8 @@
 @section('script')
     <script src="{{ asset('/assets/lib/gentleSelect/jquery-gentleSelect.js') }}"></script>
     <script src="{{ asset('/js/plugins/jquery.cropit.js') }}"></script>
+    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer>
+    </script>
     <script>
         $(document).ready(function() {
             $('#typeList').gentleSelect({ 
@@ -415,11 +435,17 @@
             // Move cropped image data to hidden input
             let imageData = $('#image-cropper').cropit('export');
             $('.hidden-image-data').val(imageData);
-            // $("input[name='original_image']").val();
-            console.log($("input[name='original_image']").val());
             
             // Prevent the form from actually submitting
             return true;
         });
+        function onSubmit(token) {
+            document.getElementById("register").submit();
+        }
+        var onloadCallback = function() {
+            grecaptcha.render('html_element', {
+                'sitekey' : "6LcoTJYUAAAAAEyxoNf5G18ML2RLPWeS-U1v9J5O"
+            });
+        };
     </script>
 @endsection

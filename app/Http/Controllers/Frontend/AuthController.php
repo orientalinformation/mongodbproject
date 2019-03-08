@@ -16,6 +16,8 @@ use Storage;
 use Illuminate\Validation\Rule;
 use App\Model\UserSocial;
 use File;
+use App\Rules\GoogleRecaptcha;
+use App\Rules\CheckBase64Rule;
 
 class AuthController extends Controller
 {
@@ -89,6 +91,9 @@ class AuthController extends Controller
             'association'           => 'required|integer|min:0',
             'status'                => 'required|integer|min:0',
             'type'                  => 'required|array',
+            'g-recaptcha-response'  => ['required', new GoogleRecaptcha],
+            // 'image_data'            => [new CheckBase64Rule]
+            'original_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $messages = [
@@ -115,6 +120,9 @@ class AuthController extends Controller
             'status.min'                    => __('validation.min.numeric', ['attribute' => "status", 'min' => 0]),
             'type.required'                 => __('validation.required', ['attribute' => "type"]),
             'type.array'                    => __('validation.array', ['attribute' => "type"]),
+            'g-recaptcha-response.required' => 'Please check reCaptcha',
+            'original_image.image'          => 'File must be an image with extension: .jpg, .png, etc...',
+            'original_image.max'            => 'File is too large, maximun allow are 2MB'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -164,7 +172,10 @@ class AuthController extends Controller
             File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
             // file_put_contents($path. '/' . $filename, $image);
             File::put($path. '/' . $filename, $image);
-            symlink(storage_path().'/avatar', public_path(). '/storage/avatar');
+            if(!File::isDirectory($path)) {
+                symlink(storage_path().'/avatar', public_path(). '/storage/avatar');
+            }
+            
             $data['avatar'] = '/storage/avatar/' . $filename;
         }
         // create
