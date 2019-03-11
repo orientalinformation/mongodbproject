@@ -27,6 +27,8 @@ class CreateBookCollection extends Migration
             $collection->integer('share');
             $collection->string('cat_id');
             $collection->integer('view');
+            $collection->integer('like');
+            $collection->boolean('is_delete');
             $collection->timestamps();
 
         });

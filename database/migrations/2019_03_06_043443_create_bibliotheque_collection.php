@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWebCollection extends Migration
+class CreateBibliothequeCollection extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateWebCollection extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->table('web', function (Blueprint $collection) {
-            $collection->increments('id');
+        Schema::connection('mongodb')->table('bibliotheques', function (Blueprint $collection) {
+            $collection->index('id');
             $collection->string('title');
-            $collection->index('url');
+            $collection->string('description');
             $collection->string('image');
-            $collection->text('description');
-            $collection->dateTime('pub_date');
-            $collection->smallInteger('status');  // 0: old, 1: new, 2: update
+            $collection->string('url');
+            $collection->tinyInteger('view');
+            $collection->double('price');
             $collection->integer('like');
-            $collection->integer('view');
+            $collection->string('category_id');
             $collection->boolean('is_delete');
             $collection->timestamps();
-
         });
     }
 
@@ -36,6 +35,6 @@ class CreateWebCollection extends Migration
      */
     public function down()
     {
-        Schema::connection('mongodb')->dropIfExists('web');
+        Schema::connection('mongodb')->dropIfExists('bibliotheques');
     }
 }
