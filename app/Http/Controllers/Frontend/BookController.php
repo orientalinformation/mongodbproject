@@ -8,6 +8,7 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
+use Elasticsearch\ClientBuilder;
 
 
 class BookController extends Controller
@@ -47,6 +48,37 @@ class BookController extends Controller
             $start_year = $request->get('start_year');
             $end_year = $request->get('end_year');
             $book = $this->bookRepository->getRange($start_year, $end_year, $rowPage)->toArray();
+        }else if($request->has('txtSearch')){
+            $client = ClientBuilder::create()->build();
+            $searchValue = $request->get('txtSearch');
+            $matchAll = [
+                'match_all' => new \stdClass()
+            ];
+
+            $matchPrefix = [
+                'match_phrase_prefix'   => [
+                    'title' => $searchValue
+                ]
+            ];
+            $param = [
+                'index' => Config::get('constants.elasticsearch.book.index'),
+                'type'  => Config::get('constants.elasticsearch.book.type'),
+                'body'  => [
+                    'from'  => ($page - 1) * $rowPage,
+                    'size'  => $rowPage,
+                    'query' => is_null($searchValue) ? $matchAll : $matchPrefix
+
+                ]
+            ];
+
+            $response = $client->search($param);
+            $book['total'] = $response["hits"]["total"];
+            $book['data'] = [];
+            if($response["hits"]["total"] > 0) {
+                foreach ($response["hits"]["hits"] as $item) {
+                    $book['data'][] = $item['_source'];
+                };
+            }
         }else{
             $book = $this->bookRepository->paginate($rowPage)->toArray();
         }

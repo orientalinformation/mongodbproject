@@ -99,7 +99,7 @@ class BookController extends Controller
                 $ext = ['jpg','jpeg','gif','png','bmp'];
                 $path = Ulities::uploadFile($fileImage, $bookPath, $ext);
                 $data['image'] = $path['data'];
-                $image = $path;
+                $image = $path['data'];
             }
             $file = "";
             if ($request->hasFile('file')) {
@@ -151,12 +151,14 @@ class BookController extends Controller
                             'status' => $data['status'],
                             'share' => $share,
                             'view' => 0,
+                            'updated_at' => $result->updated_at->format('Y-m-d h'),
+                            'created_at' => $result->created_at->format('Y-m-d h')
                         ],
-                        'index' => $book->getIndexName(),
-                        'type' => $book->getTypeName(),
+                        'index' => Config::get('constants.elasticsearch.book.index'),
+                        'type' => Config::get('constants.elasticsearch.book.type'),
                         'id' => $id,
                     ];
-//                    dd($dataElastic);
+
                     $client = ClientBuilder::create()->build();
                     $response = $client->index($dataElastic);
                 }

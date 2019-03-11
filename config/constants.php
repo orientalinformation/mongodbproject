@@ -13,5 +13,10 @@ return [
     'bookPath'  => '/public/upload/book/',
     'bookFilePath'  => '/public/upload/book/file/',
     'avatarPath'  => '/public/upload/avatar/',
-
+    'elasticsearch' => [
+                        'book' => [
+                                    'index' => 'book_index',
+                                    'type' => 'book'
+                                    ]
+                        ]
 ];
