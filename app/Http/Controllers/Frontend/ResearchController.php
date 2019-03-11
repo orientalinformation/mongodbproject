@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Research\ResearchRepositoryInterface;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+use Lang;
 
 
 class ResearchController extends Controller
@@ -22,7 +25,7 @@ class ResearchController extends Controller
      * @param ResearchRepositoryInterface $ResearchRepository
      * @return void
      */
-    public function __construct(Request $request, ResearchRepositoryInterface $ResearchRepository)
+    public function __construct(Request $request, ResearchRepositoryInterface $researchRepository)
     {
         $this->request = $request;
         $this->researchRepository = $researchRepository;
@@ -35,13 +38,24 @@ class ResearchController extends Controller
 	public function saveKeyword()
 	{
 		 if ($this->request->ajax()) {
-            $this->request->validate([
-			    'name' => 'bail|required|unique:researches|max:100',
-			    'keyword' => 'required',
-			    'user_id' => 'required',
-			]);
+		 	$request = $this->request->all();
 
-			$request = $this->request->all();
+			$validator = Validator::make($request, [
+	            'name' => 'bail|required|max:100',
+			    'keyword' => 'required',
+	        ]);
+
+			if ($validator->fails()) {
+			    return response()->json(['errors'=>$validator->errors()->all()]);
+			}
+			
+			$result = $this->researchRepository->saveKeySearchingValue($request);
+			if ($result) {
+				return response()->json([
+					'code' => '200',
+					'message' => Lang::get('message.msg_create_successfully')
+				]);
+			}
         }
 	}
 }
