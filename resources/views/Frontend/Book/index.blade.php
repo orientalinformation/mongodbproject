@@ -19,13 +19,23 @@
                             <script type="text/javascript">
                                 $('input').bind("enterKey",function(e){
                                     let normanSearch = $('.normanSearch').val();
-                                    alert('a');
+                                    window.location.href = "{{ URL::to('/') . '/book' }}" + "?txtSearch=" + normanSearch;
                                 });
                                 $('input').keyup(function(e){
                                     if(e.keyCode == 13)
                                     {
                                         $(this).trigger("enterKey");
                                     }
+                                });
+                                $(document).ready(function () {
+                                    $('#input').bind('blur', function () {
+                                        if($('#input').val()=='')
+                                            $('#input_img').show();
+                                    });
+
+                                    $('#input').bind('focus', function () {
+                                        $('#input_img').hide();
+                                    });
                                 });
                             </script>
                         @endsection

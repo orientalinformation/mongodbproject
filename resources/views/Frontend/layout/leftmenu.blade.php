@@ -90,7 +90,6 @@
                     currentMinValue = ui.values[ 0 ];
                     currentMaxValue = ui.values[ 1 ];
                     window.location.href = "{{ URL::to('/') . '/book' }}" + "?start_year=" + currentMinValue + "&end_year=" + currentMaxValue;
-                    // alert('currentMinValue = '+currentMinValue+' currentMaxValue = '+currentMaxValue);
                 }
             });
         });
