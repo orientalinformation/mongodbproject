@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Support\Facades\Route;
 
 
@@ -20,12 +21,14 @@ class ProductController extends Controller
      *
      * @param Request $request
      * @param ProductRepositoryInterface $productRepository
+     * @param CategoryRepositoryInterface $cateogryRepository
      * @return void
      */
-    public function __construct(Request $request, ProductRepositoryInterface $productRepository)
+    public function __construct(Request $request, ProductRepositoryInterface $productRepository, CategoryRepositoryInterface $cateogryRepository)
     {
         $this->request = $request;
         $this->productRepository = $productRepository;
+        $this->cateogryRepository = $cateogryRepository;
     }
 
 	/**
@@ -70,8 +73,8 @@ class ProductController extends Controller
 		    }
 		}
 
-		return view('Frontend.Product.search', compact('keyword', 'products', 'productItems', 'urlSort'));
+		$category = $this->cateogryRepository->parentOrderByPath()->toArray();
+
+		return view('Frontend.Product.search', compact('keyword', 'products', 'category', 'productItems', 'urlSort'));
     }
-
-
 }

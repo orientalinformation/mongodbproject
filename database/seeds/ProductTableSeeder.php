@@ -45,8 +45,6 @@ class ProductTableSeeder extends Seeder
         	$pink = 0;
         	$isPublic = 0;
         	$isDelete = 0;
-        	$createdAt = Carbon::now()->format('Y-m-d H:i:s');
-            $updatedAt = Carbon::now()->format('Y-m-d H:i:s');
 
             $data = [
                 'title'             => $title,
@@ -57,8 +55,6 @@ class ProductTableSeeder extends Seeder
                 'like'              => $like,
                 'category_id'       => $categoryId,
                 'is_delete'         => $isDelete,
-                'created_at'        => $createdAt,
-                'updated_at'        => $updatedAt,
             ];
 
             $productCreate = Product::create($data);
@@ -88,8 +84,8 @@ class ProductTableSeeder extends Seeder
                         'pink'          => $productDetail->pink,
                         'is_public'     => $productDetail->is_public,
                         'is_delete'     => $productDetail->is_delete,
-                        'created_at'    => $productDetail->created_at,
-                        'updated_at'    => $productDetail->updated_at,
+                        'updated_at'    => $productDetail->updated_at->format('Y-m-d H:i:s'),
+                        'created_at'    => $productDetail->created_at->format('Y-m-d H:i:s')
                     ];
 
                     $dataElastic = [
@@ -102,8 +98,8 @@ class ProductTableSeeder extends Seeder
                             'category_id'       => $product->categoryId_id,
                             'like'              => $product->like,
                             'is_delete'         => $product->is_delete,
-                            'created_at'        => $product->created_at,
-                            'updated_at'        => $product->updated_at,
+                            'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
+                            'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
                             'product_detail'    => $productDetailElatic
                         ],
                         'index' => Config::get('constants.elasticsearch.product.index'),
