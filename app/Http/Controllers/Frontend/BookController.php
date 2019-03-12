@@ -151,4 +151,26 @@ class BookController extends Controller
     {
         //
     }
+
+    /**
+     * Check status like
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function checkLiked(Request $request)
+    {
+        $data['status'] = 0;
+        $data['data'] = "";
+        if($request->has("user_id") && $request->has("book_id")){
+            $user_id = $request->has("user_id");
+            $book_id = $request->has("book_id");
+            $book = $this->bookRepository->checkLiked($user_id, $book_id)->toArray();
+            $data['status'] = 1;
+            dd($book);die;
+            $data['data'] = "";
+        }
+        $data = json_encode($data);
+        print_r($data);die;
+    }
 }

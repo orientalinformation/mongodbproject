@@ -2906,3 +2906,34 @@ ul.horizontal-menu-library > li a{
 
 .flat-slider::after { clear: both; }
 /* slider range time */
+
+.wrap .content-panel{
+    position: absolute;
+    bottom: -140px;
+    right: -85px;
+    background: #ffffff;
+    width: 185px;
+    box-shadow: 0px 1px 20px;
+    z-index: 1;
+    display: none;
+    font-size: 12px;
+}
+
+.content-line{
+    margin: 5px 0;
+    padding: 2px 15px;
+}
+
+.content-line span{
+    margin-left: 25px;
+}
+
+.content-line i{
+    text-align: left;
+    font-size: 14px;
+}
+
+.content-line:hover{
+    background: #f77d3a;
+    color: #ffffff;
+}
