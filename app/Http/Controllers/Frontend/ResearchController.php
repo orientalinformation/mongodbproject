@@ -10,6 +10,7 @@ use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use App\Model\Research;
 use Lang;
+use Auth;
 
 
 class ResearchController extends Controller
@@ -70,7 +71,10 @@ class ResearchController extends Controller
 
             $request = $this->request->all();
             $id = $request['id'];
-            return Research::destroy($id);
+            $count = Research::where('_id', $id)->where('user_id', Auth::user()->id)->count();
+            if ($count > 0) {
+            	return Research::destroy($id);
+            }
         }
 	}
 }

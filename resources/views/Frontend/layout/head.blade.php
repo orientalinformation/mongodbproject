@@ -23,4 +23,5 @@
     <link rel="stylesheet" href="{{ asset('/assets/css/front-product.css') }}">
 
     <!-- Stylesheets -->
+    <script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
 </head>

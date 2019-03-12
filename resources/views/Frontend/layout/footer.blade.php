@@ -41,7 +41,6 @@
     </div>
 </footer>
 
-<script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
 <!-- <script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script> -->
 <!-- <script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script> -->
 <script src="{{ asset('/assets/lib/bootstrap/bootstrap.min.js') }}"></script>
