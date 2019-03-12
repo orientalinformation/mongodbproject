@@ -27,9 +27,17 @@ class ResearchEloquentRepository extends EloquentRepository implements ResearchR
         $research->name = $request['name'];
         $research->keyword = $request['keyword'];
         $research->is_delete = 0;
-        $research->created_at = Carbon::now()->format('Y-m-d H:i:s');
-        $research->updated_at = Carbon::now()->format('Y-m-d H:i:s');
 
         return $research->save();
+    }
+
+    /**
+     * find item limit
+     * @param $limit
+     * @return mixed
+     */
+    public function getListItem($limit = 5)
+    {
+        return $this->model->where('is_delete', 0)->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->limit($limit)->get();
     }
 }

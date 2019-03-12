@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	// save research
 	$('#btn-save-keyword').click(function(e) {
 		var keyword = $('input[name=keyword]').val();
 		var name = $('input[name=research_name]').val();
@@ -28,6 +29,23 @@ $(document).ready(function() {
 				    }); 
 				}
 			},
+		})
+	});
+
+	//destroy research
+	$('.destroy-research').click(function() {
+		var id = $(this).data('id');
+		var url = $(this).data('url');
+
+		$.ajax({
+			type: 'DELETE',
+			url: url,
+			data: {'id':id, '_token':$('meta[name="csrf-token"]').attr('content')},
+			success:function(result){
+				if (result) {
+					window.location.reload();
+				}
+			}
 		})
 	})
 })

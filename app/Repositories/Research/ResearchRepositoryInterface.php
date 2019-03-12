@@ -10,4 +10,10 @@ interface ResearchRepositoryInterface
 	 * @param $request
 	 */
 	public function saveKeySearchingValue($request);
+
+	/**
+	 * find item limit
+	 * @param $limit
+	 */
+	public function getListItem($limit);
 }

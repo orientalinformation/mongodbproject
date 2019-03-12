@@ -92,7 +92,7 @@
                 <h4 class="modal-title">@lang('common.saveSearch')</h4>
               </div>
             <div class="modal-body">
-                <form name="frmSaveKeyword" action="{{ route('frontSaveKeyword') }}">
+                <form name="frmSaveKeyword" action="{{ route('frontResearchSave') }}">
                     <div class="form-group rechercher">
                         <div class="input-group">
                             <input type="text" name="research_name" class="form-control">

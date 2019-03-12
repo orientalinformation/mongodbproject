@@ -42,7 +42,8 @@ Route::namespace('Frontend')->group(function () {
     Route::get('product/search', ['uses' => 'ProductController@search', 'as' => 'frontProductSearch'])->middleware('auth');
 
     // Research routes
-    Route::post('save-keyword', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontSaveKeyword'])->middleware('auth');
+    Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
+    Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware('auth');
 });
 
 //===========BACKEND==========

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Research\ResearchRepositoryInterface;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,14 +22,16 @@ class ProductController extends Controller
      *
      * @param Request $request
      * @param ProductRepositoryInterface $productRepository
-     * @param CategoryRepositoryInterface $cateogryRepository
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param ResearchRepositoryInterface $researchRepository
      * @return void
      */
-    public function __construct(Request $request, ProductRepositoryInterface $productRepository, CategoryRepositoryInterface $cateogryRepository)
+    public function __construct(Request $request, ProductRepositoryInterface $productRepository, CategoryRepositoryInterface $categoryRepository, ResearchRepositoryInterface $researchRepository)
     {
         $this->request = $request;
         $this->productRepository = $productRepository;
-        $this->cateogryRepository = $cateogryRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->researchRepository = $researchRepository;
     }
 
 	/**
@@ -73,8 +76,11 @@ class ProductController extends Controller
 		    }
 		}
 
-		$category = $this->cateogryRepository->parentOrderByPath()->toArray();
+		// list category left
+		$category = $this->categoryRepository->parentOrderByPath()->toArray();
+		// list researches
+		$researches = $this->researchRepository->getListItem(5);
 
-		return view('Frontend.Product.search', compact('keyword', 'products', 'category', 'productItems', 'urlSort'));
+		return view('Frontend.Product.search', compact('keyword', 'products', 'category', 'researches', 'productItems', 'urlSort'));
     }
 }

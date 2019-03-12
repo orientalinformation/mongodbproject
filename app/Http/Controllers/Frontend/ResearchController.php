@@ -8,6 +8,7 @@ use App\Repositories\Research\ResearchRepositoryInterface;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use App\Model\Research;
 use Lang;
 
 
@@ -56,6 +57,20 @@ class ResearchController extends Controller
 					'message' => Lang::get('message.msg_create_successfully')
 				]);
 			}
+        }
+	}
+
+	/**
+     * Delete Item Research
+     * @return bolean
+     */
+	public function destroy()
+	{
+		if ($this->request->ajax()) {
+
+            $request = $this->request->all();
+            $id = $request['id'];
+            return Research::destroy($id);
         }
 	}
 }
