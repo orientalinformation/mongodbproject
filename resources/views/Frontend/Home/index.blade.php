@@ -1,5 +1,9 @@
 @extends('Frontend.layout.master')
 
+@section('styles')
+    <link href="{{ asset('/assets/lib/bootstrap/bootstrap.css') }}" rel="stylesheet">
+@stop
+
 @section('title')
     {{ __('home.frontEnd.title') }}
 @endsection

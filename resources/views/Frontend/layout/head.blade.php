@@ -11,7 +11,9 @@
     <link href="{{ asset('/assets/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
     <link href="{{ asset('/assets/lib/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- <link href="{{ asset('/assets/lib/bootstrap/bootstrap.css') }}" rel="stylesheet"> -->
+
+    <!--Dynamic StyleSheets added from a view would be pasted here-->
+    @yield('styles')
 
     <!-- Plugins -->
     <link href="{{ asset('/assets/lib/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet">

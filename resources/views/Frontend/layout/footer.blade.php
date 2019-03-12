@@ -50,6 +50,8 @@
 <script src="{{ asset('/assets/lib/frontend/web-animations.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/hammer.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/frontend/muuri.min.js') }}"></script>
+<script src="{{ asset('/assets/lib/jquery/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('/assets/lib/slider/slider.js') }}"></script>
 <script src="{{ asset('/assets/js/front-product.js') }}"></script>
 
 <!-- Plugins -->

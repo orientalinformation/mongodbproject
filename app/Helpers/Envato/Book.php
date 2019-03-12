@@ -7,8 +7,6 @@
  */
 
 namespace App\Helpers\Envato;
-
-
 use App\Model\Pin;
 
 class Book

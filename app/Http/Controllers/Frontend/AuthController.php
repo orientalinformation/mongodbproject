@@ -13,6 +13,7 @@ use Validator;
 use Auth;
 use Mail;
 use Illuminate\Validation\Rule;
+use App\Model\UserSocial;
 
 class AuthController extends Controller
 {
@@ -141,17 +142,25 @@ class AuthController extends Controller
         }
 
         // Hash password
-        $data["role_id"] = $role->id;
-        $data["account_id"] = $account->id;
-        $data["is_admin"] = 0;
-        $data["gender"] = 0;
-        $data["fullname"] = $data['first_name'].' '.$data['last_name'];
-        $data["birthday"] = date("Y-m-d");
-        $data["password"] = Hash::make($data["password"]);
-        $data["type"] = json_encode($data["type"]);
-
+        $data["role_id"]       = $role->id;
+        $data["account_id"]    = $account->id;
+        $data["is_admin"]      = 0;
+        $data["gender"]        = 0;
+        $data["fullname"]      = $data['first_name'].' '.$data['last_name'];
+        $data["birthday"]      = date("Y-m-d");
+        $data["password"]      = Hash::make($data["password"]);
+        $data["type"]          = json_encode($data["type"]);
+        if(array_key_exists('avatar_social', $data)) {
+            $data['avatar'] = $data['avatar_social'];
+        }
         // create
         $result = $this->userRepository->create($data);
+
+        if ($data['provider'] && !empty($result->id)) {
+            // social account
+            $data['user_id'] = $result->id;
+            UserSocial::create($data);
+        }
 
         if ($result) {
             auth()->login($result);
