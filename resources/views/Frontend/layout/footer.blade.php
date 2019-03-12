@@ -41,20 +41,6 @@
     </div>
 </footer>
 
-<script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
-{{--<script src="{{ asset('/assets/lib/jquery/jquery.min.js') }}"></script>--}}
-<script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script>
-<script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script>
-{{--<script src="{{ asset('/assets/lib/bootstrap/bootstrap.min.js') }}"></script>--}}
-<script src="{{ asset('/assets/lib/frontend/web-animations.min.js') }}"></script>
-<script src="{{ asset('/assets/lib/frontend/hammer.min.js') }}"></script>
-<script src="{{ asset('/assets/lib/frontend/muuri.min.js') }}"></script>
-
-<script src="{{ asset('/assets/lib/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('/assets/lib/jquery/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('/assets/lib/slider/slider.js') }}"></script>
-
-
 <!-- Plugins -->
 <script type="text/javascript">
     $.ajaxSetup({

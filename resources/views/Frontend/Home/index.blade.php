@@ -2,6 +2,14 @@
 
 @section('styles')
     <link href="{{ asset('/assets/lib/bootstrap/bootstrap.css') }}" rel="stylesheet">
+
+    <script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('/assets/lib/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/frontend/web-animations.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/frontend/hammer.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/frontend/muuri.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script>
+    <script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script>
 @stop
 
 @section('title')

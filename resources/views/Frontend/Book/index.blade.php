@@ -1,5 +1,12 @@
 @extends('Frontend.layout.master')
 
+@section('styles')
+    <script src="{{ asset('/assets/lib/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/jquery/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('/assets/lib/slider/slider.js') }}"></script>
+@stop
+
 @section('title')
     {{ __('home.frontEnd.title') }}
 @endsection
