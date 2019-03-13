@@ -60,6 +60,7 @@
     $is_admin = $data['is_admin'] ?? '';
     $first_name = $data['first_name'] ?? '';
     $last_name = $data['last_name'] ?? '';
+    
 @endphp
 <header class="header-login">
     <div class="container-fluid">
@@ -98,16 +99,13 @@
                 {{ csrf_field() }}
                 <div class="col-lg-12">
                     <div id="image-cropper" class="register-avt">
-                        <!-- This is where the preview image is displayed -->
                         <div class="cropit-preview"></div>
-                        
-                        <!-- This range input controls zoom -->
-                        <!-- You can add additional elements here, e.g. the image icons -->
+
                         <span class="icon icon-image small-image"></span>
                         <input type="range" class="cropit-image-zoom-input" />
-                        
-                        <!-- This is where user selects new image -->
+
                         <input type="file" class="cropit-image-input" name="original_image" accept="image/*" />
+                        
                     </div>
                     @if ($errors->has('original_image'))
                         <div class="invalid-feedback">
@@ -368,7 +366,7 @@
                     <input type="hidden" name="provider" value="{{$provider}}">
                     <input type="hidden" name="provider_id" value="{{$provider_id}}">
                     <input type="hidden" name="nom" value="{{$nom}}">
-                    <input type="hidden" name="avatar_social" value="{{$avatar_social}}">
+                    <input type="hidden" name="avatar_social" value="{{$avatar_social}}" id="avatar_social">
                     <input type="hidden" name="fullname" value="{{$fullname}}">
                     <input type="hidden" name="role_id" value="{{$role_id}}">
                     <input type="hidden" name="account_id" value="{{$account_id}}">
@@ -377,6 +375,7 @@
                     <input type="hidden" name="is_admin" value="{{$is_admin}}">
                     <input type="hidden" name="image_data" class="hidden-image-data" />
                     <input type="hidden" name="image_name" class="hidden-image-name" />
+                    
                     
                     <button type="button" class="btnLogin g-recaptcha"  data-callback="onSubmit">S'EnRegistrer</button>
                 </div>
@@ -389,7 +388,7 @@
 @section('script')
     <script src="{{ asset('/assets/lib/gentleSelect/jquery-gentleSelect.js') }}"></script>
     <script src="{{ asset('/js/plugins/jquery.cropit.js') }}"></script>
-    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=fr' async defer>
+    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl={{ app()->getLocale() }}' async defer>
     </script>
     <script>
         $(document).ready(function() {
@@ -407,9 +406,15 @@
             if($('#switch_2_left').is(':checked')) {
                 $('#interested_group').show();
             }
-
-            $('#image-cropper').cropit();
+            let imageSrc = $('#avatar_social').val();
             
+            $('#image-cropper').cropit({
+                'minZoom': 2,
+                'allowDragNDrop': false,
+                'smallImage': 'allow',
+                imageState: {src: imageSrc}
+            });
+
         });
 
         $(document).on('click', '.btnLogin', function () {
