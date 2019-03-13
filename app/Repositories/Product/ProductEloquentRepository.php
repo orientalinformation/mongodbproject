@@ -23,33 +23,57 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
 	 * @return array
 	 *
 	 */
-    public function searchByKeyword($keyword = null, $page = 1, $options = null)
+    public function searchByKeyword($q = null, $page = 1, $options = null)
     {
-    	$limit = 24;
+    	$limit = config('constants.rowPageProduct');
     	$offset = ($page > 1) ? ($page - 1) * $limit : 0;
-        if ($keyword != null) {
+        if ($q!= null) {
             $should = [
                 'match_phrase_prefix' => [
-                    'title' => $keyword
+                    'title' => $q
                 ]
             ];
         } else {
             $should = ['match_all' => new \stdClass()];
         }
 
+        $bool = [
+            'must' => [
+                'match' => [
+                    'is_delete' => 0
+                ]
+            ],
+            'should' => [
+                $should
+            ]
+        ];
+
+        if (isset($options['start_year']) && isset($options['end_year'])) {
+            $bool = [
+                'must' => [
+                    'range' => [
+                        'updated_at' => [
+                            'gte' => $options['start_year'],
+                            'lte' => $options['end_year'],
+                            'format' => 'yyyy||yyyy'
+                        ]
+                    ],
+                ],
+                'filter' => [
+                    'term' => [
+                        'is_delete' => 0
+                    ]
+                ],
+                'should' => [
+                    $should
+                ]
+            ];
+        }
+
         $query = [
             'constant_score' => [
                 'filter' => [
-                    'bool' => [
-                        'must' => [
-                            'match' => [
-                                'is_delete' => 0
-                            ]
-                        ],
-                        'should' => [
-                            $should
-                        ]
-                    ]
+                    'bool' => $bool
                 ]
             ]
         ];

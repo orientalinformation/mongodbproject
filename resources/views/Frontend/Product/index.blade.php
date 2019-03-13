@@ -13,7 +13,7 @@
             <div class="col-lg-3 col-sm-3">
                 <div id="input_container">
                 	<form method="Get" action="{{ route('frontProduct') }}">
-	                    <input type="text" name="keyword" id="input" value="{{ app('request')->input('keyword') }}">
+	                    <input type="text" name="q" id="input" value="{{ app('request')->input('q') }}">
 	                    <i class="fa fa-search" aria-hidden="true" id="input_img"></i>
 	                    <button type="button" id="btnSearch" data-toggle="modal" data-target=".bd-search-advance-modal-lg">Recherche avancée</button>
 					</form>
@@ -68,7 +68,7 @@
                             <img src="/image/front/cdd-icon.png" class="cdd-icon">
                         </div>
                         <div class="">
-                            {!! str_limit($product['_source']['description'], $limit = 30, $end = '...') !!}
+                            {{ EnvatoUlities::limit(strip_tags($product['_source']['description']), 20) }}
                         </div>
                         <div class="">
                             {{ EnvatoUlities::number_format_short($product['_source']['view']) }} vues . {{ EnvatoUlities::time_elapsed_string($product['_source']['created_at']) }}
@@ -77,6 +77,7 @@
                     @endforeach
                 </div>
                 @endforeach
+                <div class="text-center">@include('Backend.partials.pagination', ['paginator' => $result])</div>
                 @else 
                 <div class="alert alert-warning">@lang('common.noResult')</div>
                 @endif

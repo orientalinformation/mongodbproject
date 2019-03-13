@@ -13,6 +13,7 @@ class RssTableSeeder extends Seeder
      */
     public function run()
     {
+        Rss::truncate();
         $data = [
             [
                 'rss'           => 'https://vnexpress.net/rss/tin-tuc.rss',

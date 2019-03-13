@@ -76,18 +76,6 @@ class ProductTableSeeder extends Seeder
        		foreach ($products as $product) {
                 $productDetail = ProductDetail::where('product_id', $product->id)->first();
                 if ($productDetail) {
-                    $productDetailElatic = [
-                        'id'            => $productDetail->id,
-                        'product_id'    => $product->id,
-                        'user_id'       => $productDetail->user_id,
-                        'share'         => $productDetail->share,
-                        'pink'          => $productDetail->pink,
-                        'is_public'     => $productDetail->is_public,
-                        'is_delete'     => $productDetail->is_delete,
-                        'updated_at'    => $productDetail->updated_at->format('Y-m-d H:i:s'),
-                        'created_at'    => $productDetail->created_at->format('Y-m-d H:i:s')
-                    ];
-
                     $dataElastic = [
                         'body' => [
                             'title'             => $product->title,
@@ -97,10 +85,13 @@ class ProductTableSeeder extends Seeder
                             'view'              => $product->view,
                             'category_id'       => $product->categoryId_id,
                             'like'              => $product->like,
+                            'user_id'           => $productDetail->user_id,
+                            'share'             => $productDetail->share,
+                            'pink'              => $productDetail->pink,
+                            'is_public'         => $productDetail->is_public,
                             'is_delete'         => $product->is_delete,
                             'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
                             'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
-                            'product_detail'    => $productDetailElatic
                         ],
                         'index' => Config::get('constants.elasticsearch.product.index'),
                         'type' => Config::get('constants.elasticsearch.product.type'),

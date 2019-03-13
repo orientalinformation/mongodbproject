@@ -8,6 +8,8 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Research\ResearchRepositoryInterface;
 use Illuminate\Support\Facades\Route;
+use App\Helpers\Envato\Ulities;
+use Illuminate\Support\Facades\Config;
 
 
 class ProductController extends Controller
@@ -42,25 +44,32 @@ class ProductController extends Controller
 	 */
     public function index()
     {
-    	$input = $this->request->all();
-		$keyword = (isset($input['keyword'])) ? $input['keyword'] : null;
-		$page = (isset($input['page'])) ? $input['page'] : 1;
+		$q = $this->request->has('q') ? $this->request->get('q') : null;
+		$page = $this->request->has('page') ? $this->request->get('page') : 1;
 		$currentPath = Route::getFacadeRoot()->current()->uri();
-		// url ordering
-		$urlSort = [];
-		$urlSort['latest'] = '/' . $currentPath . '?sort=desc';
-		$urlSort['oldest'] = '/' . $currentPath . '?sort=asc';
-		if ($keyword != null) {
-			$urlSort['latest'] = '/' . $currentPath . '?keyword=' . $keyword . '&sort=desc';
-			$urlSort['oldest'] = '/' . $currentPath . '?keyword=' . $keyword . '&sort=asc';  
-		}
 
 		$options = null;
-		if (isset($input['sort'])) {
-			$options['sort'] = $input['sort'];
+		if ($this->request->has('sort')) {
+			$options['sort'] = $this->request->get('sort');
 		}
 
-		$products = $this->productRepository->searchByKeyword($keyword, $page, $options);
+		// url ordering
+		$paramPath = '';
+		if ($q != null) {
+			$paramPath = 'q=' . $q . '&';
+		}
+
+		if($this->request->has('start_year') && $this->request->has('end_year')) {
+			$options['start_year'] = $this->request->get('start_year');
+			$options['end_year'] = $this->request->get('end_year');
+			$paramPath .= 'start_year=' . $options['start_year'] . '&end_year=' . $options['end_year'] . '&';
+		}
+
+		$urlSort = [];
+		$urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
+		$urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
+
+		$products = $this->productRepository->searchByKeyword($q, $page, $options);
 		$productItems = [];
 		if(!empty($products['hits'])){ 
 			if (count($products['hits']) > 6) {
@@ -76,11 +85,14 @@ class ProductController extends Controller
 		    }
 		}
 
+		$rowPage = Config::get('constants.rowPageProduct');
+		$paginate = Ulities::calculatorPage($q, $page, $products['total'], $rowPage);
+		$result = $this->productRepository->paginate($rowPage)->toArray();
 		// list category left
 		$category = $this->categoryRepository->parentOrderByPath()->toArray();
 		// list researches
 		$researches = $this->researchRepository->getListItem(5);
 
-		return view('Frontend.Product.index', compact('keyword', 'products', 'category', 'researches', 'productItems', 'urlSort'));
+		return view('Frontend.Product.index', compact('products', 'category', 'researches', 'productItems', 'urlSort', 'result', 'paginate', 'q'));
     }
 }
