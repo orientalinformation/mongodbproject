@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use App\Model\Research;
+use App\Rules\ValidateUniqueResearch;
 use Lang;
 use Auth;
 
@@ -43,7 +44,7 @@ class ResearchController extends Controller
 		 	$request = $this->request->all();
 
 			$validator = Validator::make($request, [
-	            'name' => 'bail|required|max:100',
+	            'name' => ['bail', 'required', 'max:100', new ValidateUniqueResearch],
 			    'keyword' => 'required',
 	        ]);
 
