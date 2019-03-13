@@ -28,4 +28,6 @@ interface BookRepositoryInterface
      * @return mixed
      */
     public function getRange($start_year, $end_year, $perPage);
+
+    public function checkLiked($user_id, $book_id);
 }

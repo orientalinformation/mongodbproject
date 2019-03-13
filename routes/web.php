@@ -20,6 +20,8 @@ Route::namespace('Frontend')->group(function () {
 
     Route::get('/book', 'BookController@index');
 
+    Route::get('/check_liked', 'BookController@checkLiked');
+
     //register routes
     Route::get('register', 'AuthController@showRegistrationForm');
     Route::post('register', 'AuthController@register')->name('register');
