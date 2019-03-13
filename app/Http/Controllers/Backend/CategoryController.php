@@ -87,22 +87,22 @@ class CategoryController extends Controller
             }
             $this->cateogryRepository->update($id, $data);
 
-            if($id != '') {
-                $category = new CategoryElastic();
-                $dataElastic = [
-                    'body' => [
-                        'parentID' => $request->get('parentID'),
-                        'name' => $request->get('name'),
-                        'description' => $request->get('description'),
-                        'path' => $data['path']
-                    ],
-                    'index' => $category->getIndexName(),
-                    'type'  => $category->getTypeName(),
-                    'id' => $id,
-                ];
-                $client = ClientBuilder::create()->build();
-                $response = $client->index($dataElastic);
-            }
+//            if($id != '') {
+//                $category = new CategoryElastic();
+//                $dataElastic = [
+//                    'body' => [
+//                        'parentID' => $request->get('parentID'),
+//                        'name' => $request->get('name'),
+//                        'description' => $request->get('description'),
+//                        'path' => $data['path']
+//                    ],
+//                    'index' => $category->getIndexName(),
+//                    'type'  => $category->getTypeName(),
+//                    'id' => $id,
+//                ];
+//                $client = ClientBuilder::create()->build();
+//                $response = $client->index($dataElastic);
+//            }
 
             return redirect('admin/categories')->with('success', 'Category saved!');
         }
@@ -158,20 +158,20 @@ class CategoryController extends Controller
 
                 $this->cateogryRepository->update($id, $data);
 
-                $category = new CategoryElastic();
-                $dataElastic = [
-                    'body' => [
-                        'parentID' => $request->get('parentID'),
-                        'name' => $request->get('name'),
-                        'description' => $request->get('description'),
-                        'path' => $data['path']
-                    ],
-                    'index' => $category->getIndexName(),
-                    'type'  => $category->getTypeName(),
-                    'id' => $id,
-                ];
-                $client = ClientBuilder::create()->build();
-                $response = $client->index($dataElastic);
+//                $category = new CategoryElastic();
+//                $dataElastic = [
+//                    'body' => [
+//                        'parentID' => $request->get('parentID'),
+//                        'name' => $request->get('name'),
+//                        'description' => $request->get('description'),
+//                        'path' => $data['path']
+//                    ],
+//                    'index' => $category->getIndexName(),
+//                    'type'  => $category->getTypeName(),
+//                    'id' => $id,
+//                ];
+//                $client = ClientBuilder::create()->build();
+//                $response = $client->index($dataElastic);
 
                 return redirect()->to('admin/categories');
             }else{
@@ -198,30 +198,30 @@ class CategoryController extends Controller
             $id = $request->get('id');
             $this->cateogryRepository->delete($id);
 
-            $category = new CategoryElastic();
-            $params = [
-                'index' => $category->getIndexName(),
-                'type'  => $category->getTypeName(),
-                'body' => [
-                    'query' => [
-                        'match' => [
-                            '_id' => $id
-                        ]
-                    ]
-                ]
-            ];
-            $client = ClientBuilder::create()->build();
-            $response = $client->search($params);
-            $items = $response['hits']['hits'];
-
-            if(sizeof($items) > 0) {
-                $params = [
-                    'index' => $category->getIndexName(),
-                    'type'  => $category->getTypeName(),
-                    'id' => $id
-                ];
-                $client->delete($params);
-            }
+//            $category = new CategoryElastic();
+//            $params = [
+//                'index' => $category->getIndexName(),
+//                'type'  => $category->getTypeName(),
+//                'body' => [
+//                    'query' => [
+//                        'match' => [
+//                            '_id' => $id
+//                        ]
+//                    ]
+//                ]
+//            ];
+//            $client = ClientBuilder::create()->build();
+//            $response = $client->search($params);
+//            $items = $response['hits']['hits'];
+//
+//            if(sizeof($items) > 0) {
+//                $params = [
+//                    'index' => $category->getIndexName(),
+//                    'type'  => $category->getTypeName(),
+//                    'id' => $id
+//                ];
+//                $client->delete($params);
+//            }
 
             return redirect('admin/categories')->with('success', 'Category deleted!');
         }

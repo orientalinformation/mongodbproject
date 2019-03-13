@@ -16,11 +16,10 @@ class CreateWebCollection extends Migration
         Schema::connection('mongodb')->table('web', function (Blueprint $collection) {
             $collection->increments('id');
             $collection->string('title');
-            $collection->index('url');
-            $collection->string('image');
+            $collection->index('link');
+            $collection->string('enclosure');
             $collection->text('description');
             $collection->dateTime('pub_date');
-            $collection->smallInteger('status');  // 0: old, 1: new, 2: update
             $collection->integer('like');
             $collection->integer('view');
             $collection->boolean('is_delete');

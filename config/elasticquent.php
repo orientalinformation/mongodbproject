@@ -29,10 +29,4 @@ return array(
 
     'default_index' => 'compagnons',
 
-    'post_index'    => 'posts',
-
-    'book_index'    => 'books',
-
-    'category_index'    => 'categories',
-
 );

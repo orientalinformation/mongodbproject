@@ -15,7 +15,7 @@ class CreateRssCollection extends Migration
     {
         Schema::connection('mongodb')->table('rss', function (Blueprint $collection) {
             $collection->index('id');
-            $collection->string('rss');
+            $collection->string('url');
             $collection->text('description');
             $collection->bigInteger('userId');
             $collection->timestamps();

@@ -7,10 +7,10 @@
 {{ Form::model($rss, ['route'=>['rss.update', $rss->_id], 'class' => 'form-horizontal submit-form', 'method' => 'patch', 'enctype' => 'multipart/form-data']) }}
 <div class="modal-body">
     <div class="form-group row">
-        <label for="rss" class="col-md-2 col-sm-2 col-form-label">{{ __('rss.linkRss') }}</label>
+        <label for="url" class="col-md-2 col-sm-2 col-form-label">{{ __('rss.linkRss') }}</label>
         <div class="col-md-10 col-sm-10">
-            {{ Form::text('rss', null, array_merge(['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'rss'], [])) }}
-            <span class="error rss"></span>
+            {{ Form::text('url', null, array_merge(['class' => 'form-control', 'autocomplete' => 'off', 'id' => 'url'], [])) }}
+            <span class="error url"></span>
         </div>
     </div>
     <div class="form-group row">
@@ -33,16 +33,17 @@
         $('#save').click(function (e) {
             $('.error').text('');
 
-            var rss = $('#rss').val();
+            var link = $('#url').val();
 
-            if (rss.trim() == "") {
-                $('.rss').text('{{ __('rss.msg_rssRequired') }}');
+            if (link.trim() == "") {
+                $('.url').text('{{ __('message.msg_rssRequired') }}');
                 return false;
-            } else {
-                var rssReg = new RegExp('^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?(\\.rss)$');
+            }
+            else {
+                var rssReg = new RegExp('(https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|www\\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\\.[^\\s]{2,}|https?:\\/\\/(?:www\\.|(?!www))[a-zA-Z0-9]+\\.[^\\s]{2,}|www\\.[a-zA-Z0-9]+\\.[^\\s]{2,})');
 
-                if (!rssReg.test(rss)) {
-                    $('.rss').text('{{ __('rss.msg_rssInvalid') }} (ex: https://test.net/test.rss)');
+                if (!rssReg.test(link)) {
+                    $('.url').text('{{ __('message.msg_rssInvalid') }}');
                     return false;
                 }
             }

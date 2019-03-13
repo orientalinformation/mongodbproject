@@ -14,7 +14,7 @@ class Rss extends Eloquent
         'id',
         'name',
         'description',
-        'rss',
+        'url',
         'userId'
     ];
 
