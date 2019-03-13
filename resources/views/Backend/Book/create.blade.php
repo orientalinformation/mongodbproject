@@ -17,7 +17,7 @@
         </div>
         <div class="main-form br-section-wrapper">
             <div class="form-layout form-layout-1">
-                <form method="post" action="{{route('books.store')}}" id="book-form" data-parsley-validate>
+                <form method="post" action="{{route('books.store')}}" id="book-form" data-parsley-validate enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div id="errorMsg">{{$error}}</div>
                     <div class="form-group">
@@ -30,11 +30,20 @@
                         </select>
                     </div><!-- form-group -->
                     <div class="form-group">
-                        <label>Category</label>
-                        <select class="form-control select2" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
+                        <label>Category: <span class="tx-danger">*</span></label>
+                        <select class="form-control select2" name="cat_id" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)" required>
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
-                                <option value="{{ $item['_id'] }}">{{ $item['name'] }}</option>
+                                <option value="{{ $item['_id'] }}" data-path="{{ $item['path'] }}">
+                                    <?php
+                                    $path = explode("/",$item['path']);
+                                    $path_html = "";
+                                    foreach($path as $path_item){
+                                        echo '<i style="color: #a5a5a5;font-weight: bold;margin-right: 5px; font-style: normal;">|—</i>';
+                                    }
+                                    echo $item['name'];
+                                    ?>
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -59,22 +68,18 @@
                         <input class="form-control" type="text" name="price" value="" placeholder="Enter price">
                     </div><!-- form-group -->
                     <div class="form-group">
-                        <label>Short Description:</label>
-                        <textarea rows="2" class="form-control" placeholder="Enter short description" name="shortDescription"></textarea>
-                    </div><!-- form-group -->
-                    <div class="form-group">
                         <label>Description:</label>
-                        <div id="summernote"></div>
+                        <textarea rows="2" class="form-control" id="summernote" name="description"></textarea>
                     </div><!-- form-group -->
                     <div class="form-group youtube">
                         <label>Youtube URL:</label>
-                        <input class="form-control" type="text" name="youtube" value="" placeholder="Enter youtube URL" required>
+                        <input class="form-control" type="text" name="youtube" value="" placeholder="Enter youtube URL">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Image:</label>
                         <div class="row">
                             <div class="form-group">
-                                <input type="file" class="form-control" id="image" name="logo">
+                                <input type="file" class="form-control" id="image" name="image">
                                 <img id="blah" src="#" alt="your image" />
                             </div>
                         </div>
@@ -92,8 +97,8 @@
                         </label>
                     </div>
                     <input type="hidden" id="submitType" name="submitType">
-                    <button type="submit" class="btn btn-info">Save</button>
-                    <button type="button" class="btn btn-warning" id="btnDraft">Draft</button>
+                    <button type="submit" class="btn btn-info" form="book-form">Save</button>
+                    {{--<button type="button" class="btn btn-warning" id="btnDraft">Draft</button>--}}
                     <button type="button" class="btn btn-light active" onclick="window.location= '{{route('books.index')}}'">Canel</button>
                 </form>
             </div>

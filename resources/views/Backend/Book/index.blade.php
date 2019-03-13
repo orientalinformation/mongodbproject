@@ -45,9 +45,13 @@
                         <td></td>
                         <td>
                             <?php
-                                $imagePath = URL::to('/') . '/upload/book/' . $item['image'];
-                                if (@getimagesize($imagePath)) {
-                                    echo '<img src="' . $imagePath . '" class="bookThumb">';
+                                if (array_key_exists("image",$item)){
+                                    $imagePath = URL::to('/') . '/upload/book/' . $item['image'];
+                                    if (@getimagesize($imagePath)) {
+                                        echo '<img src="' . $imagePath . '" class="bookThumb">';
+                                    }else{
+                                        echo '<img src="https://via.placeholder.com/140x100">';
+                                    }
                                 }else{
                                     echo '<img src="https://via.placeholder.com/140x100">';
                                 }

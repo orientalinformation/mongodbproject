@@ -10,6 +10,11 @@ class Category extends Model
     protected $collection = 'categories';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name', 'description', 'parentID', 'path'
+        'name', 'description', 'parent_id', 'path'
     ];
+
+    static function getChildCat($catID)
+    {
+        return Category::where([['parent_id', '=', $catID]])->get();
+    }
 }
