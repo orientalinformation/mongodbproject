@@ -34,6 +34,6 @@ class CreateReportingCollection extends Migration
      */
     public function down()
     {
-        Schema::connection('mongodb')->dropIfExists('roportings');
+        Schema::connection('mongodb')->dropIfExists('reportings');
     }
 }

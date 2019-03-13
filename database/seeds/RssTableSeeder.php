@@ -16,72 +16,72 @@ class RssTableSeeder extends Seeder
         Rss::truncate();
         $data = [
             [
-                'rss'           => 'https://vnexpress.net/rss/tin-tuc.rss',
-                'description'   => 'Tin tuc',
-                'userId'        => 1,
+                'url'           => 'https://www.lemonde.fr/rss/une.xml',
+                'description'   => 'A la une',
+                'user_id'        => 1,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/am-thuc.rss',
-                'description'   => 'Am thuc',
-                'userId'        => 1,
+                'url'           => 'https://www.lemonde.fr/videos/rss_full.xml',
+                'description'   => 'Les vidéos',
+                'user_id'        => 1,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/luat-phap.rss',
-                'description'   => 'Luat phap',
-                'userId'        => 1,
+                'url'           => 'https://www.lemonde.fr/m-actu/rss_full.xml',
+                'description'   => 'Actu',
+                'user_id'        => 1,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/thoi-su.rss',
-                'description'   => 'Thoi su',
-                'userId'        => 1,
+                'url'           => 'https://www.lemonde.fr/afrique/rss_full.xml',
+                'description'   => 'Afrique',
+                'user_id'        => 1,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/cong-nghe.rss',
-                'description'   => 'Cong nghe',
-                'userId'        => 1,
+                'url'           => 'https://www.lemonde.fr/ameriques/rss_full.xml',
+                'description'   => 'Amériques',
+                'user_id'        => 1,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/quang-cao.rss',
-                'description'   => 'Quang cao',
-                'userId'        => 2,
+                'url'           => 'https://www.lemonde.fr/argent/rss_full.xml',
+                'description'   => 'Argent & Placements',
+                'user_id'        => 2,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/thoi-su-trong-nuoc.rss',
-                'description'   => 'Thoi su trong nuoc',
-                'userId'        => 2,
+                'url'           => 'https://www.lemonde.fr/asie-pacifique/rss_full.xml',
+                'description'   => 'Asie-Pacifique',
+                'user_id'        => 2,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/thoi-su-quoc-te.rss',
-                'description'   => 'Thoi su quoc te',
-                'userId'        => 2,
+                'url'           => 'https://www.lemonde.fr/attentat-de-manchester/rss_full.xml',
+                'description'   => 'Attentat de Manchester',
+                'user_id'        => 2,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/thoi-trang.rss',
-                'description'   => 'Thoi trang',
-                'userId'        => 2,
+                'url'           => 'https://www.lemonde.fr/bac-lycee/rss_full.xml',
+                'description'   => 'Bac',
+                'user_id'        => 2,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'rss'           => 'https://vnexpress.net/rss/the-thao.rss',
-                'description'   => 'The thao',
-                'userId'        => '3',
+                'url'           => 'https://www.lemonde.fr/bachelor/rss_full.xml',
+                'description'   => 'Bachelor',
+                'user_id'        => '3',
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at'    => Carbon::now()->format('Y-m-d H:i:s')
             ]

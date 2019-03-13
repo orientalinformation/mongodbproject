@@ -55,7 +55,7 @@
                 @foreach($data['data'] as $item)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td>{{ $item['rss'] }}</td>
+                        <td>{{ $item['url'] }}</td>
                         <td>{{ $item['description'] }}</td>
                         <td>{{ $item['username'] }}</td>
                         <td>{{ $item['created_at'] }}</td>

@@ -9,7 +9,16 @@
 namespace App\Repositories\Web;
 
 
-class WebEloquentRepository
-{
+use App\Model\Web;
+use App\Repositories\EloquentRepository;
 
+class WebEloquentRepository extends EloquentRepository implements WebRepositoryInterface
+{
+    /**
+     * @return mixed|string
+     */
+    public function getModel()
+    {
+        return Web::class;
+    }
 }

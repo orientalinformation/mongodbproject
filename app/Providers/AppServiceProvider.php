@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\Web\WebRepositoryInterface;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -111,7 +112,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(
             \App\Repositories\Research\ResearchRepositoryInterface::class,
-            \App\Repositories\Research\ResearchEloquentRepository::class
+            \App\Repositories\Research\ResearchEloquentRepository::class,
+            \App\Repositories\Web\WebRepositoryInterface::class,
+            \App\Repositories\Web\WebEloquentRepository::class
         );
     }
 }

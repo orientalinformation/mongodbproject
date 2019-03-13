@@ -8,7 +8,7 @@
 
 return [
 
-    'rowPage'   => 20,
+    'rowPage'       => 20,
     'rowPageBook'   => 24,
     'rowPageProduct'   => 24,
     'bookPath'  => '/public/upload/book/',
@@ -35,5 +35,5 @@ return [
             'index' =>  'event_compagnons',
             'type'  =>  'event'
         ]
-    ]
+    ],
 ];
