@@ -35,6 +35,11 @@ Route::namespace('Frontend')->group(function () {
     Route::post('send-mail', ['uses' => 'AuthController@sendMail', 'as' => 'frontSendMail']);
     Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
+
+    //====Web start=============
+    Route::resource('web', 'WebController');
+//    Route::resource('discussions', 'Backend\DiscussionController');
+    //====Web end===============
 });
 
 //===========BACKEND==========
