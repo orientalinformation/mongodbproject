@@ -40,7 +40,7 @@ class ProductController extends Controller
 	 *
 	 * @return view
 	 */
-    public function search()
+    public function index()
     {
     	$input = $this->request->all();
 		$keyword = (isset($input['keyword'])) ? $input['keyword'] : null;
@@ -81,6 +81,6 @@ class ProductController extends Controller
 		// list researches
 		$researches = $this->researchRepository->getListItem(5);
 
-		return view('Frontend.Product.search', compact('keyword', 'products', 'category', 'researches', 'productItems', 'urlSort'));
+		return view('Frontend.Product.index', compact('keyword', 'products', 'category', 'researches', 'productItems', 'urlSort'));
     }
 }

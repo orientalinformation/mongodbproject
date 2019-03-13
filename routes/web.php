@@ -41,7 +41,7 @@ Route::namespace('Frontend')->group(function () {
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
     // Product routes
-    Route::get('product/search', ['uses' => 'ProductController@search', 'as' => 'frontProductSearch'])->middleware('auth');
+    Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware('auth');
 
     // Research routes
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
