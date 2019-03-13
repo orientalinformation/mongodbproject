@@ -21,7 +21,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Parent</label>
-                        <select class="form-control select2 type" name="parentID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getPathCat(this)">
+                        <select class="form-control select2 type" name="parent_id" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getPathCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
                                 <option value="{{ $item['_id'] }}" data-path="{{ $item['path'] }}">

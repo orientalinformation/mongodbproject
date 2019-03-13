@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Mail;
+use Storage;
 use Illuminate\Validation\Rule;
+use App\Model\UserSocial;
+use File;
+use App\Rules\GoogleRecaptcha;
+use App\Rules\CheckBase64Rule;
 
 class AuthController extends Controller
 {
@@ -86,6 +91,9 @@ class AuthController extends Controller
             'association'           => 'required|integer|min:0',
             'status'                => 'required|integer|min:0',
             'type'                  => 'required|array',
+            'g-recaptcha-response'  => ['required', new GoogleRecaptcha],
+            // 'image_data'            => [new CheckBase64Rule]
+            'original_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         $messages = [
@@ -112,6 +120,9 @@ class AuthController extends Controller
             'status.min'                    => __('validation.min.numeric', ['attribute' => "status", 'min' => 0]),
             'type.required'                 => __('validation.required', ['attribute' => "type"]),
             'type.array'                    => __('validation.array', ['attribute' => "type"]),
+            'g-recaptcha-response.required' => 'Please check reCaptcha',
+            'original_image.image'          => 'File must be an image with extension: .jpg, .png, etc...',
+            'original_image.max'            => 'File is too large, maximun allow are 2MB'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -122,7 +133,6 @@ class AuthController extends Controller
         
         // check username and email exists       
         $data = $request->all();
-
         if ($this->userRepository->checkExistsByKey('email', trim($data['email']))) {
             return back()->withErrors(__('Le mail existe déjà.'))->withInput();  
         }
@@ -141,17 +151,41 @@ class AuthController extends Controller
         }
 
         // Hash password
-        $data["role_id"] = $role->id;
-        $data["account_id"] = $account->id;
-        $data["is_admin"] = 0;
-        $data["gender"] = 0;
-        $data["fullname"] = $data['first_name'].' '.$data['last_name'];
-        $data["birthday"] = date("Y-m-d");
-        $data["password"] = Hash::make($data["password"]);
-        $data["type"] = json_encode($data["type"]);
-
+        $data["role_id"]       = $role->id;
+        $data["account_id"]    = $account->id;
+        $data["is_admin"]      = 0;
+        $data["gender"]        = 0;
+        $data["fullname"]      = $data['first_name'].' '.$data['last_name'];
+        $data["birthday"]      = date("Y-m-d");
+        $data["password"]      = Hash::make($data["password"]);
+        $data["type"]          = json_encode($data["type"]);
+        if(array_key_exists('avatar_social', $data)) {
+            $data['avatar'] = $data['avatar_social'];
+        }
+        // upload avatar
+        if(!empty($data['image_data'])) {
+            $encoded    = $data['image_data'];
+            $path       = storage_path().'/avatar';
+            $filename   = time() . '_' . $data['original_image'];
+            $base64Str  = substr($encoded, strpos($encoded, ",") + 1);
+            $image      = base64_decode($base64Str);
+            File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+            // file_put_contents($path. '/' . $filename, $image);
+            File::put($path. '/' . $filename, $image);
+            if(!File::isDirectory($path)) {
+                symlink(storage_path().'/avatar', public_path(). '/storage/avatar');
+            }
+            
+            $data['avatar'] = '/storage/avatar/' . $filename;
+        }
         // create
         $result = $this->userRepository->create($data);
+
+        if ($data['provider'] && !empty($result->id)) {
+            // social account
+            $data['user_id'] = $result->id;
+            UserSocial::create($data);
+        }
 
         if ($result) {
             auth()->login($result);

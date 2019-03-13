@@ -10,7 +10,9 @@ namespace App\Repositories\Book;
 
 
 use App\Model\Book;
+use App\Model\BookDetail;
 use App\Repositories\EloquentRepository;
+use Carbon\Carbon;
 
 class BookEloquentRepository extends EloquentRepository implements BookRepositoryInterface
 {
@@ -34,6 +36,20 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
 
     public function getDraft($perPage = 15)
     {
-        return Book::where([['status', '=', 'DRAFT']])->paginate($perPage);;
+        return Book::where([['status', '=', 'DRAFT']])->paginate($perPage);
+    }
+
+    public function getRange($start_year, $end_year, $perPage)
+    {
+        $startDate = Carbon::createFromDate($start_year, 1, 1);
+        $endDate = Carbon::createFromDate($end_year, 12, 1);
+
+        return Book::whereBetween('created_at', array($startDate, $endDate))->paginate($perPage);
+    }
+
+    public function checkLiked($user_id, $book_id)
+    {
+        return BookDetail::where([['user_id', '=', (int)$user_id],
+            ['book_id', '=', (int)$book_id]])->get();
     }
 }

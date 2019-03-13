@@ -28,7 +28,7 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
 
     public function getChildCat($catID)
     {
-        return Category::where([['parentID', '=', $catID]])->get();
+        return Category::where([['parent_id', '=', $catID]])->get();
     }
 
     public function paginateOrderByPath($perPage = 15)
@@ -39,5 +39,10 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
     public function allOrderByPath()
     {
         return $this->model->orderBy('path', 'ASC')->get();
+    }
+
+    public function parentOrderByPath()
+    {
+        return Category::where([['parent_id', '=', '']])->orderBy('path', 'ASC')->get();
     }
 }

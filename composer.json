@@ -9,12 +9,13 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "elasticquent/elasticquent": "dev-master",
         "fideloper/proxy": "^4.0",
-        "jenssegers/mongodb": "^3.3.0",
+        "jenssegers/mongodb": "^3.5",
         "laravel/framework": "5.6.*",
         "laravel/socialite": "^3.2.0",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.6",
-        "socialiteproviders/microsoft-live": "^3.0"
+        "socialiteproviders/microsoft-live": "^3.0",
+        "nesbot/carbon": "^1.33"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

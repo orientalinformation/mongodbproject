@@ -34,7 +34,7 @@
                         <select class="form-control select2 type" name="catID" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getChildCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
-                                <option value="{{ $item['_id'] }}" {{ ($item['_id']==$book['catID'])?'selected':'' }}>{{ $item['name'] }}</option>
+                                <option value="{{ $item['_id'] }}" {{ ($item['_id']==$book['cat_id'])?'selected':'' }}>{{ $item['name'] }}</option>
                             @endforeach
                         </select>
                     </div><!-- form-group -->
@@ -65,10 +65,6 @@
                         <input class="form-control" type="text" name="price" value="{{$book['price']}}" placeholder="Enter price">
                     </div><!-- form-group -->
                     <div class="form-group">
-                        <label>Short Description:</label>
-                        <textarea rows="2" class="form-control" placeholder="Enter short description" name="shortDescription">{{$book['shortDescription']}}</textarea>
-                    </div><!-- form-group -->
-                    <div class="form-group">
                         <label>Description:</label>
                         <textarea rows="2" class="form-control" id="summernote" name="description">{{$book['description']}}</textarea>
                     </div><!-- form-group -->
@@ -79,14 +75,18 @@
                     <div class="form-group">
                         <label>File:</label>
                         <?php
-                            $filePath = URL::to('/') . '/upload/book/file/' . $book['file'];
-                            if (EnvatoUlities::is_url_exist($filePath)) {
-                                echo '<a href="' . $filePath . '"><i class="fa fa-download"></i></a>';
+                            $file = "";
+                            if (array_key_exists("file",$book)){
+                                $file = $book['file'];
+                                $filePath = URL::to('/') . '/upload/book/file/' . $book['file'];
+                                if (EnvatoUlities::is_url_exist($filePath)) {
+                                    echo '<a href="' . $filePath . '"><i class="fa fa-download"></i></a>';
+                                }
                             }
                         ?>
                         <div class="row">
                             <div class="form-group">
-                                <input type="file" class="form-control" id="file" name="file" data-file="{{$book['file']}}">
+                                <input type="file" class="form-control" id="file" name="file" data-file="{{$file}}">
                             </div>
                         </div>
                     </div>
@@ -95,8 +95,12 @@
                         <div class="row">
                             <div class="form-group">
                                 <?php
-                                    $imagePath = URL::to('/') . '/upload/book/' . $book['image'];
-                                    if (!@getimagesize($imagePath)) {
+                                    if (array_key_exists("image",$book)){
+                                        $imagePath = URL::to('/') . '/upload/book/' . $book['image'];
+                                        if (!@getimagesize($imagePath)) {
+                                            $imagePath = "https://via.placeholder.com/140x100";
+                                        }
+                                    }else{
                                         $imagePath = "https://via.placeholder.com/140x100";
                                     }
                                 ?>

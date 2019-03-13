@@ -8,11 +8,11 @@
 
 return [
 
-    'rowPage'   => 20,
-    'bookPath'  => '/public/upload/book/',
+    'rowPage'       => 20,
+    'rowPageBook'   => 24,
+    'bookPath'      => '/public/upload/book/',
     'bookFilePath'  => '/public/upload/book/file/',
-    'avatarPath'  => '/public/upload/avatar/',
-
+    'avatarPath'    => '/public/upload/avatar/',
     'elasticsearch' => [
         'web'       =>  [
             'index' =>  'web_compagnons',
@@ -34,5 +34,6 @@ return [
             'index' =>  'event_compagnons',
             'type'  =>  'event'
         ]
-    ]
+    ],
+
 ];

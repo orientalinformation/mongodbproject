@@ -15,6 +15,6 @@ class CategoryElastic extends Model
     protected $fillable = [
         'name',
         'description',
-        'parentID'
+        'parent_id'
     ];
 }

@@ -69,7 +69,7 @@ class BookController extends Controller
     public function create(Request $request)
     {
         $currentPage = 'bookIndex';
-        $category_list = $this->cateogryRepository->all()->toArray();
+        $category_list = $this->cateogryRepository->allOrderByPath()->toArray();
         $error = "";
         return view('Backend.Book.create', compact(['currentPage', 'category_list', 'error']));
     }
@@ -89,17 +89,17 @@ class BookController extends Controller
             $data['title'] = $request->get('title');
             $data['alias'] = $request->get('alias');
             $data['author'] = $request->get('author');
-            $data['shortDescription'] = $request->get('shortDescription');
             $data['description'] = $request->get('description');
-            $data['catID'] = $request->get('catID');
+            $data['cat_id'] = $request->get('cat_id');
+            $data['view'] = 0;
             $image = "";
             if ($request->hasFile('image')) {
                 $fileImage = $request->image;
                 $bookPath = Config::get('constants.bookPath');
                 $ext = ['jpg','jpeg','gif','png','bmp'];
                 $path = Ulities::uploadFile($fileImage, $bookPath, $ext);
-                $data['image'] = $path;
-                $image = $path;
+                $data['image'] = $path['data'];
+                $image = $path['data'];
             }
             $file = "";
             if ($request->hasFile('file')) {
@@ -144,18 +144,21 @@ class BookController extends Controller
                             'price' => $request->get('price'),
                             'title' => $request->get('title'),
                             'alias' => $request->get('alias'),
-                            'shortDescription' => $request->get('shortDescription'),
                             'description' => $request->get('description'),
-                            'catID' => $request->get('catID'),
+                            'cat_id' => $request->get('cat_id'),
                             'image' => $image,
                             'file' => $file,
                             'status' => $data['status'],
-                            'share' => $share
+                            'share' => $share,
+                            'view' => 0,
+                            'updated_at' => $result->updated_at->format('Y-m-d h'),
+                            'created_at' => $result->created_at->format('Y-m-d h')
                         ],
-                        'index' => $book->getIndexName(),
-                        'type' => $book->getTypeName(),
+                        'index' => Config::get('constants.elasticsearch.book.index'),
+                        'type' => Config::get('constants.elasticsearch.book.type'),
                         'id' => $id,
                     ];
+
                     $client = ClientBuilder::create()->build();
                     $response = $client->index($dataElastic);
                 }
@@ -163,7 +166,7 @@ class BookController extends Controller
             }
 
             $currentPage = 'bookIndex';
-            $category_list = $this->cateogryRepository->all()->toArray();
+            $category_list = $this->cateogryRepository->allOrderByPath()->toArray();
             return view('Backend.Book.create', compact(['currentPage', 'category_list', 'error']));
         }
     }
@@ -205,6 +208,7 @@ class BookController extends Controller
             $id = $request->get('id');
             $category_list = $this->cateogryRepository->all()->toArray();
             $book = $this->bookRepository->find($id)->toArray();
+            dd($book);
             if ($request->method() == 'POST') {
                 $submitType = $request->get('submitType');
                 $data['type'] = $request->get('type');
@@ -212,9 +216,9 @@ class BookController extends Controller
                 $data['title'] = $request->get('title');
                 $data['alias'] = $request->get('alias');
                 $data['author'] = $request->get('author');
-                $data['shortDescription'] = $request->get('shortDescription');
                 $data['description'] = $request->get('description');
-                $data['catID'] = $request->get('catID');
+                $data['cat_id'] = $request->get('cat_id');
+                $data['view'] = $book['view'];
                 $image = "";
                 if($request->hasFile('image')) {
                     $fileImage = $request->image;
@@ -275,23 +279,23 @@ class BookController extends Controller
 //                $id = $result->_id;
 
                 if($id != '') {
-                    $book = new BookElastic();
+                    $bookElastic = new BookElastic();
                     $dataElastic = [
                         'body' => [
                             'type' => $request->get('type'),
                             'price' => $request->get('price'),
                             'title' => $request->get('title'),
                             'alias' => $request->get('alias'),
-                            'shortDescription' => $request->get('shortDescription'),
                             'description' => $request->get('description'),
-                            'catID' => $request->get('catID'),
+                            'cat_id' => $request->get('cat_id'),
                             'image' => $image,
                             'file' => $file,
                             'status' => $data['status'],
-                            'share' => $share
+                            'share' => $share,
+                            'view' => $book['view']
                         ],
-                        'index' => $book->getIndexName(),
-                        'type'  => $book->getTypeName(),
+                        'index' => $bookElastic->getIndexName(),
+                        'type'  => $bookElastic->getTypeName(),
                         'id' => $id,
                     ];
                     $client = ClientBuilder::create()->build();
@@ -324,23 +328,23 @@ class BookController extends Controller
                     return 0;
                 }
 
-                $book = new BookElastic();
+                $bookElastic = new BookElastic();
                 $dataElastic = [
                     'body' => [
-                        'type' => $book[0]["type"],
-                        'price' => $book[0]["price"],
-                        'title' => $book[0]["title"],
-                        'alias' => $book[0]["alias"],
-                        'shortDescription' => $book[0]["shortDescription"],
-                        'description' => $book[0]["description"],
-                        'catID' => $book[0]["catID"],
-                        'image' => $book[0]["image"],
-                        'file' => $book[0]["file"],
+                        'type' => $book["type"],
+                        'price' => $book["price"],
+                        'title' => $book["title"],
+                        'alias' => $book["alias"],
+                        'description' => $book["description"],
+                        'cat_id' => $book["cat_id"],
+                        'image' => $book["image"],
+                        'file' => $book["file"],
                         'status' => $status,
-                        'share' => $book[0]["share"]
+                        'share' => $book["share"],
+                        'view' => $book["view"]
                     ],
-                    'index' => $book->getIndexName(),
-                    'type'  => $book->getTypeName(),
+                    'index' => $bookElastic->getIndexName(),
+                    'type'  => $bookElastic->getTypeName(),
                     'id' => $book[0]["_id"],
                 ];
                 $client = ClientBuilder::create()->build();

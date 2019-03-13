@@ -6,9 +6,61 @@
 
 @section('css')
 <link href="{{ asset('/assets/lib/gentleSelect/jquery-gentleSelect.css') }}" rel="stylesheet">
+<style>
+.registerAvatar{
+    position: absolute;
+    top: -160px;
+    left: 160px;
+    border: 2px solid #b9babb;
+    /* padding: 20px 10px 0; */
+}
+.register-avt {
+    position: absolute;
+    top: -212px;
+    left: 1px;
+    border: 2px solid #b9babb;
+    max-width: 121px;
+    max-height: 141px;
+    /* padding: 20px 10px 0; */
+}
+.registerAvatar img{
+    width: 100px;
+}
+.register-avt .cropit-image-input {
+    float: none;
+}
+.register-avt .cropit-image-zoom-input {
+    float: none;
+    width: unset;
+}
+.registerAvatar input{
+    display: none;
+}
+.cropit-preview {
+  /* You can specify preview size in CSS */
+  width: 120px;
+  height: 140px;
+}
+</style>
 @stop
 
 @section('content')
+@php
+    // user signup with social account
+    $provider = $data['provider'] ?? '';
+    $provider_id = $data['provider_id'] ?? '';
+    $nom = $data['name'] ?? '';
+    $email = $data['email'] ?? '';
+    $avatar_social = $data['avatar_social'] ?? '';
+    $fullname = $data['fullname'] ?? '';
+    $role_id = $data['role_id'] ?? '';
+    $account_id = $data['account_id'] ?? '';
+    $username = $data['username'] ?? '';
+    $gender   = $data['gender'] ?? '';
+    $is_admin = $data['is_admin'] ?? '';
+    $first_name = $data['first_name'] ?? '';
+    $last_name = $data['last_name'] ?? '';
+@endphp
 <header class="header-login">
     <div class="container-fluid">
         <div class="row">
@@ -33,10 +85,37 @@
         <div class="col-lg-12 title-background-small">
             <span>S'Enregistrer</span>
         </div>
+        {{-- <div class="col-lg-12">
+            <div class="registerAvatar">
+                <img src="{{asset('image/front/default-avatar.jpg')}}" class="imgAvatar" id="img_avatar">
+                <input type="file" name="avatar" class="uploadAvatar" form="register" onchange="loadFile(event)">
+            </div>
+        </div> --}}
+        
         <div class="container register-form">
             <form action="{{ route('register') }}" id="register" method="POST">
                 {{ method_field("POST") }}
                 {{ csrf_field() }}
+                <div class="col-lg-12">
+                    <div id="image-cropper" class="register-avt">
+                        <!-- This is where the preview image is displayed -->
+                        <div class="cropit-preview"></div>
+                        
+                        <!-- This range input controls zoom -->
+                        <!-- You can add additional elements here, e.g. the image icons -->
+                        <span class="icon icon-image small-image"></span>
+                        <input type="range" class="cropit-image-zoom-input" />
+                        
+                        <!-- This is where user selects new image -->
+                        <input type="file" class="cropit-image-input" name="original_image" accept="image/*" />
+                    </div>
+                    @if ($errors->has('original_image'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('original_image') }}
+                        </div>
+                    @endif
+                </div>
+                
                 @if ($message = Session::get('error'))
                     <div class="alert alert-danger alert-dismissible fade show alert-close" role="alert">
                         {{ $message }}
@@ -66,7 +145,12 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Nom <strong class="require">*</strong></label>
-                                        <input type="text" name="first_name" placeholder="Nom" class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
+                                        <input type="text"
+                                            name="first_name"
+                                            placeholder="Nom"
+                                            class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
+                                            value="@if($first_name) {{$first_name}} @else {{ old('first_name') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('first_name'))
                                         <div class="invalid-feedback">
@@ -77,7 +161,13 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Prénom <strong class="require">*</strong></label>
-                                        <input type="text" name="last_name" placeholder="Prénom" class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" required>
+                                        <input
+                                            type="text"
+                                            name="last_name"
+                                            placeholder="Prénom"
+                                            class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
+                                            value="@if($last_name) {{$last_name}} @else {{ old('last_name') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('last_name'))
                                         <div class="invalid-feedback">
@@ -106,7 +196,13 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Addresse e-mail <strong class="require">*</strong></label>
-                                        <input type="text" name="email" placeholder="Addresse e-mail" class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" required>
+                                        <input
+                                            type="text"
+                                            name="email"
+                                            placeholder="Addresse e-mail"
+                                            class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                            value="@if($email) {{$email}} @else {{ old('email') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('email'))
                                         <div class="invalid-feedback">
@@ -117,7 +213,13 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Confirmer votre adresse e-mail <strong class="require">*</strong></label>
-                                        <input type="text" name="email_confirmation" placeholder="Confirmer votre adresse e-mail" class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}" value="{{ old('email_confirmation') }}" required>
+                                        <input
+                                            type="text"
+                                            name="email_confirmation"
+                                            placeholder="Confirmer votre adresse e-mail"
+                                            class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}"
+                                            value="@if($email) {{$email}} @else {{ old('email_confirmation') }} @endif"
+                                            required>
                                     </div>    
                                     @if ($errors->has('email_confirmation'))
                                         <div class="invalid-feedback">
@@ -241,6 +343,18 @@
                                     </div>
                                 @endif
                             </div>
+                            <div class="col-lg-12" style="margin: 10px 0;">
+                                <div class="input-group">
+                                    <div class="g-recaptcha" data-sitekey={!!env('RECAPTCHA_SITE_KEY')!!}></div>
+                                </div>
+                                <div id="html_element"></div>
+                            </div>
+                            
+                            @if ($errors->has('g-recaptcha-response'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('g-recaptcha-response') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="row groupAgree">
@@ -251,7 +365,20 @@
                             </div>
                         </div>   
                     </div>
-                    <button type="button" class="btnLogin">S'EnRegistrer</button>
+                    <input type="hidden" name="provider" value="{{$provider}}">
+                    <input type="hidden" name="provider_id" value="{{$provider_id}}">
+                    <input type="hidden" name="nom" value="{{$nom}}">
+                    <input type="hidden" name="avatar_social" value="{{$avatar_social}}">
+                    <input type="hidden" name="fullname" value="{{$fullname}}">
+                    <input type="hidden" name="role_id" value="{{$role_id}}">
+                    <input type="hidden" name="account_id" value="{{$account_id}}">
+                    <input type="hidden" name="username" value="{{$username}}">
+                    <input type="hidden" name="gender" value="{{$gender}}">
+                    <input type="hidden" name="is_admin" value="{{$is_admin}}">
+                    <input type="hidden" name="image_data" class="hidden-image-data" />
+                    <input type="hidden" name="image_name" class="hidden-image-name" />
+                    
+                    <button type="button" class="btnLogin g-recaptcha"  data-callback="onSubmit">S'EnRegistrer</button>
                 </div>
             </form>    
         </div>
@@ -261,6 +388,9 @@
 
 @section('script')
     <script src="{{ asset('/assets/lib/gentleSelect/jquery-gentleSelect.js') }}"></script>
+    <script src="{{ asset('/js/plugins/jquery.cropit.js') }}"></script>
+    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer>
+    </script>
     <script>
         $(document).ready(function() {
             $('#typeList').gentleSelect({ 
@@ -277,15 +407,19 @@
             if($('#switch_2_left').is(':checked')) {
                 $('#interested_group').show();
             }
+
+            $('#image-cropper').cropit();
+            
         });
 
         $(document).on('click', '.btnLogin', function () {
-            
+
             if ($('#chkAgree').is(":checked")) {
                 $('#register').submit();
             } else {
                 alert("Vous acceptez les conditions d'utilisation des Compagnons Du Devoir");
             }
+            
         });
 
         $(document).on('click', '.career', function () {
@@ -296,6 +430,22 @@
                 $('#interested_group').hide();
             }
         });
-
+        
+        $('form#register').submit(function() {
+            // Move cropped image data to hidden input
+            let imageData = $('#image-cropper').cropit('export');
+            $('.hidden-image-data').val(imageData);
+            
+            // Prevent the form from actually submitting
+            return true;
+        });
+        function onSubmit(token) {
+            document.getElementById("register").submit();
+        }
+        var onloadCallback = function() {
+            grecaptcha.render('html_element', {
+                'sitekey' : "6LcoTJYUAAAAAEyxoNf5G18ML2RLPWeS-U1v9J5O"
+            });
+        };
     </script>
 @endsection

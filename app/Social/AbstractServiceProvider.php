@@ -68,37 +68,41 @@ abstract class AbstractServiceProvider
                     ->where('provider_id', '=', $data['provider_id'])->first();
 
         if (!empty($social)) {
-
+            // already have account
             $user = User::find($social->user_id);
             return $this->login($user);
         } else {
             
-            $role = Role::where('name', 'user')->first();
-            $accountManager = AccountManager::where('name', 'Access')->first();
+            $role                  = Role::where('name', 'user')->first();
+            $accountManager        = AccountManager::where('name', 'Access')->first();
+            $data['fullname']      = $data['name'];
+            $data['avatar']        = $data['avatar_social'] ?? null;
+            $data['role_id']       = $role->id;
+            $data['account_id']    = $accountManager->id;
+            $data['username']      = "social_".now()->timestamp;
+            $data['password']      = Hash::make('social');
+            $data['gender']        = 1;
+            $data['is_admin']      = 0;
+            $data['email']         = $data['email'] ?? null;
+            $data['last_name']     = '';
+            $data['first_name']    = '';
 
-            $data['fullname'] = $data['name'];
-            $data['avatar'] = $data['avatar_social'] ?? null;
-            $data['role_id'] = $role->id;
-            $data['account_id'] = $accountManager->id;
-            $data['username'] = "social_".now()->timestamp;
-            $data['password'] = Hash::make('social');
-            $data['gender'] = 1;
-            $data['is_admin'] = 0;
-            $data['email'] = $data['email'] ?? null;
-
-            if (!empty($data['email'])) {
-                $user = User::firstOrCreate(['email'=>$data['email']], $data);
-            } else {
-                $user = User::create($data);    
+            if ($data['fullname']) {
+                $nom = explode(" ", $data['fullname']);
+                $data['last_name'] = end($nom);
+                array_pop($nom);
+                $data['first_name'] = implode(' ', $nom);
             }
 
-            if (!empty($user->id)) {
-                $data['user_id'] = $user->id;
-
-                if (UserSocial::create($data)) {
-                    return $this->login($user);
-                }
-            }
+            return $this->preRegister($data);
         }
     }
-};
+
+    protected function preRegister($data)
+    {
+        $dataSocial = null;
+        $type = 'web';
+
+        return view('Frontend.Auth.register', compact(['dataSocial', 'type', 'data']));
+    }
+}
