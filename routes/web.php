@@ -42,7 +42,6 @@ Route::namespace('Frontend')->group(function () {
 
     //====Web start=============
     Route::resource('web', 'WebController');
-//    Route::resource('discussions', 'Backend\DiscussionController');
     //====Web end===============
 });
 
