@@ -40,7 +40,7 @@
         </div>
     </div>
 </footer>
-
+<script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
 <!-- Plugins -->
 <script type="text/javascript">
     $.ajaxSetup({

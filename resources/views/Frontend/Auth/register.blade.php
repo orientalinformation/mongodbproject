@@ -389,7 +389,7 @@
 @section('script')
     <script src="{{ asset('/assets/lib/gentleSelect/jquery-gentleSelect.js') }}"></script>
     <script src="{{ asset('/js/plugins/jquery.cropit.js') }}"></script>
-    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit' async defer>
+    <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=fr' async defer>
     </script>
     <script>
         $(document).ready(function() {
@@ -442,9 +442,10 @@
         function onSubmit(token) {
             document.getElementById("register").submit();
         }
+        const SITE_KEY = '{{ env('RECAPTCHA_SITE_KEY') }}';
         var onloadCallback = function() {
             grecaptcha.render('html_element', {
-                'sitekey' : "6LcoTJYUAAAAAEyxoNf5G18ML2RLPWeS-U1v9J5O"
+                'sitekey' : SITE_KEY
             });
         };
     </script>

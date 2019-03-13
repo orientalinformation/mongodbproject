@@ -120,9 +120,9 @@ class AuthController extends Controller
             'status.min'                    => __('validation.min.numeric', ['attribute' => "status", 'min' => 0]),
             'type.required'                 => __('validation.required', ['attribute' => "type"]),
             'type.array'                    => __('validation.array', ['attribute' => "type"]),
-            'g-recaptcha-response.required' => 'Please check reCaptcha',
-            'original_image.image'          => 'File must be an image with extension: .jpg, .png, etc...',
-            'original_image.max'            => 'File is too large, maximun allow are 2MB'
+            'g-recaptcha-response.required' => __('validation.recaptcha', ['attribute' => "s'il vous plaît vérifier recaptcha"]),
+            'original_image.image'          => __('original_image.image'),
+            'original_image.max'            => __('original_image.max'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
