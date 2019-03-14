@@ -247,12 +247,13 @@
                                     <img src="<?= URL::to('/upload/book/') . "/" . $item['image'] ?>" class="library-thumb">
                                     <div class="menu-tooltips"></div>
                                     <div class="content-panel">
-                                        <div class="content-line"><i class="fa fa-heart-o" aria-hidden="true"></i> <span>Liker</span></div>
+                                        <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
                                         <div class="content-line"><i class="fa fa-columns" aria-hidden="true"></i> <span>À lire plus tard</span></div>
                                         <div class="content-line"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
                                         <div class="content-line"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
                                         <div class="content-line"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Partager</span></div>
                                     </div>
+                                    <input type="hidden" class="bookID" value="{{ $item['_id'] }}"/>
                                 </div>
                                 <div class="thumb-title">
                                     <span class="title"><strong>{{ $item['title'] }}</strong></span>
@@ -282,11 +283,49 @@
     <script type="text/javascript">
         $('.menu-tooltips').click(function(){
             let display = $(this).closest(".wrap").find(".content-panel");
+            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let heart = $(this).closest(".wrap").find(".likeIcon");
             if(display.css("display") == "none"){
                 display.css("display","block");
+                $.ajax({
+                    url: "{{ URL::to('/') }}/check_liked",
+                    cache: false,
+                    type: "GET",
+                    data: {user_id: 1, book_id: bookID},
+                    success: function(result){
+                        result = JSON.parse(result);
+                        if(result.status == 1){
+                            heart.removeClass("fa-heart-o");
+                            heart.addClass("fa-heart");
+                        }else{
+                            heart.addClass("fa-heart-o");
+                            heart.removeClass("fa-heart");
+                        }
+                    }
+                });
             }else{
                 display.css("display","none");
             }
+        })
+        $('.like-line').click(function(){
+            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let heart = $(this).closest(".wrap").find(".likeIcon");
+            $.ajax({
+                url: "{{ URL::to('/') }}/check_liked",
+                cache: false,
+                type: "GET",
+                data: {user_id: 1, book_id: bookID, change: 1},
+                success: function(result){
+                    result = JSON.parse(result);
+                    if(result.status == 1){
+                        heart.removeClass("fa-heart");
+                        heart.addClass("fa-heart-o");
+                    }else if(result.status == 2) {
+                        heart.removeClass("fa-heart-o");
+                        heart.addClass("fa-heart");
+                    }
+                }
+            });
         })
     </script>
 @endsection
