@@ -61,6 +61,80 @@
     $first_name = $data['first_name'] ?? '';
     $last_name = $data['last_name'] ?? '';
     
+    // data of redirect when login with social
+    
+    if(isset($input) && array_key_exists('career', $input)) {
+        if($input['career'] = '0') {
+            $career = 0;
+        }
+        if($input['career'] = '1') {
+            $career = 1;
+        }
+    } else { $career = null; }
+
+    if(isset($input) && array_key_exists('civility', $input)) {
+        if($input['civility'] = '0') {
+            $civility = 0;
+        }
+        if($input['civility'] = '1') {
+            $civility = 1;
+        }
+    } else { $civility = null; }
+
+    if(isset($input) && array_key_exists('interested', $input)) {
+        $interested = $input['interested'] === '0' ? 0 : '';
+        $interested = $input['interested'] === '1' ? 1 : '';
+        $interested = $input['interested'] === '2' ? 2 : '';
+        $interested = $input['interested'] === '3' ? 3 : '';
+    } else { $interested = null; }
+    // 
+    if(isset($input) && array_key_exists('association', $input)) {
+        $association = $input['association'] === '0' ? 0 : '';
+        $association = $input['association'] === '1' ? 1 : '';
+    } else { $association = null; }
+    //
+    if(isset($input) && array_key_exists('status', $input)) {
+        $status = $input['status'] === '0' ? 0 : '';
+        $status = $input['status'] === '1' ? 1 : '';
+    } else { $status = null; }
+    if(isset($input) && array_key_exists('type', $input)) {
+        $listType = $input['type'];
+    } else { $listType = []; }
+    if(isset($input) && array_key_exists('provider', $input)) {
+        $provider = $input['provider'];
+    }
+    // provider_id
+    if(isset($input) && array_key_exists('provider_id', $input)) {
+        $provider_id = $input['provider_id'];
+    }
+    if(isset($input) && array_key_exists('nom', $input)) {
+        $nom = $input['nom'];
+    }
+    if(isset($input) && array_key_exists('nom', $input)) {
+        $nom = $input['nom'];
+    }
+    if(isset($input) && array_key_exists('avatar_social', $input)) {
+        $avatar_social = $input['avatar_social'];
+    }
+    
+    if(isset($input) && array_key_exists('fullname', $input)) {
+        $fullname = $input['fullname'];
+    }
+    if(isset($input) && array_key_exists('role_id', $input)) {
+        $role_id = $input['role_id'];
+    }
+    if(isset($input) && array_key_exists('account_id', $input)) {
+        $account_id = $input['account_id'];
+    }
+    if(isset($input) && array_key_exists('username', $input)) {
+        $username = $input['username'];
+    }
+    if(isset($input) && array_key_exists('gender', $input)) {
+        $gender = $input['gender'];
+    }
+    if(isset($input) && array_key_exists('is_admin', $input)) {
+        $is_admin = $input['is_admin'];
+    }
 @endphp
 <header class="header-login">
     <div class="container-fluid">
@@ -129,9 +203,9 @@
                                 <div class="col-lg-12">
                                     <label class="form-control-label label-civ">Civilité <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_left" name="civility" value="0" @if (old('civility') == '0') checked @endif />
+                                        <input type="radio" id="switch_left" name="civility" value="0" @if (old('civility') == '0') checked @elseif($civility == 0) checked @endif />
                                         <label for="switch_left">M.</label>
-                                        <input type="radio" id="switch_right" name="civility" value="1" @if (old('civility') == '1') checked @endif />
+                                        <input type="radio" id="switch_right" name="civility" value="1" @if (old('civility') == '1') checked @elseif($civility == 1) checked @endif />
                                         <label for="switch_right">Mme</label>
                                     </div>
                                     @if ($errors->has('civility'))
@@ -147,7 +221,7 @@
                                             name="first_name"
                                             placeholder="Nom"
                                             class="form-control inputField {{ $errors->has('first_name') ? ' is-invalid' : '' }}"
-                                            value="@if($first_name) {{$first_name}} @else {{ old('first_name') }} @endif"
+                                            value="@if($first_name) {{$first_name}} @elseif(isset($input)) {{$input['first_name']}} @else {{ old('first_name') }} @endif"
                                             required>
                                     </div>    
                                     @if ($errors->has('first_name'))
@@ -164,7 +238,7 @@
                                             name="last_name"
                                             placeholder="Prénom"
                                             class="form-control inputField {{ $errors->has('last_name') ? ' is-invalid' : '' }}"
-                                            value="@if($last_name) {{$last_name}} @else {{ old('last_name') }} @endif"
+                                            value="@if($last_name) {{$last_name}} @elseif(isset($input)) {{$input['last_name']}} @else {{ old('last_name') }} @endif"
                                             required>
                                     </div>    
                                     @if ($errors->has('last_name'))
@@ -176,19 +250,33 @@
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Adresse</label>
-                                        <input type="text" name="address" placeholder="Adresse" class="form-control inputField" value="{{ old('address') }}">
+                                        <input type="text" 
+                                                name="address"
+                                                placeholder="Adresse"
+                                                class="form-control inputField"
+                                                value="@if(isset($input)) {{$input['address']}} @else {{ old('address') }}@endif">
                                     </div>    
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Code Postal</label>
-                                        <input type="text" name="postal_code" placeholder="Code Postal" class="form-control inputField" value="{{ old('postal_code') }}">
+                                        <input
+                                            type="text"
+                                            name="postal_code"
+                                            placeholder="Code Postal"
+                                            class="form-control inputField"
+                                            value="@if(isset($input)) {{$input['postal_code']}} @else {{ old('postal_code') }}@endif">
                                     </div>    
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="input-group">
                                         <label class="form-control-label">Pays</label>
-                                        <input type="text" name="country" placeholder="Pays" class="form-control inputField" value="{{ old('country') }}">
+                                        <input
+                                            type="text"
+                                            name="country"
+                                            placeholder="Pays"
+                                            class="form-control inputField"
+                                            value="@if(isset($input)) {{$input['country']}} @else{{ old('country') }}@endif">
                                     </div>    
                                 </div>
                                 <div class="col-lg-12">
@@ -199,7 +287,7 @@
                                             name="email"
                                             placeholder="Addresse e-mail"
                                             class="form-control inputField {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                            value="@if($email) {{$email}} @else {{ old('email') }} @endif"
+                                            value="@if($email) {{$email}} @elseif(isset($input)) {{$input['email']}} @else {{ old('email') }} @endif"
                                             required>
                                     </div>    
                                     @if ($errors->has('email'))
@@ -216,7 +304,7 @@
                                             name="email_confirmation"
                                             placeholder="Confirmer votre adresse e-mail"
                                             class="form-control inputField {{ $errors->has('email_confirmation') ? ' is-invalid' : '' }}"
-                                            value="@if($email) {{$email}} @else {{ old('email_confirmation') }} @endif"
+                                            value="@if($email) {{$email}} @elseif(isset($input)) {{$input['email_confirmation']}} @else {{ old('email_confirmation') }} @endif"
                                             required>
                                     </div>    
                                     @if ($errors->has('email_confirmation'))
@@ -254,9 +342,18 @@
                                 <div class="input-group">
                                     <label class="form-control-label label-fil">Filière <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" class="career" id="switch_2_left" name="career" value="0" @if (old('career') == '0') checked @endif />
+                                        <input type="radio"
+                                            class="career"
+                                            id="switch_2_left"
+                                            name="career"
+                                            value="0"
+                                            @if (old('career') == '0') checked @elseif(!is_null($career) && $career === 0) checked @endif />
                                         <label for="switch_2_left">Bois</label>
-                                        <input type="radio" class="career" id="switch_2_right" name="career" value="1" @if (old('career') == '1') checked @endif />
+                                        <input type="radio"
+                                            class="career"
+                                            id="switch_2_right"
+                                            name="career"
+                                            value="1" @if (old('career') == '1') checked @elseif(!is_null($career) && $career === 1) checked @endif />
                                         <label for="switch_2_right">Pierre</label>
                                     </div>
                                 </div>    
@@ -270,13 +367,28 @@
                                 <div class="input-group" style="display: none" id="interested_group" >
                                     <span class="headLine">Intéressé par les métiers:</span>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_3_1" name="interested" value="0" @if (old('interested') == '0') checked @endif />
+                                        <input type="radio"
+                                            id="switch_3_1"
+                                            name="interested"
+                                            value="0"
+                                            @if (old('interested') == '0') checked @elseif(!is_null($interested) && $interested == 0) checked @endif />
                                         <label for="switch_3_1">Menuisier</label>
-                                        <input type="radio" id="switch_3_2" name="interested" value="1" @if (old('interested') == '1') checked @endif />
+                                        <input type="radio"
+                                            id="switch_3_2"
+                                            name="interested"
+                                            value="1"
+                                            @if (old('interested') == '1') checked @elseif(!is_null($interested) && $interested == 1) checked @endif />
                                         <label for="switch_3_2">Agenceur</label>
-                                        <input type="radio" id="switch_3_3" name="interested" value="2" @if (old('interested') == '2') checked @endif />
+                                        <input type="radio"
+                                            id="switch_3_3"
+                                            name="interested"
+                                            value="2"
+                                            @if (old('interested') == '2') checked @elseif(!is_null($interested) && $interested == 2) checked @endif />
                                         <label for="switch_3_3">Charpentier</label>
-                                        <input type="radio" id="switch_3_4" name="interested" value="3" @if (old('interested') == '3') checked @endif />
+                                        <input type="radio"
+                                            id="switch_3_4"
+                                            name="interested"
+                                            value="3" @if (old('interested') == '3') checked @elseif(!is_null($interested) && $interested == 3) checked @endif />
                                         <label for="switch_3_4">Constructeur Bois</label>
                                     </div>
                                 </div>    
@@ -285,9 +397,16 @@
                                 <div class="input-group">
                                     <label style="display: inline-block; width: 220px">Membre de l'association des Compagnons du Deviort du Tour de France <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_4_1" name="association" value="0" @if (old('association') == '0') checked @endif />
+                                        <input type="radio"
+                                            id="switch_4_1"
+                                            name="association"
+                                            value="0"
+                                            @if (old('association') == '0') checked @elseif(!is_null($association) && $association == 0) checked @endif />
                                         <label for="switch_4_1">Oui</label>
-                                        <input type="radio" id="switch_4_2" name="association" value="1" @if (old('association') == '1') checked @endif />
+                                        <input type="radio"
+                                            id="switch_4_2"
+                                            name="association"
+                                            value="1" @if (old('association') == '1') checked @elseif(!is_null($association) && $association == 1) checked @endif />
                                         <label for="switch_4_2">Non</label>
                                     </div>
                                 </div>    
@@ -301,15 +420,22 @@
                                 <div class="input-group">
                                     <label style="display: inline-block;">Statut <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_5_1" name="status" value="0" @if (old('status') == '0') checked @endif />
+                                        <input type="radio"
+                                            id="switch_5_1"
+                                            name="status"
+                                            value="0"
+                                            @if (old('status') == '0') checked @elseif(!is_null($status) && $status == 0) checked @endif />
                                         <label for="switch_5_1" style="width: 200px;">Professionnel du secteur</label>
-                                        <input type="radio" id="switch_5_2" name="status" value="1" @if (old('status') == '1') checked @endif />
+                                        <input type="radio"
+                                            id="switch_5_2"
+                                            name="status"
+                                            value="1" @if (old('status') == '1') checked @elseif(!is_null($status) && $status == 1) checked @endif />
                                         <label for="switch_5_2">Passionné(e)</label>
                                     </div>
                                 </div>    
-                                @if ($errors->has('association'))
+                                @if ($errors->has('status'))
                                     <div class="invalid-feedback">
-                                        {{ $errors->first('association') }}
+                                        {{ $errors->first('status') }}
                                     </div>
                                 @endif
                             </div>    
@@ -318,20 +444,22 @@
                                     <label class="form-control-label" style="display: inline-block;">Type <strong class="require">*</strong></label>
                                     <div id="groupType">
                                         <select id='typeList' multiple="multiple" name="type[]" style="width: 100%" class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
-                                            <option value="1">Chef d'entreprise</option>
-                                            <option value="2">Salarie</option>
-                                            <option value="3">Charge d'affaire</option>
-                                            <option value="4">Conductuer de travaux</option>
-                                            <option value="5">Ouvrier qualifie</option>
-                                            <option value="6">Bureau d'etude</option>
-                                            <option value="7">Apprenti</option>
-                                            <option value="8">Chef d'atelier</option>
-                                            <option value="9">Chef de chantier</option>
-                                            <option value="10">Metreur</option>
-                                            <option value="11">Chef d'equipe</option>
-                                            <option value="12">Vernisseur</option>
-                                            <option value="13">Technico-Commercial</option>
-                                            <option value="14">Operateur machine numerique</option>
+                                            
+                                            <option value="1" @foreach($listType as $type) @if($type == '1') selected @endif @endforeach>Chef d'entreprise</option>
+                                            <option value="2" @foreach($listType as $type) @if($type == '2') selected @endif @endforeach>Salarie</option>
+                                            <option value="3" @foreach($listType as $type) @if($type == '3') selected @endif @endforeach>Charge d'affaire</option>
+                                            <option value="4" @foreach($listType as $type) @if($type == '4') selected @endif @endforeach>Conductuer de travaux</option>
+                                            <option value="5" @foreach($listType as $type) @if($type == '5') selected @endif @endforeach>Ouvrier qualifie</option>
+                                            <option value="6" @foreach($listType as $type) @if($type == '6') selected @endif @endforeach>Bureau d'etude</option>
+                                            <option value="7" @foreach($listType as $type) @if($type == '7') selected @endif @endforeach>Apprenti</option>
+                                            <option value="8" @foreach($listType as $type) @if($type == '8') selected @endif @endforeach>Chef d'atelier</option>
+                                            <option value="9" @foreach($listType as $type) @if($type == '9') selected @endif @endforeach>Chef de chantier</option>
+                                            <option value="10" @foreach($listType as $type) @if($type == '10') selected @endif @endforeach>Metreur</option>
+                                            <option value="11" @foreach($listType as $type) @if($type == '11') selected @endif @endforeach>Chef d'equipe</option>
+                                            <option value="12" @foreach($listType as $type) @if($type == '12') selected @endif @endforeach>Vernisseur</option>
+                                            <option value="13" @foreach($listType as $type) @if($type == '13') selected @endif @endforeach>Technico-Commercial</option>
+                                            <option value="14" @foreach($listType as $type) @if($type == '14') selected @endif @endforeach>Operateur machine numerique</option>
+                                            
                                         </select>
                                     </div>
                                 </div>    
@@ -361,7 +489,7 @@
                                 <input type="checkbox" name="agree" id="chkAgree" class="chkAgree"> 
                                 <span>En cliquant sur le bouton "s'enregistrer" vous acceptez les conditions générales d'utilisation de Compagnons Du Devior</span>
                             </div>
-                        </div>   
+                        </div>
                     </div>
                     <input type="hidden" name="provider" value="{{$provider}}">
                     <input type="hidden" name="provider_id" value="{{$provider_id}}">

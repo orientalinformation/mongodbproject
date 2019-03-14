@@ -18,6 +18,7 @@ use App\Model\UserSocial;
 use File;
 use App\Rules\GoogleRecaptcha;
 use App\Rules\CheckBase64Rule;
+use App\Rules\CheckMineTypeRule;
 
 class AuthController extends Controller
 {
@@ -93,7 +94,7 @@ class AuthController extends Controller
             'type'                  => 'required|array',
             'g-recaptcha-response'  => ['required', new GoogleRecaptcha],
             // 'image_data'            => [new CheckBase64Rule]
-            'original_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'original_image'        => [new CheckMineTypeRule],
         ];
 
         $messages = [
@@ -121,14 +122,22 @@ class AuthController extends Controller
             'type.required'                 => __('validation.required', ['attribute' => "type"]),
             'type.array'                    => __('validation.array', ['attribute' => "type"]),
             'g-recaptcha-response.required' => __('validation.recaptcha', ['attribute' => "s'il vous plaît vérifier recaptcha"]),
-            'original_image.image'          => __('original_image.image'),
-            'original_image.max'            => __('original_image.max'),
+            // 'original_image.image'          => __('original_image.image'),
+            // 'original_image.max'            => __('original_image.max'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator->messages())->withInput();
+            $input = $request->all();
+            $errors = $validator->messages();
+            // dd($input);
+            
+            return view('Frontend.Auth.register', compact('input'))->withErrors($errors);
+            // return redirect()->to('register')->with(['foo' => 'bar'])
+            // ->withInput($request->input())
+            // ->withErrors($validator->messages());
+            // return back()->withErrors($validator->messages())->withInput();
         }
         
         // check username and email exists       
