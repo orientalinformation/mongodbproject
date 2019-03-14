@@ -292,7 +292,7 @@
                                     <div class="menu-tooltips"></div>
                                     <div class="content-panel">
                                         <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
-                                        <div class="content-line"><i class="fa fa-columns" aria-hidden="true"></i> <span>À lire plus tard</span></div>
+                                        <div class="content-line read-line"><i class="fa fa-bookmark-o" aria-hidden="true"></i> <span>À lire plus tard</span></div>
                                         <div class="content-line"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
                                         <div class="content-line"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
                                         <div class="content-line"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Partager</span></div>
