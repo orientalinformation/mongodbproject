@@ -3,11 +3,23 @@
     @include('Frontend.layout.head')
     <body>
         @yield('css')
-        @yield('content')
+
+        <!-- Header -->
+        @include('Frontend.layout.header-contain')
+
+        @yield('content','')
     <!-- End Page -->
     <!-- Footer -->
+
+    @include('Frontend.layout.footer-panel')
+
     @include('Frontend.layout.footer')
     <!-- Script on Page -->
+
+    <!-- This script only use left menu-->
+    @section('script-left-menu')
+    @show
+
     @section('script')
 
     @show
