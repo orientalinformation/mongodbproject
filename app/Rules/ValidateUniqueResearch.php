@@ -28,7 +28,7 @@ class ValidateUniqueResearch implements Rule
     public function passes($attribute, $value)
     {
         $count = Research::where('name', $value)->where('user_id', Auth::user()->id)->count();
-        if ($count == 0) return true;
+        return $count == 0;
     }
 
     /**

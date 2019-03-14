@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	// save research
 	$('#btn-save-keyword').click(function(e) {
-		var keyword = $('input[name=keyword]').val();
+		var keyword = $('input[name=q]').val();
 		var name = $('input[name=research_name]').val();
 
 		$.ajax({
