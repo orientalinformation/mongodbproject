@@ -93,7 +93,6 @@ class AuthController extends Controller
             'status'                => 'required|integer|min:0',
             'type'                  => 'required|array',
             'g-recaptcha-response'  => ['required', new GoogleRecaptcha],
-            // 'image_data'            => [new CheckBase64Rule]
             'original_image'        => [new CheckMineTypeRule],
         ];
 
@@ -122,8 +121,6 @@ class AuthController extends Controller
             'type.required'                 => __('validation.required', ['attribute' => "type"]),
             'type.array'                    => __('validation.array', ['attribute' => "type"]),
             'g-recaptcha-response.required' => __('validation.recaptcha', ['attribute' => "s'il vous plaît vérifier recaptcha"]),
-            // 'original_image.image'          => __('original_image.image'),
-            // 'original_image.max'            => __('original_image.max'),
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -131,13 +128,7 @@ class AuthController extends Controller
         if ($validator->fails()) {
             $input = $request->all();
             $errors = $validator->messages();
-            // dd($input);
-            
             return view('Frontend.Auth.register', compact('input'))->withErrors($errors);
-            // return redirect()->to('register')->with(['foo' => 'bar'])
-            // ->withInput($request->input())
-            // ->withErrors($validator->messages());
-            // return back()->withErrors($validator->messages())->withInput();
         }
         
         // check username and email exists       
@@ -179,7 +170,6 @@ class AuthController extends Controller
             $base64Str  = substr($encoded, strpos($encoded, ",") + 1);
             $image      = base64_decode($base64Str);
             File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
-            // file_put_contents($path. '/' . $filename, $image);
             File::put($path. '/' . $filename, $image);
             if(!File::isDirectory($path)) {
                 symlink(storage_path().'/avatar', public_path(). '/storage/avatar');

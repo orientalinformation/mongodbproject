@@ -66,40 +66,39 @@
     $last_name = $data['last_name'] ?? '';
     
     // data of redirect when login with social
-    
     if(isset($input) && array_key_exists('career', $input)) {
-        if($input['career'] = '0') {
+        if($input['career'] == '0') {
             $career = 0;
         }
-        if($input['career'] = '1') {
+        if($input['career'] == '1') {
             $career = 1;
         }
     } else { $career = null; }
 
     if(isset($input) && array_key_exists('civility', $input)) {
-        if($input['civility'] = '0') {
+        if($input['civility'] == '0') {
             $civility = 0;
         }
-        if($input['civility'] = '1') {
+        if($input['civility'] == '1') {
             $civility = 1;
         }
     } else { $civility = null; }
 
     if(isset($input) && array_key_exists('interested', $input)) {
-        $interested = $input['interested'] === '0' ? 0 : '';
-        $interested = $input['interested'] === '1' ? 1 : '';
-        $interested = $input['interested'] === '2' ? 2 : '';
-        $interested = $input['interested'] === '3' ? 3 : '';
+        $interested = $input['interested'] == '0' ? 0 : '';
+        $interested = $input['interested'] == '1' ? 1 : '';
+        $interested = $input['interested'] == '2' ? 2 : '';
+        $interested = $input['interested'] == '3' ? 3 : '';
     } else { $interested = null; }
     // 
     if(isset($input) && array_key_exists('association', $input)) {
-        $association = $input['association'] === '0' ? 0 : '';
-        $association = $input['association'] === '1' ? 1 : '';
+        $association = $input['association'] == '0' ? 0 : '';
+        $association = $input['association'] == '1' ? 1 : '';
     } else { $association = null; }
     //
     if(isset($input) && array_key_exists('status', $input)) {
-        $status = $input['status'] === '0' ? 0 : '';
-        $status = $input['status'] === '1' ? 1 : '';
+        $status = $input['status'] == '0' ? 0 : '';
+        $status = $input['status'] == '1' ? 1 : '';
     } else { $status = null; }
     if(isset($input) && array_key_exists('type', $input)) {
         $listType = $input['type'];
@@ -207,9 +206,9 @@
                                 <div class="col-lg-12">
                                     <label class="form-control-label label-civ">Civilité <strong class="require">*</strong></label>
                                     <div class="switch-field">
-                                        <input type="radio" id="switch_left" name="civility" value="0" @if (old('civility') == '0') checked @elseif($civility == 0) checked @endif />
+                                        <input type="radio" id="switch_left" name="civility" value="0" @if (old('civility') == '0') checked @elseif($civility === 0) checked @endif />
                                         <label for="switch_left">M.</label>
-                                        <input type="radio" id="switch_right" name="civility" value="1" @if (old('civility') == '1') checked @elseif($civility == 1) checked @endif />
+                                        <input type="radio" id="switch_right" name="civility" value="1" @if (old('civility') == '1') checked @elseif($civility === 1) checked @endif />
                                         <label for="switch_right">Mme</label>
                                     </div>
                                     @if ($errors->has('civility'))
@@ -351,13 +350,13 @@
                                             id="switch_2_left"
                                             name="career"
                                             value="0"
-                                            @if (old('career') == '0') checked @elseif(!is_null($career) && $career === 0) checked @endif />
+                                            @if(!is_null($career) && $career == 0) checked @endif />
                                         <label for="switch_2_left">Bois</label>
                                         <input type="radio"
                                             class="career"
                                             id="switch_2_right"
                                             name="career"
-                                            value="1" @if (old('career') == '1') checked @elseif(!is_null($career) && $career === 1) checked @endif />
+                                            value="1" @if(!is_null($career) && $career == 1) checked @endif />
                                         <label for="switch_2_right">Pierre</label>
                                     </div>
                                 </div>    
@@ -476,13 +475,14 @@
                                     <div class="g-recaptcha" data-sitekey={!!env('RECAPTCHA_SITE_KEY')!!}></div>
                                 </div>
                                 <div id="html_element"></div>
-                            </div>
-                            
-                            @if ($errors->has('g-recaptcha-response'))
+                                @if ($errors->has('g-recaptcha-response'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('g-recaptcha-response') }}
                                 </div>
                             @endif
+                            </div>
+                            
+                            
                         </div>
                     </div>
                     <div class="row groupAgree">
