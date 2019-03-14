@@ -39,7 +39,7 @@ class ProductTableSeeder extends Seeder
         	$image = '/image/front/Bibliotheque_Web_1.jpg';
         	$view = 2;
         	$userId = 1;
-        	$categoryId = 1;
+        	$categoryId = '5c886865523ef210bb69fef2';
         	$like = 0;
             $share = 0;
         	$pink = 0;
@@ -83,7 +83,7 @@ class ProductTableSeeder extends Seeder
                             'description'       => $product->description,
                             'image'             => $product->image,
                             'view'              => $product->view,
-                            'category_id'       => $product->categoryId_id,
+                            'category_id'       => $product->category_id,
                             'like'              => $product->like,
                             'user_id'           => $productDetail->user_id,
                             'share'             => $productDetail->share,

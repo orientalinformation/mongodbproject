@@ -27,17 +27,43 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
     {
     	$limit = config('constants.rowPageProduct');
     	$offset = ($page > 1) ? ($page - 1) * $limit : 0;
-        if ($q!= null) {
-            $should = [
-                'match_phrase_prefix' => [
-                    'title' => $q
-                ]
-            ];
+        if (!isset($options['category'])) {
+            if ($q != null) {
+                $query = [
+                    'match_phrase_prefix' => [
+                        'title' => $q
+                    ]
+                ];
+            } else {
+                $query = ['match_all' => new \stdClass()];
+            }
         } else {
-            $should = ['match_all' => new \stdClass()];
+            $category = explode(',', $options['category']);
+            if ($q != null) {
+                $query = [
+                    'bool' => [
+                        'must' => [
+                            'match_phrase_prefix' => [
+                                'title' => $q
+                            ]
+                        ],
+                        'filter' => [
+                            'terms' => [
+                                'category_id' => $category
+                            ]
+                        ]
+                    ]
+                ];
+            } else {
+                $query = [
+                    'terms' => [
+                        'category_id' => $category
+                    ]
+                ];
+            }
         }
 
-        $bool = [
+        /*$bool = [
             'must' => [
                 'match' => [
                     'is_delete' => 0
@@ -51,6 +77,11 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
         if (isset($options['start_year']) && isset($options['end_year'])) {
             $bool = [
                 'must' => [
+                    'match' => [
+                        'is_delete' => 0
+                    ]
+                ],
+                'filter' => [
                     'range' => [
                         'updated_at' => [
                             'gte' => $options['start_year'],
@@ -58,11 +89,6 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
                             'format' => 'yyyy||yyyy'
                         ]
                     ],
-                ],
-                'filter' => [
-                    'term' => [
-                        'is_delete' => 0
-                    ]
                 ],
                 'should' => [
                     $should
@@ -76,7 +102,7 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
                     'bool' => $bool
                 ]
             ]
-        ];
+        ];*/
 
         $sort = ['_id' => 'desc'];
         if (isset($options['sort'])) {

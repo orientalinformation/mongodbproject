@@ -65,6 +65,11 @@ class ProductController extends Controller
 			$paramPath .= 'start_year=' . $options['start_year'] . '&end_year=' . $options['end_year'] . '&';
 		}
 
+		if($this->request->has('category')) {
+			$options['category'] = $this->request->get('category');
+			$paramPath .= 'category=' . $options['category'] . '&';
+		}
+
 		$urlSort = [];
 		$urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
 		$urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
