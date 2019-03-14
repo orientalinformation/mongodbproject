@@ -38,4 +38,15 @@ interface CategoryRepositoryInterface
      * @return mixed
      */
     public function parentOrderByPath();
+
+    /**
+     * Get recursive category
+     *
+     * @param $parent_id
+     * @param $level
+     * @param $space
+     * @param $trees
+     * @return mixed
+     */
+    public function recursiveCategory($parent_id = null, $level = 0, $space = "", $trees = array());
 }
