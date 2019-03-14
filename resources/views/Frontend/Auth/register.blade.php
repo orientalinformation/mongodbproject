@@ -448,7 +448,6 @@
                                     <label class="form-control-label" style="display: inline-block;">Type <strong class="require">*</strong></label>
                                     <div id="groupType">
                                         <select id='typeList' multiple="multiple" name="type[]" style="width: 100%" class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
-                                            
                                             <option value="1" @foreach($listType as $type) @if($type == '1') selected @endif @endforeach>Chef d'entreprise</option>
                                             <option value="2" @foreach($listType as $type) @if($type == '2') selected @endif @endforeach>Salarie</option>
                                             <option value="3" @foreach($listType as $type) @if($type == '3') selected @endif @endforeach>Charge d'affaire</option>
@@ -463,7 +462,6 @@
                                             <option value="12" @foreach($listType as $type) @if($type == '12') selected @endif @endforeach>Vernisseur</option>
                                             <option value="13" @foreach($listType as $type) @if($type == '13') selected @endif @endforeach>Technico-Commercial</option>
                                             <option value="14" @foreach($listType as $type) @if($type == '14') selected @endif @endforeach>Operateur machine numerique</option>
-                                            
                                         </select>
                                     </div>
                                 </div>    
