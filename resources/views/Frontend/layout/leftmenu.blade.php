@@ -32,22 +32,6 @@
     </li>
     <li>
         <input type="hidden" id="slider_range" class="flat-slider" />
-        <script type="text/javascript">
-            jQuery(function() {
-                jQuery( "#slider_range" ).flatslider({
-                    min: 1990, max: 2100,
-                    step: 1,
-                    values: [2010, 2020],
-                    range: true,
-                    einheit: '',
-                    stop: function( event, ui ) {
-                        currentMinValue = ui.values[ 0 ];
-                        currentMaxValue = ui.values[ 1 ];
-                        window.location.href = "{{ URL::to('/') . '/book' }}" + "?start_year=" + currentMinValue + "&end_year=" + currentMaxValue;
-                    }
-                });
-            });
-        </script>
     </li>
     @if (isset($researches))
     <li><a class="accordion-toggle" href="#colMenu3" data-toggle="collapse">Mes Researches</a></li>
@@ -105,3 +89,22 @@
         <div class="link-menu"><a href="#">voir plus</a></div>
     </div>
 </ul>
+
+@section('script-left-menu')
+<script type="text/javascript">
+    jQuery(function() {
+        jQuery( "#slider_range" ).flatslider({
+            min: 1990, max: 2100,
+            step: 1,
+            values: [2010, 2020],
+            range: true,
+            einheit: '',
+            stop: function( event, ui ) {
+                currentMinValue = ui.values[ 0 ];
+                currentMaxValue = ui.values[ 1 ];
+                window.location.href = "{{ URL::to('/') . '/book' }}" + "?start_year=" + currentMinValue + "&end_year=" + currentMaxValue;
+            }
+        });
+    });
+</script>
+@endsection

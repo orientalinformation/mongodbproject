@@ -402,7 +402,7 @@ button:active, button:focus {
 
 .login-form{
     font-family: sans-serif;
-    top: 40px;
+    top: 100px;
 }
 
 .register-form{
@@ -449,7 +449,7 @@ button:active, button:focus {
 }
 
 .forgot-form{
-    top: 20px;
+	top: 100px;
 }
 
 .forgot-form input{

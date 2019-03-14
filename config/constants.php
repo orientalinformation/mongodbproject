@@ -36,4 +36,8 @@ return [
             'type'  =>  'event'
         ]
     ],
+    'objectType'    => [
+        'product'   => 'PRODUCT',
+        'book'      => 'BOOK'
+    ]
 ];

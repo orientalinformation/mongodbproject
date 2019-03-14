@@ -46,10 +46,4 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
 
         return Book::whereBetween('created_at', array($startDate, $endDate))->paginate($perPage);
     }
-
-    public function checkLiked($user_id, $book_id)
-    {
-        return BookDetail::where([['user_id', '=', (int)$user_id],
-            ['book_id', '=', (int)$book_id]])->get();
-    }
 }
