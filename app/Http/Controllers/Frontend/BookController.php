@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
+use App\Repositories\BookDetail\BookDetailRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
 use Elasticsearch\ClientBuilder;
@@ -22,10 +23,11 @@ class BookController extends Controller
      * CategoryController constructor.
      * @param CategoryRepositoryInterface $cateogryRepository
      */
-    public function __construct(CategoryRepositoryInterface $cateogryRepository, BookRepositoryInterface $bookRepository)
+    public function __construct(CategoryRepositoryInterface $cateogryRepository, BookRepositoryInterface $bookRepository, BookDetailRepositoryInterface $bookdetailRepository)
     {
         $this->cateogryRepository = $cateogryRepository;
         $this->bookRepository = $bookRepository;
+        $this->bookdetailRepository = $bookdetailRepository;
     }
 
     /**
@@ -160,17 +162,62 @@ class BookController extends Controller
      */
     public function checkLiked(Request $request)
     {
-        $data['status'] = 0;
-        $data['data'] = "";
+        $result['status'] = 0;
+        $result['data'] = "";
         if($request->has("user_id") && $request->has("book_id")){
-            $user_id = $request->has("user_id");
-            $book_id = $request->has("book_id");
-            $book = $this->bookRepository->checkLiked($user_id, $book_id)->toArray();
-            $data['status'] = 1;
-            dd($book);die;
-            $data['data'] = "";
+            $user_id = $request->get("user_id");
+            $book_id = $request->get("book_id");
+            $bookDetail = $this->bookdetailRepository->checkLiked($user_id, $book_id)->toArray();
+            $result['data'] = $book_id;
+            if(sizeof($bookDetail) > 0){
+                $result['status'] = 1;
+                $result['data'] = $bookDetail;
+            }else{
+                $result['status'] = 0;
+            }
+
+            if($request->has("change")){
+                $change = $request->get("change");
+                if($change ==1){
+                    if(sizeof($bookDetail) > 0){
+                        foreach($bookDetail as $item){
+                            $data['book_id'] = $item['book_id'];
+                            $data['user_id'] = $item['user_id'];
+                            $data['share'] = $item['share'];
+                            $data['pink'] = $item['pink'];
+                            $data['is_public'] = $item['is_public'];
+                            $data['is_delete'] = 1;
+                            $this->bookdetailRepository->update($item['_id'], $data);
+                        }
+                        $result['status'] = 1;
+                    }else{
+                        $bookDetail = $this->bookdetailRepository->checkunLiked($user_id, $book_id)->toArray();
+                        if(sizeof($bookDetail) > 0){
+                            foreach($bookDetail as $item){
+                                $data['book_id'] = $item['book_id'];
+                                $data['user_id'] = $item['user_id'];
+                                $data['share'] = $item['share'];
+                                $data['pink'] = $item['pink'];
+                                $data['is_public'] = $item['is_public'];
+                                $data['is_delete'] = 0;
+                                $this->bookdetailRepository->update($item['_id'], $data);
+                            }
+                        }else{
+                            $data['book_id'] = $book_id;
+                            $data['user_id'] = $user_id;
+                            $data['share'] = 0;
+                            $data['pink'] = 0;
+                            $data['is_public'] = 0;
+                            $data['is_delete'] = 0;
+                            $data = $this->bookdetailRepository->create($data);
+                            $result['data'] = $data;
+                        }
+                        $result['status'] = 2;
+                    }
+                }
+            }
         }
-        $data = json_encode($data);
-        print_r($data);die;
+        $result = json_encode($result);
+        print_r($result);die;
     }
 }
