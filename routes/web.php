@@ -40,6 +40,9 @@ Route::namespace('Frontend')->group(function () {
     Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
+    // Ajax routes
+    Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware('auth');
+
     // Product routes
     Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware('auth');
 

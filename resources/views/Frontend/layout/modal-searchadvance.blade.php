@@ -2,11 +2,12 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="">
+                <form action="{{ route('frontAjaxSearchAdvance') }}" name="frmSearchAdvance" method="POST">
+                	{{ csrf_field() }}
                     <div class="rechercher">
                         <div class="form-group">
                             <span>
-                                <input type="text" class="form-control input-1" id="rechercher" placeholder="Rechercher sur la plateforme" >
+                                <input type="text" name="q" class="form-control input-1" id="rechercher" placeholder="Rechercher sur la plateforme" >
                             </span>
                         </div>
                         <div class="bibliotheque text-warning`">
@@ -18,21 +19,21 @@
                                 <div class="col-lg-3 col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                          <input type="checkbox" name="article"> Études/Synthese
+                                          <input type="checkbox" name="kind[]" value="book"> Études/Synthese
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                          <input type="checkbox" name="article" checked> Produit
+                                          <input type="checkbox" name="kind[]" value="product" checked> Produit
                                         </label>
                                       </div>
                                 </div>
                                 <div class="col-lg-3 col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                          <input type="checkbox" name="article"> Reporting/Evenements
+                                          <input type="checkbox" name="kind[]" value="report"> Reporting/Evenements
                                         </label>
                                     </div>
                                 </div>
@@ -45,9 +46,9 @@
 		                        <div class="form-group">
 		                        	<legend class="col-form-label recher-avancee-line"></legend>
 		                            <span class="text-label-rechercher text-label-rechercher-parent">Filière</span>
-									<div class="checkbox">
+									<div class="checkbox checkbox-category-first">
 		                                <label>
-		                                  <input type="checkbox" name="category"> {{ $item['name'] }}
+		                                  <input type="checkbox" name="category[]" class="input-category-one"> {{ $item['name'] }}
 		                                </label>
 		                            </div>
 		                        </div>
@@ -63,7 +64,7 @@
 				                        	@endif
 				                        	<div class="checkbox">
 				                                <label>
-				                                  <input type="checkbox" name="cate"> {{ $subItem['name'] }}
+				                                  <input type="checkbox" name="category[]" data-id="{{ $subItem['_id'] }}" id="input-category-two-{{ $subItem['_id'] }}" class="input-category-two"> {{ $subItem['name'] }}
 				                                </label>
 				                            </div>
 				                            <div class="box-sub-cat-child">
@@ -71,7 +72,7 @@
 				                            	<div class="box-sub-cat-child-item">
 				                            		<div class="checkbox">
 						                                <label>
-						                                  <input type="checkbox" name="cate"> {{ $subCatChild['name'] }}
+						                                  <input type="checkbox" name="category[]" data-parent="{{ $subItem['_id'] }}" class="input-category-three input-category-three-{{ $subItem['_id'] }}"> {{ $subCatChild['name'] }}
 						                                </label>
 						                            </div>
 				                            	</div>
@@ -87,7 +88,7 @@
                         	<legend class="col-form-label recher-avancee-line"></legend>
 							<div class="checkbox">
                                 <label>
-                                  <input type="checkbox" name="category"> Produit
+                                  <input type="checkbox" name="category[]"> Produit
                                 </label>
                             </div>
                             <div class="box-sub-cat-child">
@@ -108,7 +109,7 @@
                             </div>
                         </div>
                         <div class="box-btn-search-advance">
-                            <button class="btn btn-oblong btn-primary btn-upload" type="submit"><i class="fa fa-search" aria-hidden="true"></i> RECHECHE</button>
+                            <button class="btn btn-oblong btn-primary btn-upload" id="btn-search-advance" type="button"><i class="fa fa-search" aria-hidden="true"></i> RECHECHE</button>
                         </div>
                     </div>
                 </form>

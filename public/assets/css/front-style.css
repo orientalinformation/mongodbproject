@@ -2307,6 +2307,10 @@ ul.horizontal-menu-library > li a{
     font-size: 16px
 }
 
+.checkbox-category-first label {
+    font-weight: 600;
+}
+
 .related{
     font-size: 20px;
     font-weight: 300;
