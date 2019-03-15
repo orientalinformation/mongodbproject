@@ -166,8 +166,9 @@ class AuthController extends Controller
         if(!empty($data['image_data'])) {
             $encoded    = $data['image_data'];
             $path       = storage_path().'/avatar';
+            $randomStr  = substr( "abcdefghijklmnopqrstuvwxyz" ,mt_rand( 0 ,25 ) ,1 ) .substr( md5( time( ) ) ,1 );
             if(empty($data['original_image'])) {
-                $data['original_image'] = 'avatar_social' . '.jpg';
+                $data['original_image'] =  $randomStr . '.jpg';
             }
             $filename   = time() . '_' . $data['original_image'];
             $base64Str  = substr($encoded, strpos($encoded, ",") + 1);
