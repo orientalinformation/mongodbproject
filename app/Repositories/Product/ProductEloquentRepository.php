@@ -14,7 +14,6 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
     }
 
     /**
-	 *
 	 * Search Product By Keyword
 	 *
 	 * @param $keyword
@@ -27,82 +26,121 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
     {
     	$limit = config('constants.rowPageProduct');
     	$offset = ($page > 1) ? ($page - 1) * $limit : 0;
-        if (!isset($options['category'])) {
+        if (!isset($options) || $options == null) {
             if ($q != null) {
-                $query = [
-                    'match_phrase_prefix' => [
-                        'title' => $q
+                $must = [
+                    [
+                        'match' => [
+                            'is_delete' => 0
+                        ]
+                    ],
+                    [
+                        'match_phrase_prefix' => [
+                            'title' => $q
+                        ]
                     ]
                 ];
             } else {
-                $query = ['match_all' => new \stdClass()];
+                $must = [
+                    [
+                        'match' => [
+                            'is_delete' => 0
+                        ]
+                    ]
+                ];
             }
         } else {
-            $category = explode(',', $options['category']);
-            if ($q != null) {
-                $query = [
-                    'bool' => [
-                        'must' => [
-                            'match_phrase_prefix' => [
-                                'title' => $q
+            if (isset($options['category'])) {
+                $category = explode(',', $options['category']);
+                if ($q != null) {
+                    if (isset($options['start_year']) && isset($options['end_year'])) {
+                        $must = [
+                            [
+                                'match' => [
+                                    'is_delete' => 0
+                                ]
+                            ],
+                            [
+                                'match_phrase_prefix' => [
+                                    'title' => $q
+                                ],
+                            ],
+                            [
+                                'range' => [
+                                    'updated_at' => [
+                                        'gte' => $options['start_year'],
+                                        'lte' => $options['end_year'],
+                                        'format' => 'yyyy||yyyy'
+                                    ]
+                                ]
+                            ],
+                            [
+                                'terms' => [
+                                    'category_id' => $category
+                                ]
+                            ]
+                        ];
+                    } else {
+                        $must = [
+                            [
+                                'match' => [
+                                    'is_delete' => 0
+                                ]
+                            ],
+                            [
+                                'match_phrase_prefix' => [
+                                    'title' => $q
+                                ],
+                            ],
+                            [
+                                'terms' => [
+                                    'category_id' => $category
+                                ]
+                            ]
+                        ];
+                    }
+                    
+                } else {
+                    $must = [
+                        [
+                            'match' => [
+                                'is_delete' => 0
                             ]
                         ],
-                        'filter' => [
+                        [
                             'terms' => [
                                 'category_id' => $category
                             ]
                         ]
-                    ]
-                ];
-            } else {
-                $query = [
-                    'terms' => [
-                        'category_id' => $category
+                    ];
+                }
+            }
+
+            if (!isset($options['category']) && isset($options['start_year']) && isset($options['end_year'])) {
+                $must = [
+                    [
+                        'match' => [
+                            'is_delete' => 0
+                        ]
+                    ],
+                    [
+                        'range' => [
+                            'updated_at' => [
+                                'gte' => $options['start_year'],
+                                'lte' => $options['end_year'],
+                                'format' => 'yyyy||yyyy'
+                            ]
+                        ]
                     ]
                 ];
             }
         }
 
-        /*$bool = [
-            'must' => [
-                'match' => [
-                    'is_delete' => 0
-                ]
-            ],
-            'should' => [
-                $should
+        $query = [
+            'bool' => [
+                'must' => $must
             ]
         ];
-
-        if (isset($options['start_year']) && isset($options['end_year'])) {
-            $bool = [
-                'must' => [
-                    'match' => [
-                        'is_delete' => 0
-                    ]
-                ],
-                'filter' => [
-                    'range' => [
-                        'updated_at' => [
-                            'gte' => $options['start_year'],
-                            'lte' => $options['end_year'],
-                            'format' => 'yyyy||yyyy'
-                        ]
-                    ],
-                ],
-                'should' => [
-                    $should
-                ]
-            ];
-        }
-
-        $query = [
-            'constant_score' => [
-                'filter' => [
-                    'bool' => $bool
-                ]
-            ]
-        ];*/
 
         $sort = ['_id' => 'desc'];
         if (isset($options['sort'])) {
@@ -130,5 +168,21 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
         }
 
         return $result;
+    }
+
+    /**
+     * Get Range year
+     *
+     * @param $start_year
+     * @param $end_year
+     * @param $perPage
+     * @return mixed
+     */
+    public function getRange($start_year, $end_year, $perPage)
+    {
+        $startDate = Carbon::createFromDate($start_year, 1, 1);
+        $endDate = Carbon::createFromDate($end_year, 12, 1);
+
+        return Book::whereBetween('created_at', array($startDate, $endDate))->paginate($perPage);
     }
 }
