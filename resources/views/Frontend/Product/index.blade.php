@@ -6,7 +6,6 @@
 
 @section('content')
 
-@include('Frontend.layout.header')
 <div class="container-fluid container-library">
     <div class="main library">
         <div class="container-fluid">
