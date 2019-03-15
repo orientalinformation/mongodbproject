@@ -29,7 +29,7 @@ class ReadAfterEloquentRepository extends EloquentRepository implements ReadAfte
 
     public function checkunRead($user_id, $object_id, $type)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return ReadAfter::where([['user_id', '=', $user_id],
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],
             ['is_delete', '=', 1]])->get();

@@ -292,8 +292,8 @@
                                     <div class="menu-tooltips"></div>
                                     <div class="content-panel">
                                         <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
-                                        <div class="content-line read-line"><i class="fa fa-bookmark-o" aria-hidden="true"></i> <span>À lire plus tard</span></div>
-                                        <div class="content-line"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
+                                        <div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
+                                        <div class="content-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
                                         <div class="content-line"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
                                         <div class="content-line"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Partager</span></div>
                                     </div>
@@ -322,6 +322,29 @@
                     <?php endif; ?>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="libraryList" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Library list</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group listWrap">
+                        <input type="checkbox" name="itemList"><label>Item 1</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -354,6 +377,7 @@
             let display = $(this).closest(".wrap").find(".content-panel");
             let bookID = $(this).closest(".wrap").find(".bookID").val();
             let heart = $(this).closest(".wrap").find(".likeIcon");
+            let read = $(this).closest(".wrap").find(".readIcon");
             if(display.css("display") == "none"){
                 display.css("display","block");
                 $.ajax({
@@ -369,6 +393,22 @@
                         }else{
                             heart.addClass("fa-heart-o");
                             heart.removeClass("fa-heart");
+                        }
+                    }
+                });
+                $.ajax({
+                    url: "{{ URL::to('/') }}/check_read",
+                    cache: false,
+                    type: "GET",
+                    data: {user_id: 1, object_id: bookID},
+                    success: function(result){
+                        result = JSON.parse(result);
+                        if(result.status == 1){
+                            read.removeClass("fa-bookmark-o");
+                            read.addClass("fa-bookmark");
+                        }else{
+                            read.addClass("fa-bookmark-o");
+                            read.removeClass("fa-bookmark");
                         }
                     }
                 });
@@ -392,6 +432,26 @@
                     }else if(result.status == 2) {
                         heart.removeClass("fa-heart-o");
                         heart.addClass("fa-heart");
+                    }
+                }
+            });
+        })
+        $('.read-line').click(function(){
+            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let read = $(this).closest(".wrap").find(".readIcon");
+            $.ajax({
+                url: "{{ URL::to('/') }}/check_read",
+                cache: false,
+                type: "GET",
+                data: {user_id: 1, object_id: bookID, change: 1},
+                success: function(result){
+                    result = JSON.parse(result);
+                    if(result.status == 1){
+                        read.removeClass("fa-bookmark");
+                        read.addClass("fa-bookmark-o");
+                    }else if(result.status == 2) {
+                        read.removeClass("fa-bookmark-o");
+                        read.addClass("fa-bookmark");
                     }
                 }
             });
