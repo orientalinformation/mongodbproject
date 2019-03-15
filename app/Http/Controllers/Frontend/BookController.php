@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\BookDetail\BookDetailRepositoryInterface;
+use App\Repositories\ReadAfter\ReadAfterRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
 use Elasticsearch\ClientBuilder;
@@ -23,11 +24,12 @@ class BookController extends Controller
      * CategoryController constructor.
      * @param CategoryRepositoryInterface $cateogryRepository
      */
-    public function __construct(CategoryRepositoryInterface $cateogryRepository, BookRepositoryInterface $bookRepository, BookDetailRepositoryInterface $bookdetailRepository)
+    public function __construct(CategoryRepositoryInterface $cateogryRepository, BookRepositoryInterface $bookRepository, BookDetailRepositoryInterface $bookdetailRepository, ReadAfterRepositoryInterface $readafterRepository)
     {
         $this->cateogryRepository = $cateogryRepository;
         $this->bookRepository = $bookRepository;
         $this->bookdetailRepository = $bookdetailRepository;
+        $this->readafterRepository = $readafterRepository;
     }
 
     /**
@@ -168,7 +170,7 @@ class BookController extends Controller
             $user_id = $request->get("user_id");
             $book_id = $request->get("book_id");
             $bookDetail = $this->bookdetailRepository->checkLiked($user_id, $book_id)->toArray();
-            $result['data'] = $book_id;
+
             if(sizeof($bookDetail) > 0){
                 $result['status'] = 1;
                 $result['data'] = $bookDetail;
@@ -208,6 +210,68 @@ class BookController extends Controller
                             $data['share'] = 0;
                             $data['pink'] = 0;
                             $data['is_public'] = 0;
+                            $data['is_delete'] = 0;
+                            $data = $this->bookdetailRepository->create($data);
+                            $result['data'] = $data;
+                        }
+                        $result['status'] = 2;
+                    }
+                }
+            }
+        }
+        $result = json_encode($result);
+        print_r($result);die;
+    }
+
+    /**
+     * Check status read
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function checkRead(Request $request)
+    {
+        $result['status'] = 0;
+        $result['data'] = "";
+        if($request->has("user_id") && $request->has("object_id")){
+            $user_id = $request->get("user_id");
+            $object_id = $request->get("object_id");
+            $type = Config::get('constants.objectType.book');
+            $bookDetail = $this->readafterRepository->checkRead($user_id, $object_id, $type)->toArray();
+
+            if(sizeof($bookDetail) > 0){
+                $result['status'] = 1;
+                $result['data'] = $bookDetail;
+            }else{
+                $result['status'] = 0;
+            }
+
+            if($request->has("change")){
+                $change = $request->get("change");
+                if($change ==1){
+                    if(sizeof($bookDetail) > 0){
+                        foreach($bookDetail as $item){
+                            $data['object_id'] = $item['object_id'];
+                            $data['user_id'] = $item['user_id'];
+                            $data['type_name'] = $type;
+                            $data['is_delete'] = 1;
+                            $this->bookdetailRepository->update($item['_id'], $data);
+                        }
+                        $result['status'] = 1;
+                    }else{
+                        $bookDetail = $this->readafterRepository->checkunRead($user_id, $object_id)->toArray();
+                        if(sizeof($bookDetail) > 0){
+                            foreach($bookDetail as $item){
+                                $data['object_id'] = $item['object_id'];
+                                $data['user_id'] = $item['user_id'];
+                                $data['type_name'] = $type;
+                                $data['is_delete'] = 0;
+                                $this->bookdetailRepository->update($item['_id'], $data);
+                            }
+                        }else{
+                            $data['object_id'] = $object_id;
+                            $data['user_id'] = $user_id;
+                            $data['type_name'] = $type;
                             $data['is_delete'] = 0;
                             $data = $this->bookdetailRepository->create($data);
                             $result['data'] = $data;
