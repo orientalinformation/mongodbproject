@@ -166,10 +166,10 @@ class AuthController extends Controller
         if(!empty($data['image_data'])) {
             $encoded    = $data['image_data'];
             $path       = storage_path().'/avatar';
-            $filename   = time() . '_' . $data['original_image'];
             if(empty($data['original_image'])) {
-                $data['original_image'] = 'avatar';
+                $data['original_image'] = 'avatar_social' . '.jpg';
             }
+            $filename   = time() . '_' . $data['original_image'];
             $base64Str  = substr($encoded, strpos($encoded, ",") + 1);
             $image      = base64_decode($base64Str);
             File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
