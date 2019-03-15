@@ -33,6 +33,10 @@ return [
         'event'     =>  [
             'index' =>  'event_compagnons',
             'type'  =>  'event'
+        ],
+        'bibliotheque' => [
+            'index' => 'bibliotheque_compagnons',
+            'type'  => 'bibliotheque'
         ]
     ],
     'objectType'    => [
