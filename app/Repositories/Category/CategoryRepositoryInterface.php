@@ -48,5 +48,14 @@ interface CategoryRepositoryInterface
      * @param $trees
      * @return mixed
      */
-    public function recursiveCategory($parent_id = null, $level = 0, $space = "", $trees = array());
+    public function recursiveCategory($parent_id = null, $level = 0, $space = "", $trees = []);
+
+    /**
+     * Get list id category child
+     *
+     * @param $parent_id
+     * @param $trees
+     * @return array
+     */
+    public function getCategoryTreeId($parent_id = null, $trees = []);
 }

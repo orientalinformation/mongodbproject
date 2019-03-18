@@ -51,7 +51,8 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
             }
         } else {
             if (isset($options['category'])) {
-                $category = explode(',', $options['category']);
+                $category = $options['category'];
+                $aaaa = ['5c8a281f523ef228d555e16e', '5c8a2832523ef228d555e16f'];
                 if ($q != null) {
                     if (isset($options['start_year']) && isset($options['end_year'])) {
                         $must = [

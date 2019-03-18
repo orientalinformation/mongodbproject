@@ -55,7 +55,7 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
      * @param $trees
      * @return mixed
      */
-    public function recursiveCategory($parent_id = null, $level = 0, $space = "", $trees = array())
+    public function recursiveCategory($parent_id = null, $level = 0, $space = "", $trees = [])
     {
         if (!$trees) {
             $trees = [];
@@ -79,5 +79,32 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
         }
 
         return $trees_obj;
+    }
+
+    /**
+     * Get list id category child
+     *
+     * @param $parent_id
+     * @param $trees
+     * @return array
+     */
+    public function getCategoryTreeId($parent_id = null, $trees = [])
+    {
+        if ($parent_id != null) {
+            $trees[] = $parent_id;
+        }
+
+        $categories = Category::where('parent_id', $parent_id)->get();
+        if (count($categories) > 0) {
+            foreach ($categories as $category) {
+                $trees[] = $category->_id;
+                $trees = $this->getCategoryTreeId($category->_id, $trees);
+            }
+        }
+
+        $trees = array_unique($trees);
+        $trees = array_values($trees);
+
+        return $trees;
     }
 }

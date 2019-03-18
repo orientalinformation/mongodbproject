@@ -37,15 +37,26 @@ class AjaxController extends Controller
 			}
 
 			$kinds = $this->request->get('kind');
+			
 	        if (count($kinds) > 1) {
+	        	$url = '/web?q=' . $this->request->get('q');
+	        	if ($this->request->has('category')) {
+	        		$url .= '&category=' . implode(',', $this->request->get('category'));
+	        	}
+
 	        	$response = [
 	        		'code' => 200,
-	        		'url' => '/web?q=' . $this->request->get('q')
+	        		'url' => $url
 	        	];
 	        } else {
+	        	$url = '/' . $kinds[0] . '?q=' . $this->request->get('q');
+	        	if ($this->request->has('category')) {
+	        		$url .= '&category=' . implode(',', $this->request->get('category'));
+	        	}
+	        	
 	        	$response = [
 	        		'code' => 200,
-	        		'url' => '/' . $kinds[0] . '?q=' . $this->request->get('q')
+	        		'url' => $url
 	        	];
 	        }
 

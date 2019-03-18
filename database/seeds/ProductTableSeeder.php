@@ -5,6 +5,7 @@ use Faker\Factory as Faker;
 use Carbon\Carbon;
 use App\Model\Product;
 use App\Model\ProductDetail;
+use App\Model\Category;
 use Elasticsearch\ClientBuilder;
 use App\Repositories\Product\ProductRepositoryInterface;
 
@@ -31,77 +32,88 @@ class ProductTableSeeder extends Seeder
 
         // add data to mongo db product table
     	$productRepository = app(ProductRepositoryInterface::class);
-        $faker = Faker::create('fr');
-        for ($i = 0; $i < 100; $i++) { 
-        	$title = $faker->text(20);
-            $url = str_slug($title);
-        	$description = $faker->text(30);
-        	$image = '/image/front/Bibliotheque_Web_1.jpg';
-        	$view = 2;
-        	$userId = 1;
-        	$categoryId = '5c886865523ef210bb69fef2';
-        	$like = 0;
-            $share = 0;
-        	$pink = 0;
-        	$isPublic = 0;
-        	$isDelete = 0;
+        $categories = Category::all();
+        if (count($categories) > 0) {
+            $arrayCategory = [];
+            foreach ($categories as $category) {
+                $arrayCategory[] = $category->_id;
+            }
 
-            $data = [
-                'title'             => $title,
-                'url'               => $url,
-                'description'       => $description,
-                'image'             => $image,
-                'view'              => $view,
-                'like'              => $like,
-                'category_id'       => $categoryId,
-                'is_delete'         => $isDelete,
-            ];
+            $faker = Faker::create('fr');
+            for ($i = 0; $i < 100; $i++) { 
+                $title = $faker->text(20);
+                $url = str_slug($title);
+                $description = $faker->text(30);
+                $image = '/image/front/Bibliotheque_Web_1.jpg';
+                $view = 2;
+                $userId = 1;
+                $like = 0;
+                $share = 0;
+                $pink = 0;
+                $isPublic = 0;
+                $isDelete = 0;
 
-            $productCreate = Product::create($data);
-            $dataProductDetail = [
-                'product_id' => $productCreate->id,
-                'user_id' => $userId,
-                'share' => $share,
-                'pink' => $pink,
-                'is_public' => $isPublic,
-                'is_delete' => $isDelete,
-            ];
+                // random category id
+                $arrayRand = array_rand($arrayCategory);
+                $categoryId = $arrayCategory[$arrayRand];
 
-            ProductDetail::create($dataProductDetail);
-        }
+                $data = [
+                    'title'             => $title,
+                    'url'               => $url,
+                    'description'       => $description,
+                    'image'             => $image,
+                    'view'              => $view,
+                    'like'              => $like,
+                    'category_id'       => $categoryId,
+                    'is_delete'         => $isDelete,
+                ];
 
-        // insert data to Elastic
-        $products = $productRepository->all();
-       	if (count($products) > 0) {
-       		foreach ($products as $product) {
-                $productDetail = ProductDetail::where('product_id', $product->id)->first();
-                if ($productDetail) {
-                    $dataElastic = [
-                        'body' => [
-                            'title'             => $product->title,
-                            'url'               => $product->url,
-                            'description'       => $product->description,
-                            'image'             => $product->image,
-                            'view'              => $product->view,
-                            'category_id'       => $product->category_id,
-                            'like'              => $product->like,
-                            'user_id'           => $productDetail->user_id,
-                            'share'             => $productDetail->share,
-                            'pink'              => $productDetail->pink,
-                            'is_public'         => $productDetail->is_public,
-                            'is_delete'         => $product->is_delete,
-                            'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
-                            'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
-                        ],
-                        'index' => Config::get('constants.elasticsearch.product.index'),
-                        'type' => Config::get('constants.elasticsearch.product.type'),
-                        'id' => $product->id,
-                    ];
+                $productCreate = Product::create($data);
+                $dataProductDetail = [
+                    'product_id' => $productCreate->id,
+                    'user_id' => $userId,
+                    'share' => $share,
+                    'pink' => $pink,
+                    'is_public' => $isPublic,
+                    'is_delete' => $isDelete,
+                ];
 
-                    $client = ClientBuilder::create()->build();
-                    $client->index($dataElastic);
+                ProductDetail::create($dataProductDetail);
+            }
+
+            // insert data to Elastic
+            $products = $productRepository->all();
+            if (count($products) > 0) {
+                foreach ($products as $product) {
+                    $productDetail = ProductDetail::where('product_id', $product->id)->first();
+                    if ($productDetail) {
+                        $dataElastic = [
+                            'body' => [
+                                'title'             => $product->title,
+                                'url'               => $product->url,
+                                'description'       => $product->description,
+                                'image'             => $product->image,
+                                'view'              => $product->view,
+                                'category_id'       => $product->category_id,
+                                'like'              => $product->like,
+                                'user_id'           => $productDetail->user_id,
+                                'share'             => $productDetail->share,
+                                'pink'              => $productDetail->pink,
+                                'is_public'         => $productDetail->is_public,
+                                'is_delete'         => $product->is_delete,
+                                'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
+                                'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
+                            ],
+                            'index' => Config::get('constants.elasticsearch.product.index'),
+                            'type' => Config::get('constants.elasticsearch.product.type'),
+                            'id' => $product->id,
+                        ];
+
+                        $client = ClientBuilder::create()->build();
+                        $client->index($dataElastic);
+                    }
                 }
-       		}
-       	}
+            }
+        }
     }
 }

@@ -37,10 +37,9 @@ class ProductController extends Controller
     }
 
 	/**
-	 *
 	 * Display list product with keyword filter
 	 *
-	 * @return view
+	 * @return View
 	 */
     public function index()
     {
@@ -66,8 +65,9 @@ class ProductController extends Controller
 		}
 
 		if($this->request->has('category')) {
-			$options['category'] = $this->request->get('category');
-			$paramPath .= 'category=' . $options['category'] . '&';
+			$listCategory = $this->categoryRepository->getCategoryTreeId($this->request->get('category'));
+			$options['category'] = $listCategory;
+			$paramPath .= 'category=' . $this->request->get('category') . '&';
 		}
 
 		$urlSort = [];

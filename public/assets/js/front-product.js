@@ -77,6 +77,14 @@ function searchAdvance() {
 		
 	});
 
+	$('form[name=frmSearchAdvance]').on('keyup keypress', function(e) {
+		var keyCode = e.keyCode || e.which;
+		if (keyCode === 13) { 
+		e.preventDefault();
+		return false;
+		}
+	});
+
 	$('#btn-search-advance').click(function(e) {
 		e.preventDefault();
 		var form = $('form[name=frmSearchAdvance]');
