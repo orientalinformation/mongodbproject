@@ -24,6 +24,8 @@ Route::namespace('Frontend')->group(function () {
 
     Route::get('/check_read', 'BookController@checkRead');
 
+    Route::get('/check_list', 'BookController@getLibraryDetailbyUserID');
+
     //register routes
     Route::get('register', 'AuthController@showRegistrationForm');
     Route::post('register', 'AuthController@register')->name('register');

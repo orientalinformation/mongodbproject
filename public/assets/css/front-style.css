@@ -2938,3 +2938,17 @@ ul.horizontal-menu-library > li a{
     background: #f77d3a;
     color: #ffffff;
 }
+
+.pull-right{
+    float: right;
+}
+
+.listWrap input{
+    position: absolute;
+    bottom: 10px;
+}
+
+.listWrap label{
+    margin-left: 30px;
+    bottom: 0px;
+}

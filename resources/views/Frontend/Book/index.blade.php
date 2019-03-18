@@ -293,7 +293,7 @@
                                     <div class="content-panel">
                                         <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
                                         <div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
-                                        <div class="content-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
+                                        <div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
                                         <div class="content-line"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
                                         <div class="content-line"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Partager</span></div>
                                     </div>
@@ -336,9 +336,11 @@
                     <h4 class="modal-title">Library list</h4>
                 </div>
                 <div class="modal-body">
+                    @foreach($library as $item)
                     <div class="input-group listWrap">
-                        <input type="checkbox" name="itemList"><label>Item 1</label>
+                        <input type="checkbox" name="itemList" class="itemList" attr-data="{{ $item['_id'] }}"><label>{{ $item['name'] }}</label>
                     </div>
+                    @endforeach
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -456,7 +458,33 @@
                 }
             });
         })
-
+        $('.list-line').click(function(){
+            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let itemList = $('.itemList');
+            itemList.map(function(){
+                let library_id = $(this).attr('attr-data');
+                let library_item = $(this);
+                $.ajax({
+                    url: "{{ URL::to('/') }}/check_list",
+                    cache: false,
+                    type: "GET",
+                    data: {library_id: library_id, object_id: bookID},
+                    success: function(result){
+                        result = JSON.parse(result);
+                        if(result.status == 1){
+                            library_item.attr('checked','checked');
+                        }
+                    }
+                });
+            })
+        })
+        $('.itemList').click(function(){
+            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let library_id = $(this).attr('attr-data');
+            if ($(this).is(':checked')) {
+                alert(library_id);
+            }
+        })
     </script>
 @endsection
 

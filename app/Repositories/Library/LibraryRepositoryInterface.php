@@ -12,4 +12,6 @@ namespace App\Repositories\Library;
 interface LibraryRepositoryInterface
 {
     public function getLibraryByUserID($userID, $perPage);
+
+    public function getAllLibraryByUserID($userID);
 }

@@ -366,6 +366,7 @@ class BookController extends Controller
         }
         return json_encode($data);
     }
+
     /**
      * Remove the specified resource from storage.
      *
