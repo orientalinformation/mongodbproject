@@ -65,8 +65,17 @@ class ProductController extends Controller
 		}
 
 		if($this->request->has('category')) {
-			$listCategory = $this->categoryRepository->getCategoryTreeId($this->request->get('category'));
-			$options['category'] = $listCategory;
+			$categories = explode(',', $this->request->get('category'));
+			$arrCategory = [];
+			foreach ($categories as $category) {
+				$listCategories = $this->categoryRepository->getCategoryTreeId($category);
+				foreach ($listCategories as $listCategory) {
+					$arrCategory[] = $listCategory;
+				}
+			}
+
+			$arrCategory = array_values(array_unique($arrCategory));
+			$options['category'] = $arrCategory;
 			$paramPath .= 'category=' . $this->request->get('category') . '&';
 		}
 
