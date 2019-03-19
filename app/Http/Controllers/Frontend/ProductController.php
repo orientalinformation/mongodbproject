@@ -10,6 +10,7 @@ use App\Repositories\Research\ResearchRepositoryInterface;
 use Illuminate\Support\Facades\Route;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
+use Elasticsearch\ClientBuilder;
 
 
 class ProductController extends Controller
@@ -45,9 +46,16 @@ class ProductController extends Controller
     {
 		$q = $this->request->has('q') ? $this->request->get('q') : null;
 		$page = $this->request->has('page') ? $this->request->get('page') : 1;
+		$limit = Config::get('constants.rowPageProduct');
 		$currentPath = Route::getFacadeRoot()->current()->uri();
 
 		$options = null;
+		$options['page'] = $page;
+		$options['limit'] = $limit;
+		if ($q != null) {
+			$options['q'] = $q;
+		}
+		
 		if ($this->request->has('sort')) {
 			$options['sort'] = $this->request->get('sort');
 		}
@@ -82,8 +90,19 @@ class ProductController extends Controller
 		$urlSort = [];
 		$urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
 		$urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
+		$indexName = Config::get('constants.elasticsearch.product.index');
+		$typeName = Config::get('constants.elasticsearch.product.type');
 
-		$products = $this->productRepository->searchByKeyword($q, $page, $options);
+		$params = Ulities::getElasticParams($indexName, $typeName, $options);
+		$client = ClientBuilder::create()->build();
+        $response = $client->search($params);
+
+        $products = [];
+        if (!empty($response)) {
+            $products['total'] = $response['hits']['total'];
+            $products['hits'] = $response['hits']['hits'];
+        }
+
 		$productItems = [];
 		if(!empty($products['hits'])){ 
 			if (count($products['hits']) > 6) {
