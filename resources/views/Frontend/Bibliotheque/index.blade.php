@@ -53,7 +53,7 @@
         <div class="container-fluid">
             <!-- Left menu -->
             <div class="col-lg-3 col-sm-3">
-                @include('Frontend.layout.leftmenu', ['category'])
+                @include('Frontend.Bibliotheque.partials.leftmenu', ['category'])
             </div>
             <div class="col-lg-9 col-sm-9">
                 {{-- <div class="row">

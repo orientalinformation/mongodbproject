@@ -18,7 +18,7 @@ class CreateCategoryCollection extends Migration
             $collection->string('name');
             $collection->string('alias');
             $collection->string('description');
-            $collection->string('parentID');
+            $collection->string('parent_id');
             $collection->string('path');
             $collection->timestamps();
 

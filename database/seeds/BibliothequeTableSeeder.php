@@ -7,6 +7,7 @@ use App\Model\Bibliotheque;
 use App\Model\BibliothequeDetail;
 use Elasticsearch\ClientBuilder;
 use App\Model\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
 
 class BibliothequeTableSeeder extends Seeder
@@ -97,12 +98,14 @@ class BibliothequeTableSeeder extends Seeder
        		}
            }
            // data for category
+           $categoryRepository = app(CategoryRepositoryInterface::class);
+           $categories = $categoryRepository->all();
            if(!count($categories) > 0) {
                $dataCategory = [
                 'name' => 'Fillère',
                 'alias' => '',
                 'description' => 'Fillère',
-                'parentID' => '',
+                'parent_id' => '',
                 'path'    => ''
                ];
                Category::create($dataCategory);
