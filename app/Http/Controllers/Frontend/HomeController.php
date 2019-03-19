@@ -14,7 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('Frontend.Home.index');
+        $pageName = 'home';
+        return view('Frontend.Home.index', compact(['pageName']));
     }
 
     /**

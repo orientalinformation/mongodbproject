@@ -4,3 +4,133 @@
 2019/03/06 11:18:54 [error] 867#867: *141 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot declare class App\Helpers\Envato\CategoryHelper, because the name is already in use in /var/www/compagnons-du-devoir/app/Helpers/Envato/Category.php on line 12" while reading response header from upstream, client: 127.0.0.1, server: companons.local, request: "GET /book HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.2-fpm.sock:", host: "companons.local"
 2019/03/06 11:18:56 [error] 867#867: *141 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot declare class App\Helpers\Envato\CategoryHelper, because the name is already in use in /var/www/compagnons-du-devoir/app/Helpers/Envato/Category.php on line 12" while reading response header from upstream, client: 127.0.0.1, server: companons.local, request: "GET /book HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.2-fpm.sock:", host: "companons.local"
 2019/03/06 11:18:57 [error] 867#867: *141 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot declare class App\Helpers\Envato\CategoryHelper, because the name is already in use in /var/www/compagnons-du-devoir/app/Helpers/Envato/Category.php on line 12" while reading response header from upstream, client: 127.0.0.1, server: companons.local, request: "GET /book HTTP/1.1", upstream: "fastcgi://unix:/run/php/php7.2-fpm.sock:", host: "companons.local"
+2019/03/19 09:25:28 [error] 4780#4780: *452 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /var/www/html/compagnons-du-devoir/storage/framework/views/730216ce67ecf549988963bd069375c32624d06c.php on line 48
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/compagnons-du-devoir/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/compagnons-du-devoir/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Ill
+2019/03/19 09:25:29 [error] 4780#4780: *452 FastCGI sent in stderr: "re}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php:68
+PHP message: PHP  46. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  47. Illuminate\Routing\Middleware\SubstituteBindings->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  48. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php:41
+PHP message: PHP  49. Illuminate\Routing\Router->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:30
+PHP message: PHP  50. Illuminate\Routing\Router->prepareResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:665
+PHP message: PHP  51. Illuminate\Routing\Router::toResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:705
+PHP message: PHP  52. Illuminate\Http\Response->__construct() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:733
+PHP message: PHP  53. Illuminate\Http\Response->setContent() /var/www/html/compagnons-du-devoir/vendor/symfony/http-foundation/Response.php:202
+PHP message: PHP  54. Illuminate\View\View->render() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Http/Response.php:42
+PHP message: PHP  55. Illuminate\View\View->renderContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:90
+PHP message: PHP  56. Illuminate\View\View->getContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:125
+PHP message: PHP  57
+2019/03/19 09:25:42 [error] 4782#4782: *457 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /var/www/html/compagnons-du-devoir/storage/framework/views/730216ce67ecf549988963bd069375c32624d06c.php on line 48
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/compagnons-du-devoir/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/compagnons-du-devoir/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Ill
+2019/03/19 09:25:42 [error] 4782#4782: *457 FastCGI sent in stderr: "re}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php:68
+PHP message: PHP  46. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  47. Illuminate\Routing\Middleware\SubstituteBindings->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  48. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php:41
+PHP message: PHP  49. Illuminate\Routing\Router->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:30
+PHP message: PHP  50. Illuminate\Routing\Router->prepareResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:665
+PHP message: PHP  51. Illuminate\Routing\Router::toResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:705
+PHP message: PHP  52. Illuminate\Http\Response->__construct() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:733
+PHP message: PHP  53. Illuminate\Http\Response->setContent() /var/www/html/compagnons-du-devoir/vendor/symfony/http-foundation/Response.php:202
+PHP message: PHP  54. Illuminate\View\View->render() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Http/Response.php:42
+PHP message: PHP  55. Illuminate\View\View->renderContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:90
+PHP message: PHP  56. Illuminate\View\View->getContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:125
+PHP message: PHP  57
+2019/03/19 09:27:18 [error] 4782#4782: *465 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /var/www/html/compagnons-du-devoir/storage/framework/views/730216ce67ecf549988963bd069375c32624d06c.php on line 48
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/compagnons-du-devoir/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/compagnons-du-devoir/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Ill
+2019/03/19 09:27:18 [error] 4782#4782: *465 FastCGI sent in stderr: "re}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php:68
+PHP message: PHP  46. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  47. Illuminate\Routing\Middleware\SubstituteBindings->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  48. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php:41
+PHP message: PHP  49. Illuminate\Routing\Router->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:30
+PHP message: PHP  50. Illuminate\Routing\Router->prepareResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:665
+PHP message: PHP  51. Illuminate\Routing\Router::toResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:705
+PHP message: PHP  52. Illuminate\Http\Response->__construct() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:733
+PHP message: PHP  53. Illuminate\Http\Response->setContent() /var/www/html/compagnons-du-devoir/vendor/symfony/http-foundation/Response.php:202
+PHP message: PHP  54. Illuminate\View\View->render() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Http/Response.php:42
+PHP message: PHP  55. Illuminate\View\View->renderContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:90
+PHP message: PHP  56. Illuminate\View\View->getContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:125
+PHP message: PHP  57
+2019/03/19 09:29:30 [error] 4782#4782: *476 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /var/www/html/compagnons-du-devoir/storage/framework/views/730216ce67ecf549988963bd069375c32624d06c.php on line 48
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/compagnons-du-devoir/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/compagnons-du-devoir/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Ill
+2019/03/19 09:29:31 [error] 4782#4782: *476 FastCGI sent in stderr: "re}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php:68
+PHP message: PHP  46. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  47. Illuminate\Routing\Middleware\SubstituteBindings->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  48. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php:41
+PHP message: PHP  49. Illuminate\Routing\Router->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:30
+PHP message: PHP  50. Illuminate\Routing\Router->prepareResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:665
+PHP message: PHP  51. Illuminate\Routing\Router::toResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:705
+PHP message: PHP  52. Illuminate\Http\Response->__construct() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:733
+PHP message: PHP  53. Illuminate\Http\Response->setContent() /var/www/html/compagnons-du-devoir/vendor/symfony/http-foundation/Response.php:202
+PHP message: PHP  54. Illuminate\View\View->render() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Http/Response.php:42
+PHP message: PHP  55. Illuminate\View\View->renderContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:90
+PHP message: PHP  56. Illuminate\View\View->getContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:125
+PHP message: PHP  57
+2019/03/19 09:30:04 [error] 4782#4782: *483 FastCGI sent in stderr: "PHP message: PHP Fatal error:  Cannot use isset() on the result of an expression (you can use "null !== expression" instead) in /var/www/html/compagnons-du-devoir/storage/framework/views/730216ce67ecf549988963bd069375c32624d06c.php on line 48
+PHP message: PHP Stack trace:
+PHP message: PHP   1. {main}() /var/www/html/compagnons-du-devoir/public/index.php:0
+PHP message: PHP   2. App\Http\Kernel->handle() /var/www/html/compagnons-du-devoir/public/index.php:55
+PHP message: PHP   3. App\Http\Kernel->sendRequestThroughRouter() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:116
+PHP message: PHP   4. Illuminate\Routing\Pipeline->then() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php:151
+PHP message: PHP   5. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:104
+PHP message: PHP   6. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP   7. App\Http\Middleware\CheckForMaintenanceMode->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP   8. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php:62
+PHP message: PHP   9. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  10. Illuminate\Foundation\Http\Middleware\ValidatePostSize->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  11. Illuminate\Routing\Pipeline->Ill
+2019/03/19 09:30:04 [error] 4782#4782: *483 FastCGI sent in stderr: "re}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/VerifyCsrfToken.php:68
+PHP message: PHP  46. Illuminate\Routing\Pipeline->Illuminate\Pipeline\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:53
+PHP message: PHP  47. Illuminate\Routing\Middleware\SubstituteBindings->handle() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php:151
+PHP message: PHP  48. Illuminate\Routing\Pipeline->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php:41
+PHP message: PHP  49. Illuminate\Routing\Router->Illuminate\Routing\{closure}() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php:30
+PHP message: PHP  50. Illuminate\Routing\Router->prepareResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:665
+PHP message: PHP  51. Illuminate\Routing\Router::toResponse() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:705
+PHP message: PHP  52. Illuminate\Http\Response->__construct() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Routing/Router.php:733
+PHP message: PHP  53. Illuminate\Http\Response->setContent() /var/www/html/compagnons-du-devoir/vendor/symfony/http-foundation/Response.php:202
+PHP message: PHP  54. Illuminate\View\View->render() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/Http/Response.php:42
+PHP message: PHP  55. Illuminate\View\View->renderContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:90
+PHP message: PHP  56. Illuminate\View\View->getContents() /var/www/html/compagnons-du-devoir/vendor/laravel/framework/src/Illuminate/View/View.php:125
+PHP message: PHP  57
