@@ -217,7 +217,7 @@
                             </div>
                         </div>
                         <div class="box-btn-search-advance">
-                            <button class="btn btn-oblong btn-primary btn-upload" id="btn-search-advance" type="button"><i class="fa fa-search" aria-hidden="true"></i> RECHECHE</button>
+                            <button class="btn btn-oblong btn-primary btn-upload" id="btn_search_advance" type="button"><i class="fa fa-search" aria-hidden="true"></i> RECHECHE</button>
                         </div>
                     </div>
                 </form>

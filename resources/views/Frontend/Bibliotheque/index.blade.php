@@ -23,18 +23,7 @@
                         <!-- <input type="button" value="Recherche avancée" id="btnSearch"> -->
                     </form>
               </div>
-              <script type="text/javascript">
-                  $(document).ready(function () {
-                      $('#input').bind('blur', function () {
-                          if($('#input').val()=='')
-                              $('#input_img').show();
-                      });
-
-                      $('#input').bind('focus', function () {
-                          $('#input_img').hide();
-                      });
-                  });
-              </script>
+              
             </div>
             <div class="col-lg-9">
                 <ul class="horizontal-menu-library">
@@ -131,5 +120,29 @@
 @endsection
 
 @section('script')
+<script>
+if(!!window.jQuery) {
+    // jQuery is loaded
+} else {
+    // load jQuery first
+    var script = document.createElement('script');
+    script.type = "text/javascript";
+    script.src = "/assets/lib/jquery/jquery.min.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+}
+</script>
 
+<script src="{{ asset('/assets/js/front-bibliotheque.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#input').bind('blur', function () {
+            if($('#input').val()=='')
+                $('#input_img').show();
+        });
+
+        $('#input').bind('focus', function () {
+            $('#input_img').hide();
+        });
+    });
+</script>
 @endsection
