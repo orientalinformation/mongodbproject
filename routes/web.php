@@ -21,10 +21,11 @@ Route::namespace('Frontend')->group(function () {
     Route::get('/book', 'BookController@index');
 
     Route::get('/check_liked', 'BookController@checkLiked');
-
     Route::get('/check_read', 'BookController@checkRead');
-
     Route::get('/check_list', 'BookController@getLibraryDetailbyUserID');
+    Route::get('/update_list', 'BookController@updateLibraryDetail');
+    Route::get('/create_list', 'BookController@createLibrary');
+    Route::get('/check_share', 'BookController@checkShare');
 
     //register routes
     Route::get('register', 'AuthController@showRegistrationForm');

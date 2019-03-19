@@ -294,8 +294,8 @@
                                         <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
                                         <div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
                                         <div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
-                                        <div class="content-line"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
-                                        <div class="content-line"><i class="fa fa-share-alt" aria-hidden="true"></i> <span>Partager</span></div>
+                                        <div class="content-line create-line" data-toggle="modal" data-target="#libraryCreate"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
+                                        <div class="content-line share-line"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>
                                     </div>
                                     <input type="hidden" class="bookID" value="{{ $item['_id'] }}"/>
                                 </div>
@@ -335,14 +335,39 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Library list</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="body-libraryList">
                     @foreach($library as $item)
                     <div class="input-group listWrap">
                         <input type="checkbox" name="itemList" class="itemList" attr-data="{{ $item['_id'] }}"><label>{{ $item['name'] }}</label>
                     </div>
                     @endforeach
+                    <input type="hidden" id="bookID-modal">
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="libraryCreate" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Create list</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Name:</label>
+                    <div class="alert alert-success alertCreatelist"></div>
+                    <input type="text" class="form-control" placeholder="Name" id="nameLibrary">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success btnCreateLibrary">Create</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -380,6 +405,7 @@
             let bookID = $(this).closest(".wrap").find(".bookID").val();
             let heart = $(this).closest(".wrap").find(".likeIcon");
             let read = $(this).closest(".wrap").find(".readIcon");
+            let share = $(this).closest(".wrap").find(".shareIcon");
             if(display.css("display") == "none"){
                 display.css("display","block");
                 $.ajax({
@@ -414,10 +440,30 @@
                         }
                     }
                 });
+                $.ajax({
+                    url: "{{ URL::to('/') }}/check_share",
+                    cache: false,
+                    type: "GET",
+                    data: {user_id: 1, book_id: bookID},
+                    success: function(result){
+                        result = JSON.parse(result);
+                        if(result.status == 1){
+                            share.css('color','blue')
+                        }else{
+                            share.css('color','black')
+                        }
+                    }
+                });
             }else{
                 display.css("display","none");
             }
         })
+        $(document).mouseup(function (e) {
+            var popup = $(".content-panel");
+            if (!$('.menu-tooltips').is(e.target) && !popup.is(e.target) && popup.has(e.target).length == 0) {
+                popup.hide(500);
+            }
+        });
         $('.like-line').click(function(){
             let bookID = $(this).closest(".wrap").find(".bookID").val();
             let heart = $(this).closest(".wrap").find(".likeIcon");
@@ -461,6 +507,8 @@
         $('.list-line').click(function(){
             let bookID = $(this).closest(".wrap").find(".bookID").val();
             let itemList = $('.itemList');
+            $("#libraryList").find("#bookID-modal").val(bookID);
+            // itemList.parent().remove();
             itemList.map(function(){
                 let library_id = $(this).attr('attr-data');
                 let library_item = $(this);
@@ -471,7 +519,9 @@
                     data: {library_id: library_id, object_id: bookID},
                     success: function(result){
                         result = JSON.parse(result);
+                        console.log(result);
                         if(result.status == 1){
+                            // itemList.parent().append('<input type="checkbok">');
                             library_item.attr('checked','checked');
                         }
                     }
@@ -479,11 +529,59 @@
             })
         })
         $('.itemList').click(function(){
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let bookID = $(this).closest(".modal-body").find("#bookID-modal").val();
             let library_id = $(this).attr('attr-data');
-            if ($(this).is(':checked')) {
-                alert(library_id);
-            }
+            $.ajax({
+                url: "{{ URL::to('/') }}/update_list",
+                cache: false,
+                type: "GET",
+                data: {library_id: library_id, object_id: bookID},
+                success: function(result){
+                    result = JSON.parse(result);
+                }
+            });
+        })
+        $('.create-line').click(function(){
+            $('input').val('');
+            $('.alertCreatelist').hide();
+            $('.btnCreateLibrary').click(function(){
+                let name = $('#nameLibrary').val();
+
+                $.ajax({
+                    url: "{{ URL::to('/') }}/create_list",
+                    cache: false,
+                    type: "GET",
+                    data: {user_id: "1", name: name},
+                    success: function(result){
+                        result = JSON.parse(result);
+                        if(result.status == 1){
+                            $('.alertCreatelist').text("create success");
+                            $('.alertCreatelist').show();
+                        }else{
+                            $('.alertCreatelist').text(result.data);
+                            $('.alertCreatelist').show();
+                        }
+                    }
+                });
+            })
+        })
+        $('.share-line').click(function(){
+            let bookID = $(this).closest(".wrap").find(".bookID").val();
+            let share = $(this).closest(".wrap").find(".shareIcon");
+            $.ajax({
+                url: "{{ URL::to('/') }}/check_share",
+                cache: false,
+                type: "GET",
+                data: {user_id: 1, book_id: bookID, change: 1},
+                success: function(result){
+                    result = JSON.parse(result);
+                    if(result.status == 1){
+                        share.css('color','black');
+                    }else if(result.status == 2) {
+                        share.css('color','blue');
+                    }
+                }
+            });
         })
     </script>
 @endsection

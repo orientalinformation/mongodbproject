@@ -51,4 +51,14 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
         return Library::where([['_id', '=', $id],
                                 ['share', '=', (int)$share]])->get();
     }
+
+    /**
+     * Check Library by UserID
+     * @return mixed
+     */
+    public function checkName($user_id, $name)
+    {
+        return Library::where([['user_id', '=', $user_id],
+            ['name', '=', $name]])->get();
+    }
 }
