@@ -63,7 +63,7 @@
                                     $imagePath = URL::to('/image/front/avatar-home.png');
                                 }
                                 ?>
-                                <img src="{{ asset(Auth::user()->avatar) }}" width="50" height="50" class="avatar-home">
+                                <img src="{{ asset(Auth::user()->avatar) }}" width="50px" height="50px" class="avatar-home">
                             @endif
                         </div>
                     </div>
