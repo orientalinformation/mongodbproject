@@ -26,7 +26,7 @@
                                 <div class="col-lg-3 col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                          <input type="checkbox" name="kind[]" value="product" checked> Produit
+                                          <input type="checkbox" name="kind[]" value="product"@php if ($controller == 'ProductController') echo ' checked' @endphp> Produit
                                         </label>
                                       </div>
                                 </div>
@@ -42,7 +42,7 @@
                     	@if(sizeof($category) > 0)
                     	<div class="list-category-advance">
                     		@foreach($category as $key => $item)
-	                    		<?php $subCat = EnvatoCategory::getSubCategory($item['_id']); ?>
+	                    		@php $subCat = EnvatoCategory::getSubCategory($item['_id']); @endphp
 		                        <div class="form-group">
 		                        	<legend class="col-form-label recher-avancee-line"></legend>
 		                            <span class="text-label-rechercher text-label-rechercher-parent">Filière</span>
@@ -57,7 +57,7 @@
 			                            <span class="text-label-rechercher">Thématique</span>
 			                        </div>
 			                        @foreach($subCat as $keySub => $subItem)
-				                        <?php $subCatChilds = EnvatoCategory::getSubCategory($subItem['_id']); ?>
+				                        @php $subCatChilds = EnvatoCategory::getSubCategory($subItem['_id']); @endphp
 			                        	<div class="form-group">
 			                        		@if ($keySub > 0)
 			                        		<legend class="col-form-label recher-avancee-line"></legend>
