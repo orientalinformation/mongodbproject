@@ -161,6 +161,7 @@ class Ulities
     {
         $limit = $options['limit'];
         $offset = ($options['page'] > 1) ? ($options['page'] - 1) * $limit : 0;
+        $must = [];
         $must[] = [
             'match' => [
                 'is_delete' => 0
