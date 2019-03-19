@@ -143,4 +143,10 @@ return [
 
     'attributes' => [],
 
+    'attributes' => [],
+    'recaptcha' => 'Please check recaptcha',
+    'original_image' => [
+        'image' => 'File must be an image with extension: .jpg, .png, etc...',
+        'max'   => 'File is too large, maximun allow are 2MB'
+    ]
 ];
