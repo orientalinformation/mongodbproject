@@ -32,4 +32,20 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
             ['book_id', '=', $book_id],
             ['is_delete', '=', 1]])->get();
     }
+
+    public function checkShared($user_id, $book_id)
+    {
+        return BookDetail::where([['user_id', '=', $user_id],
+            ['book_id', '=', $book_id],
+            ['share', '=', 1],
+            ['is_delete', '=', 0]])->get();
+    }
+
+    public function checkunShared($user_id, $book_id)
+    {
+        return BookDetail::where([['user_id', '=', $user_id],
+            ['book_id', '=', $book_id],
+            ['share', '=', 0],
+            ['is_delete', '=', 0]])->get();
+    }
 }
