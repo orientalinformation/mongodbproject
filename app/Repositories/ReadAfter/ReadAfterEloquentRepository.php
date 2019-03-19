@@ -21,7 +21,6 @@ class ReadAfterEloquentRepository extends EloquentRepository implements ReadAfte
 
     public function checkRead($user_id, $object_id, $type)
     {
-        dd($user_id);
         return ReadAfter::where([['user_id', '=', $user_id],
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],

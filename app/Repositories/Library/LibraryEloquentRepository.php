@@ -24,14 +24,41 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
         return Library::class;
     }
 
+    /**
+     * Get Library by user id
+     * @return mixed
+     */
     public function getLibraryByUserID($userID, $perPage)
     {
         return Library::where([['userID', '=', $userID]])->paginate($perPage);
     }
 
+    /**
+     * Get All Library by user id
+     * @return mixed
+     */
+    public function getAllLibraryByUserID($userID)
+    {
+        return Library::where([['user_id', '=', $userID]])->get();
+    }
+
+    /**
+     * Check share
+     * @return mixed
+     */
     public function checkShare($id, $share)
     {
         return Library::where([['_id', '=', $id],
                                 ['share', '=', (int)$share]])->get();
+    }
+
+    /**
+     * Check Library by UserID
+     * @return mixed
+     */
+    public function checkName($user_id, $name)
+    {
+        return Library::where([['user_id', '=', $user_id],
+            ['name', '=', $name]])->get();
     }
 }
