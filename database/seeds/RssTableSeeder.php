@@ -13,6 +13,7 @@ class RssTableSeeder extends Seeder
      */
     public function run()
     {
+        Rss::truncate();
         $data = [
             [
                 'url'           => 'https://www.lemonde.fr/rss/une.xml',

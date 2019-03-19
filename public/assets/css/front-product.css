@@ -1,0 +1,32 @@
+.box-trier .filter-option{
+	text-align: right!important;
+	font-weight: 700;
+	color: #FF5500FF
+}
+.box-trier.dropdown.show{
+	width: 100%!important;
+}
+.bootstrap-select .dropdown-toggle .caret{
+	color: #FF5500FF;
+}
+.box-trier .bootstrap-select .dropdown-menu li a.active{
+	background: none;
+	color: #FF5500FF;
+}
+.box-trier .bootstrap-select .dropdown-menu li a{
+	text-align: right;
+}
+.btn-research{
+	margin-top: 44px
+}
+.btn-research .btn{
+	border-radius: 25px;
+	background: #FF7505FF;
+	font-size: 12px;
+	padding: 10px 15px
+}
+.btn-research .btn i {font-size: 14px}
+#btn-save-keyword{
+	background: #ff7600;
+	border-color: #ff7600
+}
