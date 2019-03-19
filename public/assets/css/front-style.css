@@ -2667,11 +2667,13 @@ ul.horizontal-menu-library > li a{
     left: -30px;
 }
 
+.bg_home_menu a {color: #333}
+
 .carousel.slide{
     position: relative;
     height: auto;
     float: right;
-    width: 430px;
+    width: 100%;
 }
 
 .bg_home_menu i{
@@ -2773,8 +2775,8 @@ ul.horizontal-menu-library > li a{
 }
 
 .image-space{
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    height: auto;
     margin: 10px auto;
 }
 

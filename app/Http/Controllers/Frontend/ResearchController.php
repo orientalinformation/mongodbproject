@@ -19,13 +19,13 @@ class ResearchController extends Controller
 	/**
      * @var ResearchRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
-    protected $ResearchRepository;
+    protected $researchRepository;
 
 	/**
      * Instantiate Research controller.
      *
      * @param Request $request
-     * @param ResearchRepositoryInterface $ResearchRepository
+     * @param ResearchRepositoryInterface $researchRepository
      * @return void
      */
     public function __construct(Request $request, ResearchRepositoryInterface $researchRepository)
