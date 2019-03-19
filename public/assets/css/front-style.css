@@ -2938,3 +2938,7 @@ ul.horizontal-menu-library > li a{
     background: #f77d3a;
     color: #ffffff;
 }
+
+.float-right {
+    float: right;
+}
