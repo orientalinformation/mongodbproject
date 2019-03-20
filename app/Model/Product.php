@@ -17,4 +17,9 @@ class Product extends Model
         $products = Product::all()->toArray();
         return $products;
     }
+
+    public static function getProductByID($id)
+    {
+        return Product::where([['_id', '=', $id]])->get();
+    }
 }

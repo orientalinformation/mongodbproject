@@ -143,5 +143,15 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface::class,
             \App\Repositories\LibraryDetail\LibraryDetailEloquentRepository::class
         );
+
+        $this->app->singleton(
+            \App\Repositories\WebDetail\WebDetailRepositoryInterface::class,
+            \App\Repositories\WebDetail\WebDetailEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\ProductDetail\ProductDetailRepositoryInterface::class,
+            \App\Repositories\ProductDetail\ProductDetailEloquentRepository::class
+        );
     }
 }

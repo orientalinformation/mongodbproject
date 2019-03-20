@@ -49,25 +49,21 @@
                                         </div>
                                         <div id="homeCarousel1" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
-                                            <div class="carousel-inner home-slider">
-                                                <div class="item clearfix active">
-                                                    <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
+                                            <div class="carousel-inner home-slider"><!--WebHelper::getWebDetail-->
+                                                <?php $i = 1;?>
+                                                @foreach($web['data'] as $item)
+                                                    <?php $web_data = EnvatoWeb::getWebDetail($item['web_id']);?>
+                                                    <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
+                                                        <div class="image">
+                                                            <img src="https://via.placeholder.com/100x100" alt="">
+                                                        </div>
+                                                        <div class="content">
+                                                            <p class="title"><a href="#">{{ $web_data[0]['title'] }}</a></p>
+                                                            <p class="description">{{ $web_data[0]['description'] }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="content">
-                                                        <p class="title">title 1</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="item clearfix">
-                                                    <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p class="title">title 2</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                    </div>
-                                                </div>
+                                                    <?php $i++; ?>
+                                                @endforeach
                                             </div>
 
                                             <!-- Left and right controls -->
@@ -122,24 +118,32 @@
                                         <div id="homeCarousel3" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
-                                                <div class="item clearfix active">
-                                                    <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
+                                                <?php $i = 1;?>
+                                                @foreach($book['data'] as $item)
+                                                    <?php $book_data = EnvatoBook::getBookDetail($item['book_id']);?>
+                                                    <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
+                                                        <div class="image">
+                                                            <?php
+                                                            if (array_key_exists("image",$book_data[0])){
+                                                                $imagePath = URL::to('/') . '/upload/book/' . $book_data[0]['image'];
+//                                                                if (@getimagesize($imagePath)) {
+//                                                                    echo '<img src="' . $imagePath . '">';
+//                                                                }else{
+//                                                                    echo '<img src="https://via.placeholder.com/100x100">';
+//                                                                }
+                                                            }else{
+                                                                echo '<img src="https://via.placeholder.com/100x100">';
+                                                            }
+                                                            echo '<img src="' . $imagePath . '">';
+                                                            ?>
+                                                        </div>
+                                                        <div class="content">
+                                                            <p class="title">{{ $book_data[0]['title']  }}</p>
+                                                            <p class="description">{{ $book_data[0]['description']  }}</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="content">
-                                                        <p class="title">title 1</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="item clearfix">
-                                                    <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p class="title">title 2</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                    </div>
-                                                </div>
+                                                    <?php $i++; ?>
+                                                @endforeach
                                             </div>
 
                                             <!-- Left and right controls -->
@@ -194,7 +198,10 @@
                                         <div id="homeCarousel5" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
-                                                <div class="item clearfix active">
+                                                <?php $i = 1;?>
+                                                @foreach($product['data'] as $item)
+                                                <?php $product_data = EnvatoProduct::getProductDetail($item['product_id']);?>
+                                                <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
                                                     <div class="image">
                                                         <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
@@ -203,15 +210,8 @@
                                                         <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                                                     </div>
                                                 </div>
-                                                <div class="item clearfix">
-                                                    <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p class="title">title 2</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                    </div>
-                                                </div>
+                                                <?php $i++; ?>
+                                                @endforeach
                                             </div>
 
                                             <!-- Left and right controls -->

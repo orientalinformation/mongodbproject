@@ -2964,3 +2964,7 @@ ul.horizontal-menu-library > li a{
     margin-left: 30px;
     bottom: 0px;
 }
+
+.title a{
+    color: #000000;
+}

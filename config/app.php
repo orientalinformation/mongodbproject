@@ -230,9 +230,11 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Es' => Elasticquent\ElasticquentElasticsearchFacade::class,
         'Moloquent'  => Jenssegers\Mongodb\Eloquent\Model::class,
-        'EnvatoBook' => App\Helpers\Envato\Book::class,
+        'EnvatoBook' => App\Helpers\Envato\BookHelper::class,
         'EnvatoUlities' => App\Helpers\Envato\Ulities::class,
         'EnvatoCategory' => App\Helpers\Envato\CategoryHelper::class,
+        'EnvatoWeb' => App\Helpers\Envato\WebHelper::class,
+        'EnvatoProduct' => App\Helpers\Envato\WebHelper::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class

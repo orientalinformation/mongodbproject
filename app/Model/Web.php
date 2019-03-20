@@ -17,4 +17,9 @@ class Web extends Eloquent
         'description',
         'pub_date'
     ];
+
+    public static function getWebByID($id)
+    {
+        return Web::where([['_id', '=', $id]])->get();
+    }
 }
