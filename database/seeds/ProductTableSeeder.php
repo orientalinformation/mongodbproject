@@ -25,8 +25,9 @@ class ProductTableSeeder extends Seeder
             'index' => Config::get('constants.elasticsearch.product.index')
         ];
         $client = ClientBuilder::create()->build();
+//        dd($param);
         // check index exists before delete
-        if ($client->indices()->exists($param)) {
+        if ($client->indices()->exists($param)) { dd('a');
             $client->indices()->delete($param);
         }
 
@@ -83,37 +84,37 @@ class ProductTableSeeder extends Seeder
 
             // insert data to Elastic
             $products = $productRepository->all();
-            if (count($products) > 0) {
-                foreach ($products as $product) {
-                    $productDetail = ProductDetail::where('product_id', $product->id)->first();
-                    if ($productDetail) {
-                        $dataElastic = [
-                            'body' => [
-                                'title'             => $product->title,
-                                'url'               => $product->url,
-                                'description'       => $product->description,
-                                'image'             => $product->image,
-                                'view'              => $product->view,
-                                'category_id'       => $product->category_id,
-                                'like'              => $product->like,
-                                'user_id'           => $productDetail->user_id,
-                                'share'             => $productDetail->share,
-                                'pink'              => $productDetail->pink,
-                                'is_public'         => $productDetail->is_public,
-                                'is_delete'         => $product->is_delete,
-                                'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
-                                'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
-                            ],
-                            'index' => Config::get('constants.elasticsearch.product.index'),
-                            'type' => Config::get('constants.elasticsearch.product.type'),
-                            'id' => $product->id,
-                        ];
-
-                        $client = ClientBuilder::create()->build();
-                        $client->index($dataElastic);
-                    }
-                }
-            }
+//            if (count($products) > 0) {
+//                foreach ($products as $product) {
+//                    $productDetail = ProductDetail::where('product_id', $product->id)->first();
+//                    if ($productDetail) {
+//                        $dataElastic = [
+//                            'body' => [
+//                                'title'             => $product->title,
+//                                'url'               => $product->url,
+//                                'description'       => $product->description,
+//                                'image'             => $product->image,
+//                                'view'              => $product->view,
+//                                'category_id'       => $product->category_id,
+//                                'like'              => $product->like,
+//                                'user_id'           => $productDetail->user_id,
+//                                'share'             => $productDetail->share,
+//                                'pink'              => $productDetail->pink,
+//                                'is_public'         => $productDetail->is_public,
+//                                'is_delete'         => $product->is_delete,
+//                                'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
+//                                'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
+//                            ],
+//                            'index' => Config::get('constants.elasticsearch.product.index'),
+//                            'type' => Config::get('constants.elasticsearch.product.type'),
+//                            'id' => $product->id,
+//                        ];
+//
+//                        $client = ClientBuilder::create()->build();
+//                        $client->index($dataElastic);
+//                    }
+//                }
+//            }
         }
     }
 }
