@@ -142,5 +142,9 @@ return [
     */
 
     'attributes' => [],
-
+    'recaptcha' => 'S\'il vous plaît vérifier recaptcha',
+    'original_image' => [
+        'image' => 'Le fichier doit être une image avec l\'extension: .jpg, .png, etc ...',
+        'max'   => 'Le fichier est trop volumineux, la capacité maximale autorisée est de 2 MB'
+    ]
 ];

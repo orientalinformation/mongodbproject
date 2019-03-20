@@ -74,9 +74,11 @@ Route::namespace('Frontend')->group(function () {
     // Research routes
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware('auth');
+    // Bibliotheque routes
+    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+
     //====Web start=============
     Route::resource('web', 'WebController');
-//    Route::resource('discussions', 'Backend\DiscussionController');
     //====Web end===============
 });
 

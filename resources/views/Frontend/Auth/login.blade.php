@@ -5,22 +5,6 @@
 @endsection
 
 @section('content')
-<header class="header-login">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-8 col-sm-6">
-                <div class="logo">
-                    <a href="/">
-                        <img src="{{ URL::to('/image/front/logo.png')}}" class="img-logo">
-                    </a>
-                    <span class="logo-title">Compagnons Du Devoir</span>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-            </div>
-        </div>
-    </div>
-</header>
 <div class="container-fluid">
     <div class="row slide">
         <div class="bg-login"></div>

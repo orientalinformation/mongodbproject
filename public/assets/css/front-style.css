@@ -2951,6 +2951,9 @@ ul.horizontal-menu-library > li a{
     color: #ffffff;
 }
 
+.float-right {
+    float: right;
+
 .pull-right{
     float: right;
 }

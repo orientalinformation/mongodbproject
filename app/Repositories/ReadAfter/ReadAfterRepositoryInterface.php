@@ -2,8 +2,13 @@
 /**
  * Created by PhpStorm.
  * User: binhdq
+<<<<<<< HEAD
+ * Date: 15/03/2019
+ * Time: 14:01
+=======
  * Date: 14/03/2019
  * Time: 16:59
+>>>>>>> binh
  */
 
 namespace App\Repositories\ReadAfter;
