@@ -29,4 +29,9 @@ class Bibliotheque extends Model
         $products = [];
         return $products;
     }
+
+    public function bibliothequeDetail()
+    {
+        return $this->hasOne('App\Model\BibliothequeDetail', '_id', 'book_id');
+    }
 }

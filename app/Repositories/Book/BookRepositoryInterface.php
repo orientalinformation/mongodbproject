@@ -28,4 +28,13 @@ interface BookRepositoryInterface
      * @return mixed
      */
     public function getRange($start_year, $end_year, $perPage);
+
+    /**
+     * get items by admin
+     *
+     * @param array $listAdminIds
+     * @param int $limit
+     * @return mixed
+     */
+    public function getItemsByadmin($listAdminIds, $limit);
 }

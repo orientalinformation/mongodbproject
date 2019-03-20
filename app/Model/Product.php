@@ -17,4 +17,9 @@ class Product extends Model
         $products = Product::all()->toArray();
         return $products;
     }
+
+    public function bookDetail()
+    {
+        return $this->hasOne('App\Model\ProductDetail', '_id', 'product_id');
+    }
 }

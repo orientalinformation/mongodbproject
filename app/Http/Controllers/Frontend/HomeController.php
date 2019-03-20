@@ -9,6 +9,7 @@ use App\Repositories\Web\WebRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
+use Illuminate\Support\Facades\Config;
 
 class HomeController extends Controller
 {
@@ -80,9 +81,27 @@ class HomeController extends Controller
             }
         }
 
-        // get web data
+        $webs = null;
+        $books = null;
+        $products = null;
+        $bibliothequets = null;
+        $limit = Config::get('constants.itemSearchHome');
+        if (!empty($listAdminIds)) {
+            // get web data
+            $webs = $this->webRepository->getItemsByadmin($limit);
+
+            // get book data
+            $books = $this->bookRepository->getItemsByadmin($listAdminIds, $limit);
+            
+            // get product data
+            $products = $this->productRepository->getItemsByadmin($listAdminIds, $limit);
+
+            // get product data
+            $bibliothequets = $this->bibliothequetRepository->getItemsByadmin($listAdminIds, $limit);
+        }
+        
         $pageName = 'home';
-        return view('Frontend.Home.index', compact(['pageName']));
+        return view('Frontend.Home.index', compact(['pageName', 'webs', 'books', 'products', 'bibliothequets']));
     }
 
     public function index_login()
