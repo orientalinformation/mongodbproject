@@ -16,7 +16,7 @@ use Illuminate\Routing\Router;
 Route::namespace('Frontend')->group(function () {
 
     Route::get('/', 'HomeController@index');
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home-login', 'HomeController@index_login');
 
     Route::get('/book', 'BookController@index');
 
