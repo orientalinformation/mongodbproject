@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Web\WebRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
@@ -15,6 +16,11 @@ class HomeController extends Controller
      * @var UserRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $userRepository;
+
+    /**
+     * @var WebRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $webRepository;
 
     /**
      * @var ProductRepositoryInterface|\App\Repositories\BaseRepositoryInterface
@@ -36,6 +42,7 @@ class HomeController extends Controller
      *
      * @param Request $request
      * @param UserRepositoryInterface $userRepository
+     * @param WebRepositoryInterface $webRepository
      * @param ProductRepositoryInterface $productRepository
      * @param BookRepositoryInterface $bookRepository
      * @param BibliothequeRepositoryInterface $bibliothequetRepository
@@ -45,11 +52,13 @@ class HomeController extends Controller
         Request $request, 
         UserRepositoryInterface $userRepository, 
         ProductRepositoryInterface $productRepository, 
+        WebRepositoryInterface $webRepository, 
         BookRepositoryInterface $bookRepository, 
         BibliothequeRepositoryInterface $bibliothequetRepository)
     {
         $this->request = $request;
         $this->userRepository = $userRepository;
+        $this->webRepository = $webRepository;
         $this->productRepository = $productRepository;
         $this->bookRepository = $bookRepository;
         $this->bibliothequetRepository = $bibliothequetRepository;
@@ -62,6 +71,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //get list id admin
+        $userAdmins = $this->userRepository->getlistAdmins();
+        $listAdminIds = [];
+        if (count($userAdmins) > 0) {
+            foreach ($userAdmins as $userAdmin) {
+                array_push($listAdminIds, $userAdmin->id);
+            }
+        }
+
+        // get web data
         $pageName = 'home';
         return view('Frontend.Home.index', compact(['pageName']));
     }

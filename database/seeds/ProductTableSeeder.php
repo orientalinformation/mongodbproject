@@ -18,7 +18,8 @@ class ProductTableSeeder extends Seeder
      */
     public function run()
     {
-    	Product::truncate();
+        Product::query()->delete();
+    	ProductDetail::query()->delete();
 
         // delete Elastic Product Index
         $param = [
@@ -27,7 +28,7 @@ class ProductTableSeeder extends Seeder
         $client = ClientBuilder::create()->build();
 
         // check index exists before delete
-        if ($client->indices()->exists($param)) { dd('a');
+        if ($client->indices()->exists($param)) {
             $client->indices()->delete($param);
         }
 
