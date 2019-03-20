@@ -50,7 +50,7 @@ class ProductTableSeeder extends Seeder
                 $like = 0;
                 $share = 0;
                 $pink = 0;
-                $isPublic = 0;
+                $isPublic = 1;
                 $isDelete = 0;
 
                 // random category id

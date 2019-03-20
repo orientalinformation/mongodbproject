@@ -165,6 +165,9 @@ class Ulities
         $must[] = [
             'match' => [
                 'is_delete' => 0
+            ],
+            'match' => [
+                'is_public' => 1
             ]
         ];
         if ($options != null) {
