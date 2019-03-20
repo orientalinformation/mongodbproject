@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Route;
-// use App\Repositories\Research\ResearchRepositoryInterface;
+use App\Repositories\Research\ResearchRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
+use App\Repositories\Library\LibraryRepositoryInterface;
 
 class BibliothequeController extends Controller
 {
@@ -20,21 +21,42 @@ class BibliothequeController extends Controller
     protected $bibliothequetRepository;
 
 	/**
-     * Instantiate product controller.
+     * @var CategoryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $categoryRepository;
+
+    /**
+     * @var ResearchRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+	protected $researchRepository;
+	
+	/**
+     * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+	protected $libraryRepository;
+	
+	/**
+     * Instantiate Bibliotheque controller.
      *
      * @param Request $request
+	 * @param CategoryRepositoryInterface $categoryRepository
+	 * @param ResearchRepositoryInterface $researchRepository
+	 * @param LibraryRepositoryInterface $libraryRepository
      * @param BibliothequeRepositoryInterface $bibliothequeRepository
      * @return void
      */
     public function __construct(
         Request $request,
         BibliothequeRepositoryInterface $bibliothequeRepository,
-		CategoryRepositoryInterface $categoryRepository
+		CategoryRepositoryInterface $categoryRepository,
+		ResearchRepositoryInterface $researchRepository,
+		LibraryRepositoryInterface $libraryRepository
     ) {
         $this->request = $request;
         $this->bibliothequeRepository = $bibliothequeRepository;
         $this->categoryRepository = $categoryRepository;
-        // $this->researchRepository = $researchRepository;
+		$this->researchRepository = $researchRepository;
+		$this->libraryRepository = $libraryRepository;
     }
 
     /** 
@@ -43,11 +65,16 @@ class BibliothequeController extends Controller
      */
     public function index()
     {
-        $q           = $this->request->has('q') ? $this->request->get('q') : null;
-		$page        = $this->request->has('page') ? $this->request->get('page') : 1;
-		$currentPath = Route::getFacadeRoot()->current()->uri();
-
-		$options     = null;
+        $q                   = $this->request->has('q') ? $this->request->get('q') : null;
+		$page                = $this->request->has('page') ? $this->request->get('page') : 1;
+		$currentPath         = Route::getFacadeRoot()->current()->uri();
+		$limit               = Config::get('constants.rowPage');
+		$options             = null;
+		$options['page']     = $page;
+		$options['limit']    = $limit;
+		if ($q != null) {
+			$options['q'] = $q;
+		}
 		if ($this->request->has('sort')) {
 			$options['sort'] = $this->request->get('sort');
 		}
@@ -82,8 +109,20 @@ class BibliothequeController extends Controller
 		$urlSort           = [];
 		$urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
 		$urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
+		$indexName         = Config::get('constants.elasticsearch.bibliotheque.index');
+		$typeName          = Config::get('constants.elasticsearch.bibliotheque.type');
 
-		$bibliotheques     = $this->bibliothequeRepository->searchByKeyword($q, $page, $options);
+		$params            = Ulities::getElasticParams($indexName, $typeName, $options);
+		
+		$client            = ClientBuilder::create()->build();
+		$response          = $client->search($params);
+		
+		$bibliotheques = [];
+		if (!empty($response)) {
+            $bibliotheques['total'] = $response['hits']['total'];
+            $bibliotheques['hits']  = $response['hits']['hits'];
+		}
+		
 		$bibliothequeItems = [];
 		if(!empty($bibliotheques['hits'])) { 
 			if (count($bibliotheques['hits']) > 6) {
@@ -99,19 +138,19 @@ class BibliothequeController extends Controller
 		    }
 		}
 
-		$rowPage = Config::get('constants.rowPageBibliotheque');
-		$paginate = Ulities::calculatorPage($q, $page, $bibliotheques['total'], $rowPage);
-        $result = $this->bibliothequeRepository->paginate($rowPage)->toArray();
+		$paginate = Ulities::calculatorPage($q, $page, $bibliotheques['total'], $limit);
+        $result   = $this->bibliothequeRepository->paginate($limit)->toArray();
 
 		// list category left
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
 
 		// list researches
-		// $researches = $this->researchRepository->getListItem(5);
+		$researches = $this->researchRepository->getListItem(5)->toArray();
+		$library    = $this->libraryRepository->getAllLibraryByUserID("1")->toArray();
 
 		return view(
 			'Frontend.Bibliotheque.index',
-			compact('bibliotheques', 'category', 'researches', 'bibliothequeItems', 'urlSort', 'result', 'paginate', 'q')
+			compact('bibliotheques', 'category', 'researches', 'bibliothequeItems', 'urlSort', 'result', 'paginate', 'q', 'library')
 		);
     }
 }

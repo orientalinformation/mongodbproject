@@ -1,62 +1,66 @@
 $(document).ready(function() {
-	// saveKeyword();
-	// destroyResearch();
+	saveSearchKeyword();
+	removeSearchKey();
 	searchBibliotheque();
 })
 
 // save research
-// function saveKeyword() {
-// 	$('#btn-save-keyword').click(function(e) {
-// 		var keyword = $('input[name=q]').val();
-// 		var name = $('input[name=research_name]').val();
-
-// 		$.ajax({
-// 			type: 'POST',
-// 			url: $('form[name=frmSaveKeyword]').attr('action'),
-// 			data: {'name':name, 'keyword':keyword, '_token':$('meta[name="csrf-token"]').attr('content')},
-// 			success:function(result) {
-// 				if (result.code == 200) {
-// 					toastr['success'](result.message);
-// 					setTimeout(function() {
-//         				window.location.reload();
-//         			}, 800)
-// 				}
-// 				if (typeof result.errors != 'undefined') {
-// 					$.each(result.errors, function(key,value) {
-// 				     	toastr['error'](value);
-// 				    }); 
-// 				}
-// 			},
-// 			error: function (xhr) {
-// 				console.log(xhr)
-// 				if (typeof xhr.responseJSON.errors != 'undefined') {
-// 				    $.each(xhr.responseJSON.errors, function(key,value) {
-// 				     	toastr['error'](value);
-// 				    }); 
-// 				}
-// 			},
-// 		})
-// 	});
-// }
+function saveSearchKeyword() {
+	$('#btn_save_search_keyword').click(function(e) {
+		$(this).prop('disabled', true);
+		var keyword = $('input[name=q]').val();
+		var name = $('input[name=research_name]').val();
+		toastr.options = {
+			"preventDuplicates": true
+		};
+		$.ajax({
+			type: 'POST',
+			url: $('form[name=frmSaveKeyword]').attr('action'),
+			data: {'name':name, 'keyword':keyword, '_token':$('meta[name="csrf-token"]').attr('content')},
+			success:function(result) {
+				$('#btn_save_search_keyword').prop('disabled', false);
+				if (result.code == 200) {
+					toastr['success'](result.message);
+					setTimeout(function() {
+        				window.location.reload();
+        			}, 800)
+				}
+				if (typeof result.errors != 'undefined') {
+					$.each(result.errors, function(key,value) {
+				     	toastr['error'](value);
+				    }); 
+				}
+			},
+			error: function (xhr) {
+				$('#btn_save_search_keyword').prop('disabled', false);
+				console.log(xhr)
+				if (typeof xhr.responseJSON.errors != 'undefined') {
+				    $.each(xhr.responseJSON.errors, function(key,value) {
+				     	toastr['error'](value);
+				    }); 
+				}
+			},
+		})
+	});
+}
 	
 //destroy research
-// function destroyResearch() {
-// 	$('.destroy-research').click(function() {
-// 		var id = $(this).data('id');
-// 		var url = $(this).data('url');
-
-// 		$.ajax({
-// 			type: 'DELETE',
-// 			url: url,
-// 			data: {'id':id, '_token':$('meta[name="csrf-token"]').attr('content')},
-// 			success:function(result){
-// 				if (result) {
-// 					window.location.reload();
-// 				}
-// 			}
-// 		})
-// 	})
-// }
+function removeSearchKey() {
+	$('.keyword-action').click(function() {
+		var id = $(this).data('id');
+		var url = $(this).data('url');
+		$.ajax({
+			type: 'DELETE',
+			url: url,
+			data: {'id':id, '_token':$('meta[name="csrf-token"]').attr('content')},
+			success:function(result){
+				if (result) {
+					window.location.reload();
+				}
+			}
+		})
+	})
+}
 
 function searchBibliotheque() {
 	$('input.input-category-two').change(function() {
@@ -77,7 +81,7 @@ function searchBibliotheque() {
 		
 	});
 
-	$('form[name=frmSearchAdvance]').on('keyup keypress', function(e) {
+	$('form[name=frmSearchbibliotheque]').on('keyup keypress', function(e) {
 		var keyCode = e.keyCode || e.which;
 		if (keyCode === 13) { 
 		e.preventDefault();
@@ -87,19 +91,26 @@ function searchBibliotheque() {
 
 	$('#btn_search_advance').click(function(e) {
 		e.preventDefault();
-		var form = $('form[name=frmSearchAdvance]');
+		$(this).prop('disabled', true);
+		toastr.options = {
+			"preventDuplicates": true
+		};
+		var form = $('form[name=frmSearchbibliotheque]');
 		var q = form.find('input[name=q]').val();
+
 		if (q == '') {
-			// toastr['error']('Le champ de q est obligatoire.');
+			toastr['error']('Le champ de q est obligatoire.');
 			form.find('input[name=q]').focus();
+			$('#btn_search_advance').prop('disabled', false);
 			return false;
 		}
 
 		$.ajax({
 			type: 'POST',
-			url: $('form[name=frmSearchAdvance]').attr('action'),
+			url: $('form[name=frmSearchbibliotheque]').attr('action'),
 			data: form.serialize(),
 			success:function(result) {
+				$('#btn_search_advance').prop('disabled', false);
 				if (result.code == 200) {
 					setTimeout(function() {
         				window.location.href = result.url;
@@ -107,15 +118,17 @@ function searchBibliotheque() {
 				}
 				if (typeof result.errors != 'undefined') {
 					$.each(result.errors, function(key,value) {
-				     	// toastr['error'](value);
+						 toastr['error'](value);
+						 $('#btn_search_advance').prop('disabled', false);
 				    }); 
 				}
 			},
 			error: function (xhr) {
+				$('#btn_search_advance').prop('disabled', false);
 				console.log(xhr)
 				if (typeof xhr.responseJSON.errors != 'undefined') {
 				    $.each(xhr.responseJSON.errors, function(key,value) {
-				     	// toastr['error'](value);
+						 toastr['error'](value);
 				    }); 
 				}
 			},

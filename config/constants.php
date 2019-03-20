@@ -43,6 +43,5 @@ return [
     'objectType'    => [
         'product'   => 'PRODUCT',
         'book'      => 'BOOK'
-    ],
-    'rowPageBibliotheque' => 24
+    ]
 ];

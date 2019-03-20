@@ -45,22 +45,22 @@
                 @include('Frontend.Bibliotheque.partials.leftmenu', ['category'])
             </div>
             <div class="col-lg-9 col-sm-9">
-                {{-- <div class="row">
-                    <div class="col-md-9 hidden-xs hidden-sm"></div>
-                    <div class="col-md-3 box-trier">
-                        <select class="selectpicker" title="@lang('common.sort')" onchange="window.open(this.value,'_self');">
-                            <option value="{{ $urlSort['latest'] }}" 
-                            @if (app('request')->input('sort') == 'desc') 
-                            selected
-                            @endif>@lang('common.latest')</option>
-                            <option value="{{ $urlSort['oldest'] }}"
-                            @if (app('request')->input('sort') == 'asc') 
-                            selected
-                            @endif
-                            >@lang('common.oldest')</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-9 hidden-xs hidden-sm"></div>
+                        <div class="col-md-3 box-trier">
+                            <select class="selectpicker" title="@lang('common.sort')" onchange="window.open(this.value,'_self');">
+                                <option value="{{ $urlSort['latest'] }}" 
+                                @if (app('request')->input('sort') == 'desc') 
+                                selected
+                                @endif>@lang('common.latest')</option>
+                                <option value="{{ $urlSort['oldest'] }}"
+                                @if (app('request')->input('sort') == 'asc') 
+                                selected
+                                @endif
+                                >@lang('common.oldest')</option>
+                            </select>
+                        </div>
                     </div>
-                </div> --}}
                 <div class="head-menu"><span>@lang('bibliotheques.title') Compagnons</span> ({{$bibliotheques['total']}})</div>
                 @if (!empty($bibliothequeItems))
                     @foreach($bibliothequeItems as $key => $productItem)
@@ -101,12 +101,12 @@
                 <h4 class="modal-title">@lang('common.saveSearch')</h4>
               </div>
             <div class="modal-body">
-                <form name="frmSaveKeyword" >
+                <form name="frmSaveKeyword" action="{{ route('frontResearchSave') }}">
                     <div class="form-group rechercher">
                         <div class="input-group">
                             <input type="text" name="research_name" class="form-control">
                             <span class="input-group-btn">
-                                <button id="btn-save-keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
+                                <button id="btn_save_search_keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
                                 </span> @lang('common.btnSave')!</button>
                             </span>
                         </div>

@@ -75,6 +75,20 @@
         </ul>
         <div class="link-menu"><a href="#">voir plus</a></div>
     </div>
+
+    @if(count($researches) > 0)
+    <li><a class="accordion-toggle" href="#colMenu6" data-toggle="collapse">Mes Recherches</a></li>
+    <div id="colMenu6" class="panel-collapse collapse in">
+        <ul class="sub-menu-library">
+            @foreach($researches as $keyName)
+            <li>{{$keyName['name']}}
+                <span class="pin-icon "><a href="#" class="keyword-action" data-id="{{$keyName['_id']}}" data-url="{{ route('frontResearchDestroy') }}"><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+            </li>
+            @endforeach
+        </ul>
+        <div class="link-menu"><a href="#">voir plus</a></div>
+    </div>
+    @endif
 </ul>
 
 @section('script-left-menu')
