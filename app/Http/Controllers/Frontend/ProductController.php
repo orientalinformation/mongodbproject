@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
 use Elasticsearch\ClientBuilder;
+use Auth;
 
 
 class ProductController extends Controller
@@ -175,7 +176,7 @@ class ProductController extends Controller
 		$category = $this->categoryRepository->parentOrderByPath()->toArray();
 		// list researches
 		$researches = $this->researchRepository->getListItem(5);
-        $library = $this->libraryRepository->getAllLibraryByUserID("1")->toArray();
+        $library = $this->libraryRepository->getAllLibraryByUserID(Auth::user()->id)->toArray();
 		return view('Frontend.Product.index', compact('products', 'category', 'researches', 'productItems', 'urlSort', 'result', 'paginate', 'q', 'library'));
     }
 
@@ -188,24 +189,24 @@ class ProductController extends Controller
     {
         $result['status'] = 0;
         $result['data'] = "";
-        if($request->has("user_id") && $request->has("book_id")){
-            $user_id = $request->get("user_id");
-            $book_id = $request->get("book_id");
-            $bookDetail = $this->productdetailRepository->checkLiked($user_id, $book_id)->toArray();
+        if($request->has("object_id")){
+            $userId = Auth::user()->id;
+            $objectId = $request->get("object_id");
+            $productDetail = $this->productdetailRepository->checkLiked($userId, $objectId)->toArray();
 
-            if(sizeof($bookDetail) > 0){
+            if(sizeof($productDetail) > 0){
                 $result['status'] = 1;
-                $result['data'] = $bookDetail;
+                $result['data'] = $productDetail;
             }else{
                 $result['status'] = 0;
             }
 
             if($request->has("change")){
                 $change = $request->get("change");
-                if($change ==1){
-                    if(sizeof($bookDetail) > 0){
-                        foreach($bookDetail as $item){
-                            $data['book_id'] = $item['book_id'];
+                if($change == 1){
+                    if(sizeof($productDetail) > 0){
+                        foreach($productDetail as $item){
+                            $data['product_id'] = $item['product_id'];
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = $item['share'];
                             $data['pink'] = $item['pink'];
@@ -215,10 +216,10 @@ class ProductController extends Controller
                         }
                         $result['status'] = 1;
                     }else{
-                        $bookDetail = $this->productdetailRepository->checkunLiked($user_id, $book_id)->toArray();
-                        if(sizeof($bookDetail) > 0){
-                            foreach($bookDetail as $item){
-                                $data['book_id'] = $item['book_id'];
+                        $productDetail = $this->productdetailRepository->checkunLiked($userId, $objectId)->toArray();
+                        if(sizeof($productDetail) > 0){
+                            foreach($productDetail as $item){
+                                $data['product_id'] = $item['product_id'];
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = $item['share'];
                                 $data['pink'] = $item['pink'];
@@ -227,8 +228,8 @@ class ProductController extends Controller
                                 $this->productdetailRepository->update($item['_id'], $data);
                             }
                         }else{
-                            $data['book_id'] = $book_id;
-                            $data['user_id'] = $user_id;
+                            $data['product_id'] = $objectId;
+                            $data['user_id'] = $userId;
                             $data['share'] = 0;
                             $data['pink'] = 0;
                             $data['is_public'] = 0;
@@ -254,15 +255,15 @@ class ProductController extends Controller
     {
         $result['status'] = 0;
         $result['data'] = "";
-        if($request->has("user_id") && $request->has("object_id")){
-            $user_id = $request->get("user_id");
-            $object_id = $request->get("object_id");
+        if($request->has("object_id")){
+            $userId = Auth::user()->id;
+            $objectId = $request->get("object_id");
             $type = Config::get('constants.objectType.book');
-            $bookDetail = $this->readafterRepository->checkRead($user_id, $object_id, $type)->toArray();
+            $productDetail = $this->readafterRepository->checkRead($userId, $objectId, $type)->toArray();
 
-            if(sizeof($bookDetail) > 0){
+            if(sizeof($productDetail) > 0){
                 $result['status'] = 1;
-                $result['data'] = $bookDetail;
+                $result['data'] = $productDetail;
             }else{
                 $result['status'] = 0;
             }
@@ -270,8 +271,8 @@ class ProductController extends Controller
             if($request->has("change")){
                 $change = $request->get("change");
                 if($change ==1){
-                    if(sizeof($bookDetail) > 0){
-                        foreach($bookDetail as $item){
+                    if(sizeof($productDetail) > 0){
+                        foreach($productDetail as $item){
                             $data['user_id'] = $item['user_id'];
                             $data['object_id'] = $item['object_id'];
                             $data['type_name'] = $type;
@@ -280,9 +281,9 @@ class ProductController extends Controller
                         }
                         $result['status'] = 1;
                     }else{
-                        $bookDetail = $this->readafterRepository->checkunRead($user_id, $object_id, $type)->toArray();
-                        if(sizeof($bookDetail) > 0){
-                            foreach($bookDetail as $item){
+                        $productDetail = $this->readafterRepository->checkunRead($userId, $objectId, $type)->toArray();
+                        if(sizeof($productDetail) > 0){
+                            foreach($productDetail as $item){
                                 $data['user_id'] = $item['user_id'];
                                 $data['object_id'] = $item['object_id'];
                                 $data['type_name'] = $type;
@@ -290,8 +291,8 @@ class ProductController extends Controller
                                 $this->readafterRepository->update($item['_id'], $data);
                             }
                         }else{
-                            $data['user_id'] = $user_id;
-                            $data['object_id'] = $object_id;
+                            $data['user_id'] = $userId;
+                            $data['object_id'] = $objectId;
                             $data['type_name'] = $type;
                             $data['is_delete'] = 0;
                             $data = $this->readafterRepository->create($data);
@@ -317,9 +318,9 @@ class ProductController extends Controller
 
         if($request->has('library_id') && $request->has('object_id')) {
             $library_id = $request->get('library_id');
-            $object_id = $request->get('object_id');
+            $objectId = $request->get('object_id');
             $type = Config::get('constants.objectType.book');
-            $libraryDetail = $this->libraryDetailRepository->getLibraryDetail($library_id, $object_id, $type)->toArray();
+            $libraryDetail = $this->libraryDetailRepository->getLibraryDetail($library_id, $objectId, $type)->toArray();
             $library_data = [];
             if(sizeof($libraryDetail) > 0){
                 foreach($libraryDetail as $item){
@@ -347,10 +348,10 @@ class ProductController extends Controller
 
         if($request->has('library_id') && $request->has('object_id')) {
             $library_id = $request->get('library_id');
-            $object_id = $request->get('object_id');
+            $objectId = $request->get('object_id');
             $type = Config::get('constants.objectType.product');
-            $libraryDetail = $this->libraryDetailRepository->getLibraryDetail($library_id, $object_id, $type)->toArray();
-            $libraryDetailExist = $this->libraryDetailRepository->getLibraryDetailExist($library_id, $object_id, $type)->toArray();
+            $libraryDetail = $this->libraryDetailRepository->getLibraryDetail($library_id, $objectId, $type)->toArray();
+            $libraryDetailExist = $this->libraryDetailRepository->getLibraryDetailExist($library_id, $objectId, $type)->toArray();
 
             if(sizeof($libraryDetail) <= 0){
                 if(sizeof($libraryDetailExist) > 0){
@@ -367,7 +368,7 @@ class ProductController extends Controller
                 }else{
                     $data = [];
                     $data['library_id'] = $library_id;
-                    $data['object_id'] = $object_id;
+                    $data['object_id'] = $objectId;
                     $data['type_name'] = $type;
                     $data['share'] = 0;
                     $data['is_delete'] = 0;
@@ -403,9 +404,9 @@ class ProductController extends Controller
         $result['status'] = 0;
         $result['data'] = "";
 
-        if($request->has('name') && $request->has('user_id')) {
+        if($request->has('name')) {
             $name = $request->get('name');
-            $userId = $request->get('user_id');
+            $userId = Auth::user()->id;
 
             $checkName = $this->libraryRepository->checkName($userId,$name)->toArray();
 
@@ -442,14 +443,14 @@ class ProductController extends Controller
     {
         $result['status'] = 0;
         $result['data'] = "";
-        if($request->has("user_id") && $request->has("book_id")){
-            $user_id = $request->get("user_id");
-            $book_id = $request->get("book_id");
-            $bookDetail = $this->productdetailRepository->checkShared($user_id, $book_id)->toArray();
+        if($request->has("object_id")){
+            $userId = Auth::user()->id;
+            $objectId = $request->get("object_id");
+            $productDetail = $this->productdetailRepository->checkShared($userId, $objectId)->toArray();
 
-            if(sizeof($bookDetail) > 0){
+            if(sizeof($productDetail) > 0){
                 $result['status'] = 1;
-                $result['data'] = $bookDetail;
+                $result['data'] = $productDetail;
             }else{
                 $result['status'] = 0;
             }
@@ -457,9 +458,9 @@ class ProductController extends Controller
             if($request->has("change")){
                 $change = $request->get("change");
                 if($change ==1){
-                    if(sizeof($bookDetail) > 0){
-                        foreach($bookDetail as $item){
-                            $data['book_id'] = $item['book_id'];
+                    if(sizeof($productDetail) > 0){
+                        foreach($productDetail as $item){
+                            $data['product_id'] = $item['product_id'];
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = 0;
                             $data['pink'] = $item['pink'];
@@ -469,10 +470,10 @@ class ProductController extends Controller
                         }
                         $result['status'] = 1;
                     }else{
-                        $bookDetail = $this->productdetailRepository->checkunLiked($user_id, $book_id)->toArray();
-                        if(sizeof($bookDetail) > 0){
-                            foreach($bookDetail as $item){
-                                $data['book_id'] = $item['book_id'];
+                        $productDetail = $this->productdetailRepository->checkunLiked($userId, $objectId)->toArray();
+                        if(sizeof($productDetail) > 0){
+                            foreach($productDetail as $item){
+                                $data['product_id'] = $item['product_id'];
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = 1;
                                 $data['pink'] = $item['pink'];
@@ -481,8 +482,8 @@ class ProductController extends Controller
                                 $this->productdetailRepository->update($item['_id'], $data);
                             }
                         }else{
-                            $data['book_id'] = $book_id;
-                            $data['user_id'] = $user_id;
+                            $data['product_id'] = $objectId;
+                            $data['user_id'] = $userId;
                             $data['share'] = 1;
                             $data['pink'] = 0;
                             $data['is_public'] = 0;

@@ -18,8 +18,6 @@ class ProductTableSeeder extends Seeder
      */
     public function run()
     {
-    	Product::truncate();
-
         // delete Elastic Product Index
         $param = [
             'index' => Config::get('constants.elasticsearch.product.index')
@@ -27,9 +25,9 @@ class ProductTableSeeder extends Seeder
         $client = ClientBuilder::create()->build();
 
         // check index exists before delete
-        if ($client->indices()->exists($param)) { dd('a');
+        /*if ($client->indices()->exists($param)) {
             $client->indices()->delete($param);
-        }
+        }*/
 
         // add data to mongo db product table
     	$productRepository = app(ProductRepositoryInterface::class);

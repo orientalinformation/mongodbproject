@@ -4,9 +4,57 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Book\BookRepositoryInterface;
+use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
 
 class HomeController extends Controller
 {
+    /**
+     * @var UserRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $userRepository;
+
+    /**
+     * @var ProductRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $productRepository;
+
+    /**
+     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bookRepository;
+
+    /**
+     * @var BibliothequeRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bibliothequetRepository;
+
+    /**
+     * Instantiate product controller.
+     *
+     * @param Request $request
+     * @param UserRepositoryInterface $userRepository
+     * @param ProductRepositoryInterface $productRepository
+     * @param BookRepositoryInterface $bookRepository
+     * @param BibliothequeRepositoryInterface $bibliothequetRepository
+     * @return void
+     */
+    public function __construct(
+        Request $request, 
+        UserRepositoryInterface $userRepository, 
+        ProductRepositoryInterface $productRepository, 
+        BookRepositoryInterface $bookRepository, 
+        BibliothequeRepositoryInterface $bibliothequetRepository)
+    {
+        $this->request = $request;
+        $this->userRepository = $userRepository;
+        $this->productRepository = $productRepository;
+        $this->bookRepository = $bookRepository;
+        $this->bibliothequetRepository = $bibliothequetRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *

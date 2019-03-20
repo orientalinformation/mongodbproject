@@ -12,7 +12,7 @@ $('.menu-tooltips').click(function(){
             url: url + "check_liked",
             cache: false,
             type: "GET",
-            data: {user_id: 1, book_id: bookID},
+            data: {object_id: bookID},
             success: function(result){
                 if(result.status == 1){
                     heart.removeClass("fa-heart-o");
@@ -27,7 +27,7 @@ $('.menu-tooltips').click(function(){
             url: url + "check_read",
             cache: false,
             type: "GET",
-            data: {user_id: 1, object_id: bookID},
+            data: {object_id: bookID},
             success: function(result){
                 if(result.status == 1){
                     read.removeClass("fa-bookmark-o");
@@ -42,7 +42,7 @@ $('.menu-tooltips').click(function(){
             url: url + "check_share",
             cache: false,
             type: "GET",
-            data: {user_id: 1, book_id: bookID},
+            data: {object_id: bookID},
             success: function(result){
                 if(result.status == 1){
                     share.css('color','blue')
@@ -70,7 +70,7 @@ $('.like-line').click(function(){
         url: url + "check_liked",
         cache: false,
         type: "GET",
-        data: {user_id: 1, book_id: bookID, change: 1},
+        data: {object_id: bookID, change: 1},
         success: function(result){
             if(result.status == 1){
                 heart.removeClass("fa-heart");
@@ -91,7 +91,7 @@ $('.read-line').click(function(){
         url: url + "check_read",
         cache: false,
         type: "GET",
-        data: {user_id: 1, object_id: bookID, change: 1},
+        data: {object_id: bookID, change: 1},
         success: function(result){
             if(result.status == 1){
                 read.removeClass("fa-bookmark");
@@ -154,7 +154,7 @@ $('.create-line').click(function(){
             url: url + "create_list",
             cache: false,
             type: "GET",
-            data: {user_id: "1", name: name},
+            data: {name: name},
             success: function(result){
                 if(result.status == 1){
                     $('.alertCreatelist').text("create success");
@@ -176,7 +176,7 @@ $('.share-line').click(function(){
         url: url + "check_share",
         cache: false,
         type: "GET",
-        data: {user_id: 1, book_id: bookID, change: 1},
+        data: {object_id: bookID, change: 1},
         success: function(result){
             if(result.status == 1){
                 share.css('color','black');
