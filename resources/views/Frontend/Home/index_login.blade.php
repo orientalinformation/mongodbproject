@@ -1,5 +1,9 @@
 @extends('Frontend.layout.master')
 
+@section('styles')
+
+@stop
+
 @section('title')
     {{ __('home.frontEnd.title') }}
 @endsection
@@ -48,7 +52,7 @@
                                             <div class="carousel-inner home-slider">
                                                 <div class="item clearfix active">
                                                     <div class="image">
-                                                        <img src="image/9.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 1</p>
@@ -57,7 +61,7 @@
                                                 </div>
                                                 <div class="item clearfix">
                                                     <div class="image">
-                                                        <img src="image/10.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 2</p>
@@ -84,7 +88,7 @@
                                             <div class="carousel-inner home-slider">
                                                 <div class="item clearfix active">
                                                     <div class="image">
-                                                        <img src="image/9.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 1</p>
@@ -93,7 +97,7 @@
                                                 </div>
                                                 <div class="item clearfix">
                                                     <div class="image">
-                                                        <img src="image/10.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 2</p>
@@ -120,7 +124,7 @@
                                             <div class="carousel-inner home-slider">
                                                 <div class="item clearfix active">
                                                     <div class="image">
-                                                        <img src="image/9.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 1</p>
@@ -129,7 +133,7 @@
                                                 </div>
                                                 <div class="item clearfix">
                                                     <div class="image">
-                                                        <img src="image/10.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 2</p>
@@ -156,7 +160,7 @@
                                             <div class="carousel-inner home-slider">
                                                 <div class="item clearfix active">
                                                     <div class="image">
-                                                        <img src="image/9.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 1</p>
@@ -165,7 +169,7 @@
                                                 </div>
                                                 <div class="item clearfix">
                                                     <div class="image">
-                                                        <img src="image/10.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 2</p>
@@ -192,7 +196,7 @@
                                             <div class="carousel-inner home-slider">
                                                 <div class="item clearfix active">
                                                     <div class="image">
-                                                        <img src="image/9.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 1</p>
@@ -201,7 +205,7 @@
                                                 </div>
                                                 <div class="item clearfix">
                                                     <div class="image">
-                                                        <img src="image/10.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 2</p>
@@ -228,7 +232,7 @@
                                             <div class="carousel-inner home-slider">
                                                 <div class="item clearfix active">
                                                     <div class="image">
-                                                        <img src="image/9.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 1</p>
@@ -237,7 +241,7 @@
                                                 </div>
                                                 <div class="item clearfix">
                                                     <div class="image">
-                                                        <img src="image/10.jpg" alt="">
+                                                        <img src="https://via.placeholder.com/100x100" alt="">
                                                     </div>
                                                     <div class="content">
                                                         <p class="title">title 2</p>
@@ -267,7 +271,7 @@
                             <div class="row">
                                 <div class="col-lg-2">
                                     <div class="wrap-image-space">
-                                        <img src="image/9.jpg" class="image-space">
+                                        <img src="https://via.placeholder.com/218x218" class="image-space">
                                         <span class="dot-space">...</span>
                                     </div>
                                     <p class="title-space">Title 1 <span>(80)</span></p>
@@ -276,7 +280,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="wrap-image-space">
-                                        <img src="image/9.jpg" class="image-space">
+                                        <img src="https://via.placeholder.com/218x218" class="image-space">
                                         <span class="dot-space">...</span>
                                     </div>
                                     <p class="title-space">Title 1 <span>(80)</span></p>
@@ -285,7 +289,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="wrap-image-space">
-                                        <img src="image/9.jpg" class="image-space">
+                                        <img src="https://via.placeholder.com/218x218" class="image-space">
                                         <span class="dot-space">...</span>
                                     </div>
                                     <p class="title-space">Title 1 <span>(80)</span></p>
@@ -294,7 +298,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="wrap-image-space">
-                                        <img src="image/9.jpg" class="image-space">
+                                        <img src="https://via.placeholder.com/218x218" class="image-space">
                                         <span class="dot-space">...</span>
                                     </div>
                                     <p class="title-space">Title 1 <span>(80)</span></p>
@@ -303,7 +307,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="wrap-image-space">
-                                        <img src="image/9.jpg" class="image-space">
+                                        <img src="https://via.placeholder.com/218x218" class="image-space">
                                         <span class="dot-space">...</span>
                                     </div>
                                     <p class="title-space">Title 1 <span>(80)</span></p>
@@ -312,7 +316,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="wrap-image-space">
-                                        <img src="image/9.jpg" class="image-space">
+                                        <img src="https://via.placeholder.com/218x218" class="image-space">
                                         <span class="dot-space">...</span>
                                     </div>
                                     <p class="title-space">Title 1 <span>(80)</span></p>

@@ -2798,8 +2798,8 @@ ul.horizontal-menu-library > li a{
     display: block;
 }
 
-.dot-space{
-    padding: 3px 5px;
+.dot-space {
+    padding: 2% 4%;
     background: #000000;
     color: #ffffff;
     font-weight: bold;
@@ -2807,7 +2807,7 @@ ul.horizontal-menu-library > li a{
     opacity: 0.5;
     position: absolute;
     bottom: 15px;
-    right: 45px;
+    right: 10px;
 }
 
 .wrap-image-space{
