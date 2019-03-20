@@ -25,8 +25,9 @@ class ProductTableSeeder extends Seeder
             'index' => Config::get('constants.elasticsearch.product.index')
         ];
         $client = ClientBuilder::create()->build();
+
         // check index exists before delete
-        if ($client->indices()->exists($param)) {
+        if ($client->indices()->exists($param)) { dd('a');
             $client->indices()->delete($param);
         }
 

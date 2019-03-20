@@ -18,6 +18,11 @@ class HomeController extends Controller
         return view('Frontend.Home.index', compact(['pageName']));
     }
 
+    public function index_login()
+    {
+        return view('Frontend.Home.index_login');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
