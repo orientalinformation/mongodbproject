@@ -43,6 +43,68 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
 
     public function parentOrderByPath()
     {
-        return Category::where([['parent_id', '=', '']])->orderBy('path', 'ASC')->get();
+        return Category::where([['parent_id', '=', null]])->orderBy('path', 'ASC')->get();
+    }
+
+    /**
+     * Get recursive category
+     *
+     * @param $parent_id
+     * @param $level
+     * @param $space
+     * @param $trees
+     * @return mixed
+     */
+    public function recursiveCategory($parent_id = null, $level = 0, $space = "", $trees = [])
+    {
+        if (!$trees) {
+            $trees = [];
+        }
+        
+        $categories = Category::where('parent_id', $parent_id)->orderBy('path', 'ASC')->get();
+        $trees_obj = array();
+        if (count($categories) > 0) {
+            $level++;
+            foreach ($categories as $category) {
+                $trees[] = ['id' => $category->_id, 'parent_id' => $category->parent_id, 'name' => $space . $category->name, 'path' => $category->path, 'level' => $level];
+                $trees = $this->recursiveCategory($category->_id, $level, $space, $trees);
+            }
+        }
+
+        if (!empty($trees)) {
+            foreach ($trees as $tree) {
+                $tree = (object)$tree;
+                $trees_obj[] = $tree;
+            }
+        }
+
+        return $trees_obj;
+    }
+
+    /**
+     * Get list id category child
+     *
+     * @param $parent_id
+     * @param $trees
+     * @return array
+     */
+    public function getCategoryTreeId($parent_id = null, $trees = [])
+    {
+        if ($parent_id != null) {
+            $trees[] = $parent_id;
+        }
+
+        $categories = Category::where('parent_id', $parent_id)->get();
+        if (count($categories) > 0) {
+            foreach ($categories as $category) {
+                $trees[] = $category->_id;
+                $trees = $this->getCategoryTreeId($category->_id, $trees);
+            }
+        }
+
+        $trees = array_unique($trees);
+        $trees = array_values($trees);
+
+        return $trees;
     }
 }

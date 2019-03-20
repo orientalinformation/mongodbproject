@@ -6,9 +6,10 @@
 /.idea
 /.vscode
 /.vagrant
-/upload
+/public/upload
 Homestead.json
 Homestead.yaml
+composer.lock
 npm-debug.log
 yarn-error.log
 .env

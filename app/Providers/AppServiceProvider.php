@@ -17,6 +17,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        // get controller action name to view
+        app('view')->composer('*', function ($view) {
+            $action = app('request')->route()->getAction();
+            $controller = class_basename($action['controller']);
+            list($controller, $action) = explode('@', $controller);
+            
+            $view->with(compact('controller', 'action'));
+        });
     }
 
     /**
@@ -103,6 +112,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Discussion\DiscussionRepositoryInterface::class,
             \App\Repositories\Discussion\DiscussionEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Product\ProductRepositoryInterface::class,
+            \App\Repositories\Product\ProductEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Research\ResearchRepositoryInterface::class,
+            \App\Repositories\Research\ResearchEloquentRepository::class
         );
 
         $this->app->singleton(

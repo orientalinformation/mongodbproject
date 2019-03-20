@@ -33,6 +33,19 @@
     <li>
         <input type="hidden" id="slider_range" class="flat-slider" />
     </li>
+    @if (isset($researches))
+    <li><a class="accordion-toggle" href="#colMenu3" data-toggle="collapse">Mes Researches</a></li>
+    <div id="colMenu3" class="panel-collapse collapse in">
+        <ul class="sub-menu-library">
+            @foreach($researches as $research)
+            <li>{{ $research->name }}
+                <span class="pin-icon"><a href="#" class="destroy-research" data-id="{{ $research->id }}" data-url="{{ route('frontResearchDestroy') }}"><i class="fa fa-trash" aria-hidden="true"></a></i></span>
+            </li>
+            @endforeach
+        </ul>
+        <div class="link-menu"><a href="#">voir plus</a></div>
+    </div>
+    @endif
     <li><a class="accordion-toggle" href="#colMenu4" data-toggle="collapse">Mes bibliothèques</a></li>
     <div id="colMenu4" class="panel-collapse collapse in">
         <ul class="sub-menu-library">
