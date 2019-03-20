@@ -17,27 +17,6 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
-    <div class="row slide">
-        <div class="col-12"><img src="{{ URL::to('/image/front/slider.png')}}" class="img-slide"></div>
-        <div class="col-12 cover"></div>
-        <div class="col-12 title-slide">
-            <span>La nouvelle plate-forme des <br/>Compagnons Du Devoir</span>
-        </div>
-        <div class="col-12 title-slide-small">
-            <span>La nouvelle plate-forme des <br/>Compagnons Du Devoir</span>
-        </div>
-        <div class="col-12 title-slide-foot">
-            <span>Votre espace d’échanges collaborative et <br/>professionnelle à votr</span>
-        </div>
-        <div class="col-12 search_button">
-            <div class="box-icon-home"><img src="{{ URL::to('/image/front/home-search-icon.png')}}"></div>
-        </div>
-        <div class="col-12 edit_button">
-            <div class="box-icon-home"><img src="{{ URL::to('/image/front/home-edit-icon.png')}}"></div>
-        </div>
-    </div>
-</div>
 <div class="container-fluid container-library">
     <div class="main library">
         <div class="container-fluid">
