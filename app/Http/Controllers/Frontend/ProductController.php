@@ -24,6 +24,37 @@ class ProductController extends Controller
      */
     protected $productRepository;
 
+    /**
+     * @var CategoryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $categoryRepository;
+
+    /**
+     * @var ResearchRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $researchRepository;
+
+    /**
+     * @var ProductDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $productdetailRepository;
+
+    /**
+     * @var ReadAfterRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $readafterRepository;
+
+    /**
+     * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $libraryRepository;
+
+    /**
+     * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $librarydetailRepository;
+
+
 	/**
      * Instantiate product controller.
      *
@@ -37,7 +68,15 @@ class ProductController extends Controller
      * @param LibraryDetailRepositoryInterface $librarydetailRepository
      * @return void
      */
-    public function __construct(Request $request, ProductRepositoryInterface $productRepository, ProductDetailRepositoryInterface $productdetailRepository, CategoryRepositoryInterface $categoryRepository, ResearchRepositoryInterface $researchRepository, ReadAfterRepositoryInterface $readafterRepository, LibraryRepositoryInterface $libraryRepository, LibraryDetailRepositoryInterface $librarydetailRepository)
+    public function __construct(
+        Request $request, 
+        ProductRepositoryInterface $productRepository, 
+        ProductDetailRepositoryInterface $productdetailRepository, 
+        CategoryRepositoryInterface $categoryRepository, 
+        ResearchRepositoryInterface $researchRepository, 
+        ReadAfterRepositoryInterface $readafterRepository, 
+        LibraryRepositoryInterface $libraryRepository, 
+        LibraryDetailRepositoryInterface $librarydetailRepository)
     {
         $this->request = $request;
         $this->productRepository = $productRepository;
@@ -58,7 +97,7 @@ class ProductController extends Controller
     {
 		$q = $this->request->has('q') ? $this->request->get('q') : null;
 		$page = $this->request->has('page') ? $this->request->get('page') : 1;
-		$limit = Config::get('constants.rowPageProduct');
+		$limit = Config::get('constants.rowPage');
 		$currentPath = Route::getFacadeRoot()->current()->uri();
 
 		$options = null;
@@ -130,9 +169,8 @@ class ProductController extends Controller
 		    }
 		}
 
-		$rowPage = Config::get('constants.rowPageProduct');
-		$paginate = Ulities::calculatorPage($q, $page, $products['total'], $rowPage);
-		$result = $this->productRepository->paginate($rowPage)->toArray();
+		$paginate = Ulities::calculatorPage($q, $page, $products['total'], $limit);
+		$result = $this->productRepository->paginate($limit)->toArray();
 		// list category left
 		$category = $this->categoryRepository->parentOrderByPath()->toArray();
 		// list researches
@@ -144,8 +182,7 @@ class ProductController extends Controller
     /**
      * Check status like
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function checkLiked(Request $request)
     {
@@ -211,8 +248,7 @@ class ProductController extends Controller
     /**
      * Check status read
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function checkRead(Request $request)
     {
@@ -270,6 +306,11 @@ class ProductController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Get library detail with user id
+     *
+     * @return string
+     */
     public function getLibraryDetailbyUserID(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
@@ -295,6 +336,11 @@ class ProductController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Update library detail
+     *
+     * @return string
+     */
     public function updateLibraryDetail(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
@@ -348,6 +394,11 @@ class ProductController extends Controller
         return response()->json($result);
     }
 
+    /**
+     * Create a library
+     *
+     * @return string
+     */
     public function createLibrary(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
@@ -383,10 +434,9 @@ class ProductController extends Controller
     }
 
     /**
-     * Check status share
+     * Check share status
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function checkShare(Request $request)
     {

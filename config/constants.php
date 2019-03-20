@@ -10,7 +10,6 @@ return [
 
     'rowPage'       => 20,
     'rowPageBook'   => 24,
-    'rowPageProduct'   => 24,
     'bookPath'  => '/public/upload/book/',
     'bookFilePath'  => '/public/upload/book/file/',
     'avatarPath'  => '/public/upload/avatar/',
