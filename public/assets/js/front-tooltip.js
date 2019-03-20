@@ -5,15 +5,15 @@ $('.menu-tooltips').click(function(){
     let heart = $(this).closest(".wrap").find(".likeIcon");
     let read = $(this).closest(".wrap").find(".readIcon");
     let share = $(this).closest(".wrap").find(".shareIcon");
+    let url = '/' + type + '/';
     if(display.css("display") == "none"){
         display.css("display","block");
         $.ajax({
-            url: "{{ URL::to('/') }}/check_liked",
+            url: url + "check_liked",
             cache: false,
             type: "GET",
             data: {user_id: 1, book_id: bookID},
             success: function(result){
-                result = JSON.parse(result);
                 if(result.status == 1){
                     heart.removeClass("fa-heart-o");
                     heart.addClass("fa-heart");
@@ -24,12 +24,11 @@ $('.menu-tooltips').click(function(){
             }
         });
         $.ajax({
-            url: "{{ URL::to('/') }}/check_read",
+            url: url + "check_read",
             cache: false,
             type: "GET",
             data: {user_id: 1, object_id: bookID},
             success: function(result){
-                result = JSON.parse(result);
                 if(result.status == 1){
                     read.removeClass("fa-bookmark-o");
                     read.addClass("fa-bookmark");
@@ -40,12 +39,11 @@ $('.menu-tooltips').click(function(){
             }
         });
         $.ajax({
-            url: "{{ URL::to('/') }}/check_share",
+            url: url + "check_share",
             cache: false,
             type: "GET",
             data: {user_id: 1, book_id: bookID},
             success: function(result){
-                result = JSON.parse(result);
                 if(result.status == 1){
                     share.css('color','blue')
                 }else{
@@ -64,16 +62,16 @@ $(document).mouseup(function (e) {
     }
 });
 $('.like-line').click(function(){
-	let type = $(this).parent('content-panel').data('type');
+	let type = $(this).parent('.content-panel').data('type');
     let bookID = $(this).closest(".wrap").find(".bookID").val();
     let heart = $(this).closest(".wrap").find(".likeIcon");
+    let url = '/' + type + '/';
     $.ajax({
-        url: "{{ URL::to('/') }}/check_liked",
+        url: url + "check_liked",
         cache: false,
         type: "GET",
         data: {user_id: 1, book_id: bookID, change: 1},
         success: function(result){
-            result = JSON.parse(result);
             if(result.status == 1){
                 heart.removeClass("fa-heart");
                 heart.addClass("fa-heart-o");
@@ -85,16 +83,16 @@ $('.like-line').click(function(){
     });
 })
 $('.read-line').click(function(){
-	let type = $(this).parent('content-panel').data('type');
+	let type = $(this).parent('.content-panel').data('type');
     let bookID = $(this).closest(".wrap").find(".bookID").val();
     let read = $(this).closest(".wrap").find(".readIcon");
+    let url = '/' + type + '/';
     $.ajax({
-        url: "{{ URL::to('/') }}/check_read",
+        url: url + "check_read",
         cache: false,
         type: "GET",
         data: {user_id: 1, object_id: bookID, change: 1},
         success: function(result){
-            result = JSON.parse(result);
             if(result.status == 1){
                 read.removeClass("fa-bookmark");
                 read.addClass("fa-bookmark-o");
@@ -106,22 +104,21 @@ $('.read-line').click(function(){
     });
 })
 $('.list-line').click(function(){
-	let type = $(this).parent('content-panel').data('type');
+	let type = $(this).parent('.content-panel').data('type');
     let bookID = $(this).closest(".wrap").find(".bookID").val();
     let itemList = $('.itemList');
+    let url = '/' + type + '/';
     $("#libraryList").find("#bookID-modal").val(bookID);
     // itemList.parent().remove();
     itemList.map(function(){
         let library_id = $(this).attr('attr-data');
         let library_item = $(this);
         $.ajax({
-            url: "{{ URL::to('/') }}/check_list",
+            url: url + "check_list",
             cache: false,
             type: "GET",
             data: {library_id: library_id, object_id: bookID},
             success: function(result){
-                result = JSON.parse(result);
-                console.log(result);
                 if(result.status == 1){
                     // itemList.parent().append('<input type="checkbok">');
                     library_item.attr('checked','checked');
@@ -131,33 +128,34 @@ $('.list-line').click(function(){
     })
 })
 $('.itemList').click(function(){
-	let type = $(this).parent('content-panel').data('type');
+	let type = $(this).data('type');
     let bookID = $(this).closest(".modal-body").find("#bookID-modal").val();
     let library_id = $(this).attr('attr-data');
+    let url = '/' + type + '/';
     $.ajax({
-        url: "{{ URL::to('/') }}/update_list",
+        url: url + "update_list",
         cache: false,
         type: "GET",
         data: {library_id: library_id, object_id: bookID},
         success: function(result){
-            result = JSON.parse(result);
+            
         }
     });
 })
 $('.create-line').click(function(){
-	let type = $(this).parent('content-panel').data('type');
+	let type = $(this).parent('.content-panel').data('type');
+    let url = '/' + type + '/';
     $('input').val('');
     $('.alertCreatelist').hide();
     $('.btnCreateLibrary').click(function(){
         let name = $('#nameLibrary').val();
 
         $.ajax({
-            url: "{{ URL::to('/') }}/create_list",
+            url: url + "create_list",
             cache: false,
             type: "GET",
             data: {user_id: "1", name: name},
             success: function(result){
-                result = JSON.parse(result);
                 if(result.status == 1){
                     $('.alertCreatelist').text("create success");
                     $('.alertCreatelist').show();
@@ -170,16 +168,16 @@ $('.create-line').click(function(){
     })
 })
 $('.share-line').click(function(){
-	let type = $(this).parent('content-panel').data('type');
+	let type = $(this).parent('.content-panel').data('type');
     let bookID = $(this).closest(".wrap").find(".bookID").val();
     let share = $(this).closest(".wrap").find(".shareIcon");
+    let url = '/' + type + '/';
     $.ajax({
-        url: "{{ URL::to('/') }}/check_share",
+        url: url + "check_share",
         cache: false,
         type: "GET",
         data: {user_id: 1, book_id: bookID, change: 1},
         success: function(result){
-            result = JSON.parse(result);
             if(result.status == 1){
                 share.css('color','black');
             }else if(result.status == 2) {

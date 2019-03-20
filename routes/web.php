@@ -50,6 +50,26 @@ Route::namespace('Frontend')->group(function () {
 
     // Product routes
     Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware('auth');
+    Route::prefix('product/')->group(function () {
+        Route::get('/check_liked', [
+            'uses' => 'ProductController@checkLiked',
+        ]);
+        Route::get('/check_read', [
+            'uses' => 'ProductController@checkRead',
+        ]);
+        Route::get('/check_list', [
+            'uses' => 'ProductController@getLibraryDetailbyUserID',
+        ]);
+        Route::get('/update_list', [
+            'uses' => 'ProductController@updateLibraryDetail',
+        ]);
+        Route::get('/create_list', [
+            'uses' => 'ProductController@createLibrary',
+        ]);
+        Route::get('/check_share', [
+            'uses' => 'ProductController@checkShare',
+        ]);
+    });
 
     // Research routes
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');

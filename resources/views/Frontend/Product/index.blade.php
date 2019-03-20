@@ -118,4 +118,9 @@
     </div>
 </div>
 @include('Frontend.layout.modal-searchadvance')
+@include('Frontend.layout.modal-tooltip', ['library'])
+@endsection
+
+@section('script')
+<script src="{{ asset('/assets/js/front-tooltip.js') }}"></script>
 @endsection
