@@ -8,36 +8,36 @@ interface ProductDetailRepositoryInterface
     /**
      * Get Check Liked
      *
-     * @param int $user_id
-     * @param string $product_id
+     * @param int $userId
+     * @param string $productId
      * @return mixed
      */
-    public function checkLiked($user_id, $product_id);
+    public function checkLiked($userId, $productId);
 
     /**
      * Get Check unLiked
      *
-     * @param int $user_id
-     * @param string $product_id
+     * @param int $userId
+     * @param string $productId
      * @return mixed
      */
-    public function checkunLiked($user_id, $product_id);
+    public function checkunLiked($userId, $productId);
 
     /**
      * Get Check Shared
      *
-     * @param int $user_id
-     * @param string $product_id
+     * @param int $userId
+     * @param string $productId
      * @return mixed
      */
-    public function checkShared($user_id, $product_id);
+    public function checkShared($userId, $productId);
 
     /**
      * Get Check unShared
      *
-     * @param int $user_id
-     * @param string $product_id
+     * @param int $userId
+     * @param string $productId
      * @return mixed
      */
-    public function checkunShared($user_id, $product_id);
+    public function checkunShared($userId, $productId);
 }
