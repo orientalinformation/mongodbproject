@@ -86,7 +86,7 @@
                     @endforeach
                 </div>
                 @endforeach
-                <div class="text-center">@include('Backend.partials.pagination', ['paginator' => $result])</div>
+                <div class="text-center">@include('Frontend.partials.pagination', ['paginator' => $result])</div>
                 @else 
                 <div class="alert alert-warning">@lang('common.noResult')</div>
                 @endif
