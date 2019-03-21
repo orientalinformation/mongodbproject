@@ -11,6 +11,7 @@
 |
 */
 use Illuminate\Routing\Router;
+use App\Http\Middleware\CheckAdminFrontend;
 
 //===========FONTEND==========
 Route::namespace('Frontend')->group(function () {
@@ -46,10 +47,10 @@ Route::namespace('Frontend')->group(function () {
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
     // Ajax routes
-    Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware('auth');
+    Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware(CheckAdminFrontend::class);
 
     // Product routes
-    Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware('auth');
+    Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware(CheckAdminFrontend::class);
     Route::prefix('product/')->group(function () {
         Route::get('/check_liked', [
             'uses' => 'ProductController@checkLiked',
@@ -72,10 +73,10 @@ Route::namespace('Frontend')->group(function () {
     });
 
     // Research routes
-    Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
-    Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware('auth');
+    Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware(CheckAdminFrontend::class);
+    Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware(CheckAdminFrontend::class);
     // Bibliotheque routes
-    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
 
     //====Web start=============
     Route::resource('web', 'WebController');
