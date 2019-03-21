@@ -55,7 +55,19 @@
                                                     <?php $web_data = EnvatoWeb::getWebDetail($item['web_id']);?>
                                                     <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
                                                         <div class="image">
-                                                            <img src="https://via.placeholder.com/100x100" alt="">
+                                                            <?php
+                                                            if (array_key_exists("enclosure",$web_data[0])){
+                                                                $imagePath = URL::to('/') . '/upload/book/' . $web_data[0]['enclosure'];
+//                                                                if (@getimagesize($imagePath)) {
+//                                                                    echo '<img src="' . $imagePath . '">';
+//                                                                }else{
+//                                                                    echo '<img src="https://via.placeholder.com/100x100">';
+//                                                                }
+                                                            }else{
+                                                                echo '<img src="https://via.placeholder.com/100x100">';
+                                                            }
+                                                            echo '<img src="' . $imagePath . '">';
+                                                            ?>
                                                         </div>
                                                         <div class="content">
                                                             <p class="title"><a href="#">{{ $web_data[0]['title'] }}</a></p>
@@ -203,11 +215,23 @@
                                                 <?php $product_data = EnvatoProduct::getProductDetail($item['product_id']);?>
                                                 <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
                                                     <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
+                                                        <?php
+                                                        if (array_key_exists("image",$product_data[0])){
+                                                            $imagePath = URL::to('/') . '/upload/book/' . $product_data[0]['image'];
+//                                                                if (@getimagesize($imagePath)) {
+//                                                                    echo '<img src="' . $imagePath . '">';
+//                                                                }else{
+//                                                                    echo '<img src="https://via.placeholder.com/100x100">';
+//                                                                }
+                                                        }else{
+                                                            echo '<img src="https://via.placeholder.com/100x100">';
+                                                        }
+                                                        echo '<img src="' . $imagePath . '">';
+                                                        ?>
                                                     </div>
                                                     <div class="content">
-                                                        <p class="title">title 1</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                        <p class="title">{{ $product_data[0]['title'] }}</p>
+                                                        <p class="description">{{ $product_data[0]['description'] }}</p>
                                                     </div>
                                                 </div>
                                                 <?php $i++; ?>

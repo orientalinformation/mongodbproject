@@ -234,7 +234,7 @@ return [
         'EnvatoUlities' => App\Helpers\Envato\Ulities::class,
         'EnvatoCategory' => App\Helpers\Envato\CategoryHelper::class,
         'EnvatoWeb' => App\Helpers\Envato\WebHelper::class,
-        'EnvatoProduct' => App\Helpers\Envato\WebHelper::class,
+        'EnvatoProduct' => App\Helpers\Envato\ProductHelper::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class
