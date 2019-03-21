@@ -45,13 +45,10 @@ Route::namespace('Frontend')->group(function () {
     Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
-<<<<<<< HEAD
     // Bibliotheque routes
     Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
     Route::get('bibliotheque_check_liked', 'BibliothequeController@checkLiked')->middleware('auth');
 
-=======
->>>>>>> ngonc
     // Ajax routes
     Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware('auth');
 
@@ -81,12 +78,9 @@ Route::namespace('Frontend')->group(function () {
     // Research routes
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware('auth');
-<<<<<<< HEAD
-=======
     // Bibliotheque routes
     Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
 
->>>>>>> ngonc
     //====Web start=============
     Route::resource('web', 'WebController');
     //====Web end===============

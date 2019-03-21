@@ -80,7 +80,8 @@ class BibliothequeController extends Controller
 		$limit               = Config::get('constants.rowPage');
 		$options             = null;
 		$options['page']     = $page;
-		$options['limit']    = $limit;
+        $options['limit']    = $limit;
+        
 		if ($q != null) {
 			$options['q'] = $q;
 		}
@@ -118,11 +119,11 @@ class BibliothequeController extends Controller
 		$urlSort           = [];
 		$urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
 		$urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
-		$indexName         = Config::get('constants.elasticsearch.bibliotheque.index');
-		$typeName          = Config::get('constants.elasticsearch.bibliotheque.type');
+		$indexName         = Config::get('constants.elasticsearch.library.index');
+		$typeName          = Config::get('constants.elasticsearch.library.type');
 
 		$params            = Ulities::getElasticParams($indexName, $typeName, $options);
-		
+
 		$client            = ClientBuilder::create()->build();
 		$response          = $client->search($params);
 		

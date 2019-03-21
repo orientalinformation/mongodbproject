@@ -38,6 +38,10 @@ return [
         'bibliotheque' => [
             'index' => 'bibliotheque_compagnons',
             'type'  => 'bibliotheque'
+        ],
+        'library' => [
+            'index' => 'library_compagnons',
+            'type'  => 'library'
         ]
     ],
     'objectType'    => [
