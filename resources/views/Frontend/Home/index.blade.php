@@ -51,10 +51,12 @@
                         <div class="row">
                             @if (count($webs) > 0)
                             <div class="col-lg-6">
-                                <div class="wrapSlider">
+                                <div class="wrapSlider clearfix">
                                     <div class="divIcon">
-                                        <span>Web</span>
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <a href="#">
+                                            <span>Web</span>
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div id="homeCarousel1" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
@@ -62,10 +64,10 @@
                                             @foreach($webs as $key => $web)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $web['_source']['enclosure'] }}" alt="{{ $web['_source']['title'] }}">
+                                                    <a href="#"><img src="{{ $web['_source']['enclosure'] }}" alt="{{ $web['_source']['title'] }}"></a>
                                                 </div>
                                                 <div class="content">
-                                                    <p class="title">{{ $web['_source']['title'] }}</p>
+                                                    <p class="title"><a href="#">{{ $web['_source']['title'] }}</a></p>
                                                     <p class="description">{{ EnvatoUlities::limit(strip_tags($web['_source']['description']), 120) }}</p>
                                                 </div>
                                             </div>
@@ -81,10 +83,12 @@
                             </div>
                             @endif
                             <div class="col-lg-6">
-                                <div class="wrapSlider">
+                                <div class="wrapSlider clearfix">
                                     <div class="divIcon">
-                                        <span>Événement</span>
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <a href="#">
+                                            <span>Événement</span>
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div id="homeCarousel2" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
@@ -118,10 +122,12 @@
                             </div>
                             @if (count($books) > 0)
                             <div class="col-lg-6">
-                                <div class="wrapSlider">
+                                <div class="wrapSlider clearfix">
                                     <div class="divIcon">
-                                        <span>Étude</span>
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <a href="#">
+                                            <span>Étude</span>
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div id="homeCarousel3" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
@@ -144,10 +150,12 @@
                             </div>
                             @endif
                             <div class="col-lg-6">
-                                <div class="wrapSlider">
+                                <div class="wrapSlider clearfix">
                                     <div class="divIcon">
-                                        <span>Causerie</span>
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <a href="#">
+                                            <span>Causerie</span>
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div id="homeCarousel4" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
@@ -181,20 +189,22 @@
                             </div>
                             @if (count($products) > 0)
                             <div class="col-lg-6">
-                                <div class="wrapSlider">
+                                <div class="wrapSlider clearfix">
                                     <div class="divIcon">
-                                        <span>Produit</span>
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <a href="{{ route('frontProduct') }}">
+                                            <span>Produit</span>
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div id="homeCarousel5" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                         <div class="carousel-inner home-slider">
                                             @foreach ($products as $key => $product)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $product['_source']['image'] }}" alt="{{ $product['_source']['title'] }}">
+                                                    <a href="#"><img src="{{ $product['_source']['image'] }}" alt="{{ $product['_source']['title'] }}"></a>
                                                 </div>
                                                 <div class="content">
-                                                    <p class="title">{{ $product['_source']['title'] }}</p>
+                                                    <p class="title"><a href="#">{{ $product['_source']['title'] }}</a></p>
                                                     <p class="description">{{ EnvatoUlities::limit(strip_tags($product['_source']['description']), 120) }}</p>
                                                 </div>
                                             </div>
@@ -209,10 +219,12 @@
                             @endif
                             @if (count($bibliothequets) > 0)
                             <div class="col-lg-6">
-                                <div class="wrapSlider">
+                                <div class="wrapSlider clearfix">
                                     <div class="divIcon">
-                                        <span>Bibliothèque</span>
-                                        <i class="fa fa-globe" aria-hidden="true"></i>
+                                        <a href="{{ route('frontBibliotheque') }}">
+                                            <span>Bibliothèque</span>
+                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                     <div id="homeCarousel6" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
@@ -220,10 +232,10 @@
                                             @foreach ($bibliothequets as $key => $bibliothequet)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $bibliothequet['_source']['image'] }}" alt="{{ $bibliothequet['_source']['title'] }}">
+                                                    <a href="#"><img src="{{ $bibliothequet['_source']['image'] }}" alt="{{ $bibliothequet['_source']['title'] }}"></a>
                                                 </div>
                                                 <div class="content">
-                                                    <p class="title">{{ $bibliothequet['_source']['title'] }}</p>
+                                                    <p class="title"><a href="#">{{ $bibliothequet['_source']['title'] }}</a></p>
                                                     <p class="description">{{ EnvatoUlities::limit(strip_tags($bibliothequet['_source']['description']), 120) }}</p>
                                                 </div>
                                             </div>
