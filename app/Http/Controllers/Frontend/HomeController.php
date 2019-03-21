@@ -10,6 +10,9 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
 use Illuminate\Support\Facades\Config;
+use Elasticsearch\ClientBuilder;
+use App\Helpers\Envato\Ulities;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -72,36 +75,49 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //get list id admin
-        $userAdmins = $this->userRepository->getlistAdmins();
-        $listAdminIds = [];
-        if (count($userAdmins) > 0) {
-            foreach ($userAdmins as $userAdmin) {
-                array_push($listAdminIds, $userAdmin->id);
+        if (!Auth::check()) {
+            //get list id admin
+            $userAdmins = $this->userRepository->getlistAdmins();
+            $listAdminIds = [];
+            if (count($userAdmins) > 0) {
+                foreach ($userAdmins as $userAdmin) {
+                    array_push($listAdminIds, $userAdmin->id);
+                }
             }
-        }
 
-        $webs = null;
-        $books = null;
-        $products = null;
-        $bibliothequets = null;
-        $limit = Config::get('constants.itemSearchHome');
-        if (!empty($listAdminIds)) {
-            // get web data
-            $webs = $this->webRepository->getItemsByadmin($limit);
+            $webs = null;
+            $books = null;
+            $products = null;
+            $bibliothequets = null;
+            $limit = Config::get('constants.itemSearchHome');
+            $page = $this->request->has('page') ? $this->request->get('page') : 1;
+            $options = null;
+            $options['page'] = $page;
+            $options['limit'] = $limit;
+            if (!empty($listAdminIds)) {
+                $options['user'] = $listAdminIds;
+                // get web data
+                $webs = $this->webRepository->getItemsByadmin($limit);
 
-            // get book data
-            $books = $this->bookRepository->getItemsByadmin($listAdminIds, $limit);
+                // get book data
+                $books = $this->bookRepository->getItemsByadmin($listAdminIds, $limit);
+                
+                // get product data
+                $indexName = Config::get('constants.elasticsearch.product.index');
+                $typeName = Config::get('constants.elasticsearch.product.type');
+                $params = Ulities::getElasticParams($indexName, $typeName, $options);
+                $response = ClientBuilder::create()->build()->search($params);
+                $products = $response['hits']['hits'];
+
+                // get product data
+                $bibliothequets = $this->bibliothequetRepository->getItemsByadmin($listAdminIds, $limit);
+            }
             
-            // get product data
-            $products = $this->productRepository->getItemsByadmin($listAdminIds, $limit);
-
-            // get product data
-            $bibliothequets = $this->bibliothequetRepository->getItemsByadmin($listAdminIds, $limit);
+            $pageName = 'home';
+            return view('Frontend.Home.index', compact(['pageName', 'webs', 'books', 'products', 'bibliothequets']));
+        } else {
+            return redirect()->action('Frontend\HomeController@index_login');
         }
-        
-        $pageName = 'home';
-        return view('Frontend.Home.index', compact(['pageName', 'webs', 'books', 'products', 'bibliothequets']));
     }
 
     public function index_login()

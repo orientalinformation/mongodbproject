@@ -128,7 +128,7 @@
                                        @foreach ($books as $key => $book)
                                         <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                             <div class="image">
-                                                <img src="{{ $product->product->image }}" alt="">
+                                                <img src="{{ $book->book->image }}" alt="">
                                             </div>
                                             <div class="content">
                                                 <p class="title">{{ $book->book->title }}</p>
@@ -189,21 +189,18 @@
                                         <i class="fa fa-globe" aria-hidden="true"></i>
                                     </div>
                                     <div id="homeCarousel5" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
-                                      <!-- Wrapper for slides -->
                                         <div class="carousel-inner home-slider">
                                             @foreach ($products as $key => $product)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $product->product->image }}" alt="">
+                                                    <img src="{{ $product['_source']['image'] }}" alt="">
                                                 </div>
                                                 <div class="content">
-                                                    <p class="title">{{ $product->product->title }}</p>
-                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($product->product->description), 120) }}</p>
+                                                    <p class="title">{{ $product['_source']['title'] }}</p>
+                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($product['_source']['description']), 120) }}</p>
                                                 </div>
                                             </div>
                                             @endforeach
-
-                                          <!-- Left and right controls -->
                                           <a class="right carousel-control" href="#homeCarousel5" data-slide="next">
                                             <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                           </a>

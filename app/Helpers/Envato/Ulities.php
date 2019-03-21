@@ -188,6 +188,15 @@ class Ulities
                 ];
             }
 
+            if (isset($options['user'])) {
+                $user = $options['user'];
+                $must[] = [
+                    'terms' => [
+                        'user_id' => $user
+                    ]
+                ];
+            }
+
             if (isset($options['start_year']) && isset($options['end_year'])) {
                 $must[] = [
                     'range' => [
