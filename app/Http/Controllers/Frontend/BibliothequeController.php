@@ -14,6 +14,8 @@ use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
 use App\Repositories\BibliothequeDetail\BibliothequeDetailRepositoryInterface;
 use App\Repositories\Library\LibraryRepositoryInterface;
+use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
+use App\Repositories\ReadAfter\ReadAfterRepositoryInterface;
 
 class BibliothequeController extends Controller
 {
@@ -40,7 +42,17 @@ class BibliothequeController extends Controller
 	/**
      * @var BibliothequeDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
-	protected $bibliothequeDetailRepository;
+    protected $bibliothequeDetailRepository;
+    
+    /**
+     * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $libraryDetailRepository;
+
+    /**
+     * @var ReadAfterRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $readafterRepository;
 	
 	/**
      * Instantiate Bibliotheque controller.
@@ -51,6 +63,7 @@ class BibliothequeController extends Controller
 	 * @param LibraryRepositoryInterface $libraryRepository
      * @param BibliothequeRepositoryInterface $bibliothequeRepository
 	 * @param BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository
+	 * @param LibraryDetailRepositoryInterface $libraryDetailRepository
      * @return void
      */
     public function __construct(
@@ -59,14 +72,18 @@ class BibliothequeController extends Controller
 		CategoryRepositoryInterface $categoryRepository,
 		ResearchRepositoryInterface $researchRepository,
 		LibraryRepositoryInterface $libraryRepository,
-		BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository
+        BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository,
+        LibraryDetailRepositoryInterface $libraryDetailRepository,
+        ReadAfterRepositoryInterface $readafterRepository
     ) {
         $this->request = $request;
         $this->bibliothequeRepository = $bibliothequeRepository;
         $this->categoryRepository = $categoryRepository;
 		$this->researchRepository = $researchRepository;
 		$this->libraryRepository = $libraryRepository;
-		$this->bibliothequeDetailRepository = $bibliothequeDetailRepository;
+        $this->bibliothequeDetailRepository = $bibliothequeDetailRepository;
+        $this->libraryDetailRepository = $libraryDetailRepository;
+        $this->readafterRepository = $readafterRepository;
     }
 
     /** 
@@ -172,17 +189,16 @@ class BibliothequeController extends Controller
      */
     public function checkLiked(Request $request)
     {
-        // print_r($request->all());die();
         $result['status'] = 0;
         $result['data'] = "";
-        if($request->has("library_id")) {
+        if($request->has("user_id") && $request->has("library_id")) {
             $userId = Auth::user()->id;
             $libraryId = $request->get("library_id");
-            $bibliothequeDetail = $this->bibliothequeDetailRepository->checkLiked($userId, $libraryId)->toArray();
-            // print_r($request->all());die();
-            if(sizeof($bibliothequeDetail) > 0) {
+            $libraryDetail = $this->libraryDetailRepository->checkLiked($userId, $libraryId)->toArray();
+            
+            if(sizeof($libraryDetail) > 0) {
                 $result['status'] = 1;
-                $result['data'] = $bibliothequeDetail;
+                $result['data'] = $libraryDetail;
             } else {
                 $result['status'] = 0;
             }
@@ -190,37 +206,37 @@ class BibliothequeController extends Controller
             if($request->has("change")) {
                 $change = $request->get("change");
                 if($change == 1) {
-                    if(sizeof($bibliothequeDetail) > 0) {
-                        foreach($bibliothequeDetail as $item) {
-                            $data['bibliotheque_id'] = $item['bibliotheque_id'];
+                    if(sizeof($libraryDetail) > 0) {
+                        foreach($libraryDetail as $item) {
+                            $data['library_id'] = $item['library_id'];
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = $item['share'];
                             $data['pink'] = $item['pink'];
                             $data['is_public'] = $item['is_public'];
                             $data['is_delete'] = 1;
-                            $this->bibliothequeDetailRepository->update($item['_id'], $data);
+                            $this->libraryDetailRepository->update($item['_id'], $data);
                         }
                         $result['status'] = 1;
                     } else {
-                        $bibliothequeDetail = $this->bibliothequeDetailRepository->checkunLiked($userId, $libraryId)->toArray();
-                        if(sizeof($bibliothequeDetail) > 0) {
-                            foreach($bibliothequeDetail as $item) {
-                                $data['bibliotheque_id'] = $item['bibliotheque_id'];
+                        $libraryDetail = $this->libraryDetailRepository->checkunLiked($userId, $libraryId)->toArray();
+                        if(sizeof($libraryDetail) > 0) {
+                            foreach($libraryDetail as $item) {
+                                $data['library_id'] = $item['library_id'];
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = $item['share'];
                                 $data['pink'] = $item['pink'];
                                 $data['is_public'] = $item['is_public'];
                                 $data['is_delete'] = 0;
-                                $this->bibliothequeDetailRepository->update($item['_id'], $data);
+                                $this->libraryDetailRepository->update($item['_id'], $data);
                             }
                         } else {
-                            $data['bibliotheque_id'] = $libraryId;
+                            $data['library_id'] = $libraryId;
                             $data['user_id'] = $userId;
                             $data['share'] = 0;
                             $data['pink'] = 0;
-                            $data['is_public'] = 0;
+                            $data['is_public'] = 1;
                             $data['is_delete'] = 0;
-                            $data = $this->bibliothequeDetailRepository->create($data);
+                            $data = $this->libraryDetailRepository->create($data);
                             $result['data'] = $data;
                         }
                         $result['status'] = 2;
@@ -230,5 +246,72 @@ class BibliothequeController extends Controller
         }
 
         return response()->json($result);
+    }
+
+        /**
+     * Check status read
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function checkRead(Request $request)
+    {
+        $result['status'] = 0;
+        $result['data']   = "";
+        
+        if($request->has("user_id") && $request->has("library_id")) {
+            
+            $user_id       = $request->get("user_id");
+            $object_id     = $request->get("library_id");
+            $type          = Config::get('constants.objectType.library');
+            $libraryDetail = $this->readafterRepository->checkRead($user_id, $object_id, $type)->toArray();
+
+            if(sizeof($libraryDetail) > 0) {
+                $result['status'] = 1;
+                $result['data']   = $libraryDetail;
+            } else {
+                $result['status'] = 0;
+            }
+
+            if($request->has("change")) {
+                $change = $request->get("change");
+                if($change ==1) {
+                    
+                    if(sizeof($libraryDetail) > 0) {
+
+                        foreach($libraryDetail as $item) {
+                            $data['object_id'] = $item['object_id'];
+                            $data['user_id']   = $item['user_id'];
+                            $data['type_name'] = $type;
+                            $data['is_delete'] = 1;
+                            $this->libraryDetailRepository->update($item['_id'], $data);
+                        }
+                        $result['status'] = 1;
+                    } else {
+                        $libraryDetail = $this->readafterRepository->checkunRead($user_id, $object_id, $type)->toArray();
+                        if(sizeof($libraryDetail) > 0) {
+                            foreach($libraryDetail as $item) {
+                                $data['user_id']   = $item['user_id'];
+                                $data['object_id'] = $item['object_id'];
+                                $data['type_name'] = $type;
+                                $data['is_delete'] = 0;
+                                $this->readafterRepository->update($item['_id'], $data);
+                            }
+                        } else {
+                            $data['user_id']   = $user_id;
+                            $data['object_id'] = $object_id;
+                            $data['type_name'] = $type;
+                            $data['is_delete'] = 0;
+                            $data              = $this->readafterRepository->create($data);
+                            $result['data']    = $data;
+                        }
+                        $result['status'] = 2;
+                    }
+                }
+            }
+        }
+
+         $result = json_encode($result);
+        print_r($result);die;
     }
 }

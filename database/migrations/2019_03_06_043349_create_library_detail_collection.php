@@ -16,6 +16,7 @@ class CreateLibraryDetailCollection extends Migration
         Schema::connection('mongodb')->table('library_details', function (Blueprint $collection) {
             $collection->index('id');
             $collection->string('library_id');
+            $collection->string('object_id');
             $collection->string('user_id');
             $collection->boolean('share');
             $collection->boolean('pink');

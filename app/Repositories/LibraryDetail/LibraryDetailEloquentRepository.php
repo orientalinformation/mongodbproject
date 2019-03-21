@@ -37,4 +37,34 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
             ['type_name', '=', $type],
             ['is_delete', '=', 1]])->get();
     }
+
+    /**
+     * Get Check Liked
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkLiked($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 0]
+        ])->get();
+    }
+
+    /**
+     * Get Check UnLiked
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkunLiked($userId, $libraryId)
+    {
+        return LibraryDetail::where([['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 1]])->get();
+    }
 }

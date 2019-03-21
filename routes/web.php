@@ -48,6 +48,7 @@ Route::namespace('Frontend')->group(function () {
     // Bibliotheque routes
     Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
     Route::get('bibliotheque_check_liked', 'BibliothequeController@checkLiked')->middleware('auth');
+    Route::get('bibliotheque_check_read', 'BibliothequeController@checkRead')->middleware('auth');
 
     // Ajax routes
     Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware('auth');

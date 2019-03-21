@@ -46,6 +46,7 @@ return [
     ],
     'objectType'    => [
         'product'   => 'PRODUCT',
-        'book'      => 'BOOK'
+        'book'      => 'BOOK',
+        'library'   => 'LIBRARY'
     ]
 ];
