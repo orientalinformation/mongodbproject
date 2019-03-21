@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Repositories\Research\ResearchRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
+use App\Repositories\BibliothequeDetail\BibliothequeDetailRepositoryInterface;
 use App\Repositories\Library\LibraryRepositoryInterface;
 
 class BibliothequeController extends Controller
@@ -34,6 +35,11 @@ class BibliothequeController extends Controller
      * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
 	protected $libraryRepository;
+
+	/**
+     * @var BibliothequeDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+	protected $bibliothequeDetailRepository;
 	
 	/**
      * Instantiate Bibliotheque controller.
@@ -43,6 +49,7 @@ class BibliothequeController extends Controller
 	 * @param ResearchRepositoryInterface $researchRepository
 	 * @param LibraryRepositoryInterface $libraryRepository
      * @param BibliothequeRepositoryInterface $bibliothequeRepository
+	 * @param BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository
      * @return void
      */
     public function __construct(
@@ -50,13 +57,15 @@ class BibliothequeController extends Controller
         BibliothequeRepositoryInterface $bibliothequeRepository,
 		CategoryRepositoryInterface $categoryRepository,
 		ResearchRepositoryInterface $researchRepository,
-		LibraryRepositoryInterface $libraryRepository
+		LibraryRepositoryInterface $libraryRepository,
+		BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository
     ) {
         $this->request = $request;
         $this->bibliothequeRepository = $bibliothequeRepository;
         $this->categoryRepository = $categoryRepository;
 		$this->researchRepository = $researchRepository;
 		$this->libraryRepository = $libraryRepository;
+		$this->bibliothequeDetailRepository = $bibliothequeDetailRepository;
     }
 
     /** 
@@ -152,5 +161,72 @@ class BibliothequeController extends Controller
 			'Frontend.Bibliotheque.index',
 			compact('bibliotheques', 'category', 'researches', 'bibliothequeItems', 'urlSort', 'result', 'paginate', 'q', 'library')
 		);
+	}
+	
+	/**
+     * Check status like
+     *
+     * @return string
+     */
+    public function checkLiked(Request $request)
+    {
+        // print_r($request->all());die();
+        $result['status'] = 0;
+        $result['data'] = "";
+        if($request->has("object_id")) {
+            $userId = Auth::user()->id;
+            $objectId = $request->get("object_id");
+            $bibliothequeDetail = $this->bibliothequeDetailRepository->checkLiked($userId, $objectId)->toArray();
+            
+            if(sizeof($bibliothequeDetail) > 0) {
+                $result['status'] = 1;
+                $result['data'] = $bibliothequeDetail;
+            } else {
+                $result['status'] = 0;
+            }
+
+            if($request->has("change")) {
+                $change = $request->get("change");
+                if($change == 1) {
+                    if(sizeof($bibliothequeDetail) > 0) {
+                        foreach($bibliothequeDetail as $item) {
+                            $data['bibliotheque_id'] = $item['bibliotheque_id'];
+                            $data['user_id'] = $item['user_id'];
+                            $data['share'] = $item['share'];
+                            $data['pink'] = $item['pink'];
+                            $data['is_public'] = $item['is_public'];
+                            $data['is_delete'] = 1;
+                            $this->bibliothequeDetailRepository->update($item['_id'], $data);
+                        }
+                        $result['status'] = 1;
+                    } else {
+                        $bibliothequeDetail = $this->bibliothequeDetailRepository->checkunLiked($userId, $objectId)->toArray();
+                        if(sizeof($bibliothequeDetail) > 0) {
+                            foreach($bibliothequeDetail as $item) {
+                                $data['bibliotheque_id'] = $item['bibliotheque_id'];
+                                $data['user_id'] = $item['user_id'];
+                                $data['share'] = $item['share'];
+                                $data['pink'] = $item['pink'];
+                                $data['is_public'] = $item['is_public'];
+                                $data['is_delete'] = 0;
+                                $this->bibliothequeDetailRepository->update($item['_id'], $data);
+                            }
+                        } else {
+                            $data['bibliotheque_id'] = $objectId;
+                            $data['user_id'] = $userId;
+                            $data['share'] = 0;
+                            $data['pink'] = 0;
+                            $data['is_public'] = 0;
+                            $data['is_delete'] = 0;
+                            $data = $this->bibliothequeDetailRepository->create($data);
+                            $result['data'] = $data;
+                        }
+                        $result['status'] = 2;
+                    }
+                }
+            }
+        }
+
+        return response()->json($result);
     }
 }
