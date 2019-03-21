@@ -135,6 +135,7 @@ class ProductController extends Controller
 			}
 
 			$arrCategory = array_values(array_unique($arrCategory));
+            $options['category_query'] = $this->request->get('category');
 			$options['category'] = $arrCategory;
 			$paramPath .= 'category=' . $this->request->get('category') . '&';
 		}
@@ -142,6 +143,11 @@ class ProductController extends Controller
 		$urlSort = [];
 		$urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
 		$urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
+        if($this->request->has('page')) {
+            $urlSort['latest'] .= '&page=' . $this->request->get('page');
+            $urlSort['oldest'] .= '&page=' . $this->request->get('page');
+        }
+
 		$indexName = Config::get('constants.elasticsearch.product.index');
 		$typeName = Config::get('constants.elasticsearch.product.type');
 
@@ -170,7 +176,7 @@ class ProductController extends Controller
 		    }
 		}
 
-		$paginate = Ulities::calculatorPage($q, $page, $products['total'], $limit);
+		$paginate = Ulities::calculatorPage($q, $page, $products['total'], $limit, $options);
 		$result = $this->productRepository->paginate($limit)->toArray();
 		// list category left
 		$category = $this->categoryRepository->parentOrderByPath()->toArray();
