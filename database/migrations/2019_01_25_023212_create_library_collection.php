@@ -20,6 +20,7 @@ class CreateLibraryCollection extends Migration
             $collection->integer('share');
             $collection->string('user_id');
             $collection->integer('view');
+            $collection->boolean('is_public');
             $collection->boolean('is_delete');
             $collection->timestamps();
 

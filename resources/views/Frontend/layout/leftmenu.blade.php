@@ -1,9 +1,10 @@
+<?php $url=strtok($_SERVER["REQUEST_URI"],'?'); ?>
 <ul class="profile-menu-left menu-home menu-library">
     <?php if(sizeof($category) >0 ): ?>
         @foreach($category as $item)
-        <li><a class="accordion-toggle" href="#colMenu<?= $item['_id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
         <?php $subCat = EnvatoCategory::getSubCategory($item['_id']); ?>
             <?php if(sizeof($subCat) > 0): ?>
+            <li><a class="accordion-toggle" href="#colMenu<?= $item['_id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
             <div id="colMenu<?= $item['_id'] ?>" class="panel-collapse collapse">
                 <ul class="sub-menu-library">
                     @foreach($subCat as $subItem)
@@ -13,22 +14,24 @@
                             <div id="colMenuSub<?= $subItem['_id'] ?>" class="panel-collapse collapse in">
                                 <ul class="sub-menu-library">
                                     @foreach($sub2Cat as $sub2Item)
-                                        <li>{{ $sub2Item['name'] }}</li>
+                                        <li><a href="<?= $url . '?catID=' . $subItem['_id'] ?>">{{ $sub2Item['name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
                         <?php else: ?>
-                            <li>{{ $subItem['name'] }}</li>
+                            <li><a href="<?= $url . '?catID=' . $subItem['_id'] ?>">{{ $subItem['name'] }}</a></li>
                         <?php endif;?>
                     @endforeach
                 </ul>
             </div>
+            <?php else: ?>
+            <li><a href="<?= $url . '?catID=' . $item['_id'] ?>">{{ $item['name'] }}</a></li>
             <?php endif;?>
         @endforeach
     <?php endif; ?>
     <li>
-        <img src="{{ URL::to('/image/front/video-checked.png')}}" class="library-video-icon">
-        <img src="{{ URL::to('/image/front/video-remove.png')}}" class="library-video-icon">
+        <a href="#"><img src="{{ URL::to('/image/front/video-checked.png')}}" class="library-video-icon"></a>
+        <a href="#"><img src="{{ URL::to('/image/front/video-remove.png')}}" class="library-video-icon"></a>
     </li>
     <li>
         <input type="hidden" id="slider_range" class="flat-slider" />
@@ -46,6 +49,7 @@
         <div class="link-menu"><a href="#">voir plus</a></div>
     </div>
     @endif
+    <?php if (!empty(Auth::user())): ?>
     <li><a class="accordion-toggle" href="#colMenu4" data-toggle="collapse">Mes bibliothèques</a></li>
     <div id="colMenu4" class="panel-collapse collapse in">
         <ul class="sub-menu-library">
@@ -67,27 +71,7 @@
         </ul>
         <div class="link-menu"><a href="#">voir plus</a></div>
     </div>
-    <li><a class="accordion-toggle" href="#colMenu5" data-toggle="collapse">Bibliothèques publiques</a></li>
-    <div id="colMenu5" class="panel-collapse collapse in">
-        <ul class="sub-menu-library">
-            <li>Nom de la bibio par rene
-                <span class="pin-icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <i class="fa fa-share" aria-hidden="true"></i></span>
-            </li>
-            <li>Nom de la bibio2 par @rene
-                <span class="pin-icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <i class="fa fa-share" aria-hidden="true"></i></span>
-            </li>
-            <li>Nom de la bibio par Pierre badin
-                <span class="pin-icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <i class="fa fa-share" aria-hidden="true"></i></span>
-            </li>
-            <li>Nom de la bibio par rene
-                <span class="pin-icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <i class="fa fa-share" aria-hidden="true"></i></span>
-            </li>
-            <li>Nom de la bibio par rene
-                <span class="pin-icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i> <i class="fa fa-share" aria-hidden="true"></i></span>
-            </li>
-        </ul>
-        <div class="link-menu"><a href="#">voir plus</a></div>
-    </div>
+    <?php endif; ?>
 </ul>
 
 @section('script-left-menu')

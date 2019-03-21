@@ -49,9 +49,10 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
             ['is_delete', '=', 0]])->get();
     }
 
-    public function getAllPublic($perPage)
+    public function getAllPublicByUserID($userId, $perPage)
     {
-        return BookDetail::where([['is_public', '=', 1],
+        return BookDetail::where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
             ['is_delete', '=', 0]])->paginate($perPage);
     }
 }

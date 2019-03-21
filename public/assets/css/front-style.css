@@ -805,7 +805,7 @@ input.chkAgree{
 }
 
 .profile-menu-left li:first-child{
-    padding: 18px 0 8px 15px;
+    padding: 18px 0 8px 30px;
 }
 
 .profile-menu-left li{
@@ -2721,6 +2721,10 @@ ul.horizontal-menu-library > li a{
     font-weight: bold;
     text-align: center;
     padding-top: 20px;
+}
+
+.divIcon a{
+    color: #ffffff;
 }
 
 .home-slider .item .image img{

@@ -58,11 +58,11 @@ class BookController extends Controller
             $page = 1;
         }
         $category = $this->cateogryRepository->parentOrderByPath()->toArray();
-        if($request->has('start_year') && $request->has('end_year')) {
+        if ($request->has('start_year') && $request->has('end_year')) {
             $start_year = $request->get('start_year');
             $end_year = $request->get('end_year');
             $book = $this->bookRepository->getRange($start_year, $end_year, $rowPage)->toArray();
-        }else if($request->has('txtSearch')){
+        } else if ($request->has('txtSearch')) {
             $client = ClientBuilder::create()->build();
             $searchValue = $request->get('txtSearch');
             $matchAll = [
@@ -70,16 +70,16 @@ class BookController extends Controller
             ];
 
             $matchPrefix = [
-                'match_phrase_prefix'   => [
+                'match_phrase_prefix' => [
                     'title' => $searchValue
                 ]
             ];
             $param = [
                 'index' => Config::get('constants.elasticsearch.book.index'),
-                'type'  => Config::get('constants.elasticsearch.book.type'),
-                'body'  => [
-                    'from'  => ($page - 1) * $rowPage,
-                    'size'  => $rowPage,
+                'type' => Config::get('constants.elasticsearch.book.type'),
+                'body' => [
+                    'from' => ($page - 1) * $rowPage,
+                    'size' => $rowPage,
                     'query' => is_null($searchValue) ? $matchAll : $matchPrefix
 
                 ]
@@ -88,11 +88,14 @@ class BookController extends Controller
             $response = $client->search($param);
             $book['total'] = $response["hits"]["total"];
             $book['data'] = [];
-            if($response["hits"]["total"] > 0) {
+            if ($response["hits"]["total"] > 0) {
                 foreach ($response["hits"]["hits"] as $item) {
                     $book['data'][] = $item['_source'];
                 };
             }
+        } else if ($request->has('catID')){
+            $catID = $request->get('catID');
+            $book = $this->bookRepository->getByCatID($catID, $rowPage)->toArray();
         }else{
             $book = $this->bookRepository->paginate($rowPage)->toArray();
         }

@@ -11,6 +11,8 @@ use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\BookDetail\BookDetailRepositoryInterface;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
+use App\Repositories\Library\LibraryRepositoryInterface;
+use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 
 use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
@@ -44,6 +46,16 @@ class HomeController extends Controller
     protected $bibliothequetRepository;
 
     /**
+     * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $libraryRepository;
+
+    /**
+     * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $librarydetailRepository;
+
+    /**
      * Instantiate product controller.
      *
      * @param Request $request
@@ -63,7 +75,9 @@ class HomeController extends Controller
                                 ProductDetailRepositoryInterface $productdetailRepository,
                                 Request $request,
                                 UserRepositoryInterface $userRepository,
-                                BibliothequeRepositoryInterface $bibliothequetRepository)
+                                BibliothequeRepositoryInterface $bibliothequetRepository,
+                                LibraryRepositoryInterface $libraryRepository,
+                                LibraryDetailRepositoryInterface $librarydetailRepository)
     {
         $this->webRepository = $webRepository;
         $this->webdetailRepository = $webdetailRepository;
@@ -74,6 +88,8 @@ class HomeController extends Controller
         $this->request = $request;
         $this->userRepository = $userRepository;
         $this->bibliothequetRepository = $bibliothequetRepository;
+        $this->libraryRepository = $libraryRepository;
+        $this->librarydetailRepository = $librarydetailRepository;
     }
 
     /**
@@ -117,10 +133,13 @@ class HomeController extends Controller
 
     public function index_login()
     {
-        $web = $this->webdetailRepository->getAllPublic(3)->toArray();
-        $book = $this->bookdetailRepository->getAllPublic(3)->toArray();
-        $product = $this->productdetailRepository->getAllPublic(3)->toArray();
-        return view('Frontend.Home.index_login', compact(['web','book','product']));
+        $userId = 1;
+        $perPage = 3;
+        $web = $this->webdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        $book = $this->bookdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        $product = $this->productdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        $library = $this->librarydetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        return view('Frontend.Home.index_login', compact(['web','book','product','library']));
     }
 
     /**

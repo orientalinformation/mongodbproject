@@ -44,8 +44,8 @@
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
-                                            <span>Web</span>
-                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            <a href="#"><span>Web</span></a>
+                                            <a href="#"><i class="fa fa-globe" aria-hidden="true"></i></a>
                                         </div>
                                         <div id="homeCarousel1" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
@@ -88,8 +88,8 @@
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
-                                            <span>Événement</span>
-                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            <a href="#"><span>Événement</span></a>
+                                            <a href="#"><i class="fa fa-calendar" aria-hidden="true"></i></a>
                                         </div>
                                         <div id="homeCarousel2" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
@@ -124,8 +124,8 @@
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
-                                            <span>Étude</span>
-                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            <a href="{{ URL::to('/') . '/book' }}"><span>Étude</span></a>
+                                            <a href="{{ URL::to('/') . '/book' }}"><i class="fa fa-book" aria-hidden="true"></i> </a>
                                         </div>
                                         <div id="homeCarousel3" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
@@ -168,8 +168,8 @@
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
-                                            <span>Causerie</span>
-                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            <a href="#"><span>Causerie</span></a>
+                                            <a href="#"><i class="fa fa-weixin" aria-hidden="true"></i></a>
                                         </div>
                                         <div id="homeCarousel4" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
@@ -204,8 +204,8 @@
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
-                                            <span>Produit</span>
-                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            <a href="{{ URL::to('/') . '/product' }}"><span>Produit</span></a>
+                                            <a href="{{ URL::to('/') . '/product' }}"><i class="fa fa-product-hunt" aria-hidden="true"></i></a>
                                         </div>
                                         <div id="homeCarousel5" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
@@ -248,30 +248,38 @@
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
-                                            <span>Bibliothèque</span>
-                                            <i class="fa fa-globe" aria-hidden="true"></i>
+                                            <a href="{{ URL::to('/') . '/book' }}"><span>Bibliothèque</span></a>
+                                            <a href="{{ URL::to('/') . '/book' }}"><i class="fa fa-university" aria-hidden="true"></i></a>
                                         </div>
                                         <div id="homeCarousel6" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
-                                                <div class="item clearfix active">
+                                                <?php $i = 1;?>
+                                                @foreach($library['data'] as $item)
+                                                <?php $library_data = EnvatoLibrary::getLibraryDetail($item['library_id']);?>
+                                                <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
                                                     <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
+                                                        <?php
+                                                        if (array_key_exists("image",$library_data[0])){
+                                                            $imagePath = URL::to('/') . '/upload/book/' . $library_data[0]['image'];
+//                                                                if (@getimagesize($imagePath)) {
+//                                                                    echo '<img src="' . $imagePath . '">';
+//                                                                }else{
+//                                                                    echo '<img src="https://via.placeholder.com/100x100">';
+//                                                                }
+                                                        }else{
+                                                            echo '<img src="https://via.placeholder.com/100x100">';
+                                                        }
+                                                        echo '<img src="' . $imagePath . '">';
+                                                        ?>
                                                     </div>
                                                     <div class="content">
-                                                        <p class="title">title 1</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                        <p class="title">{{ $library_data[0]['title'] }}</p>
+                                                        <p class="description">{{ $library_data[0]['description'] }}</p>
                                                     </div>
                                                 </div>
-                                                <div class="item clearfix">
-                                                    <div class="image">
-                                                        <img src="https://via.placeholder.com/100x100" alt="">
-                                                    </div>
-                                                    <div class="content">
-                                                        <p class="title">title 2</p>
-                                                        <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                                    </div>
-                                                </div>
+                                                <?php $i++; ?>
+                                                @endforeach
                                             </div>
 
                                             <!-- Left and right controls -->

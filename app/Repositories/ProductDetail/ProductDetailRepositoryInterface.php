@@ -11,7 +11,6 @@ namespace App\Repositories\ProductDetail;
 
 interface ProductDetailRepositoryInterface
 {
-    public function getAllPublic($perPage);
     /**
      * Get Check Liked
      *
@@ -47,4 +46,6 @@ interface ProductDetailRepositoryInterface
      * @return mixed
      */
     public function checkunShared($user_id, $product_id);
+
+    public function getAllPublicByUserID($userId, $perPage);
 }

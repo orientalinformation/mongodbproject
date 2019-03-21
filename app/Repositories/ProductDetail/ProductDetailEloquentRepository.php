@@ -21,12 +21,6 @@ class ProductDetailEloquentRepository extends EloquentRepository implements Prod
         return ProductDetail::class;
     }
 
-    public function getAllPublic($perPage)
-    {
-        return ProductDetail::where([['is_public', '=', 1],
-            ['is_delete', '=', 0]])->paginate($perPage);
-    }
-
     public function checkLiked($user_id, $product_id)
     {
         return ProductDetail::where([['user_id', '=', $user_id],
@@ -55,5 +49,12 @@ class ProductDetailEloquentRepository extends EloquentRepository implements Prod
             ['product_id', '=', $product_id],
             ['share', '=', 0],
             ['is_delete', '=', 0]])->get();
+    }
+
+    public function getAllPublicByUserID($userId, $perPage)
+    {
+        return ProductDetail::where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
+            ['is_delete', '=', 0]])->paginate($perPage);
     }
 }

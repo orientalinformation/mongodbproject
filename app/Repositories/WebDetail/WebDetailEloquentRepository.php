@@ -22,9 +22,10 @@ class WebDetailEloquentRepository extends EloquentRepository implements WebDetai
         return WebDetail::class;
     }
 
-    public function getAllPublic($perPage)
+    public function getAllPublicByUserID($userId, $perPage)
     {
-        return WebDetail::where([['is_public', '=', 1],
+        return WebDetail::where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
             ['is_delete', '=', 0]])->paginate($perPage);
     }
 }
