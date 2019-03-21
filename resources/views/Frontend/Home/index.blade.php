@@ -34,7 +34,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-2 col-sm-2">
-                    <div class="bg_home_menu"><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Mes Bibliotheques</a></div>
+                    <div class="bg_home_menu"><a href="{{ route('frontBibliotheque') }}"><i class="fa fa-book" aria-hidden="true"></i> Mes Bibliotheques</a></div>
                     <div class="bg_home_menu"><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Mes Causeries</a></div>
                     <div class="bg_home_menu"><a href="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Mes Sauvegardes</a></div>
                 </div>
@@ -62,7 +62,7 @@
                                             @foreach($webs as $key => $web)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $web['_source']['enclosure'] }}" alt="">
+                                                    <img src="{{ $web['_source']['enclosure'] }}" alt="{{ $web['_source']['title'] }}">
                                                 </div>
                                                 <div class="content">
                                                     <p class="title">{{ $web['_source']['title'] }}</p>
@@ -191,7 +191,7 @@
                                             @foreach ($products as $key => $product)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $product['_source']['image'] }}" alt="">
+                                                    <img src="{{ $product['_source']['image'] }}" alt="{{ $product['_source']['title'] }}">
                                                 </div>
                                                 <div class="content">
                                                     <p class="title">{{ $product['_source']['title'] }}</p>
@@ -220,7 +220,7 @@
                                             @foreach ($bibliothequets as $key => $bibliothequet)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $bibliothequet['_source']['image'] }}" alt="">
+                                                    <img src="{{ $bibliothequet['_source']['image'] }}" alt="{{ $bibliothequet['_source']['title'] }}">
                                                 </div>
                                                 <div class="content">
                                                     <p class="title">{{ $bibliothequet['_source']['title'] }}</p>
