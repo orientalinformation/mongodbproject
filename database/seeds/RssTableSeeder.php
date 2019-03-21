@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Model\Rss;
+use App\Model\Web;
+use Elasticsearch\ClientBuilder;
 
 class RssTableSeeder extends Seeder
 {
@@ -13,7 +15,19 @@ class RssTableSeeder extends Seeder
      */
     public function run()
     {
-        Rss::truncate();
+        Rss::query()->delete();
+        Web::query()->delete();
+        //delete ElasticSearch Web Index
+        $param = [
+            'index' => Config::get('constants.elasticsearch.web.index')
+        ];
+
+        $client = ClientBuilder::create()->build();
+        // check index exists before delete
+        if ($client->indices()->exists($param)) {
+            $client->indices()->delete($param);
+        }
+
         $data = [
             [
                 'url'           => 'https://www.lemonde.fr/rss/une.xml',
