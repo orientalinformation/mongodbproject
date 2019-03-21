@@ -34,9 +34,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-2 col-sm-2">
-                    <div class="bg_home_menu"><a href="{{ route('frontBibliotheque') }}"><i class="fa fa-book" aria-hidden="true"></i> Mes Bibliotheques</a></div>
-                    <div class="bg_home_menu"><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Mes Causeries</a></div>
-                    <div class="bg_home_menu"><a href="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Mes Sauvegardes</a></div>
+                    <div class="bg_home_menu"><a href="{{ route('frontBibliotheque') }}"><i class="fa fa-book" aria-hidden="true"></i> BIBLIOTHEQUE</a></div>
+                    <div class="bg_home_menu"><a href="#"><i class="fa fa-users" aria-hidden="true"></i> Social NETWORK</a></div>
+                    <div class="bg_home_menu"><a href="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Annuaire</a></div>
                 </div>
                 <div class="col-lg-10 col-sm-10">
                     <div class="container-fluid">
