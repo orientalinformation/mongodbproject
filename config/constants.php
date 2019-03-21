@@ -8,7 +8,7 @@
 
 return [
 
-    'rowPage'       => 20,
+    'rowPage'       => 24,
     'rowPageBook'   => 24,
     'itemSearchHome' => 3,
     'bookPath'  => '/public/upload/book/',
