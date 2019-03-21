@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -174,11 +175,11 @@ class BibliothequeController extends Controller
         // print_r($request->all());die();
         $result['status'] = 0;
         $result['data'] = "";
-        if($request->has("object_id")) {
+        if($request->has("library_id")) {
             $userId = Auth::user()->id;
-            $objectId = $request->get("object_id");
-            $bibliothequeDetail = $this->bibliothequeDetailRepository->checkLiked($userId, $objectId)->toArray();
-            
+            $libraryId = $request->get("library_id");
+            $bibliothequeDetail = $this->bibliothequeDetailRepository->checkLiked($userId, $libraryId)->toArray();
+            // print_r($request->all());die();
             if(sizeof($bibliothequeDetail) > 0) {
                 $result['status'] = 1;
                 $result['data'] = $bibliothequeDetail;
@@ -201,7 +202,7 @@ class BibliothequeController extends Controller
                         }
                         $result['status'] = 1;
                     } else {
-                        $bibliothequeDetail = $this->bibliothequeDetailRepository->checkunLiked($userId, $objectId)->toArray();
+                        $bibliothequeDetail = $this->bibliothequeDetailRepository->checkunLiked($userId, $libraryId)->toArray();
                         if(sizeof($bibliothequeDetail) > 0) {
                             foreach($bibliothequeDetail as $item) {
                                 $data['bibliotheque_id'] = $item['bibliotheque_id'];
@@ -213,7 +214,7 @@ class BibliothequeController extends Controller
                                 $this->bibliothequeDetailRepository->update($item['_id'], $data);
                             }
                         } else {
-                            $data['bibliotheque_id'] = $objectId;
+                            $data['bibliotheque_id'] = $libraryId;
                             $data['user_id'] = $userId;
                             $data['share'] = 0;
                             $data['pink'] = 0;

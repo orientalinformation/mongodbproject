@@ -18,14 +18,14 @@ class BibliothequeDetailEloquentRepository extends EloquentRepository implements
      * Get Check Liked
      *
      * @param int $userId
-     * @param string $bibliothequeId
+     * @param string $libraryId
      * @return mixed
      */
-    public function checkLiked($userId, $bibliothequeId)
+    public function checkLiked($userId, $libraryId)
     {
         return BibliothequeDetail::where([
             ['user_id', '=', $userId],
-            ['bibliotheque_id', '=', $bibliothequeId],
+            ['library_id', '=', $libraryId],
             ['is_delete', '=', 0]
         ])->get();
     }

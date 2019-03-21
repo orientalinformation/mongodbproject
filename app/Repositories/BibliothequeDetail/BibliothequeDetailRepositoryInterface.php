@@ -12,7 +12,7 @@ interface BibliothequeDetailRepositoryInterface
      * @param string $bibliothequeId
      * @return mixed
      */
-    public function checkLiked($userId, $bibliothequeId);
+    public function checkLiked($userId, $libraryId);
 
     /**
      * Get Check unLiked

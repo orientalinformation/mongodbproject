@@ -142,7 +142,7 @@ function searchBibliotheque() {
 $('.menu-tooltips').click(function() {
 	let type = $(this).data('type');
 	let display = $(this).closest(".wrap").find(".content-panel");
-	let bibliothequeId = $(this).closest(".wrap").find(".bibliotheque-id").val();
+	let libraryId = $(this).closest(".wrap").find(".bibliotheque-id").val();
 	let heart = $(this).closest(".wrap").find(".likeIcon");
 	let read = $(this).closest(".wrap").find(".readIcon");
 	let share = $(this).closest(".wrap").find(".shareIcon");
@@ -152,7 +152,7 @@ $('.menu-tooltips').click(function() {
 			url: "/bibliotheque_check_liked",
 			cache: false,
 			type: "GET",
-			data: {user_id: 1, bibliotheque_id: bibliothequeId},
+			data: {user_id: 1, library_id: libraryId},
 			success: function(result) {
 				console.log(result);
 				result = JSON.parse(result);
