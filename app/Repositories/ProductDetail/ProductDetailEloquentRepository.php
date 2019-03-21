@@ -21,32 +21,60 @@ class ProductDetailEloquentRepository extends EloquentRepository implements Prod
         return ProductDetail::class;
     }
 
-    public function checkLiked($user_id, $product_id)
+    /**
+     * Get Check Liked
+     *
+     * @param int $userId
+     * @param string $productId
+     * @return mixed
+     */
+    public function checkLiked($userId, $productId)
     {
-        return ProductDetail::where([['user_id', '=', $user_id],
-            ['product_id', '=', $product_id],
+        return ProductDetail::where([['user_id', '=', $userId],
+            ['product_id', '=', $productId],
             ['is_delete', '=', 0]])->get();
     }
 
-    public function checkunLiked($user_id, $product_id)
+    /**
+     * Get Check unLiked
+     *
+     * @param int $userId
+     * @param string $productId
+     * @return mixed
+     */
+    public function checkunLiked($userId, $productId)
     {
-        return ProductDetail::where([['user_id', '=', $user_id],
-            ['product_id', '=', $product_id],
+        return ProductDetail::where([['user_id', '=', $userId],
+            ['product_id', '=', $productId],
             ['is_delete', '=', 1]])->get();
     }
 
-    public function checkShared($user_id, $product_id)
+    /**
+     * Get Check Shared
+     *
+     * @param int $userId
+     * @param string $productId
+     * @return mixed
+     */
+    public function checkShared($userId, $productId)
     {
-        return ProductDetail::where([['user_id', '=', $user_id],
-            ['product_id', '=', $product_id],
+        return ProductDetail::where([['user_id', '=', $userId],
+            ['product_id', '=', $productId],
             ['share', '=', 1],
             ['is_delete', '=', 0]])->get();
     }
 
-    public function checkunShared($user_id, $product_id)
+    /**
+     * Get Check unShared
+     *
+     * @param int $userId
+     * @param string $productId
+     * @return mixed
+     */
+    public function checkunShared($userId, $productId)
     {
-        return ProductDetail::where([['user_id', '=', $user_id],
-            ['product_id', '=', $product_id],
+        return ProductDetail::where([['user_id', '=', $userId],
+            ['product_id', '=', $productId],
             ['share', '=', 0],
             ['is_delete', '=', 0]])->get();
     }

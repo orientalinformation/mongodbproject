@@ -31,7 +31,7 @@ if ($paginate['pageNum'] > $limitPage) {
             @if($leftLimitPage > 1)
                 @for( $i = 1; $i <= $leftLimitPage; $i++)
                     <li class="page-item {{ ($paginate['page'] == $i) ? 'active' : '' }}">
-                        <a class="page-link" href="{{ $paginate['page'] == $i ? '#' : ($paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . $i) }}" class="" > {{ $i }}</a>
+                        <a class="page-link" href="{{ $paginate['page'] == $i ? '#' : $paginate['url'] . 'page=' . $i }}" class="" > {{ $i }}</a>
                     </li>
                 @endfor
             @endif
@@ -52,7 +52,7 @@ if ($paginate['pageNum'] > $limitPage) {
                 <li class="page-item disabled"><span class="page-link">...</span></li>
                 @for( $i = $rightLimitPage; $i <= $paginate['pageNum']; $i++)
                     <li class="page-item {{ ($paginate['page'] == $i) ? 'active' : '' }}">
-                        <a class="page-link" href="{{ ($paginate['page']) == $i ? '#' : ($paginate['url'] . ($q ? '?q=' . $q : '') . (is_null($q) ? '?page=' : '&page=') . $i) }}" class="" > {{ $i }}</a>
+                        <a class="page-link" href="{{ $paginate['page'] == $i ? '#' : $paginate['url'] . 'page=' . $i }}" class="" > {{ $i }}</a>
                     </li>
                 @endfor
             @endif

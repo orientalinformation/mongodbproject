@@ -45,7 +45,7 @@ class ProductTableSeeder extends Seeder
             for ($i = 0; $i < 100; $i++) { 
                 $title = $faker->text(20);
                 $url = str_slug($title);
-                $description = $faker->text(30);
+                $description = $faker->text(150);
                 $image = '/image/front/Bibliotheque_Web_1.jpg';
                 $view = 2;
                 $userId = 1;
