@@ -85,32 +85,65 @@ class HomeController extends Controller
                 }
             }
 
-            $webs = null;
-            $books = null;
-            $products = null;
-            $bibliothequets = null;
+            $webs = [];
+            $books = [];
+            $products = [];
+            $bibliothequets = [];
             $limit = Config::get('constants.itemSearchHome');
             $page = $this->request->has('page') ? $this->request->get('page') : 1;
             $options = null;
             $options['page'] = $page;
             $options['limit'] = $limit;
+            $client = ClientBuilder::create()->build();
             if (!empty($listAdminIds)) {
                 $options['user'] = $listAdminIds;
                 // get web data
-                $webs = $this->webRepository->getItemsByadmin($limit);
-
+                $indexName = Config::get('constants.elasticsearch.web.index');
+                $typeName = Config::get('constants.elasticsearch.web.type');
+                $param = [
+                    'index' => $indexName
+                ];
+                if ($client->indices()->exists($param)) {
+                    $params = Ulities::getElasticParams($indexName, $typeName, $options);
+                    $response = $client->search($params);
+                    $webs = $response['hits']['hits'];
+                }
+                
                 // get book data
-                $books = $this->bookRepository->getItemsByadmin($listAdminIds, $limit);
+                $indexName = Config::get('constants.elasticsearch.book.index');
+                $typeName = Config::get('constants.elasticsearch.book.type');
+                $param = [
+                    'index' => $indexName
+                ];
+                if ($client->indices()->exists($param)) {
+                    $params = Ulities::getElasticParams($indexName, $typeName, $options);
+                    $response = $client->search($params);
+                    $books = $response['hits']['hits'];
+                }
                 
                 // get product data
                 $indexName = Config::get('constants.elasticsearch.product.index');
                 $typeName = Config::get('constants.elasticsearch.product.type');
-                $params = Ulities::getElasticParams($indexName, $typeName, $options);
-                $response = ClientBuilder::create()->build()->search($params);
-                $products = $response['hits']['hits'];
+                $param = [
+                    'index' => $indexName
+                ];
+                if ($client->indices()->exists($param)) {
+                    $params = Ulities::getElasticParams($indexName, $typeName, $options);
+                    $response = $client->search($params);
+                    $products = $response['hits']['hits'];
+                }
 
                 // get product data
-                $bibliothequets = $this->bibliothequetRepository->getItemsByadmin($listAdminIds, $limit);
+                $indexName = Config::get('constants.elasticsearch.bibliotheque.index');
+                $typeName = Config::get('constants.elasticsearch.bibliotheque.type');
+                $param = [
+                    'index' => $indexName
+                ];
+                if ($client->indices()->exists($param)) {
+                    $params = Ulities::getElasticParams($indexName, $typeName, $options);
+                    $response =  $client->search($params);
+                    $bibliothequets = $response['hits']['hits'];
+                }
             }
             
             $pageName = 'home';

@@ -62,11 +62,11 @@
                                             @foreach($webs as $key => $web)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $web->enclosure }}" alt="">
+                                                    <img src="{{ $web['_source']['enclosure'] }}" alt="">
                                                 </div>
                                                 <div class="content">
-                                                    <p class="title">{{ $web->title }}</p>
-                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($web->description), 120) }}</p>
+                                                    <p class="title">{{ $web['_source']['title'] }}</p>
+                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($web['_source']['description']), 120) }}</p>
                                                 </div>
                                             </div>
                                             @endforeach
@@ -128,16 +128,14 @@
                                        @foreach ($books as $key => $book)
                                         <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                             <div class="image">
-                                                <img src="{{ $book->book->image }}" alt="">
+                                                <img src="{{ $book['_source']['image'] }}" alt="">
                                             </div>
                                             <div class="content">
-                                                <p class="title">{{ $book->book->title }}</p>
-                                                <p class="description">{{ EnvatoUlities::limit(strip_tags($book->book->description), 120) }}</p>
+                                                <p class="title">{{ $book['_source']['title'] }}</p>
+                                                <p class="description">{{ EnvatoUlities::limit(strip_tags($book['_source']['description']), 120) }}</p>
                                             </div>
                                         </div>
                                         @endforeach
-
-                                      <!-- Left and right controls -->
                                       <a class="right carousel-control" href="#homeCarousel3" data-slide="next">
                                         <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                       </a>
@@ -222,11 +220,11 @@
                                             @foreach ($bibliothequets as $key => $bibliothequet)
                                             <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                                 <div class="image">
-                                                    <img src="{{ $bibliothequet->bibliothequet->image }}" alt="">
+                                                    <img src="{{ $bibliothequet['_source']['image'] }}" alt="">
                                                 </div>
                                                 <div class="content">
-                                                    <p class="title">{{ $bibliothequet->bibliothequet->title }}</p>
-                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($bibliothequet->bibliothequet->description), 120) }}</p>
+                                                    <p class="title">{{ $bibliothequet['_source']['title'] }}</p>
+                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($bibliothequet['_source']['description']), 120) }}</p>
                                                 </div>
                                             </div>
                                             @endforeach

@@ -9,6 +9,7 @@
 namespace App\Helpers\Envato;
 use \DateTime;
 use Elasticsearch\ClientBuilder;
+use Illuminate\Support\Facades\Config;
 
 
 class Ulities
@@ -162,14 +163,21 @@ class Ulities
         $limit = $options['limit'];
         $offset = ($options['page'] > 1) ? ($options['page'] - 1) * $limit : 0;
         $must = [];
-        $must[] = [
-            'match' => [
-                'is_delete' => 0
-            ],
-            'match' => [
-                'is_public' => 1
-            ]
-        ];
+        if ($indexName == Config::get('constants.elasticsearch.web.index')) {
+            $must[] = [
+                'match_all' => new \stdClass()
+            ];
+        } else {
+            $must[] = [
+                'match' => [
+                    'is_delete' => 0
+                ],
+                'match' => [
+                    'is_public' => 1
+                ]
+            ];
+        }
+
         if ($options != null) {
             if (isset($options['q'])) {
                 $must[] = [
@@ -179,22 +187,24 @@ class Ulities
                 ];
             }
 
-            if (isset($options['category'])) {
-                $category = $options['category'];
-                $must[] = [
-                    'terms' => [
-                        'category_id' => $category
-                    ]
-                ];
-            }
+            if ($indexName != Config::get('constants.elasticsearch.web.index')) {
+                if (isset($options['category'])) {
+                    $category = $options['category'];
+                    $must[] = [
+                        'terms' => [
+                            'category_id' => $category
+                        ]
+                    ];
+                }
 
-            if (isset($options['user'])) {
-                $user = $options['user'];
-                $must[] = [
-                    'terms' => [
-                        'user_id' => $user
-                    ]
-                ];
+                if (isset($options['user'])) {
+                    $user = $options['user'];
+                    $must[] = [
+                        'terms' => [
+                            'user_id' => $user
+                        ]
+                    ];
+                }
             }
 
             if (isset($options['start_year']) && isset($options['end_year'])) {
