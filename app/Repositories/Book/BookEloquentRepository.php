@@ -13,6 +13,7 @@ use App\Model\Book;
 use App\Model\BookDetail;
 use App\Repositories\EloquentRepository;
 use Carbon\Carbon;
+use DB;
 
 class BookEloquentRepository extends EloquentRepository implements BookRepositoryInterface
 {
@@ -45,5 +46,23 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
         $endDate = Carbon::createFromDate($end_year, 12, 1);
 
         return Book::whereBetween('created_at', array($startDate, $endDate))->paginate($perPage);
+    }
+
+    /**
+     * get items by admin
+     *
+     * @param array $listAdminIds
+     * @param int $limit
+     * @return mixed
+     */
+    public function getItemsByadmin($listAdminIds, $limit)
+    {
+        $items = BookDetail::with('book')
+                            ->whereIn('user_id', $listAdminIds)
+                            ->orderBy('_id', 'desc')
+                            ->limit($limit)
+                            ->get();
+
+        return $items;
     }
 }

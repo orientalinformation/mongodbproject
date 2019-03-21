@@ -49,8 +49,8 @@
 <script src="{{ asset('/assets/lib/slider/slider.js') }}"></script>
 
 <script src="{{ asset('/assets/lib/jquery/jquery.js') }}"></script>
-<!-- <script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script> -->
-<!-- <script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script> -->
+<script src="{{ asset('/assets/lib/popper.js/popper.js') }}"></script>
+<script src="{{ asset('/assets/lib/bootstrap/bootstrap.js') }}"></script>
 <script src="{{ asset('/assets/lib/bootstrap/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/toastr/toastr.min.js') }}"></script>

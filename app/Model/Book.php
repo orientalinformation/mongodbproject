@@ -16,4 +16,9 @@ class Book extends Model
         $books = Book::all()->toArray();
         return $books;
     }
+
+    public function bookDetail()
+    {
+        return $this->hasOne('App\Model\BookDetail', '_id', 'book_id');
+    }
 }

@@ -12,4 +12,9 @@ class BookDetail extends Model
     protected $fillable = [
         'book_id', 'user_id', 'share', 'pink', 'is_public', 'is_delete'
     ];
+
+    public function book()
+	{
+	    return $this->belongsTo('App\Model\Book');
+	}
 }

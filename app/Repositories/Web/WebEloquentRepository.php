@@ -21,4 +21,17 @@ class WebEloquentRepository extends EloquentRepository implements WebRepositoryI
     {
         return Web::class;
     }
+
+    /**
+	 * get items by admin
+	 *
+	 * @param int $limit
+	 * @return mixed
+	 */
+	public function getItemsByadmin($limit)
+	{
+		$items = $this->model->orderBy('_id', 'desc')->limit($limit)->get();
+
+		return $items;
+	}
 }

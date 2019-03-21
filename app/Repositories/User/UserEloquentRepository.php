@@ -124,4 +124,14 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
                     ->orderBy('updated_at', 'desc')
                     ->paginate($limit);
     }
+
+    /**
+     * get list Admin
+     *
+     * @return mixed
+     */
+    public function getlistAdmins()
+    {
+        return User::where('is_admin', 1)->get();
+    }
 }

@@ -16,7 +16,7 @@ use Illuminate\Routing\Router;
 Route::namespace('Frontend')->group(function () {
 
     Route::get('/', 'HomeController@index');
-    Route::get('/home', 'HomeController@index');
+    Route::get('/home-login', 'HomeController@index_login');
 
     Route::get('/book', 'BookController@index');
 
@@ -45,19 +45,48 @@ Route::namespace('Frontend')->group(function () {
     Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
+<<<<<<< HEAD
     // Bibliotheque routes
     Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
     Route::get('bibliotheque_check_liked', 'BibliothequeController@checkLiked')->middleware('auth');
 
+=======
+>>>>>>> ngonc
     // Ajax routes
     Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware('auth');
 
     // Product routes
     Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware('auth');
+    Route::prefix('product/')->group(function () {
+        Route::get('/check_liked', [
+            'uses' => 'ProductController@checkLiked',
+        ]);
+        Route::get('/check_read', [
+            'uses' => 'ProductController@checkRead',
+        ]);
+        Route::get('/check_list', [
+            'uses' => 'ProductController@getLibraryDetailbyUserID',
+        ]);
+        Route::get('/update_list', [
+            'uses' => 'ProductController@updateLibraryDetail',
+        ]);
+        Route::get('/create_list', [
+            'uses' => 'ProductController@createLibrary',
+        ]);
+        Route::get('/check_share', [
+            'uses' => 'ProductController@checkShare',
+        ]);
+    });
 
     // Research routes
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware('auth');
+<<<<<<< HEAD
+=======
+    // Bibliotheque routes
+    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+
+>>>>>>> ngonc
     //====Web start=============
     Route::resource('web', 'WebController');
     //====Web end===============

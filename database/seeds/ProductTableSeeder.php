@@ -18,13 +18,15 @@ class ProductTableSeeder extends Seeder
      */
     public function run()
     {
-    	Product::truncate();
+        Product::query()->delete();
+    	ProductDetail::query()->delete();
 
         // delete Elastic Product Index
         $param = [
             'index' => Config::get('constants.elasticsearch.product.index')
         ];
         $client = ClientBuilder::create()->build();
+
         // check index exists before delete
         if ($client->indices()->exists($param)) {
             $client->indices()->delete($param);
@@ -43,14 +45,14 @@ class ProductTableSeeder extends Seeder
             for ($i = 0; $i < 100; $i++) { 
                 $title = $faker->text(20);
                 $url = str_slug($title);
-                $description = $faker->text(30);
+                $description = $faker->text(150);
                 $image = '/image/front/Bibliotheque_Web_1.jpg';
                 $view = 2;
                 $userId = 1;
                 $like = 0;
                 $share = 0;
                 $pink = 0;
-                $isPublic = 0;
+                $isPublic = 1;
                 $isDelete = 0;
 
                 // random category id

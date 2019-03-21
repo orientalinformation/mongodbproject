@@ -19,7 +19,7 @@
                                 <div class="col-lg-3 col-sm-3">
                                     <div class="checkbox">
                                         <label>
-                                          <input type="checkbox" name="kind[]" value="book"> Études/Synthese
+                                          <input type="checkbox" name="kind[]" value="book"@php if ($controller == 'BookController') echo ' checked' @endphp> Études/Synthese
                                         </label>
                                     </div>
                                 </div>
