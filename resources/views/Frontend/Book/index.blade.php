@@ -255,6 +255,7 @@
                 data: {user_id: 1, object_id: bookID, change: 1},
                 success: function(result){
                     result = JSON.parse(result);
+                    console.log(result);
                     if(result.status == 1){
                         read.removeClass("fa-bookmark");
                         read.addClass("fa-bookmark-o");

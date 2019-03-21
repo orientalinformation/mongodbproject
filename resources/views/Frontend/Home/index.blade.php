@@ -17,27 +17,6 @@
 @endsection
 
 @section('content')
-<div class="container-fluid">
-    <div class="row slide">
-        <div class="col-12"><img src="{{ URL::to('/image/front/slider.png')}}" class="img-slide"></div>
-        <div class="col-12 cover"></div>
-        <div class="col-12 title-slide">
-            <span>La nouvelle plate-forme des <br/>Compagnons Du Devoir</span>
-        </div>
-        <div class="col-12 title-slide-small">
-            <span>La nouvelle plate-forme des <br/>Compagnons Du Devoir</span>
-        </div>
-        <div class="col-12 title-slide-foot">
-            <span>Votre espace d’échanges collaborative et <br/>professionnelle à votr</span>
-        </div>
-        <div class="col-12 search_button">
-            <div class="box-icon-home"><img src="{{ URL::to('/image/front/home-search-icon.png')}}"></div>
-        </div>
-        <div class="col-12 edit_button">
-            <div class="box-icon-home"><img src="{{ URL::to('/image/front/home-edit-icon.png')}}"></div>
-        </div>
-    </div>
-</div>
 <div class="container-fluid container-library">
     <div class="main library">
         <div class="container-fluid">
@@ -70,6 +49,7 @@
                     </div>
                     <div class="container-fluid">
                         <div class="row">
+                            @if (count($webs) > 0)
                             <div class="col-lg-6">
                                 <div class="wrapSlider">
                                     <div class="divIcon">
@@ -78,26 +58,19 @@
                                     </div>
                                     <div id="homeCarousel1" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
-                                      <div class="carousel-inner home-slider">
-                                        <div class="item clearfix active">
-                                            <div class="image">
-                                                <img src="/image/front/9.jpg" alt="">
+                                       <div class="carousel-inner home-slider">
+                                            @foreach($webs as $key => $web)
+                                            <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
+                                                <div class="image">
+                                                    <img src="{{ $web->enclosure }}" alt="">
+                                                </div>
+                                                <div class="content">
+                                                    <p class="title">{{ $web->title }}</p>
+                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($web->description), 120) }}</p>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <p class="title">title 1</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
+                                            @endforeach
                                         </div>
-                                        <div class="item clearfix">
-                                            <div class="image">
-                                                <img src="/image/front/10.jpg" alt="">
-                                            </div>
-                                            <div class="content">
-                                                <p class="title">title 2</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
-                                        </div>
-                                      </div>
 
                                       <!-- Left and right controls -->
                                       <a class="right carousel-control" href="#homeCarousel1" data-slide="next">
@@ -106,6 +79,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="col-lg-6">
                                 <div class="wrapSlider">
                                     <div class="divIcon">
@@ -142,6 +116,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (count($books) > 0)
                             <div class="col-lg-6">
                                 <div class="wrapSlider">
                                     <div class="divIcon">
@@ -150,26 +125,17 @@
                                     </div>
                                     <div id="homeCarousel3" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
-                                      <div class="carousel-inner home-slider">
-                                        <div class="item clearfix active">
+                                       @foreach ($books as $key => $book)
+                                        <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
                                             <div class="image">
-                                                <img src="/image/front/9.jpg" alt="">
+                                                <img src="{{ $product->product->image }}" alt="">
                                             </div>
                                             <div class="content">
-                                                <p class="title">title 1</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                                <p class="title">{{ $book->book->title }}</p>
+                                                <p class="description">{{ EnvatoUlities::limit(strip_tags($book->book->description), 120) }}</p>
                                             </div>
                                         </div>
-                                        <div class="item clearfix">
-                                            <div class="image">
-                                                <img src="/image/front/10.jpg" alt="">
-                                            </div>
-                                            <div class="content">
-                                                <p class="title">title 2</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
-                                        </div>
-                                      </div>
+                                        @endforeach
 
                                       <!-- Left and right controls -->
                                       <a class="right carousel-control" href="#homeCarousel3" data-slide="next">
@@ -178,6 +144,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="col-lg-6">
                                 <div class="wrapSlider">
                                     <div class="divIcon">
@@ -214,6 +181,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (count($products) > 0)
                             <div class="col-lg-6">
                                 <div class="wrapSlider">
                                     <div class="divIcon">
@@ -222,34 +190,29 @@
                                     </div>
                                     <div id="homeCarousel5" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
-                                      <div class="carousel-inner home-slider">
-                                        <div class="item clearfix active">
-                                            <div class="image">
-                                                <img src="/image/front/9.jpg" alt="">
+                                        <div class="carousel-inner home-slider">
+                                            @foreach ($products as $key => $product)
+                                            <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
+                                                <div class="image">
+                                                    <img src="{{ $product->product->image }}" alt="">
+                                                </div>
+                                                <div class="content">
+                                                    <p class="title">{{ $product->product->title }}</p>
+                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($product->product->description), 120) }}</p>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <p class="title">title 1</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
-                                        </div>
-                                        <div class="item clearfix">
-                                            <div class="image">
-                                                <img src="/image/front/10.jpg" alt="">
-                                            </div>
-                                            <div class="content">
-                                                <p class="title">title 2</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
-                                        </div>
-                                      </div>
+                                            @endforeach
 
-                                      <!-- Left and right controls -->
-                                      <a class="right carousel-control" href="#homeCarousel5" data-slide="next">
-                                        <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
-                                      </a>
+                                          <!-- Left and right controls -->
+                                          <a class="right carousel-control" href="#homeCarousel5" data-slide="next">
+                                            <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                          </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            @endif
+                            @if (count($bibliothequets) > 0)
                             <div class="col-lg-6">
                                 <div class="wrapSlider">
                                     <div class="divIcon">
@@ -259,24 +222,17 @@
                                     <div id="homeCarousel6" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                       <!-- Wrapper for slides -->
                                       <div class="carousel-inner home-slider">
-                                        <div class="item clearfix active">
-                                            <div class="image">
-                                                <img src="/image/front/9.jpg" alt="">
+                                            @foreach ($bibliothequets as $key => $bibliothequet)
+                                            <div class="item clearfix @php if ($key == 0) echo 'active' @endphp">
+                                                <div class="image">
+                                                    <img src="{{ $bibliothequet->bibliothequet->image }}" alt="">
+                                                </div>
+                                                <div class="content">
+                                                    <p class="title">{{ $bibliothequet->bibliothequet->title }}</p>
+                                                    <p class="description">{{ EnvatoUlities::limit(strip_tags($bibliothequet->bibliothequet->description), 120) }}</p>
+                                                </div>
                                             </div>
-                                            <div class="content">
-                                                <p class="title">title 1</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
-                                        </div>
-                                        <div class="item clearfix">
-                                            <div class="image">
-                                                <img src="/image/front/10.jpg" alt="">
-                                            </div>
-                                            <div class="content">
-                                                <p class="title">title 2</p>
-                                                <p class="description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                            </div>
-                                        </div>
+                                            @endforeach
                                       </div>
 
                                       <!-- Left and right controls -->
@@ -286,6 +242,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="container-fluid">

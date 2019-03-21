@@ -20,11 +20,13 @@ class AppServiceProvider extends ServiceProvider
 
         // get controller action name to view
         app('view')->composer('*', function ($view) {
-            $action = app('request')->route()->getAction();
-            $controller = class_basename($action['controller']);
-            list($controller, $action) = explode('@', $controller);
-            
-            $view->with(compact('controller', 'action'));
+            if (app('request')->route()) {
+                $action = app('request')->route()->getAction();
+                $controller = class_basename($action['controller']);
+                list($controller, $action) = explode('@', $controller);
+                
+                $view->with(compact('controller', 'action'));
+            }
         });
     }
 
@@ -132,6 +134,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\BookDetail\BookDetailRepositoryInterface::class,
             \App\Repositories\BookDetail\BookDetailEloquentRepository::class
+        );
+
+        $this->app->singleton(
+            \App\Repositories\Bibliotheque\BibliothequeRepositoryInterface::class,
+            \App\Repositories\Bibliotheque\BibliothequeEloquentRepository::class
         );
 
         $this->app->singleton(

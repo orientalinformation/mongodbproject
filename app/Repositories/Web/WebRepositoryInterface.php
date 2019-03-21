@@ -11,5 +11,11 @@ namespace App\Repositories\Web;
 
 interface WebRepositoryInterface
 {
-
+	/**
+	 * get items by admin
+	 *
+	 * @param int $limit
+	 * @return mixed
+	 */
+	public function getItemsByadmin($limit);
 }

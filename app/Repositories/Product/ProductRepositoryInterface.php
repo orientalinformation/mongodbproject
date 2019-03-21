@@ -6,14 +6,6 @@ namespace App\Repositories\Product;
 interface ProductRepositoryInterface
 {
 	/**
-	 * Search Product By Keyword
-	 * @param $keyword
-	 * @param $page
-	 * @param $options
-	 */
-	public function searchByKeyword($keyword, $page, $options = null);
-
-	/**
      * Get Range year
      *
      * @param $start_year
@@ -22,4 +14,13 @@ interface ProductRepositoryInterface
      * @return mixed
      */
     public function getRange($start_year, $end_year, $perPage);
+
+    /**
+	 * get items by admin
+	 *
+	 * @param array $listAdminIds
+	 * @param int $limit
+	 * @return mixed
+	 */
+	public function getItemsByadmin($listAdminIds, $limit);
 }

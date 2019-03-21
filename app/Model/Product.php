@@ -22,4 +22,9 @@ class Product extends Model
     {
         return Product::where([['_id', '=', $id]])->get();
     }
+
+    public function bookDetail()
+    {
+        return $this->hasOne('App\Model\ProductDetail', '_id', 'product_id');
+    }
 }

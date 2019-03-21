@@ -26,6 +26,7 @@ class BookController extends Controller
      * CategoryController constructor.
      * @param CategoryRepositoryInterface $cateogryRepository
      */
+
     public function __construct(CategoryRepositoryInterface $cateogryRepository,
                                 BookRepositoryInterface $bookRepository,
                                 BookDetailRepositoryInterface $bookdetailRepository,
@@ -261,13 +262,13 @@ class BookController extends Controller
                 if($change ==1){
                     if(sizeof($bookDetail) > 0){
                         foreach($bookDetail as $item){
-                            $data['user_id'] = $item['user_id'];
                             $data['object_id'] = $item['object_id'];
+                            $data['user_id'] = $item['user_id'];
                             $data['type_name'] = $type;
                             $data['is_delete'] = 1;
-                            $this->readafterRepository->update($item['_id'], $data);
+                            $this->bookdetailRepository->update($item['_id'], $data);
                         }
-                        $result['status'] = 1;
+                        $result['status'] = $item['object_id'];
                     }else{
                         $bookDetail = $this->readafterRepository->checkunRead($user_id, $object_id, $type)->toArray();
                         if(sizeof($bookDetail) > 0){

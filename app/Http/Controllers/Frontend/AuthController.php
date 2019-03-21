@@ -18,6 +18,7 @@ use App\Model\UserSocial;
 use File;
 use App\Rules\GoogleRecaptcha;
 use App\Rules\CheckBase64Rule;
+use App\Rules\CheckMineTypeRule;
 
 class AuthController extends Controller
 {
@@ -92,8 +93,7 @@ class AuthController extends Controller
             'status'                => 'required|integer|min:0',
             'type'                  => 'required|array',
             'g-recaptcha-response'  => ['required', new GoogleRecaptcha],
-            // 'image_data'            => [new CheckBase64Rule]
-            'original_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'original_image'        => [new CheckMineTypeRule],
         ];
 
         $messages = [
@@ -120,15 +120,15 @@ class AuthController extends Controller
             'status.min'                    => __('validation.min.numeric', ['attribute' => "status", 'min' => 0]),
             'type.required'                 => __('validation.required', ['attribute' => "type"]),
             'type.array'                    => __('validation.array', ['attribute' => "type"]),
-            'g-recaptcha-response.required' => 'Please check reCaptcha',
-            'original_image.image'          => 'File must be an image with extension: .jpg, .png, etc...',
-            'original_image.max'            => 'File is too large, maximun allow are 2MB'
+            'g-recaptcha-response.required' => __('validation.recaptcha', ['attribute' => "s'il vous plaît vérifier recaptcha"]),
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return back()->withErrors($validator->messages())->withInput();
+            $input = $request->all();
+            $errors = $validator->messages();
+            return view('Frontend.Auth.register', compact('input'))->withErrors($errors);
         }
         
         // check username and email exists       
@@ -166,11 +166,14 @@ class AuthController extends Controller
         if(!empty($data['image_data'])) {
             $encoded    = $data['image_data'];
             $path       = storage_path().'/avatar';
+            $randomStr  = substr( "abcdefghijklmnopqrstuvwxyz" ,mt_rand( 0 ,25 ) ,1 ) .substr( md5( time( ) ) ,1 );
+            if(empty($data['original_image'])) {
+                $data['original_image'] =  $randomStr . '.jpg';
+            }
             $filename   = time() . '_' . $data['original_image'];
             $base64Str  = substr($encoded, strpos($encoded, ",") + 1);
             $image      = base64_decode($base64Str);
             File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
-            // file_put_contents($path. '/' . $filename, $image);
             File::put($path. '/' . $filename, $image);
             if(!File::isDirectory($path)) {
                 symlink(storage_path().'/avatar', public_path(). '/storage/avatar');

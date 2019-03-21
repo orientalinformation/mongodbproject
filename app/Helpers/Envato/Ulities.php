@@ -8,6 +8,7 @@
 
 namespace App\Helpers\Envato;
 use \DateTime;
+use Elasticsearch\ClientBuilder;
 
 
 class Ulities
@@ -146,6 +147,83 @@ class Ulities
 
         if (!$full) $string = array_slice($string, 0, 1);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
+    }
+
+    /**
+     * Search Elastic
+     *
+     * @param string $indexName
+     * @param string $typeName
+     * @param array $options
+     * @return array
+     */
+    public static function getElasticParams($indexName, $typeName, $options)
+    {
+        $limit = $options['limit'];
+        $offset = ($options['page'] > 1) ? ($options['page'] - 1) * $limit : 0;
+        $must = [];
+        $must[] = [
+            'match' => [
+                'is_delete' => 0
+            ],
+            'match' => [
+                'is_public' => 1
+            ]
+        ];
+        if ($options != null) {
+            if (isset($options['q'])) {
+                $must[] = [
+                    'match_phrase_prefix' => [
+                        'title' => $options['q']
+                    ]
+                ];
+            }
+
+            if (isset($options['category'])) {
+                $category = $options['category'];
+                $must[] = [
+                    'terms' => [
+                        'category_id' => $category
+                    ]
+                ];
+            }
+
+            if (isset($options['start_year']) && isset($options['end_year'])) {
+                $must[] = [
+                    'range' => [
+                        'updated_at' => [
+                            'gte' => $options['start_year'],
+                            'lte' => $options['end_year'],
+                            'format' => 'yyyy||yyyy'
+                        ]
+                    ]
+                ];
+            }
+        }
+
+        $query = [
+            'bool' => [
+                'must' => $must
+            ]
+        ];
+
+        $sort = ['_id' => 'desc'];
+        if (isset($options['sort'])) {
+            $sort = ['_id' => $options['sort']];
+        }
+
+        $params = [
+            'index' => $indexName,
+            'type' => $typeName,
+            'body' => [
+                'from' => $offset,
+                'size' => $limit,
+                'query' => $query,
+                'sort' => $sort
+            ]
+        ];
+
+        return $params;
     }
 
     public static function to_slug($str) {

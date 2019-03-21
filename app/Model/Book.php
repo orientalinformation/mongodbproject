@@ -20,4 +20,9 @@ class Book extends Model
     {
         return Book::where([['_id', '=', $id]])->get();
     }
+
+    public function bookDetail()
+    {
+        return $this->hasOne('App\Model\BookDetail', '_id', 'book_id');
+    }
 }

@@ -11,7 +11,7 @@
     <!-- End Page -->
     <!-- Footer -->
 
-    @include('Frontend.layout.footer-panel')
+    {{-- @include('Frontend.layout.footer-panel') --}}
 
     @include('Frontend.layout.footer')
     <!-- Script on Page -->
