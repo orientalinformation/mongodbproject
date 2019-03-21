@@ -5,9 +5,16 @@ use Carbon\Carbon;
 use App\Model\Rss;
 use App\Model\Web;
 use Elasticsearch\ClientBuilder;
+use App\Repositories\Rss\RssRepositoryInterface;
+use App\Repositories\BaseRepositoryInterface;
 
 class RssTableSeeder extends Seeder
 {
+    /**
+     * @var RssRepositoryInterface|BaseRepositoryInterface
+     */
+    private $rssRepository;
+
     /**
      * Run the database seeds.
      *
@@ -27,6 +34,8 @@ class RssTableSeeder extends Seeder
         if ($client->indices()->exists($param)) {
             $client->indices()->delete($param);
         }
+
+        $this->rssRepository = app(RssRepositoryInterface::class);
 
         $data = [
             [
@@ -102,9 +111,7 @@ class RssTableSeeder extends Seeder
         ];
 
         foreach ($data as $item) {
-            $rss = new Rss();
-
-            $rss->create($item);
+            $this->rssRepository->create($item);
         }
 
     }
