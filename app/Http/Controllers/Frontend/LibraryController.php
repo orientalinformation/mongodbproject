@@ -144,7 +144,7 @@ class LibraryController extends Controller
 
 		$client            = ClientBuilder::create()->build();
 		$response          = $client->search($params);
-		
+
 		$bibliotheques = [];
 		if (!empty($response)) {
             $bibliotheques['total'] = $response['hits']['total'];
