@@ -1,6 +1,8 @@
 @php $type = ''; @endphp
 @if ($controller == 'ProductController')
   @php $type = 'product'; @endphp
+@elseif($controller == 'BookController')
+  @php $type = 'book'; @endphp
 @endif
 <div class="modal fade" id="libraryList" role="dialog">
     <div class="modal-dialog">

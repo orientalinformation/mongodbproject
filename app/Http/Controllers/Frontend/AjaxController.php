@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Helpers\Envato\ObjectService;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
+use App\Repositories\Book\BookRepositoryInterface;
+use App\Repositories\BookDetail\BookDetailRepositoryInterface;
 
 class AjaxController extends Controller
 {
@@ -25,6 +27,16 @@ class AjaxController extends Controller
      * @var ProductDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $productdetailRepository;
+
+    /**
+     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bookRepository;
+
+    /**
+     * @var BookDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bookdetailRepository;
 
 	/**
      * Instantiate Ajax controller.
@@ -145,6 +157,9 @@ class AjaxController extends Controller
 			switch ($type) {
 				case 'product':
 					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->productRepository, $this->productdetailRepository);
+					break;
+				case 'book':
+					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->bookRepository, $this->bookdetailRepository);
 					break;
 			}
 

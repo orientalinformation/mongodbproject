@@ -259,6 +259,7 @@ class BookController extends Controller
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = $item['share'];
                                 $data['pink'] = $item['pink'];
+                                $data['is_like'] = 1;
                                 $data['is_public'] = 1;
                                 $data['is_delete'] = 0;
                                 $this->bookdetailRepository->update($item['_id'], $data);
@@ -268,6 +269,7 @@ class BookController extends Controller
                             $data['user_id'] = $user_id;
                             $data['share'] = 0;
                             $data['pink'] = 0;
+                            $data['is_like'] = 1;
                             $data['is_public'] = 1;
                             $data['is_delete'] = 0;
                             $data = $this->bookdetailRepository->create($data);
