@@ -147,6 +147,7 @@ $('.menu-tooltips').click(function() {
 	let read = $(this).closest(".wrap").find(".readIcon");
 	let share = $(this).closest(".wrap").find(".shareIcon");
 	let url = '/' + type + '/';
+	var pink = $(this).closest(".box-toolips").find(".pinkIcon");
 	if(display.css("display") == "none") {
 		display.css("display","block");
 		$.ajax({
@@ -343,6 +344,29 @@ $('.share-line').click(function() {
                 share.css('color','black');
             } else if(result.status == 2) {
                 share.css('color','blue');
+            }
+        }
+    });
+})
+
+
+$('.object-tooltip').click(function() {
+    var type = $(this).closest('.box-toolips').data('type');
+    var id = $(this).closest('.box-toolips').data('id'); 
+    var element = $(this).data('element');
+    var pink = $(this).closest(".box-toolips").find(".pinkIcon");
+	
+    $.ajax({
+        type: 'POST',
+        url: '/ajax/setObjectDataDetail',
+        data: {'id':id, 'type':type, 'element':element, '_token':$('meta[name="csrf-token"]').attr('content')},
+        success:function(result) {
+			console.log(result);
+			
+            if (result.status == 1) {
+                pink.css('color','red');
+            } else {
+                pink.css('color','black');
             }
         }
     });
