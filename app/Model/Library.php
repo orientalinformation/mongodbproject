@@ -10,6 +10,11 @@ class Library extends Model
     protected $collection = 'libraries';
     public $translatedAttributes = [];
     protected $fillable = [
-        'name', 'alias', 'share', 'user_id', 'view', 'is_delete'
+        'title', 'alias', 'description', 'image', 'url', 'view', 'price', 'like', 'category_id', 'is_delete'
     ];
+
+    public static function getLibraryByID($id)
+    {
+        return Library::where([['_id', '=', $id]])->get();
+    }
 }

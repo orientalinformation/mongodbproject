@@ -3,7 +3,14 @@
 namespace App\Model;
 
 use Jenssegers\Mongodb\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $name
+ * @property string $description
+ * @property int $parent_id
+ * @property string $path
+ */
 class Category extends Model
 {
     protected $connection = 'mongodb';

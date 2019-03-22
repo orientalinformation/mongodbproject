@@ -809,7 +809,7 @@ input.chkAgree{
 }
 
 .profile-menu-left li:first-child{
-    padding: 18px 0 8px 15px;
+    padding: 18px 0 8px 30px;
 }
 
 .profile-menu-left li{
@@ -2742,6 +2742,10 @@ ul.horizontal-menu-library > li a{
     z-index: 1;
 }
 
+.divIcon a{
+    color: #ffffff;
+}
+
 .home-slider .item .image img{
   width: 100px;
   height: 100px;
@@ -2983,4 +2987,8 @@ ul.horizontal-menu-library > li a{
 .listWrap label{
     margin-left: 30px;
     bottom: 0px;
+}
+
+.title a{
+    color: #000000;
 }

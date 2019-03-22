@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: binhdq
+ * Date: 20/03/2019
+ * Time: 18:27
+ */
 
 namespace App\Repositories\ProductDetail;
 
@@ -39,5 +45,8 @@ interface ProductDetailRepositoryInterface
      * @param string $productId
      * @return mixed
      */
-    public function checkunShared($userId, $productId);
+
+    public function checkunShared($user_id, $product_id);
+
+    public function getAllPublicByUserID($userId, $perPage);
 }
