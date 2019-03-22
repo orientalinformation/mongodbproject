@@ -15,6 +15,18 @@ class Web extends Eloquent
         'link',
         'enclosure',
         'description',
-        'pub_date'
+        'pub_date',
+        'is_public',
+        'is_video',
+        'is_image',
+        'is_sound',
+        'is_delete',
+        'user_id'
+
     ];
+
+    public static function getWebByID($id)
+    {
+        return Web::where([['_id', '=', $id]])->get();
+    }
 }

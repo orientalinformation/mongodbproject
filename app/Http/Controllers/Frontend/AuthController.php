@@ -192,7 +192,7 @@ class AuthController extends Controller
 
         if ($result) {
             auth()->login($result);
-            return redirect('/home');
+            return redirect('/home-login');
         }
 
         return back()->with('error', __('Échec de la création.'));
@@ -245,7 +245,7 @@ class AuthController extends Controller
         );
 
         if (Auth::attempt($userAndPass) || Auth::attempt($emailAndPass)) {
-            return redirect("/home");
+            return redirect("/home-login");
         } else {
             return back()->with('error', __('L\'identifiant ou le mot de passe est incorrect.'));
         }
@@ -260,7 +260,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/home');
+        return redirect('/');
     }
 
     /**

@@ -37,4 +37,10 @@ interface BookRepositoryInterface
      * @return mixed
      */
     public function getItemsByadmin($listAdminIds, $limit);
+
+    /**
+     * Get By CatID
+     * @return mixed
+     */
+    public function getByCatID($catID, $perPage = 15);
 }

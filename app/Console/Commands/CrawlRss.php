@@ -118,7 +118,12 @@ class CrawlRss extends Command
                 'pub_date'      => !empty($pubDate) ? date('Y-m-d H:m:s', strtotime($pubDate)) : $pubDate,
                 'view'          => 0,
                 'like'          => 0,
-                'is_delete'     => 0
+                'is_public'     => 1,
+                'is_video'      => 0,
+                'is_image'      => !empty($enclosure) ? 1 : 0,
+                'is_sound'      => 0,
+                'is_delete'     => 0,
+                'user_id'       => 1
             ];
 
             $feed[] = $item;
@@ -147,7 +152,12 @@ class CrawlRss extends Command
                         'link'          => $item['link'],
                         'pub_date'      => $item['pub_date'],
                         'view'          => $item['view'],
-                        'like'          => $item['like']
+                        'like'          => $item['like'],
+                        'is_public'     => $item['is_public'],
+                        'is_video'      => $item['is_video'],
+                        'is_image'      => $item['is_image'],
+                        'is_delete'     => $item['is_delete'],
+                        'user_id'       => $item['user_id']
                     ],
                     'index' => Config::get('constants.elasticsearch.web.index'),
                     'type'  => Config::get('constants.elasticsearch.web.type'),
@@ -167,6 +177,7 @@ class CrawlRss extends Command
                             'enclosure'     =>  $item['enclosure'],
                             'link'          =>  $item['link'],
                             'pub_date'      =>  $item['pub_date'],
+                            'is_image'      =>  $item['is_image']
                         ]
                     ],
                     'index' =>  Config::get('constants.elasticsearch.web.index'),
@@ -178,8 +189,6 @@ class CrawlRss extends Command
 
             }
         }
-
-
     }
 
 }

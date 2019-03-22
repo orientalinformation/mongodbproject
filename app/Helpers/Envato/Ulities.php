@@ -21,7 +21,7 @@ class Ulities
      * @param int $rowTotal
      * @return array
      */
-    public static function calculatorPage($searchValue = null, $page = 1, $rowTotal = 0, $rowPage = 0)
+    public static function calculatorPage($searchValue = null, $page = 1, $rowTotal = 0, $rowPage = 0, $options = null)
     {
         $pageNum = 0;
         $url = url()->current();
@@ -31,8 +31,39 @@ class Ulities
             $pageNum += ($rowTotal % $rowPage) > 0 ? 1 : 0;
         }
 
-        $prev = $page > 1 ? $url . ($searchValue ? '?q=' . $searchValue : '') . (is_null($searchValue) ? '?page=':'&page=' ) . ($page - 1): null;
-        $next = $page < $pageNum ? $url . ($searchValue ? '?q=' . $searchValue : '') . (is_null($searchValue) ? '?page=':'&page=' ) . ($page + 1): null;
+        $prev = null;
+        $next = null;
+        $paramPath = null;
+        if ($options == null) {
+            $prev = $page > 1 ? $url . ($searchValue ? '?q=' . $searchValue : '') . (is_null($searchValue) ? '?page=':'&page=' ) . ($page - 1): null;
+            $next = $page < $pageNum ? $url . ($searchValue ? '?q=' . $searchValue : '') . (is_null($searchValue) ? '?page=':'&page=' ) . ($page + 1): null;
+        } else {
+            if(isset($options['q'])) {
+                $paramPath = 'q=' . $options['q'] . '&';
+            }
+
+            if(isset($options['start_year']) && isset($options['end_year'])) {
+                $paramPath .= 'start_year=' . $options['start_year'] . '&end_year=' . $options['end_year'] . '&';
+            }
+
+            if(isset($options['category_query'])) {
+                $paramPath .= 'category=' . $options['category_query'] . '&';
+            }
+
+            if (isset($options['sort'])) {
+                $paramPath .= 'sort=' . $options['sort'] . '&';
+            }
+
+            $url = $url . '?' . $paramPath;
+            if ($page > 1) {
+                $prev = $url . 'page=' . ($page - 1);
+            }
+
+            if ($page < $pageNum) {
+                $next = $url . 'page=' . ($page + 1);
+            }
+        }
+        
         $paginate = [
             'page'      => $page,
             'pageNum'   => $pageNum,

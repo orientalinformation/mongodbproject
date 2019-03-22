@@ -4,10 +4,17 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\User\UserRepositoryInterface;
+
 use App\Repositories\Web\WebRepositoryInterface;
-use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\WebDetail\WebDetailRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
+use App\Repositories\BookDetail\BookDetailRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
+use App\Repositories\Library\LibraryRepositoryInterface;
+use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
+
+use App\Repositories\User\UserRepositoryInterface;
 use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use Elasticsearch\ClientBuilder;
@@ -42,6 +49,16 @@ class HomeController extends Controller
     protected $bibliothequetRepository;
 
     /**
+     * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $libraryRepository;
+
+    /**
+     * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $librarydetailRepository;
+
+    /**
      * Instantiate product controller.
      *
      * @param Request $request
@@ -52,20 +69,30 @@ class HomeController extends Controller
      * @param BibliothequeRepositoryInterface $bibliothequetRepository
      * @return void
      */
-    public function __construct(
-        Request $request, 
-        UserRepositoryInterface $userRepository, 
-        ProductRepositoryInterface $productRepository, 
-        WebRepositoryInterface $webRepository, 
-        BookRepositoryInterface $bookRepository, 
-        BibliothequeRepositoryInterface $bibliothequetRepository)
+
+    public function __construct(WebRepositoryInterface $webRepository,
+                                WebDetailRepositoryInterface $webdetailRepository,
+                                BookRepositoryInterface $bookRepository,
+                                BookDetailRepositoryInterface $bookdetailRepository,
+                                ProductRepositoryInterface $productRepository,
+                                ProductDetailRepositoryInterface $productdetailRepository,
+                                Request $request,
+                                UserRepositoryInterface $userRepository,
+                                BibliothequeRepositoryInterface $bibliothequetRepository,
+                                LibraryRepositoryInterface $libraryRepository,
+                                LibraryDetailRepositoryInterface $librarydetailRepository)
     {
+        $this->webRepository = $webRepository;
+        $this->webdetailRepository = $webdetailRepository;
+        $this->bookRepository = $bookRepository;
+        $this->bookdetailRepository = $bookdetailRepository;
+        $this->productRepository = $productRepository;
+        $this->productdetailRepository = $productdetailRepository;
         $this->request = $request;
         $this->userRepository = $userRepository;
-        $this->webRepository = $webRepository;
-        $this->productRepository = $productRepository;
-        $this->bookRepository = $bookRepository;
         $this->bibliothequetRepository = $bibliothequetRepository;
+        $this->libraryRepository = $libraryRepository;
+        $this->librarydetailRepository = $librarydetailRepository;
     }
 
     /**
@@ -155,7 +182,13 @@ class HomeController extends Controller
 
     public function index_login()
     {
-        return view('Frontend.Home.index_login');
+        $userId = 1;
+        $perPage = 3;
+        $web = $this->webdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        $book = $this->bookdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        $product = $this->productdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        $library = $this->librarydetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+        return view('Frontend.Home.index_login', compact(['web','book','product','library']));
     }
 
     /**

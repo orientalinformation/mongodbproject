@@ -20,12 +20,15 @@ class CreateLibraryCollection extends Migration
             $collection->string('image');
             $collection->string('alias');
             $collection->string('url');
-            $collection->tinyInteger('view');
             $collection->double('price');
             $collection->integer('like');
             $collection->string('category_id');
             $collection->string('user_id');
+            $collection->integer('view');
             $collection->boolean('is_public');
+            $collection->boolean('is_video');
+            $collection->boolean('is_image');
+            $collection->boolean('is_sound');
             $collection->boolean('is_delete');
             $collection->timestamps();
         });

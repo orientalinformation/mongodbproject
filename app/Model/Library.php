@@ -12,4 +12,9 @@ class Library extends Model
     protected $fillable = [
         'name', 'description', 'image', 'alias', 'url', 'view', 'price', 'like', 'category_id', 'is_delete', 'user_id', 'is_public'
     ];
+
+    public static function getLibraryByID($id)
+    {
+        return Library::where([['_id', '=', $id]])->get();
+    }
 }

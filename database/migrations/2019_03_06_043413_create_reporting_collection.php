@@ -21,7 +21,12 @@ class CreateReportingCollection extends Migration
             $collection->string('url');
             $collection->integer('view');
             $collection->integer('like');
+            $collection->boolean('is_public');
+            $collection->boolean('is_video');
+            $collection->boolean('is_image');
+            $collection->boolean('is_sound');
             $collection->string('category_id');
+            $collection->integer('user_id');
             $collection->boolean('is_delete');
             $collection->timestamps();
         });

@@ -9,9 +9,10 @@
 namespace App\Helpers\Envato;
 use App\Model\Pin;
 use App\Model\LibraryDetail;
+use App\Model\Book;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 
-class Book
+class BookHelper
 {
     /**
      * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
@@ -43,5 +44,10 @@ class Book
             return 1;
         }
         return 0;
+    }
+
+    public static function getBookDetail($id) {
+        $result = Book::getBookByID($id)->toArray();
+        return $result;
     }
 }

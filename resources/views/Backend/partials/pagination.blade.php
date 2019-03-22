@@ -18,7 +18,6 @@ if ($paginate['pageNum'] > $limitPage) {
 } else {
     $leftLimitPage = $paginate['pageNum'];
 }
-
 ?>
 
 <div class="ht-80 d-flex align-items-center justify-content-center">
