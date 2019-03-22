@@ -23,11 +23,11 @@ class CreateWebCollection extends Migration
             $collection->integer('like');
             $collection->integer('view');
             $collection->boolean('is_public');
-            $collection->boolean('is_delete');
             $collection->boolean('is_video');
             $collection->boolean('is_image');
             $collection->boolean('is_sound');
             $collection->integer('user_id');
+            $collection->boolean('is_delete');
             $collection->timestamps();
 
         });
