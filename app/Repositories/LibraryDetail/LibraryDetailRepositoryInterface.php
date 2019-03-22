@@ -33,4 +33,13 @@ interface LibraryDetailRepositoryInterface
      * @return mixed
      */
     public function checkunLiked($userId, $libraryId);
+
+    /**
+     * Get Check Shared
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkShared($userId, $libraryId);
 }

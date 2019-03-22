@@ -15,7 +15,7 @@ class CreateLibraryCollection extends Migration
     {
         Schema::connection('mongodb')->table('libraries', function (Blueprint $collection) {
             $collection->index('id');
-            $collection->string('title');
+            $collection->string('name');
             $collection->string('description');
             $collection->string('image');
             $collection->string('alias');
@@ -24,6 +24,8 @@ class CreateLibraryCollection extends Migration
             $collection->double('price');
             $collection->integer('like');
             $collection->string('category_id');
+            $collection->string('user_id');
+            $collection->boolean('is_public');
             $collection->boolean('is_delete');
             $collection->timestamps();
         });

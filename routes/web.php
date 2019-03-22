@@ -47,9 +47,27 @@ Route::namespace('Frontend')->group(function () {
 
     // Bibliotheque routes
     Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
-    Route::get('bibliotheque_check_liked', 'BibliothequeController@checkLiked')->middleware('auth');
-    Route::get('bibliotheque_check_read', 'BibliothequeController@checkRead')->middleware('auth');
-
+    
+    Route::prefix('bibliotheque/')->group(function () {
+        Route::get('/check_liked', [
+            'uses' => 'BibliothequeController@checkLiked',
+        ]);
+        Route::get('/check_read', [
+            'uses' => 'BibliothequeController@checkRead',
+        ]);
+        Route::get('/check_list', [
+            'uses' => 'BibliothequeController@getLibraryDetailbyUserID',
+        ]);
+        Route::get('/update_list', [
+            'uses' => 'BibliothequeController@updateLibraryDetail',
+        ]);
+        Route::get('/create_list', [
+            'uses' => 'BibliothequeController@createLibrary',
+        ]);
+        Route::get('/check_share', [
+            'uses' => 'BibliothequeController@checkShare',
+        ]);
+    });
     // Ajax routes
     Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware('auth');
 

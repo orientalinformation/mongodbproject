@@ -67,4 +67,22 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
             ['library_id', '=', $libraryId],
             ['is_delete', '=', 1]])->get();
     }
+
+    /**
+     * Get Check Shared
+     *
+     * @param    int       $userId
+     * @param    string    $libraryId
+     * @return   mixed
+     */
+    public function checkShared($userId, $libraryId)
+    {
+        $libDetailModel = $this->model;
+        return $libDetailModel::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['share', '=', 1],
+            ['is_delete', '=', 0]
+        ])->get();
+    }
 }

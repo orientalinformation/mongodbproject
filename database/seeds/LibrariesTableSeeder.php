@@ -35,11 +35,11 @@ class LibrariesTableSeeder extends Seeder
     	$bibliothequeRepository = app(LibraryRepositoryInterface::class);
         $faker = Faker::create('fr');
         for ($i = 0; $i < 100; $i++) { 
-            $title = $faker->text(20);
-            $url = str_slug($title);
+            $name = $faker->text(20);
+            $url = str_slug($name);
 
             $data = [
-                'title'             => $title,
+                'name'             => $name,
                 'description'       => $faker->text(30),
                 'url'               => $url,
                 'image'             => '/image/front/Bibliotheque_Web_1.jpg',
@@ -48,6 +48,8 @@ class LibrariesTableSeeder extends Seeder
                 'like'              => random_int(1, 99),
                 'price'             => random_int(11, 99),
                 'category_id'       => 1,
+                'user_id'           => 1,
+                'is_public'         => 0,
                 'is_delete'         => '0',
             ];
 
@@ -59,6 +61,7 @@ class LibrariesTableSeeder extends Seeder
                 'user_id' => 1,
                 'share' => 0,
                 'pink' => 0,
+                'is_like' => 0,
                 'is_public' => 1,
                 'is_delete' => 0,
             ];
@@ -75,7 +78,7 @@ class LibrariesTableSeeder extends Seeder
                 if ($bibliothequesDetail) {
                     $dataElastic = [
                         'body' => [
-                            'title'             => $bibliotheque->title,
+                            'name'             => $bibliotheque->name,
                             'url'               => $bibliotheque->url,
                             'description'       => $bibliotheque->description,
                             'image'             => $bibliotheque->image,

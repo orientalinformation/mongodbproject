@@ -63,18 +63,18 @@
                         <div class="col-lg-2 col-sm-2">
                             <div class="wrap">
                                 <img src="{{ $product['_source']['image'] }}" class="library-thumb">
-                                <div class="menu-tooltips"></div>
-                                <div class="content-panel">
+                                <div class="menu-tooltips" data-type="bibliotheque"></div>
+                                <div class="content-panel" data-type="bibliotheque">
                                     <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
                                     <div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
                                     <div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
                                     <div class="content-line create-line" data-toggle="modal" data-target="#libraryCreate"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
                                     <div class="content-line share-line"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>
                                 </div>
-                                <input type="hidden" class="bibliotheque-id" value="{{ $product['_id'] }}">
+                                <input type="hidden" id="bibliotheque_id" class="bibliotheque-id" value="{{ $product['_id'] }}">
                             </div>
                             <div class="thumb-title">
-                                <span class="title">{{ $product['_source']['title'] }}</span>
+                                <span class="title">{{ $product['_source']['name'] }}</span>
                                 <img src="/image/front/cdd-icon.png" class="cdd-icon">
                             </div>
                             <div class="thumb-author">
@@ -119,6 +119,7 @@
     </div>
 </div>
 @include('Frontend.Bibliotheque.partials.modal-searchadvance')
+@include('Frontend.Bibliotheque.partials.modal-tooltip', ['library'])
 @endsection
 
 @section('script')
