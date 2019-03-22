@@ -65,4 +65,9 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
 
         return $items;
     }
+
+    public function getByCatID($catID, $perPage = 15)
+    {
+        return Book::where([['cat_id', '=', $catID]])->paginate($perPage);
+    }
 }

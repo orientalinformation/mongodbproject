@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: binhdq
+ * Date: 20/03/2019
+ * Time: 18:20
+ */
 
 namespace App\Repositories\ProductDetail;
 
@@ -7,6 +13,9 @@ use App\Repositories\EloquentRepository;
 
 class ProductDetailEloquentRepository extends EloquentRepository implements ProductDetailRepositoryInterface
 {
+    /**
+     * @return mixed|string
+     */
     public function getModel()
     {
         return ProductDetail::class;
@@ -68,5 +77,12 @@ class ProductDetailEloquentRepository extends EloquentRepository implements Prod
             ['product_id', '=', $productId],
             ['share', '=', 0],
             ['is_delete', '=', 0]])->get();
+    }
+
+    public function getAllPublicByUserID($userId, $perPage)
+    {
+        return ProductDetail::where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
+            ['is_delete', '=', 0]])->paginate($perPage);
     }
 }

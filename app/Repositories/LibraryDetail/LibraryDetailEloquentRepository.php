@@ -10,6 +10,7 @@ namespace App\Repositories\LibraryDetail;
 
 
 use App\Model\LibraryDetail;
+use App\Model\Library;
 use App\Repositories\EloquentRepository;
 
 class LibraryDetailEloquentRepository extends EloquentRepository implements LibraryDetailRepositoryInterface
@@ -36,5 +37,12 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],
             ['is_delete', '=', 1]])->get();
+    }
+
+    public function getAllPublicByUserID($userId, $perPage)
+    {
+        return LibraryDetail::where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
+            ['is_delete', '=', 0]])->paginate($perPage);
     }
 }

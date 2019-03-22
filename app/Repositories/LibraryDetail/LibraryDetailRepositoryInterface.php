@@ -15,4 +15,6 @@ interface LibraryDetailRepositoryInterface
     public function getLibraryDetail($library_id, $object_id, $type);
 
     public function getLibraryDetailExist($library_id, $object_id, $type);
+
+    public function getAllPublicByUserID($userId, $perPage);
 }

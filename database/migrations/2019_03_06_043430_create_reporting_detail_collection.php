@@ -19,7 +19,7 @@ class CreateReportingDetailCollection extends Migration
             $collection->string('user_id');
             $collection->boolean('share');
             $collection->boolean('pink');
-            $collection->boolean('is_public');
+            $collection->boolean('is_like');
             $collection->boolean('is_delete');
             $collection->timestamps();
         });

@@ -18,6 +18,11 @@ class Product extends Model
         return $products;
     }
 
+    public static function getProductByID($id)
+    {
+        return Product::where([['_id', '=', $id]])->get();
+    }
+
     public function bookDetail()
     {
         return $this->hasOne('App\Model\ProductDetail', '_id', 'product_id');

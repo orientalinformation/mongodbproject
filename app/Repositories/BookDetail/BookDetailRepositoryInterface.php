@@ -22,4 +22,6 @@ interface BookDetailRepositoryInterface
      * @return mixed
      */
     public function checkunLiked($user_id, $book_id);
+
+    public function getAllPublicByUserID($userId, $perPage);
 }
