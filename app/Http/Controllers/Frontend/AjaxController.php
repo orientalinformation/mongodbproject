@@ -55,7 +55,6 @@ class AjaxController extends Controller
     	if ($this->request->ajax()) {
     		$request = $this->request->all();
     		$validator = Validator::make($request, [
-	            'q' => 'required',
 			    'kind' => 'required',
 	        ]);
 
@@ -66,7 +65,15 @@ class AjaxController extends Controller
 			$kinds = $this->request->get('kind');
 			
 	        if (count($kinds) > 1) {
-	        	$url = '/web?q=' . $this->request->get('q');
+	        	$url = '/home';
+	        	if (($this->request->has('q') && $this->request->get('q') != null) || $this->request->has('category')) {
+	        		$url .= '?';
+	        	}
+	        	
+	        	if ($this->request->has('q')) {
+        			$url .= 'q=' . $this->request->get('q') . '&';
+	        	}
+	        	
 	        	if ($this->request->has('category')) {
 	        		$url .= '&category=' . implode(',', $this->request->get('category'));
 	        	}
@@ -76,9 +83,17 @@ class AjaxController extends Controller
 	        		'url' => $url
 	        	];
 	        } else {
-	        	$url = '/' . $kinds[0] . '?q=' . $this->request->get('q');
+	        	$url = '/' . $kinds[0];
+	        	if (($this->request->has('q') && $this->request->get('q') != null) || $this->request->has('category')) {
+	        		$url .= '?';
+	        	}
+
+	        	if ($this->request->has('q') && $this->request->get('q') != null) {
+	        		$url .=  'q=' . $this->request->get('q') . '&';
+	        	}
+
 	        	if ($this->request->has('category')) {
-	        		$url .= '&category=' . implode(',', $this->request->get('category'));
+	        		$url .= 'category=' . implode(',', $this->request->get('category'));
 	        	}
 	        	
 	        	$response = [
@@ -107,8 +122,6 @@ class AjaxController extends Controller
 					break;
 			}
 
-			
-			
 			return response()->json($object);
 		}
 	}

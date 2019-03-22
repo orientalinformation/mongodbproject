@@ -1,8 +1,19 @@
 $(document).ready(function() {
+	targetKeyword();
 	saveKeyword();
 	destroyResearch();
 	searchAdvance();
 })
+
+function targetKeyword() {
+	var formSearchNormal = $('form[name=frmSearchNormal]');
+	var formSearchAdvance = $('form[name=frmSearchAdvance]');
+	
+	formSearchNormal.find('input[name=q]').keyup(function() {
+		var qValue = formSearchNormal.find('input[name=q]').val();
+		formSearchAdvance.find('input[name=q]').val(qValue);
+	})
+}
 
 // save research
 function saveKeyword() {
@@ -89,11 +100,6 @@ function searchAdvance() {
 		e.preventDefault();
 		var form = $('form[name=frmSearchAdvance]');
 		var q = form.find('input[name=q]').val();
-		if (q == '') {
-			toastr['error']('Le champ de q est obligatoire.');
-			form.find('input[name=q]').focus();
-			return false;
-		}
 
 		$.ajax({
 			type: 'POST',
