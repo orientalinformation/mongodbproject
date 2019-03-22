@@ -2959,12 +2959,13 @@ ul.horizontal-menu-library > li a{
 }
 
 .content-line span{
-    margin-left: 25px;
+    margin-left: 20px;
 }
 
 .content-line i{
     text-align: left;
     font-size: 14px;
+    width: 14px
 }
 
 .content-line:hover{

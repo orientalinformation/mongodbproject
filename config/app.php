@@ -236,6 +236,7 @@ return [
         'EnvatoWeb' => App\Helpers\Envato\WebHelper::class,
         'EnvatoProduct' => App\Helpers\Envato\ProductHelper::class,
         'EnvatoLibrary' => App\Helpers\Envato\LibraryHelper::class,
+        'EnvatoObject' => App\Helpers\Envato\ObjectService::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Input' => Illuminate\Support\Facades\Input::class

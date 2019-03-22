@@ -38,7 +38,7 @@
             </div>
             <div class="modal-body">
                 <label>Name:</label>
-                <div class="alert alert-success alertCreatelist"></div>
+                <!-- <div class="alert alert-success alertCreatelist"></div> -->
                 <input type="text" class="form-control" placeholder="Name" id="nameLibrary">
             </div>
             <div class="modal-footer">

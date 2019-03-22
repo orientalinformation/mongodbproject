@@ -60,6 +60,7 @@
 <script src="{{ asset('/assets/lib/jquery/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('/assets/lib/slider/slider.js') }}"></script>
 <script src="{{ asset('/assets/js/front-product.js') }}"></script>
+<script src="{{ asset('/assets/js/front-tooltip.js') }}"></script>
 
 <!-- Plugins -->
 <script type="text/javascript">

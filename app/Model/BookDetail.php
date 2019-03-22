@@ -10,7 +10,7 @@ class BookDetail extends Model
     protected $collection = 'book_details';
     public $translatedAttributes = [];
     protected $fillable = [
-        'book_id', 'user_id', 'share', 'pink', 'is_public', 'is_delete'
+        'book_id', 'user_id', 'is_like', 'share', 'pink', 'is_public', 'is_delete'
     ];
 
     public function book()

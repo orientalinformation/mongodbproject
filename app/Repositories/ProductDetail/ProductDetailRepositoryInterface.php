@@ -48,5 +48,11 @@ interface ProductDetailRepositoryInterface
 
     public function checkunShared($user_id, $product_id);
 
-    public function getAllPublicByUserID($userId, $perPage);
+    /**
+     * get product detail item
+     *
+     * @param string $productId
+     * @return mixed
+     */
+    public function getDataItemUser($productId);
 }
