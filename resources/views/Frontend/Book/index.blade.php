@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="col-lg-9 col-sm-9">
-                    <ul class="horizontal-menu-library">
+                    <ul class="horizontal-menu-library pull-left">
                         <li> <a href="#">Toutes</a></li>
                         <li> <a href="#">Web</a></li>
                         <li class="active"> <a href="#">Étude/Synthese</a></li>
@@ -194,6 +194,7 @@
             let heart = $(this).closest(".wrap").find(".likeIcon");
             let read = $(this).closest(".wrap").find(".readIcon");
             let share = $(this).closest(".wrap").find(".shareIcon");
+            $('.content-panel').hide();
             if(display.css("display") == "none"){
                 display.css("display","block");
                 $.ajax({
