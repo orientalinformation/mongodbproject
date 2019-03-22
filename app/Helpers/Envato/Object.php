@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Helpers\Envato;
-use App\Repositories\Product\ProductRepositoryInterface;
-use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
 use App\Repositories\ReadAfter\ReadAfterRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use Auth;
@@ -10,16 +8,7 @@ use Auth;
 
 class ObjectService
 {
-    /**
-     * @var ProductRepositoryInterface|\App\Repositories\BaseRepositoryInterface
-     */
-    protected $productRepository;
-
-    /**
-     * @var ProductDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
-     */
-    protected $productdetailRepository;
-
+    
     /**
      * @var ReadAfterRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
@@ -28,18 +17,11 @@ class ObjectService
     /**
      * Instantiate ObjectDetail service.
      *
-     * @param ProductRepositoryInterface $productRepository
-     * @param ProductDetailRepositoryInterface $productdetailRepository
      * @param ReadAfterRepositoryInterface $readafterRepository
      * @return void
      */
-    public function __construct(
-        ProductRepositoryInterface $productRepository, 
-        ProductDetailRepositoryInterface $productdetailRepository, 
-        ReadAfterRepositoryInterface $readafterRepository)
+    public function __construct(ReadAfterRepositoryInterface $readafterRepository)
     {
-        $this->productRepository = $productRepository;
-        $this->productdetailRepository = $productdetailRepository;
         $this->readafterRepository = $readafterRepository;
     }
 
