@@ -22,7 +22,9 @@ class CreateWebCollection extends Migration
             $collection->dateTime('pub_date');
             $collection->integer('like');
             $collection->integer('view');
+            $collection->boolean('is_public');
             $collection->boolean('is_delete');
+            $collection->integer('user_id');
             $collection->timestamps();
 
         });
