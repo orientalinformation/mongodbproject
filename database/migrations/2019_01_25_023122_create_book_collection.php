@@ -29,6 +29,9 @@ class CreateBookCollection extends Migration
             $collection->integer('view');
             $collection->integer('like');
             $collection->boolean('is_public');
+            $collection->boolean('is_video');
+            $collection->boolean('is_image');
+            $collection->boolean('is_sound');
             $collection->boolean('is_delete');
             $collection->integer('user_id');
             $collection->timestamps();
