@@ -8,9 +8,7 @@
 
 namespace App\Repositories\LibraryDetail;
 
-
 use App\Model\LibraryDetail;
-use App\Model\Library;
 use App\Repositories\EloquentRepository;
 
 class LibraryDetailEloquentRepository extends EloquentRepository implements LibraryDetailRepositoryInterface

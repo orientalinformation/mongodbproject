@@ -8,11 +8,28 @@
 
 namespace App\Helpers\Envato;
 use App\Model\Web;
+use App\Repositories\BaseRepositoryInterface;
+use App\Repositories\Web\WebRepositoryInterface;
 
 class WebHelper
 {
+    /**
+     * @var WebRepositoryInterface|BaseRepositoryInterface
+     */
+    private static $webRepository;
+
+    public function __construct(WebRepositoryInterface $webRepository)
+    {
+        self::$webRepository = $webRepository;
+    }
+
+    /**
+     *
+     * @param $id
+     * @return mixed
+     */
     public static function getWebDetail($id) {
-        $result = Web::getWebByID($id)->toArray();
+        $result = self::$webRepository->find($id);
         return $result;
     }
 }

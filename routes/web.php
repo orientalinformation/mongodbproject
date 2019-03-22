@@ -27,6 +27,8 @@ Route::namespace('Frontend')->group(function () {
     Route::get('/update_list', 'BookController@updateLibraryDetail');
     Route::get('/create_list', 'BookController@createLibrary');
     Route::get('/check_share', 'BookController@checkShare');
+    Route::get('/check_pin', 'BookController@checkPin');
+    Route::get('/library_checked_list', 'BookController@libraryCheckedList');
 
     //register routes
     Route::get('register', 'AuthController@showRegistrationForm');

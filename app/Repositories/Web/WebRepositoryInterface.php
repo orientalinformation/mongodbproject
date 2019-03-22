@@ -18,4 +18,12 @@ interface WebRepositoryInterface
 	 * @return mixed
 	 */
 	public function getItemsByadmin($limit);
+
+    /**
+     * get all web by user id
+     * @param $userId
+     * @param $perPage
+     * @return mixed
+     */
+    public function getAllPublicByUserID($userId, $perPage);
 }

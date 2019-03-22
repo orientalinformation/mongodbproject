@@ -13,7 +13,7 @@ interface LibraryRepositoryInterface
 {
     public function getLibraryByUserID($userID, $perPage);
 
-    public function getAllLibraryByUserID($userID);
-
     public function checkName($user_id, $name);
+
+    public function getAllLibraryByUserID($userId);
 }

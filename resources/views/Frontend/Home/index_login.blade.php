@@ -47,17 +47,17 @@
                                             <a href="#"><span>Web</span></a>
                                             <a href="#"><i class="fa fa-globe" aria-hidden="true"></i></a>
                                         </div>
+                                        <?php if(sizeof($web['data']) > 0): ?>
                                         <div id="homeCarousel1" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
-                                            <div class="carousel-inner home-slider"><!--WebHelper::getWebDetail-->
+                                            <div class="carousel-inner home-slider">
                                                 <?php $i = 1;?>
                                                 @foreach($web['data'] as $item)
-                                                    <?php $web_data = EnvatoWeb::getWebDetail($item['web_id']);?>
                                                     <div class="item clearfix @php if ($i==1) echo 'active'; @endphp">
                                                         <div class="image">
                                                             <?php
-                                                            if (array_key_exists("enclosure",$web_data[0])){
-                                                                $imagePath = URL::to('/') . '/upload/book/' . $web_data[0]['enclosure'];
+                                                            if (array_key_exists("enclosure",$item)){
+                                                                $imagePath = URL::to('/') . '/upload/book/' . $item['enclosure'];
 //                                                                if (@getimagesize($imagePath)) {
 //                                                                    echo '<img src="' . $imagePath . '">';
 //                                                                }else{
@@ -70,8 +70,8 @@
                                                             ?>
                                                         </div>
                                                         <div class="content">
-                                                            <p class="title"><a href="#">{{ $web_data[0]['title'] }}</a></p>
-                                                            <p class="description">{{ $web_data[0]['description'] }}</p>
+                                                            <p class="title"><a href="#">{{ $item['title'] }}</a></p>
+                                                            <p class="description">{{ $item['description'] }}</p>
                                                         </div>
                                                     </div>
                                                     <?php $i++; ?>
@@ -83,6 +83,7 @@
                                                 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                             </a>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -127,6 +128,7 @@
                                             <a href="{{ URL::to('/') . '/book' }}"><span>Étude</span></a>
                                             <a href="{{ URL::to('/') . '/book' }}"><i class="fa fa-book" aria-hidden="true"></i> </a>
                                         </div>
+                                        <?php if(sizeof($book['data']) > 0): ?>
                                         <div id="homeCarousel3" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
@@ -163,6 +165,7 @@
                                                 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                             </a>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -207,6 +210,7 @@
                                             <a href="{{ URL::to('/') . '/product' }}"><span>Produit</span></a>
                                             <a href="{{ URL::to('/') . '/product' }}"><i class="fa fa-product-hunt" aria-hidden="true"></i></a>
                                         </div>
+                                        <?php if(sizeof($product['data']) > 0): ?>
                                         <div id="homeCarousel5" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
@@ -243,6 +247,7 @@
                                                 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                             </a>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -251,6 +256,7 @@
                                             <a href="{{ URL::to('/') . '/book' }}"><span>Bibliothèque</span></a>
                                             <a href="{{ URL::to('/') . '/book' }}"><i class="fa fa-university" aria-hidden="true"></i></a>
                                         </div>
+                                        <?php if(sizeof($library['data']) > 0): ?>
                                         <div id="homeCarousel6" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
@@ -287,6 +293,7 @@
                                                 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                             </a>
                                         </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
