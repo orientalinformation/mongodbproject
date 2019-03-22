@@ -184,20 +184,21 @@ $('.menu-tooltips').click(function() {
 			}
 		});
 
-		// $.ajax({
-		// 	url: "{{ URL::to('/') }}/check_share",
-		// 	cache: false,
-		// 	type: "GET",
-		// 	data: {user_id: 1, book_id: bibliothequeId},
-		// 	success: function(result){
-		// 		result = JSON.parse(result);
-		// 		if(result.status == 1){
-		// 			share.css('color','blue')
-		// 		}else{
-		// 			share.css('color','black')
-		// 		}
-		// 	}
-		// });
+		$.ajax({
+            url: url + "check_share",
+            cache: false,
+            type: "GET",
+            data: { object_id: libraryId },
+            success: function(result) {
+				console.log(result);
+				
+                if(result.status == 1) {
+                    share.css('color','blue')
+                } else {
+                    share.css('color','black')
+                }
+            }
+        });
 	} else {
 		display.css("display","none");
 	}

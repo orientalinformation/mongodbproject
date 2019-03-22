@@ -54,6 +54,7 @@ class LibrariesTableSeeder extends Seeder
                 'url'               => $url,
                 'image'             => '/image/front/Bibliotheque_Web_1.jpg',
                 'alias'             => '0',
+                'share'             => 0,
                 'view'              => random_int(1, 2),
                 'like'              => random_int(1, 99),
                 'price'             => random_int(11, 99),
@@ -61,6 +62,9 @@ class LibrariesTableSeeder extends Seeder
                 'user_id'           => 1,
                 'is_public'         => 0,
                 'is_delete'         => '0',
+                'is_video'          => 0,
+                'is_image'          => 0,
+                'is_sound'          => 0
             ];
 
             $library = $this->libraryRepository->create($data);

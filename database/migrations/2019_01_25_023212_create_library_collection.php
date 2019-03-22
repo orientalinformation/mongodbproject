@@ -19,6 +19,7 @@ class CreateLibraryCollection extends Migration
             $collection->string('description');
             $collection->string('image');
             $collection->string('alias');
+            $collection->integer('share');
             $collection->string('url');
             $collection->double('price');
             $collection->integer('like');

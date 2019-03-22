@@ -470,7 +470,7 @@ class BibliothequeController extends Controller
                 if($change == 1) {
                     if(sizeof($libraryDetail) > 0) {
                         foreach($libraryDetail as $item) {
-                            $data['product_id'] = $item['product_id'];
+                            $data['library_id'] = $item['library_id'];
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = 0;
                             $data['pink'] = $item['pink'];
@@ -483,7 +483,7 @@ class BibliothequeController extends Controller
                         $libraryDetail = $this->libraryDetailRepository->checkunLiked($userId, $objectId)->toArray();
                         if(sizeof($libraryDetail) > 0){
                             foreach($libraryDetail as $item){
-                                $data['product_id'] = $item['product_id'];
+                                $data['library_id'] = $item['library_id'];
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = 1;
                                 $data['pink'] = $item['pink'];
@@ -492,7 +492,7 @@ class BibliothequeController extends Controller
                                 $this->libraryDetailRepository->update($item['_id'], $data);
                             }
                         } else {
-                            $data['product_id'] = $objectId;
+                            $data['library_id'] = $objectId;
                             $data['user_id'] = $userId;
                             $data['share'] = 1;
                             $data['pink'] = 0;
