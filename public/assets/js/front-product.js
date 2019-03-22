@@ -99,7 +99,6 @@ function searchAdvance() {
 	$('#btn-search-advance').click(function(e) {
 		e.preventDefault();
 		var form = $('form[name=frmSearchAdvance]');
-		var q = form.find('input[name=q]').val();
 
 		$.ajax({
 			type: 'POST',

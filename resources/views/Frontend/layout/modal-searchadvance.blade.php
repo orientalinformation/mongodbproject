@@ -48,7 +48,7 @@
 		                            <span class="text-label-rechercher text-label-rechercher-parent">Filière</span>
 									<div class="checkbox checkbox-category-first">
 		                                <label>
-		                                  <input type="checkbox" name="category[]" value="{{ $item['_id'] }}" class="input-category-one"> {{ $item['name'] }}
+		                                  <input type="checkbox" name="catID[]" value="{{ $item['_id'] }}" class="input-category-one"> {{ $item['name'] }}
 		                                </label>
 		                            </div>
 		                        </div>
@@ -64,7 +64,7 @@
 				                        	@endif
 				                        	<div class="checkbox">
 				                                <label>
-				                                  <input type="checkbox" name="category[]" value="{{ $subItem['_id'] }}" data-id="{{ $subItem['_id'] }}" id="input-category-two-{{ $subItem['_id'] }}" class="input-category-two"> {{ $subItem['name'] }}
+				                                  <input type="checkbox" name="catID[]" value="{{ $subItem['_id'] }}" data-id="{{ $subItem['_id'] }}" id="input-category-two-{{ $subItem['_id'] }}" class="input-category-two"> {{ $subItem['name'] }}
 				                                </label>
 				                            </div>
 				                            <div class="box-sub-cat-child">
@@ -72,7 +72,7 @@
 				                            	<div class="box-sub-cat-child-item">
 				                            		<div class="checkbox">
 						                                <label>
-						                                  <input type="checkbox" name="category[]" value="{{ $subCatChild['_id'] }}" data-parent="{{ $subItem['_id'] }}" class="input-category-three input-category-three-{{ $subItem['_id'] }}"> {{ $subCatChild['name'] }}
+						                                  <input type="checkbox" name="catID[]" value="{{ $subCatChild['_id'] }}" data-parent="{{ $subItem['_id'] }}" class="input-category-three input-category-three-{{ $subItem['_id'] }}"> {{ $subCatChild['name'] }}
 						                                </label>
 						                            </div>
 				                            	</div>
@@ -84,30 +84,6 @@
 	                        @endforeach
 	                    </div>
                         @endif
-                        <div class="form-group">
-                        	<legend class="col-form-label recher-avancee-line"></legend>
-							<div class="checkbox">
-                                <label>
-                                  <input type="checkbox" name="category[]"> Produit
-                                </label>
-                            </div>
-                            <div class="box-sub-cat-child">
-                            	<div class="box-sub-cat-child-item">
-                            		<div class="checkbox">
-		                                <label>
-		                                  <input type="checkbox" name="cate"> Quincallerie
-		                                </label>
-		                            </div>
-                            	</div>
-                            	<div class="box-sub-cat-child-item">
-                            		<div class="checkbox">
-		                                <label>
-		                                  <input type="checkbox" name="cate"> Colletset
-		                                </label>
-		                            </div>
-                            	</div>
-                            </div>
-                        </div>
                         <div class="box-btn-search-advance">
                             <button class="btn btn-oblong btn-primary btn-upload" id="btn-search-advance" type="button"><i class="fa fa-search" aria-hidden="true"></i> RECHECHE</button>
                         </div>

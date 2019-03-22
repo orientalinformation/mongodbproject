@@ -124,8 +124,8 @@ class ProductController extends Controller
 			$paramPath .= 'start_year=' . $options['start_year'] . '&end_year=' . $options['end_year'] . '&';
 		}
 
-		if($this->request->has('category')) {
-			$categories = explode(',', $this->request->get('category'));
+		if($this->request->has('catID')) {
+			$categories = explode(',', $this->request->get('catID'));
 			$arrCategory = [];
 			foreach ($categories as $category) {
 				$listCategories = $this->categoryRepository->getCategoryTreeId($category);
@@ -135,9 +135,9 @@ class ProductController extends Controller
 			}
 
 			$arrCategory = array_values(array_unique($arrCategory));
-            $options['category_query'] = $this->request->get('category');
+            $options['category_query'] = $this->request->get('catID');
 			$options['category'] = $arrCategory;
-			$paramPath .= 'category=' . $this->request->get('category') . '&';
+			$paramPath .= 'catID=' . $this->request->get('catID') . '&';
 		}
 
 		$urlSort = [];

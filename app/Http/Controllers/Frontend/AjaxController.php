@@ -66,7 +66,7 @@ class AjaxController extends Controller
 			
 	        if (count($kinds) > 1) {
 	        	$url = '/home';
-	        	if (($this->request->has('q') && $this->request->get('q') != null) || $this->request->has('category')) {
+	        	if (($this->request->has('q') && $this->request->get('q') != null) || $this->request->has('catID')) {
 	        		$url .= '?';
 	        	}
 	        	
@@ -74,8 +74,8 @@ class AjaxController extends Controller
         			$url .= 'q=' . $this->request->get('q') . '&';
 	        	}
 	        	
-	        	if ($this->request->has('category')) {
-	        		$url .= '&category=' . implode(',', $this->request->get('category'));
+	        	if ($this->request->has('catID')) {
+	        		$url .= '&catID=' . implode(',', $this->request->get('catID'));
 	        	}
 
 	        	$response = [
@@ -84,7 +84,7 @@ class AjaxController extends Controller
 	        	];
 	        } else {
 	        	$url = '/' . $kinds[0];
-	        	if (($this->request->has('q') && $this->request->get('q') != null) || $this->request->has('category')) {
+	        	if (($this->request->has('q') && $this->request->get('q') != null) || $this->request->has('catID')) {
 	        		$url .= '?';
 	        	}
 
@@ -92,8 +92,8 @@ class AjaxController extends Controller
 	        		$url .=  'q=' . $this->request->get('q') . '&';
 	        	}
 
-	        	if ($this->request->has('category')) {
-	        		$url .= 'category=' . implode(',', $this->request->get('category'));
+	        	if ($this->request->has('catID')) {
+	        		$url .= 'catID=' . implode(',', $this->request->get('catID'));
 	        	}
 	        	
 	        	$response = [

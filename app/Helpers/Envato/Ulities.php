@@ -47,7 +47,7 @@ class Ulities
             }
 
             if(isset($options['category_query'])) {
-                $paramPath .= 'category=' . $options['category_query'] . '&';
+                $paramPath .= 'catID=' . $options['category_query'] . '&';
             }
 
             if (isset($options['sort'])) {
