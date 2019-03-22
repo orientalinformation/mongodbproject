@@ -17,7 +17,7 @@ use App\Repositories\Library\LibraryRepositoryInterface;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 use App\Repositories\ReadAfter\ReadAfterRepositoryInterface;
 
-class BibliothequeController extends Controller
+class LibraryController extends Controller
 {
     /**
      * @var BibliothequeRepositoryInterface|\App\Repositories\BaseRepositoryInterface

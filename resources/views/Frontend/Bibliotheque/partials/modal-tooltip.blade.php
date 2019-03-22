@@ -1,5 +1,5 @@
 @php $type = ''; @endphp
-@if ($controller == 'BibliothequeController')
+@if ($controller == 'LibraryController')
   @php $type = 'bibliotheque'; @endphp
 @endif
 <div class="modal fade" id="libraryList" role="dialog">

@@ -46,26 +46,26 @@ Route::namespace('Frontend')->group(function () {
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
     // Bibliotheque routes
-    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+    Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
     
     Route::prefix('bibliotheque/')->group(function () {
         Route::get('/check_liked', [
-            'uses' => 'BibliothequeController@checkLiked',
+            'uses' => 'LibraryController@checkLiked',
         ]);
         Route::get('/check_read', [
-            'uses' => 'BibliothequeController@checkRead',
+            'uses' => 'LibraryController@checkRead',
         ]);
         Route::get('/check_list', [
-            'uses' => 'BibliothequeController@getLibraryDetailbyUserID',
+            'uses' => 'LibraryController@getLibraryDetailbyUserID',
         ]);
         Route::get('/update_list', [
-            'uses' => 'BibliothequeController@updateLibraryDetail',
+            'uses' => 'LibraryController@updateLibraryDetail',
         ]);
         Route::get('/create_list', [
-            'uses' => 'BibliothequeController@createLibrary',
+            'uses' => 'LibraryController@createLibrary',
         ]);
         Route::get('/check_share', [
-            'uses' => 'BibliothequeController@checkShare',
+            'uses' => 'LibraryController@checkShare',
         ]);
     });
     // Ajax routes
@@ -98,7 +98,7 @@ Route::namespace('Frontend')->group(function () {
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware('auth');
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware('auth');
     // Bibliotheque routes
-    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+    Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
 
     //====Web start=============
     Route::resource('web', 'WebController');
