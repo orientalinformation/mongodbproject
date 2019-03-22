@@ -60,60 +60,47 @@ class ProductTableSeeder extends Seeder
                 $categoryId = $arrayCategory[$arrayRand];
 
                 $data = [
+                    'user_id'           => $userId,
+                    'category_id'       => $categoryId,
                     'title'             => $title,
                     'url'               => $url,
                     'description'       => $description,
                     'image'             => $image,
                     'view'              => $view,
                     'like'              => $like,
-                    'category_id'       => $categoryId,
+                    'is_public'         => $isPublic,
                     'is_delete'         => $isDelete,
                 ];
 
                 $productCreate = Product::create($data);
-                $dataProductDetail = [
-                    'product_id' => $productCreate->id,
-                    'user_id' => $userId,
-                    'share' => $share,
-                    'pink' => $pink,
-                    'is_public' => $isPublic,
-                    'is_delete' => $isDelete,
-                ];
-
-                ProductDetail::create($dataProductDetail);
             }
 
             // insert data to Elastic
             $products = $productRepository->all();
             if (count($products) > 0) {
                 foreach ($products as $product) {
-                    $productDetail = ProductDetail::where('product_id', $product->id)->first();
-                    if ($productDetail) {
-                        $dataElastic = [
-                            'body' => [
-                                'title'             => $product->title,
-                                'url'               => $product->url,
-                                'description'       => $product->description,
-                                'image'             => $product->image,
-                                'view'              => $product->view,
-                                'category_id'       => $product->category_id,
-                                'like'              => $product->like,
-                                'user_id'           => $productDetail->user_id,
-                                'share'             => $productDetail->share,
-                                'pink'              => $productDetail->pink,
-                                'is_public'         => $productDetail->is_public,
-                                'is_delete'         => $product->is_delete,
-                                'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
-                                'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
-                            ],
-                            'index' => Config::get('constants.elasticsearch.product.index'),
-                            'type' => Config::get('constants.elasticsearch.product.type'),
-                            'id' => $product->id,
-                        ];
+                    $dataElastic = [
+                        'body' => [
+                            'user_id'           => $product->user_id,
+                            'category_id'       => $product->category_id,
+                            'title'             => $product->title,
+                            'url'               => $product->url,
+                            'description'       => $product->description,
+                            'image'             => $product->image,
+                            'view'              => $product->view,
+                            'like'              => $product->like,
+                            'is_public'         => $product->is_public,
+                            'is_delete'         => $product->is_delete,
+                            'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
+                            'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
+                        ],
+                        'index' => Config::get('constants.elasticsearch.product.index'),
+                        'type' => Config::get('constants.elasticsearch.product.type'),
+                        'id' => $product->id,
+                    ];
 
-                        $client = ClientBuilder::create()->build();
-                        $client->index($dataElastic);
-                    }
+                    $client = ClientBuilder::create()->build();
+                    $client->index($dataElastic);
                 }
             }
         }

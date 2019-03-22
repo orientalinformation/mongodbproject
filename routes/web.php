@@ -47,7 +47,9 @@ Route::namespace('Frontend')->group(function () {
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
     // Ajax routes
-    Route::post('search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware(CheckAdminFrontend::class);
+    Route::post('ajax/search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware(CheckAdminFrontend::class);
+    Route::post('ajax/getObjectDataDetail', ['uses' => 'AjaxController@getObjectDataDetail', 'as' => 'frontAjaxGetObjectDataDetail'])->middleware(CheckAdminFrontend::class);
+    Route::post('ajax/setObjectDataDetail', ['uses' => 'AjaxController@setObjectDataDetail', 'as' => 'frontAjaxSetObjectDataDetail'])->middleware(CheckAdminFrontend::class);
 
     // Product routes
     Route::get('product', ['uses' => 'ProductController@index', 'as' => 'frontProduct'])->middleware(CheckAdminFrontend::class);

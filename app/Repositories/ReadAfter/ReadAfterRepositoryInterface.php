@@ -27,4 +27,13 @@ interface ReadAfterRepositoryInterface
      * @return mixed
      */
     public function checkunRead($user_id, $object_id, $type);
+
+    /**
+     * get item readafter with object id
+     *
+     * @param $objectId
+     * @param $type
+     * @return mixed
+     */
+    public function getDataObjectItem($objectId, $type);
 }

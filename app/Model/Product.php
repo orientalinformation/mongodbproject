@@ -25,6 +25,6 @@ class Product extends Model
 
     public function bookDetail()
     {
-        return $this->hasOne('App\Model\ProductDetail', '_id', 'product_id');
+        return $this->hasMany('App\Model\ProductDetail', '_id', 'product_id');
     }
 }

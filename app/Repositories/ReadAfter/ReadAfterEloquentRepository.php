@@ -11,6 +11,7 @@ namespace App\Repositories\ReadAfter;
 
 use App\Model\ReadAfter;
 use App\Repositories\EloquentRepository;
+use Auth;
 
 class ReadAfterEloquentRepository extends EloquentRepository implements ReadAfterRepositoryInterface
 {
@@ -33,5 +34,23 @@ class ReadAfterEloquentRepository extends EloquentRepository implements ReadAfte
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],
             ['is_delete', '=', 1]])->get();
+    }
+
+    /**
+     * get item readafter with object id
+     *
+     * @param $objectId
+     * @param $type
+     * @return mixed
+     */
+    public function getDataObjectItem($objectId, $type)
+    {
+        $item = $this->model->where([
+            'user_id'   => Auth::user()->id,
+            'object_id' => $objectId,
+            'type_name' => $type
+        ])->first();
+
+        return $item;
     }
 }
