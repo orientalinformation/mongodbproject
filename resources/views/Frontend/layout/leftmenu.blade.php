@@ -77,10 +77,18 @@
 @section('script-left-menu')
 <script type="text/javascript">
     jQuery(function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var start_year = url.searchParams.get("start_year");
+        var end_year = url.searchParams.get("end_year");
+        var range = [2010, 2020];
+        if(start_year > 0 && end_year > 0){
+            range = [start_year, end_year]
+        }
         jQuery( "#slider_range" ).flatslider({
             min: 1990, max: 2100,
             step: 1,
-            values: [2010, 2020],
+            values: range,
             range: true,
             einheit: '',
             stop: function( event, ui ) {

@@ -24,9 +24,4 @@ class Web extends Eloquent
         'user_id'
 
     ];
-
-    public static function getWebByID($id)
-    {
-        return Web::where([['_id', '=', $id]])->get();
-    }
 }

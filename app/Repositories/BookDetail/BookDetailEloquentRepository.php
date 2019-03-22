@@ -19,13 +19,26 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
         return BookDetail::class;
     }
 
+    /**
+     * check like
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
     public function checkLiked($user_id, $book_id)
     {
         return BookDetail::where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
+            ['is_like', '=', 1],
             ['is_delete', '=', 0]])->get();
     }
 
+    /**
+     * check unlike
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
     public function checkunLiked($user_id, $book_id)
     {
         return BookDetail::where([['user_id', '=', $user_id],
@@ -33,6 +46,12 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
             ['is_delete', '=', 1]])->get();
     }
 
+    /**
+     * check share
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
     public function checkShared($user_id, $book_id)
     {
         return BookDetail::where([['user_id', '=', $user_id],
@@ -41,14 +60,52 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
             ['is_delete', '=', 0]])->get();
     }
 
+    /**
+     * check unshare
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
     public function checkunShared($user_id, $book_id)
     {
         return BookDetail::where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
-            ['share', '=', 0],
+            ['is_delete', '=', 1]])->get();
+    }
+
+    /**
+     * check pin
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
+    public function checkPin($user_id, $book_id)
+    {
+        return BookDetail::where([['user_id', '=', $user_id],
+            ['book_id', '=', $book_id],
+            ['pink', '=', 1],
             ['is_delete', '=', 0]])->get();
     }
 
+    /**
+     * check unpin
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
+    public function checkunPin($user_id, $book_id)
+    {
+        return BookDetail::where([['user_id', '=', $user_id],
+            ['book_id', '=', $book_id],
+            ['is_delete', '=', 0]])->get();
+    }
+
+    /**
+     * get all public by user id
+     * @param $userId
+     * @param $perPage
+     * @return mixed
+     */
     public function getAllPublicByUserID($userId, $perPage)
     {
         return BookDetail::where([['user_id', '=', $userId],

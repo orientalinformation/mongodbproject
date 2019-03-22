@@ -43,4 +43,6 @@ interface BookRepositoryInterface
      * @return mixed
      */
     public function getByCatID($catID, $perPage = 15);
+
+    public function paginateByTitleSort($sort, $perPage = 15);
 }
