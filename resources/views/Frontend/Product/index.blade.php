@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <div class="col-lg-3 col-sm-3">
                 <div id="input_container">
-                	<form method="Get" action="{{ route('frontProduct') }}">
+                	<form method="get" action="{{ route('frontProduct') }}" name="frmSearchNormal">
 	                    <input type="text" name="q" id="input" value="{{ app('request')->input('q') }}">
 	                    <i class="fa fa-search" aria-hidden="true" id="input_img"></i>
 	                    <button type="button" id="btnSearch" data-toggle="modal" data-target=".bd-search-advance-modal-lg">Recherche avancée</button>
@@ -23,14 +23,16 @@
                 <ul class="horizontal-menu-library pull-left">
                     <li> <a href="#">Toutes</a></li>
                     <li> <a href="#">Web</a></li>
-                    <li class="active"> <a href="#">Étude/Synthese</a></li>
-                    <li> <a href="#">Produit</a></li>
+                    <li> <a href="#">Étude/Synthese</a></li>
+                    <li class="active"> <a href="#">Produit</a></li>
                     <li> <a href="#">Preporting/Evenement</a></li>
                     <li> <a href="#">Librairie Compagnons</a></li>
                 </ul>
+                @if (app('request')->input('q') != '')
                 <div class="btn-research pull-right">
                     <a href="#" class="btn btn-warning text-uppercase" data-toggle="modal" data-target=".bd-save-keyword-modal-md"><i class="fa fa-level-down" aria-hidden="true"></i> @lang('common.saveSearch')</a>
                 </div>
+                @endif
             </div>
         </div>
         <div class="container-fluid">
