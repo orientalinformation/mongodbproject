@@ -9,9 +9,19 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\Library\LibraryRepositoryInterface;
+use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 
 class LibrariesTableSeeder extends Seeder
 {
+    /**
+     * @var LibraryRepositoryInterface|BaseRepositoryInterface
+     */
+    private $libraryRepository;
+
+    /**
+     * @var LibraryDetailRepositoryInterface|BaseRepositoryInterface
+     */
+    private $libraryDetailRepo;
     /**
      * Run the database seeds.
      *
@@ -32,14 +42,14 @@ class LibrariesTableSeeder extends Seeder
         }
 
         // add data to mongo db product table
-    	$bibliothequeRepository = app(LibraryRepositoryInterface::class);
+    	$this->libraryRepository = app(LibraryRepositoryInterface::class);
         $faker = Faker::create('fr');
         for ($i = 0; $i < 100; $i++) { 
             $name = $faker->text(20);
             $url = str_slug($name);
 
             $data = [
-                'name'             => $name,
+                'name'              => $name,
                 'description'       => $faker->text(30),
                 'url'               => $url,
                 'image'             => '/image/front/Bibliotheque_Web_1.jpg',
@@ -53,10 +63,10 @@ class LibrariesTableSeeder extends Seeder
                 'is_delete'         => '0',
             ];
 
-            $bibliothequeCreate = Library::create($data);
+            $library = $this->libraryRepository->create($data);
 
             $dataLibraryDetail = [
-                'library_id' => $bibliothequeCreate->id,
+                'library_id' => $library->id,
                 'object_id' => 1,
                 'user_id' => 1,
                 'share' => 0,
@@ -65,16 +75,15 @@ class LibrariesTableSeeder extends Seeder
                 'is_public' => 1,
                 'is_delete' => 0,
             ];
-
-            LibraryDetail::create($dataLibraryDetail);
+            $this->libraryDetailRepo = app(LibraryDetailRepositoryInterface::class);
+            $this->libraryDetailRepo->create($dataLibraryDetail);
         }
 
         // insert data to Elastic
-        $bibliotheques = $bibliothequeRepository->all();
+        $bibliotheques = $this->libraryRepository->all();
        	if (count($bibliotheques) > 0) {
        		foreach ($bibliotheques as $bibliotheque) {
-                $bibliothequesDetail = LibraryDetail::where('library_id', $bibliotheque->id)->first();
-                
+                $bibliothequesDetail = $this->libraryDetailRepo->getLibraryDetailById($bibliotheque->id);
                 if ($bibliothequesDetail) {
                     $dataElastic = [
                         'body' => [
@@ -104,19 +113,6 @@ class LibrariesTableSeeder extends Seeder
                     $client->index($dataElastic);
                 }
        		}
-           }
-           // data for category
-           $categoryRepository = app(CategoryRepositoryInterface::class);
-           $categories = $categoryRepository->all();
-           if(!count($categories) > 0) {
-               $dataCategory = [
-                'name' => 'Fillère',
-                'alias' => '',
-                'description' => 'Fillère',
-                'parent_id' => '',
-                'path'    => ''
-               ];
-               Category::create($dataCategory);
-           }
+        }
     }
 }

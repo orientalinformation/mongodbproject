@@ -44,4 +44,11 @@ interface LibraryDetailRepositoryInterface
     public function checkShared($userId, $libraryId);
     
     public function getAllPublicByUserID($userId, $perPage);
+
+    /**
+     * Get library detail
+     * @param int $libraryId
+     * @return mixed
+     */
+    public function getLibraryDetailById($libraryId = null);
 }

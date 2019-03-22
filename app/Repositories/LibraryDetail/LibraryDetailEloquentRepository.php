@@ -93,4 +93,15 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
             ['is_public', '=', 1],
             ['is_delete', '=', 0]])->paginate($perPage);
     }
+
+    /**
+     * Get library detail
+     * @param int $libraryId
+     * @return mixed
+     */
+    public function getLibraryDetailById($libraryId = null)
+    {
+        $libDetailModel = $this->model;
+        return $libDetailModel::where([['library_id', '=', $libraryId]])->first();
+    }
 }
