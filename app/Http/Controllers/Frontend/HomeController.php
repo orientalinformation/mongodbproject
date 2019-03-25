@@ -39,6 +39,11 @@ class HomeController extends Controller
     protected $productRepository;
 
     /**
+     * @var ProductDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $productdetailRepository;
+
+    /**
      * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $bookRepository;
@@ -65,6 +70,7 @@ class HomeController extends Controller
      * @param UserRepositoryInterface $userRepository
      * @param WebRepositoryInterface $webRepository
      * @param ProductRepositoryInterface $productRepository
+     * @param ProductDetailRepositoryInterface $productdetailRepository
      * @param BookRepositoryInterface $bookRepository
      * @param BibliothequeRepositoryInterface $bibliothequetRepository
      * @return void

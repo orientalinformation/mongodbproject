@@ -61,32 +61,34 @@
                     </div>
                     <div class="head-menu"><span><strong>Étude/Synthese</strong></span> (<?= sizeof($book['data']); ?>)</div>
                     <?php if(sizeof($book['data']) > 0): ?>
-                    <?php $i = 1; $j = 1;?>
+                    <?php $i = 1;?>
                     @foreach($book['data'] as $item)
-                        <?php if($i == 1 || $i % 7 == 0): ?>
+                        <?php if($i == 1): ?>
                             <div class="container-fluid group-box" <?= $i ?>>
                         <?php endif; ?>
-                            <div class="col-lg-2 col-sm-2">
+                            <div class="col-lg-2 col-sm-2 <?= $i ?>">
                                 <div class="wrap">
                                     <img src="<?= URL::to('/upload/book/') . "/" . $item['image'] ?>" class="library-thumb">
                                     <?php if (!empty(Auth::user())): ?>
-                                    <div class="menu-tooltips"></div>
-                                    <div class="content-panel">
-                                        <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
-                                        <div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
-                                        <div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
-                                        <div class="content-line create-line" data-toggle="modal" data-target="#libraryCreate"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
-                                        <div class="content-line pin-line"><i class="fa fa-thumb-tack pinIcon" aria-hidden="true"></i> <span>Pin</span></div>
-                                        <div class="content-line share-line"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>
+                                    <div class="box-toolips" data-type="book" data-id="{{ $item['_id'] }}">
+                                        <div class="menu-tooltips"></div>
+                                        {{--<div class="content-panel">--}}
+                                            {{--<div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>--}}
+                                            {{--<div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>--}}
+                                            {{--<div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>--}}
+                                            {{--<div class="content-line create-line" data-toggle="modal" data-target="#libraryCreate"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>--}}
+                                            {{--<div class="content-line pin-line"><i class="fa fa-thumb-tack pinIcon" aria-hidden="true"></i> <span>Pin</span></div>--}}
+                                            {{--<div class="content-line share-line"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>--}}
+                                        {{--</div>--}}
+                                        <div class="content-panel">
+                                            <div class="content-line like-line object-tooltip" data-element="like"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
+                                            <div class="content-line read-line object-tooltip" data-element="read"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
+                                            <div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>
+                                            <div class="content-line create-line" data-toggle="modal" data-target="#libraryCreate"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>
+                                            <div class="content-line share-line object-tooltip" data-element="share"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>
+                                            <div class="content-line pink-line object-tooltip" data-element="pink"><i class="fa fa fa-thumb-tack pinkIcon" aria-hidden="true"></i> <span>Pink</span></div>
+                                        </div>
                                     </div>
-                                    {{--<div class="content-panel">--}}
-                                        {{--<div class="content-line like-line object-tooltip" data-element="like"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>--}}
-                                        {{--<div class="content-line read-line object-tooltip" data-element="read"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>--}}
-                                        {{--<div class="content-line list-line" data-toggle="modal" data-target="#libraryList"><i class="fa fa-plus-square-o" aria-hidden="true"></i> <span>Ajouter dans une liste</span></div>--}}
-                                        {{--<div class="content-line create-line" data-toggle="modal" data-target="#libraryCreate"><i class="fa fa-list-ul" aria-hidden="true"></i> <span>Créer une liste</span></div>--}}
-                                        {{--<div class="content-line share-line object-tooltip" data-element="share"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>--}}
-                                        {{--<div class="content-line pink-line object-tooltip" data-element="pink"><i class="fa fa fa-thumb-tack pinkIcon" aria-hidden="true"></i> <span>Pink</span></div>--}}
-                                    {{--</div>--}}
                                     <?php endif; ?>
                                     <?php if(!isset($_GET["q"])): ?>
                                     <input type="hidden" class="bookID" value="{{ $item['_id'] }}"/>
@@ -105,11 +107,11 @@
                                     {{ EnvatoUlities::number_format_short($item['view']) }} vues . {{ EnvatoUlities::time_elapsed_string($item['created_at']) }}
                                 </div>
                             </div>
-                        <?php if($j == 6): ?>
+                        <?php if($i == 6): ?>
                             </div>
-                        <?php $j = 0; ?>
+                        <?php $i = 0; ?>
                         <?php endif; ?>
-                        <?php $i++; $j++ ?>
+                        <?php $i++; ?>
                     @endforeach
                     @include('Backend.partials.pagination', ['paginator' => $book])
                     <?php else: ?>
@@ -223,227 +225,9 @@
             });
         });
 
-        $('.menu-tooltips').click(function(){
-            let display = $(this).closest(".wrap").find(".content-panel");
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
-            let heart = $(this).closest(".wrap").find(".likeIcon");
-            let read = $(this).closest(".wrap").find(".readIcon");
-            let share = $(this).closest(".wrap").find(".shareIcon");
-            let pin = $(this).closest(".wrap").find(".pinIcon");
-            $('.content-panel').hide();
-            if(display.css("display") == "none"){
-                display.css("display","block");
-                $.ajax({
-                    url: "{{ URL::to('/') }}/check_liked",
-                    cache: false,
-                    type: "GET",
-                    data: {user_id: <?= $userID ?>, book_id: bookID},
-                    success: function(result){
-                        result = JSON.parse(result);
-                        if(result.status == 1){
-                            heart.removeClass("fa-heart-o");
-                            heart.addClass("fa-heart");
-                        }else{
-                            heart.addClass("fa-heart-o");
-                            heart.removeClass("fa-heart");
-                        }
-                    }
-                });
-                $.ajax({
-                    url: "{{ URL::to('/') }}/check_read",
-                    cache: false,
-                    type: "GET",
-                    data: {user_id: <?= $userID ?>, object_id: bookID},
-                    success: function(result){
-                        result = JSON.parse(result);
-                        if(result.status == 1){
-                            read.removeClass("fa-bookmark-o");
-                            read.addClass("fa-bookmark");
-                        }else{
-                            read.addClass("fa-bookmark-o");
-                            read.removeClass("fa-bookmark");
-                        }
-                    }
-                });
-                $.ajax({
-                    url: "{{ URL::to('/') }}/check_share",
-                    cache: false,
-                    type: "GET",
-                    data: {user_id: <?= $userID ?>, book_id: bookID},
-                    success: function(result){
-                        result = JSON.parse(result);
-                        if(result.status == 1){
-                            share.css('color','blue')
-                        }else{
-                            share.css('color','black')
-                        }
-                    }
-                });
-                $.ajax({
-                    url: "{{ URL::to('/') }}/check_pin",
-                    cache: false,
-                    type: "GET",
-                    data: {user_id: <?= $userID ?>, book_id: bookID},
-                    success: function(result){
-                        result = JSON.parse(result);
-                        if(result.status == 1){
-                            pin.css('color','blue')
-                        }else{
-                            pin.css('color','black')
-                        }
-                    }
-                });
-            }else{
-                display.css("display","none");
-            }
-        })
-        $(document).mouseup(function (e) {
-            var popup = $(".content-panel");
-            if (!$('.menu-tooltips').is(e.target) && !popup.is(e.target) && popup.has(e.target).length == 0) {
-                popup.hide(500);
-            }
-        });
-        $('.like-line').click(function(){
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
-            let heart = $(this).closest(".wrap").find(".likeIcon");
-            $.ajax({
-                url: "{{ URL::to('/') }}/check_liked",
-                cache: false,
-                type: "GET",
-                data: {user_id: <?= $userID ?>, book_id: bookID, change: 1},
-                success: function(result){
-                    result = JSON.parse(result);
-                    if(result.status == 1){
-                        heart.removeClass("fa-heart");
-                        heart.addClass("fa-heart-o");
-                    }else if(result.status == 2) {
-                        heart.removeClass("fa-heart-o");
-                        heart.addClass("fa-heart");
-                    }
-                }
-            });
-        })
-        $('.read-line').click(function(){
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
-            let read = $(this).closest(".wrap").find(".readIcon");
-            $.ajax({
-                url: "{{ URL::to('/') }}/check_read",
-                cache: false,
-                type: "GET",
-                data: {user_id: <?= $userID ?>, object_id: bookID, change: 1},
-                success: function(result){
-                    result = JSON.parse(result);
-                    console.log(result);
-                    if(result.status == 1){
-                        read.removeClass("fa-bookmark");
-                        read.addClass("fa-bookmark-o");
-                    }else if(result.status == 2) {
-                        read.removeClass("fa-bookmark-o");
-                        read.addClass("fa-bookmark");
-                    }
-                }
-            });
-        })
-        function checkList(library_id, object_id){
-            $.ajax({
-                url: "{{ URL::to('/') }}/update_list",
-                cache: false,
-                type: "GET",
-                data: {library_id: library_id, object_id: object_id},
-                success: function(result){
-                    result = JSON.parse(result);
-                }
-            });
-        }
-        $('.list-line').click(function(){
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
-            let panelList = $('#body-libraryList');
-            $.ajax({
-                url: "{{ URL::to('/') }}/library_checked_list",
-                cache: false,
-                type: "GET",
-                data: {user_id: <?= $userID ?>, object_id: bookID},
-                success: function(result){
-                    result = JSON.parse(result);
-                    if(result.status == 1){
-                        let data = result.data;
-                        let html_data = "";
-                        data.map(function(item){
-                            let check = '';
-                            if(item['checked']==1){
-                                check = 'checked';
-                            }
-                            html_data += '<div class="input-group listWrap">';
-                            html_data += '<input type="checkbox" name="itemList" onclick="checkList(\'' + item['id'] + '\',\'' + bookID + '\')" class="itemList" attr-data="' + item['id'] + '" ' + check + '><label>' + item['title'] + '</label>';
-                            html_data += '</div>';
-                        })
-                        panelList.html(html_data);
-                    }
-                }
-            });
-        })
-        $('.create-line').click(function(){
-            $('input').val('');
-            $('.alertCreatelist').hide();
-            $('.btnCreateLibrary').click(function(){
-                let name = $('#nameLibrary').val();
 
-                $.ajax({
-                    url: "{{ URL::to('/') }}/create_list",
-                    cache: false,
-                    type: "GET",
-                    data: {user_id: <?= $userID ?>, name: name},
-                    success: function(result){
-                        result = JSON.parse(result);
-                        if(result.status == 1){
-                            $('.alertCreatelist').text("create success");
-                            $('.alertCreatelist').show();
-                        }else{
-                            $('.alertCreatelist').text(result.data);
-                            $('.alertCreatelist').show();
-                        }
-                    }
-                });
-            })
-        })
-        $('.share-line').click(function(){
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
-            let share = $(this).closest(".wrap").find(".shareIcon");
-            $.ajax({
-                url: "{{ URL::to('/') }}/check_share",
-                cache: false,
-                type: "GET",
-                data: {user_id: <?= $userID ?>, book_id: bookID, change: 1},
-                success: function(result){
-                    result = JSON.parse(result);
-                    if(result.status == 1){
-                        share.css('color','black');
-                    }else if(result.status == 2) {
-                        share.css('color','blue');
-                    }
-                }
-            });
-        })
-        $('.pin-line').click(function(){
-            let bookID = $(this).closest(".wrap").find(".bookID").val();
-            let pin = $(this).closest(".wrap").find(".pinIcon");
-            $.ajax({
-                url: "{{ URL::to('/') }}/check_pin",
-                cache: false,
-                type: "GET",
-                data: {user_id: <?= $userID ?>, book_id: bookID, change: 1},
-                success: function(result){
-                    result = JSON.parse(result);
-                    if(result.status == 1){
-                        pin.css('color','black');
-                    }else if(result.status == 2) {
-                        pin.css('color','blue');
-                    }
-                }
-            });
-        })
     </script>
     @include('Frontend.layout.modal-searchadvance')
-    {{--@include('Frontend.layout.modal-tooltip', ['library'])--}}
+    @include('Frontend.layout.modal-tooltip', ['library'])
 @endsection
 

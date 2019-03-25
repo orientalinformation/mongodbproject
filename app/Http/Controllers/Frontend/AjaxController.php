@@ -49,13 +49,17 @@ class AjaxController extends Controller
     	Request $request, 
     	ObjectService $objectService, 
     	ProductRepositoryInterface $productRepository, 
-        ProductDetailRepositoryInterface $productdetailRepository
+        ProductDetailRepositoryInterface $productdetailRepository,
+        BookRepositoryInterface $bookRepository,
+        BookDetailRepositoryInterface $bookdetailRepository
     )
     {
         $this->request = $request;
         $this->objectService = $objectService;
         $this->productRepository = $productRepository;
         $this->productdetailRepository = $productdetailRepository;
+        $this->bookdetailRepository = $bookdetailRepository;
+        $this->bookRepository = $bookRepository;
     }
 	/**
 	 * Popup search advance
@@ -132,6 +136,9 @@ class AjaxController extends Controller
 				case 'product':
 					$object = $this->objectService->getDataObjectDetail($id, $type, $this->productdetailRepository);
 					break;
+                case 'book':
+                    $object = $this->objectService->getDataObjectDetail($id, $type, $this->bookdetailRepository);
+                    break;
 			}
 
 			return response()->json($object);

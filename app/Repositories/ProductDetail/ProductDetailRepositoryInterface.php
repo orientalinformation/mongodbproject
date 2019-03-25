@@ -14,4 +14,12 @@ interface ProductDetailRepositoryInterface
      * @return mixed
      */
     public function getDataItemUser($productId);
+
+    /**
+     * get all public by user id
+     * @param $userId
+     * @param $perPage
+     * @return mixed
+     */
+    public function getAllPublicByUserID($userId, $perPage);
 }

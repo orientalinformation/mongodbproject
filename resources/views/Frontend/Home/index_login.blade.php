@@ -41,13 +41,13 @@
                         </div>
                         <div class="container-fluid">
                             <div class="row">
+                                <?php if(sizeof($web['data']) > 0): ?>
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
                                             <a href="#"><span>Web</span></a>
                                             <a href="#"><i class="fa fa-globe" aria-hidden="true"></i></a>
                                         </div>
-                                        <?php if(sizeof($web['data']) > 0): ?>
                                         <div id="homeCarousel1" class="homeCarousel carousel slide" data-ride="carousel" data-interval="false">
                                             <!-- Wrapper for slides -->
                                             <div class="carousel-inner home-slider">
@@ -83,9 +83,9 @@
                                                 <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
                                             </a>
                                         </div>
-                                        <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
@@ -122,6 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php if(sizeof($book['data']) > 0): ?>
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
@@ -168,6 +169,7 @@
                                         <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
@@ -204,6 +206,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php if(sizeof($product['data']) > 0): ?>
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
@@ -250,6 +253,8 @@
                                         <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php endif; ?>
+                                <?php if(sizeof($library['data']) > 0): ?>
                                 <div class="col-lg-6">
                                     <div class="wrapSlider">
                                         <div class="divIcon">
@@ -296,6 +301,7 @@
                                         <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="container-fluid">

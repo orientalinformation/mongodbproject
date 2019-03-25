@@ -11,6 +11,7 @@ namespace App\Repositories\BookDetail;
 
 use App\Model\BookDetail;
 use App\Repositories\EloquentRepository;
+use Auth;
 
 class BookDetailEloquentRepository extends EloquentRepository implements BookDetailRepositoryInterface
 {
@@ -109,7 +110,22 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
     public function getAllPublicByUserID($userId, $perPage)
     {
         return BookDetail::where([['user_id', '=', $userId],
-            ['is_public', '=', 1],
             ['is_delete', '=', 0]])->paginate($perPage);
+    }
+
+    /**
+     * get product detail item
+     *
+     * @param string $productId
+     * @return mixed
+     */
+    public function getDataItemUser($bookId)
+    {
+        $item = $this->model->where([
+            'user_id'    => Auth::user()->id,
+            'book_id' => $bookId
+        ])->first();
+
+        return $item;
     }
 }

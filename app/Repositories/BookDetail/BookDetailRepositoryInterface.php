@@ -58,4 +58,11 @@ interface BookDetailRepositoryInterface
      * @return mixed
      */
     public function getAllPublicByUserID($userId, $perPage);
+
+    /**
+     * get product detail item
+     * @param $productId
+     * @return mixed
+     */
+    public function getDataItemUser($productId);
 }

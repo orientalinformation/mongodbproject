@@ -37,4 +37,17 @@ class ProductDetailEloquentRepository extends EloquentRepository implements Prod
 
         return $item;
     }
+
+    /**
+     * get all public by user id
+     * @param $userId
+     * @param $perPage
+     * @return mixed
+     */
+    public function getAllPublicByUserID($userId, $perPage)
+    {
+        return $this->model->where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
+            ['is_delete', '=', 0]])->paginate($perPage);
+    }
 }

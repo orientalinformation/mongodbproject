@@ -48,6 +48,7 @@ class ObjectService
         }
 
         $objectDetail = $repositoryName->getDataItemUser($id);
+
         if ($objectDetail) {
             $result['like'] = $objectDetail->is_like;
             $result['share'] = $objectDetail->share;
