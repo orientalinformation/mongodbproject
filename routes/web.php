@@ -101,7 +101,7 @@ Route::namespace('Frontend')->group(function () {
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware(CheckAdminFrontend::class);
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware(CheckAdminFrontend::class);
     // Bibliotheque routes
-    Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
+    // Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
 
     //====Web start=============
     Route::resource('web', 'WebController');

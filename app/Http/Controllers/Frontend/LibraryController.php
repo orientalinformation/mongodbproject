@@ -144,7 +144,7 @@ class LibraryController extends Controller
 
 		$client            = ClientBuilder::create()->build();
 		$response          = $client->search($params);
-
+        // dd($params);
 		$bibliotheques = [];
 		if (!empty($response)) {
             $bibliotheques['total'] = $response['hits']['total'];
@@ -157,7 +157,7 @@ class LibraryController extends Controller
 				$itemTotal = ceil(count($bibliotheques['hits'])/6);
 				$from      = 0;
 				$to        = 6;
-				for($i = 0; $i < $itemTotal; $i++){
+				for($i = 0; $i < $itemTotal; $i++) {
 					$bibliothequeItems[] = array_slice($bibliotheques['hits'], $from, $to);
 					$from += 6;
 				}
