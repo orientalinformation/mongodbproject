@@ -13,9 +13,9 @@ class CreateBibliothequeDetailCollection extends Migration
      */
     public function up()
     {
-        Schema::connection('mongodb')->table('bibliotheque_details', function (Blueprint $collection) {
+        Schema::connection('mongodb')->table('library_details', function (Blueprint $collection) {
             $collection->index('id');
-            $collection->string('bibliotheque_id');
+            $collection->string('library_id');
             $collection->string('user_id');
             $collection->boolean('share');
             $collection->boolean('pink');

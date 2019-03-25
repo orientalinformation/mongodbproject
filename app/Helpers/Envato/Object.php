@@ -54,6 +54,9 @@ class ObjectService
             case 'book':
                 $objectDetail = $repositoryName->getDataItemRepoUser('book_id', $id);
                 break;
+            case 'bibliotheque':
+                $objectDetail = $repositoryName->getDataItemRepoUser('library_id', $id);
+            break;
         }
 
         if ($objectDetail) {

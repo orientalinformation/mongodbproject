@@ -48,6 +48,27 @@ Route::namespace('Frontend')->group(function () {
     Route::get('password/reset/{token}', ['uses' => 'AuthController@showResetForm', 'as' => 'frontShowResetForm']);
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
+    // Bibliotheque routes
+    Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+    
+    Route::prefix('bibliotheque/')->group(function () {
+        Route::get('/check_liked', [
+            'uses' => 'LibraryController@checkLiked',
+        ]);
+        Route::get('/check_read', [
+            'uses' => 'LibraryController@checkRead',
+        ]);
+        Route::get('/check_list', [
+            'uses' => 'LibraryController@getLibraryDetailbyUserID',
+        ]);
+        
+        Route::get('/check_share', [
+            'uses' => 'LibraryController@checkShare',
+        ]);
+        Route::get('/check_pin', [
+            'uses' => 'LibraryController@checkPin',
+        ]);
+    });
     // Ajax routes
     Route::post('ajax/search-advance', ['uses' => 'AjaxController@searchAdvance', 'as' => 'frontAjaxSearchAdvance'])->middleware(CheckAdminFrontend::class);
     Route::post('ajax/getObjectDataDetail', ['uses' => 'AjaxController@getObjectDataDetail', 'as' => 'frontAjaxGetObjectDataDetail'])->middleware(CheckAdminFrontend::class);
@@ -80,7 +101,7 @@ Route::namespace('Frontend')->group(function () {
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware(CheckAdminFrontend::class);
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware(CheckAdminFrontend::class);
     // Bibliotheque routes
-    Route::get('bibliotheque', ['uses' => 'BibliothequeController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
+    // Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
 
     //====Web start=============
     Route::resource('web', 'WebController');

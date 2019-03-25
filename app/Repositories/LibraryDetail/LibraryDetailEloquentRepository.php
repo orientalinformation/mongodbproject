@@ -37,10 +37,116 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
             ['is_delete', '=', 1]])->get();
     }
 
+    /**
+     * Get Check Liked
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkLiked($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_like', '=', 1],
+            ['is_delete', '=', 0]])->get();
+    }
+
+    /**
+     * Get Check UnLiked
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkunLiked($userId, $libraryId)
+    {
+        return LibraryDetail::where([['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 1]])->get();
+    }
+
+    /**
+     * Get Check Shared
+     *
+     * @param    int       $userId
+     * @param    string    $libraryId
+     * @return   mixed
+     */
+    public function checkShared($userId, $libraryId)
+    {
+        $libDetailModel = $this->model;
+        return $libDetailModel::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['share', '=', 1],
+            ['is_delete', '=', 0]
+        ])->get();
+    }
+    
     public function getAllPublicByUserID($userId, $perPage)
     {
         return LibraryDetail::where([['user_id', '=', $userId],
             ['is_public', '=', 1],
             ['is_delete', '=', 0]])->paginate($perPage);
+    }
+
+    /**
+     * Get library detail
+     * @param int $libraryId
+     * @return mixed
+     */
+    public function getLibraryDetailById($libraryId = null)
+    {
+        $libDetailModel = $this->model;
+        return $libDetailModel::where([['library_id', '=', $libraryId]])->first();
+    }
+
+    /**
+     * Get Check unShare
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkunShare($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 1]
+        ])->get();
+    }
+
+    /**
+     * check pin
+     * @param $userId
+     * @param $libraryId
+     * @return mixed
+     */
+    public function checkPin($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['pink', '=', 1],
+            ['is_delete', '=', 0]
+        ])->get();
+    }
+
+    /**
+     * check unpin
+     * @param $userId
+     * @param $libraryId
+     * @return mixed
+     */
+    public function checkunPin($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 1]
+        ])->get();
     }
 }

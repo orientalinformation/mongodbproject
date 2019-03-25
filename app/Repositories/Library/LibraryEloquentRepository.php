@@ -34,6 +34,17 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
     }
 
     /**
+     * Get All Library by user id
+     * @return mixed
+     */
+    public function getAllLibraryByUserID($userID)
+    {
+        $libModel = $this->model;
+
+        return $libModel::where([['user_id', '=', $userID]])->get();
+    }
+
+    /**
      * Check share
      * @return mixed
      */
@@ -53,12 +64,4 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
             ['name', '=', $name]])->get();
     }
 
-    /**
-     * Get All Library by user id
-     * @return mixed
-     */
-    public function getAllLibraryByUserID($userId)
-    {
-        return Library::where([['user_id', '=', (int)$userId]])->get();
-    }
 }

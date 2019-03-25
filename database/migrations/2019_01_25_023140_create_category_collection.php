@@ -13,6 +13,7 @@ class CreateCategoryCollection extends Migration
      */
     public function up()
     {
+<<<<<<< HEAD
 //        Schema::connection('mongodb')->table('categories', function (Blueprint $collection) {
 //            $collection->index('id');
 //            $collection->string('name');
@@ -32,6 +33,16 @@ class CreateCategoryCollection extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('path')->nullable();
             $table->timestamps();
+=======
+        Schema::connection('mongodb')->table('categories', function (Blueprint $collection) {
+            $collection->index('id');
+            $collection->string('name');
+            $collection->string('alias');
+            $collection->string('description');
+            $collection->string('parent_id');
+            $collection->string('path');
+            $collection->timestamps();
+>>>>>>> 715ec36924ea6f35ac67673681f3534020d181e1
 
         });
     }

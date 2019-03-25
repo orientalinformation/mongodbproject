@@ -32,7 +32,6 @@ class CreateLibraryCollection extends Migration
             $collection->integer('user_id');
             $collection->boolean('is_delete');
             $collection->timestamps();
-
         });
     }
 
