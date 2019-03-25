@@ -2,30 +2,30 @@
 <ul class="profile-menu-left menu-home menu-library">
     <?php if(sizeof($category) >0 ): ?>
         @foreach($category as $item)
-        <?php $subCat = EnvatoCategory::getSubCategory($item['_id']); ?>
+        <?php $subCat = EnvatoCategory::getSubCategory($item['id']); ?>
             <?php if(sizeof($subCat) > 0): ?>
-            <li><a class="accordion-toggle" href="#colMenu<?= $item['_id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
-            <div id="colMenu<?= $item['_id'] ?>" class="panel-collapse collapse">
+            <li><a class="accordion-toggle" href="#colMenu<?= $item['id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
+            <div id="colMenu<?= $item['id'] ?>" class="panel-collapse collapse">
                 <ul class="sub-menu-library">
                     @foreach($subCat as $subItem)
-                        <?php $sub2Cat = EnvatoCategory::getSubCategory($subItem['_id']); ?>
+                        <?php $sub2Cat = EnvatoCategory::getSubCategory($subItem['id']); ?>
                         <?php if(sizeof($sub2Cat) > 0): ?>
-                            <li><a class="accordion-toggle-sub" href="#colMenuSub<?= $subItem['_id'] ?>" data-toggle="collapse">{{ $subItem['name'] }}</a></li>
-                            <div id="colMenuSub<?= $subItem['_id'] ?>" class="panel-collapse collapse in">
+                            <li><a class="accordion-toggle-sub" href="#colMenuSub<?= $subItem['id'] ?>" data-toggle="collapse">{{ $subItem['name'] }}</a></li>
+                            <div id="colMenuSub<?= $subItem['id'] ?>" class="panel-collapse collapse in">
                                 <ul class="sub-menu-library">
                                     @foreach($sub2Cat as $sub2Item)
-                                        <li><a href="<?= $url . '?catID=' . $subItem['_id'] ?>">{{ $sub2Item['name'] }}</a></li>
+                                        <li><a href="<?= $url . '?catID=' . $subItem['id'] ?>">{{ $sub2Item['name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
                         <?php else: ?>
-                            <li><a href="<?= $url . '?catID=' . $subItem['_id'] ?>">{{ $subItem['name'] }}</a></li>
+                            <li><a href="<?= $url . '?catID=' . $subItem['id'] ?>">{{ $subItem['name'] }}</a></li>
                         <?php endif;?>
                     @endforeach
                 </ul>
             </div>
             <?php else: ?>
-            <li><a href="<?= $url . '?catID=' . $item['_id'] ?>">{{ $item['name'] }}</a></li>
+            <li><a href="<?= $url . '?catID=' . $item['id'] ?>">{{ $item['name'] }}</a></li>
             <?php endif;?>
         @endforeach
     <?php endif; ?>

@@ -47,7 +47,14 @@ class ObjectService
             $result['read'] = $readAfter->is_delete == 0 ? 1 : 0;
         }
 
-        $objectDetail = $repositoryName->getDataItemUser($id);
+        switch ($type) {
+            case 'product':
+                $objectDetail = $repositoryName->getDataItemRepoUser('product_id', $id);
+                break;
+            case 'book':
+                $objectDetail = $repositoryName->getDataItemRepoUser('book_id', $id);
+                break;
+        }
 
         if ($objectDetail) {
             $result['like'] = $objectDetail->is_like;

@@ -42,13 +42,13 @@
                     	@if(sizeof($category) > 0)
                     	<div class="list-category-advance">
                     		@foreach($category as $key => $item)
-	                    		@php $subCat = EnvatoCategory::getSubCategory($item['_id']); @endphp
+	                    		@php $subCat = EnvatoCategory::getSubCategory($item['id']); @endphp
 		                        <div class="form-group">
 		                        	<legend class="col-form-label recher-avancee-line"></legend>
 		                            <span class="text-label-rechercher text-label-rechercher-parent">Filière</span>
 									<div class="checkbox checkbox-category-first">
 		                                <label>
-		                                  <input type="checkbox" name="catID[]" value="{{ $item['_id'] }}" class="input-category-one"> {{ $item['name'] }}
+		                                  <input type="checkbox" name="catID[]" value="{{ $item['id'] }}" class="input-category-one"> {{ $item['name'] }}
 		                                </label>
 		                            </div>
 		                        </div>
@@ -57,14 +57,14 @@
 			                            <span class="text-label-rechercher">Thématique</span>
 			                        </div>
 			                        @foreach($subCat as $keySub => $subItem)
-				                        @php $subCatChilds = EnvatoCategory::getSubCategory($subItem['_id']); @endphp
+				                        @php $subCatChilds = EnvatoCategory::getSubCategory($subItem['id']); @endphp
 			                        	<div class="form-group">
 			                        		@if ($keySub > 0)
 			                        		<legend class="col-form-label recher-avancee-line"></legend>
 				                        	@endif
 				                        	<div class="checkbox">
 				                                <label>
-				                                  <input type="checkbox" name="catID[]" value="{{ $subItem['_id'] }}" data-id="{{ $subItem['_id'] }}" id="input-category-two-{{ $subItem['_id'] }}" class="input-category-two"> {{ $subItem['name'] }}
+				                                  <input type="checkbox" name="catID[]" value="{{ $subItem['id'] }}" data-id="{{ $subItem['id'] }}" id="input-category-two-{{ $subItem['id'] }}" class="input-category-two"> {{ $subItem['name'] }}
 				                                </label>
 				                            </div>
 				                            <div class="box-sub-cat-child">
@@ -72,7 +72,7 @@
 				                            	<div class="box-sub-cat-child-item">
 				                            		<div class="checkbox">
 						                                <label>
-						                                  <input type="checkbox" name="catID[]" value="{{ $subCatChild['_id'] }}" data-parent="{{ $subItem['_id'] }}" class="input-category-three input-category-three-{{ $subItem['_id'] }}"> {{ $subCatChild['name'] }}
+						                                  <input type="checkbox" name="catID[]" value="{{ $subCatChild['id'] }}" data-parent="{{ $subItem['id'] }}" class="input-category-three input-category-three-{{ $subItem['id'] }}"> {{ $subCatChild['name'] }}
 						                                </label>
 						                            </div>
 				                            	</div>

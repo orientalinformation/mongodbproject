@@ -60,10 +60,10 @@
                     <td>{{ $item['updated_at'] }}</td>
                     <td>
                         <div>
-                            <a href="categories/update?id={{ $item['_id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
-                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['_id'] ?>');"><i class="fa fa-trash"></i></button>
+                            <a href="categories/update?id={{ $item['id'] }}"><button type="submit" class="btn btn-primary"><i class="fa fa-pencil"></i></button></a>
+                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete" onclick="jQuery('#hid_Id').val('<?= $item['id'] ?>');"><i class="fa fa-trash"></i></button>
                         </div>
-                        {{--<form method="POST" action="{{route('categories.destroy',$item['_id'])}}" class="delete-form" data-parsley-validate>--}}
+                        {{--<form method="POST" action="{{route('categories.destroy',$item['id'])}}" class="delete-form" data-parsley-validate>--}}
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                         {{--</form>--}}

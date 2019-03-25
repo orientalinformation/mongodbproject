@@ -82,9 +82,8 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkPin($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return BookDetail::where([['user_id', '=', (int)$user_id],
             ['book_id', '=', $book_id],
-            ['pink', '=', 1],
             ['is_delete', '=', 0]])->get();
     }
 
@@ -98,7 +97,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
     {
         return BookDetail::where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
-            ['is_delete', '=', 0]])->get();
+            ['is_delete', '=', 1]])->get();
     }
 
     /**

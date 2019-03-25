@@ -7,7 +7,7 @@
 {{--@stop--}}
 
 @section('title')
-    {{ __('home.frontEnd.title') }}
+    {{ __('book.title') }}
 @endsection
 
 @section('content')

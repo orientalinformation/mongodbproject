@@ -180,6 +180,11 @@ class LibraryController extends Controller
         dd('a');
     }
 
+    /**
+     * update share
+     * @param Request $request
+     * @return int
+     */
     public function updateShare(Request $request)
     {
         $userID = Auth::id();

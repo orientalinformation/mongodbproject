@@ -14,6 +14,13 @@ class Pin extends Model
         'itemID', 'type', 'userID'
     ];
 
+    /**
+     * find by multi where
+     * @param $itemID
+     * @param $userID
+     * @param $type
+     * @return mixed
+     */
     static function findByMultiWhere($itemID, $userID, $type)
     {
         return Pin::where([['itemID', '=', $itemID],
@@ -21,6 +28,12 @@ class Pin extends Model
             ['type', '=', $type]])->get();
     }
 
+    /**
+     * check pin exist attribute
+     * @param $type
+     * @param $itemId
+     * @return mixed
+     */
     public function checkPinExistAttribute($type, $itemId)
     {
         $userId = 1; //

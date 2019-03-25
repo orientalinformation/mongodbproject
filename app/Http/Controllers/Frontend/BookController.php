@@ -51,6 +51,7 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
+        $pageName = 'book';
         $q = $request->has('q') ? $request->get('q') : null;
         $limit = Config::get('constants.rowPage');
         $currentPath = Route::getFacadeRoot()->current()->uri();
@@ -145,7 +146,7 @@ class BookController extends Controller
 
         // list category left
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
-        return view('Frontend.Book.index', compact(['category', 'book', 'paginate', 'q', 'library', 'urlSort']));
+        return view('Frontend.Book.index', compact(['category', 'book', 'paginate', 'q', 'library', 'urlSort', 'pageName']));
     }
 
     /**
@@ -215,10 +216,8 @@ class BookController extends Controller
     }
 
     /**
-     * Check status like
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * check status like
+     * @param Request $request
      */
     public function checkLiked(Request $request)
     {
@@ -285,10 +284,8 @@ class BookController extends Controller
     }
 
     /**
-     * Check status read
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * check status read
+     * @param Request $request
      */
     public function checkRead(Request $request)
     {
@@ -346,6 +343,11 @@ class BookController extends Controller
         print_r($result);die;
     }
 
+    /**
+     * get library detail by user id
+     * @param Request $request
+     * @return string
+     */
     public function getLibraryDetailbyUserID(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
@@ -370,6 +372,11 @@ class BookController extends Controller
         return json_encode($result);
     }
 
+    /**
+     * update library detail
+     * @param Request $request
+     * @return string
+     */
     public function updateLibraryDetail(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
@@ -422,6 +429,11 @@ class BookController extends Controller
         return json_encode($result);
     }
 
+    /**
+     * create library
+     * @param Request $request
+     * @return string
+     */
     public function createLibrary(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
@@ -541,8 +553,10 @@ class BookController extends Controller
             $bookDetail = $this->bookdetailRepository->checkPin($user_id, $book_id)->toArray();
 
             if(sizeof($bookDetail) > 0){
-                $result['status'] = 1;
-                $result['data'] = $bookDetail;
+                if($bookDetail[0]["pink"] == 1){
+                    $result['status'] = 1;
+                    $result['data'] = $bookDetail;
+                }
             }else{
                 $result['status'] = 0;
             }
@@ -551,16 +565,22 @@ class BookController extends Controller
                 $change = $request->get("change");
                 if($change ==1){
                     if(sizeof($bookDetail) > 0){
+                        if($bookDetail[0]["pink"] == 1){
+                            $pink = 0;
+                            $result['status'] = 0;
+                        }else {
+                            $pink = 1;
+                            $result['status'] = 1;
+                        }
                         foreach($bookDetail as $item){
                             $data['book_id'] = $item['book_id'];
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = $item['share'];
-                            $data['pink'] = 0;
+                            $data['pink'] = $pink;
                             $data['is_public'] = 1;
                             $data['is_delete'] = 0;
                             $this->bookdetailRepository->update($item['_id'], $data);
                         }
-                        $result['status'] = 1;
                     }else{
                         $bookDetail = $this->bookdetailRepository->checkunPin($user_id, $book_id)->toArray();
                         if(sizeof($bookDetail) > 0){
@@ -583,7 +603,7 @@ class BookController extends Controller
                             $data = $this->bookdetailRepository->create($data);
                             $result['data'] = $data;
                         }
-                        $result['status'] = 2;
+                        $result['status'] = 1;
                     }
                 }
             }
@@ -592,6 +612,10 @@ class BookController extends Controller
         print_r($result);die;
     }
 
+    /**
+     * library checked list
+     * @param Request $request
+     */
     public function libraryCheckedList(Request $request){
         $result['status'] = 0;
         $result['data'] = "";

@@ -17,16 +17,16 @@
         </div>
         <div class="main-form br-section-wrapper">
             <div class="form-layout form-layout-1">
-                <form method="POST" action="{{Request::url() . '?id=' . $category['_id']}}" id="book-form" data-parsley-validate>
+                <form method="POST" action="{{Request::url() . '?id=' . $category['id']}}" id="book-form" data-parsley-validate>
                     {{ csrf_field() }}
                     {{ method_field('POST') }}
-                    <input type="hidden" name="id" value="{{ $category['_id'] }}">
+                    <input type="hidden" name="id" value="{{ $category['id'] }}">
                     <div class="form-group">
                         <label>Parent</label>
                         <select class="form-control select2 type" name="parent_id" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getPathCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
-                                <option value="{{ $item['_id'] }}" data-path="{{ $item['path'] }}" {{ ($item['_id']==$category['parentID'])?'selected':'' }}>
+                                <option value="{{ $item['id'] }}" data-path="{{ $item['path'] }}" {{ ($item['id']==$category['parent_id'])?'selected':'' }}>
                                     <?php
                                     $path = explode("/",$item['path']);
                                     $path_html = "";
@@ -43,6 +43,10 @@
                     <div class="form-group">
                         <label>Name: <span class="tx-danger">*</span></label>
                         <input class="form-control" type="text" name="name" value="{{ $category['name'] }}" placeholder="Enter name" required>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Alias: <span class="tx-danger">*</span></label>
+                        <input class="form-control" type="text" name="alias" onblur="aliasCovert(this)" id="alias" value="{{ $category['alias'] }}" placeholder="Enter alias" required>
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Description</label>
@@ -62,6 +66,11 @@
         function getPathCat(tag){
             let path = $('option:selected', tag).attr('data-path')
             $('#path').val(path);
+        }
+        function aliasCovert(tag) {
+            let aliasTxt = $(tag).val();
+            aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
+            $('#alias').val(aliasTxt.replace(/\s/g, "-"));
         }
     </script>
 @endsection

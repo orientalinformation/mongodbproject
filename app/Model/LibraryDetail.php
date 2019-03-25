@@ -13,6 +13,13 @@ class LibraryDetail extends Model
         'library_id', 'user_id', 'object_id', 'type_name', 'share', 'pink', 'is_public', 'is_delete'
     ];
 
+    /**
+     * get library detail
+     * @param $library_id
+     * @param $object_id
+     * @param $type
+     * @return mixed
+     */
     public static function getLibraryDetail($library_id, $object_id, $type){
         return LibraryDetail::where([['library_id', '=', $library_id],
             ['object_id', '=', $object_id],

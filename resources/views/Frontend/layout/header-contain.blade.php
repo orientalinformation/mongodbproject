@@ -9,7 +9,8 @@
                     <span class="logo-title">Compagnons Du Devoir</span>
                 </div>
             </div>
-            @if(Auth::check() || (isset($pageName) && $pageName == 'home'))
+
+            @if(Auth::check() || (isset($pageName) && ($pageName == 'home' or $pageName == 'book')))
                 <div class="col-lg-4">
                     <div class="pull-right">
                         <div class="dropdown">

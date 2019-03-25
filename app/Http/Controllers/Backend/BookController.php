@@ -378,6 +378,11 @@ class BookController extends Controller
         //
     }
 
+    /**
+     * delete book
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function delete(Request $request){
         if($request->has('id')) {
             $id = $request->get('id');

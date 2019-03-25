@@ -115,5 +115,12 @@ interface BaseRepositoryInterface
      */
     public function delete($id);
 
-
+    /**
+     * get repository detail item
+     *
+     * @param string $repositoryField
+     * @param string $repositoryId
+     * @return mixed
+     */
+    public function getDataItemRepoUser($repositoryField, $repositoryId);
 }

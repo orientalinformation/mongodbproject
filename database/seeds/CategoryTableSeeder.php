@@ -20,13 +20,14 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        Category::query()->delete();
+        Category::truncate();
 
         // Categories for level 1
         $categoriesLevel1 = [
             [
                 'parent_id'     => null,
                 'name'          => 'Bois',
+                'alias'         => 'bois',
                 'description'   => 'Bois',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -35,6 +36,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Pierre',
+                'alias'         => 'pierre',
                 'description'   => 'Pierre',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -46,7 +48,7 @@ class CategoryTableSeeder extends Seeder
 
         foreach ($categoriesLevel1 as $category) {
             $result = $this->categoryRepository->create($category);
-            $id = $result->_id;
+            $id = $result->id;
             $data = [
                 'path'  => $id
             ];
@@ -59,6 +61,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Logiciel',
+                'alias'         => 'logiciel',
                 'description'   => 'Logiciel',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -67,6 +70,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Outil',
+                'alias'         => 'outil',
                 'description'   => 'Outil',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -75,6 +79,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Règlementaires et normes',
+                'alias'         => 'reglementaires-et-normes',
                 'description'   => 'Règlementaires et normes',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -83,6 +88,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Transition',
+                'alias'         => 'transition',
                 'description'   => 'Transition',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -91,6 +97,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Matériaux',
+                'alias'         => 'materiaux',
                 'description'   => 'Matériaux',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -99,6 +106,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Matériaux',
+                'alias'         => 'materiaux',
                 'description'   => 'Matériaux',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -107,6 +115,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'Produit',
+                'alias'         => 'produit',
                 'description'   => 'Produit',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -120,12 +129,12 @@ class CategoryTableSeeder extends Seeder
 
         foreach ($level1 as $level) {
             foreach ($categoriesLevel2 as $level2) {
-                $level2['parent_id'] = $level->_id;
+                $level2['parent_id'] = $level->id;
                 $result = $this->categoryRepository->create($level2);
-                $id = $result->_id;
+                $id = $result->id;
 
                 $data = [
-                    'path'  => $level->_id . '/' . $id
+                    'path'  => $level->id . '/' . $id
                 ];
 
                 $this->categoryRepository->update($id, $data);
@@ -138,6 +147,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'CAO',
+                'alias'         => 'cao',
                 'description'   => 'CAO',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -146,6 +156,7 @@ class CategoryTableSeeder extends Seeder
             [
                 'parent_id'     => null,
                 'name'          => 'DAO',
+                'alias'         => 'dao',
                 'description'   => 'DAO',
                 'path'          => null,
                 'created_at'    => Carbon::now()->format('Y-m-d H:i:s'),
@@ -157,9 +168,9 @@ class CategoryTableSeeder extends Seeder
 
         if(!empty($level2)) {
             foreach ($categoriesLevel3 as $level3) {
-                $level3['parent_id'] = $level2->_id;
+                $level3['parent_id'] = $level2->id;
                 $result = $this->categoryRepository->create($level3);
-                $id = $result->_id;
+                $id = $result->id;
 
                 $data = [
                    'path'   => $level2->path . '/' . $id

@@ -13,6 +13,11 @@ class Library extends Model
         'title', 'alias', 'description', 'image', 'url', 'view', 'price', 'like', 'category_id', 'user_id', 'is_delete'
     ];
 
+    /**
+     * get library by id
+     * @param $id
+     * @return mixed
+     */
     public static function getLibraryByID($id)
     {
         return Library::where([['_id', '=', $id]])->get();

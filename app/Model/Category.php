@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use Jenssegers\Mongodb\Eloquent\Model;
-//use Illuminate\Database\Eloquent\Model;
+//use Jenssegers\Mongodb\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $name
@@ -13,13 +13,20 @@ use Jenssegers\Mongodb\Eloquent\Model;
  */
 class Category extends Model
 {
-    protected $connection = 'mongodb';
-    protected $collection = 'categories';
-    public $translatedAttributes = [];
+//    protected $connection = 'mongodb';
+//    protected $collection = 'categories';
+//    public $translatedAttributes = [];
+    protected $table = 'categories';
+
     protected $fillable = [
-        'name', 'description', 'parent_id', 'path'
+        'name', 'alias', 'description', 'parent_id', 'path'
     ];
 
+    /**
+     * get child cat
+     * @param $catID
+     * @return mixed
+     */
     static function getChildCat($catID)
     {
         return Category::where([['parent_id', '=', $catID]])->get();

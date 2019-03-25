@@ -12,10 +12,19 @@ class Book extends Model
         'type', 'title', 'alias', 'author', 'description', 'image', 'file', 'price', 'cat_id', 'status', 'share', 'view'
     ];
 
+    /**
+     * get all book
+     * @return array
+     */
     public static function getAllBook(){
         return Book::all()->toArray();
     }
 
+    /**
+     * get book by id
+     * @param $id
+     * @return mixed
+     */
     public static function getBookByID($id)
     {
         return Book::where([['_id', '=', $id]])->get();

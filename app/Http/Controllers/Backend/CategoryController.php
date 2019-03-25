@@ -74,10 +74,11 @@ class CategoryController extends Controller
         if ($request->method() == 'POST') {
             $data['parent_id'] = $request->get('parent_id');
             $data['name'] = $request->get('name');
+            $data['alias'] = $request->get('alias');
             $data['description'] = $request->get('description');
             $data['path'] = $request->get('path');
             $result = $this->cateogryRepository->create($data);
-            $id = $result->_id;
+            $id = $result->id;
 
             $this->cateogryRepository->find($id)->toArray();
             if($data['path'] != ''){
@@ -147,6 +148,7 @@ class CategoryController extends Controller
             if ($request->method() == 'POST') {
                 $data['parentID'] = $request->get('parentID');
                 $data['name'] = $request->get('name');
+                $data['alias'] = $request->get('alias');
                 $data['description'] = $request->get('description');
                 $data['path'] = $request->get('path');
 

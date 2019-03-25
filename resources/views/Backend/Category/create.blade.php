@@ -24,7 +24,7 @@
                         <select class="form-control select2 type" name="parent_id" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" onchange="getPathCat(this)">
                             <option label="Choose category"></option>
                             @foreach($category_list as $item)
-                                <option value="{{ $item['_id'] }}" data-path="{{ $item['path'] }}">
+                                <option value="{{ $item['id'] }}" data-path="{{ $item['path'] }}">
                                     <?php
                                     $path = explode("/",$item['path']);
                                     $path_html = "";
@@ -40,7 +40,11 @@
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Name: <span class="tx-danger">*</span></label>
-                        <input class="form-control" type="text" name="name" placeholder="Enter name" required>
+                        <input class="form-control" type="text" name="name" placeholder="Enter name" onblur="aliasCovert(this)" required>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Alias: <span class="tx-danger">*</span></label>
+                        <input class="form-control" type="text" name="alias" id="alias" placeholder="Enter alias" required>
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label>Description</label>
@@ -60,6 +64,11 @@
         function getPathCat(tag){
             let path = $('option:selected', tag).attr('data-path')
             $('#path').val(path);
+        }
+        function aliasCovert(tag) {
+            let aliasTxt = $(tag).val();
+            aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
+            $('#alias').val(aliasTxt.replace(/\s/g, "-"));
         }
     </script>
 @endsection
