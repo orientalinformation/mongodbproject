@@ -146,6 +146,7 @@ $('.menu-tooltips').click(function() {
 	let heart = $(this).closest(".wrap").find(".likeIcon");
 	let read = $(this).closest(".wrap").find(".readIcon");
 	let share = $(this).closest(".wrap").find(".shareIcon");
+	let pin  = $(this).closest(".wrap").find(".pinkIcon");
 	let url = '/' + type + '/';
 	var pink = $(this).closest(".box-toolips").find(".pinkIcon");
 	if(display.css("display") == "none") {
@@ -194,12 +195,28 @@ $('.menu-tooltips').click(function() {
 				console.log(result);
 				
                 if(result.status == 1) {
-                    share.css('color','blue')
+                    share.css('color','red')
                 } else {
                     share.css('color','black')
                 }
             }
-        });
+		});
+		
+		$.ajax({
+            url: url + "check_pin",
+            cache: false,
+            type: "GET",
+            data: { object_id: libraryId },
+            success: function(result) {
+				console.log(result);
+                if(result.status == 1) {
+                    pin.css('color','red')
+                } else {
+                    pin.css('color','black')
+                }
+            }
+		});
+		
 	} else {
 		display.css("display","none");
 	}
@@ -343,30 +360,27 @@ $('.share-line').click(function() {
             if(result.status == 1) {
                 share.css('color','black');
             } else if(result.status == 2) {
-                share.css('color','blue');
+                share.css('color','red');
             }
         }
     });
 })
 
-
-$('.object-tooltip').click(function() {
-    var type = $(this).closest('.box-toolips').data('type');
-    var id = $(this).closest('.box-toolips').data('id'); 
-    var element = $(this).data('element');
-    var pink = $(this).closest(".box-toolips").find(".pinkIcon");
-	
+$('.pink-line').click(function() {
+	let type   = $(this).parent('.content-panel').data('type');
+    let bookID = $(this).closest(".wrap").find(".bibliotheque-id").val();
+    let pin  = $(this).closest(".wrap").find(".pinkIcon");
+    let url    = '/' + type + '/';
     $.ajax({
-        type: 'POST',
-        url: '/ajax/setObjectDataDetail',
-        data: {'id':id, 'type':type, 'element':element, '_token':$('meta[name="csrf-token"]').attr('content')},
-        success:function(result) {
-			console.log(result);
-			
-            if (result.status == 1) {
-                pink.css('color','red');
-            } else {
-                pink.css('color','black');
+        url: url + "check_pin",
+        cache: false,
+        type: "GET",
+        data: { user_id: 1, object_id: bookID, change: 1 },
+        success: function(result) {
+            if(result.status == 1) {
+                pin.css('color','black');
+            } else if(result.status == 2) {
+                pin.css('color','red');
             }
         }
     });

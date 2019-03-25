@@ -51,4 +51,29 @@ interface LibraryDetailRepositoryInterface
      * @return mixed
      */
     public function getLibraryDetailById($libraryId = null);
+
+    /**
+     * Get Check UnLiked
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkunShare($userId, $libraryId);
+
+    /**
+     * check pin
+     * @param $userId
+     * @param $libraryId
+     * @return mixed
+     */
+    public function checkPin($userId, $libraryId);
+
+    /**
+     * check unpin
+     * @param $userId
+     * @param $libraryId
+     * @return mixed
+     */
+    public function checkunPin($userId, $libraryId);
 }

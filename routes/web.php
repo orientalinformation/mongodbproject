@@ -61,14 +61,12 @@ Route::namespace('Frontend')->group(function () {
         Route::get('/check_list', [
             'uses' => 'LibraryController@getLibraryDetailbyUserID',
         ]);
-        Route::get('/update_list', [
-            'uses' => 'LibraryController@updateLibraryDetail',
-        ]);
-        Route::get('/create_list', [
-            'uses' => 'LibraryController@createLibrary',
-        ]);
+        
         Route::get('/check_share', [
             'uses' => 'LibraryController@checkShare',
+        ]);
+        Route::get('/check_pin', [
+            'uses' => 'LibraryController@checkPin',
         ]);
     });
     // Ajax routes

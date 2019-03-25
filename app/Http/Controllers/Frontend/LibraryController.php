@@ -115,12 +115,12 @@ class LibraryController extends Controller
 
 		if($this->request->has('start_year') && $this->request->has('end_year')) {
 			$options['start_year'] = $this->request->get('start_year');
-			$options['end_year'] = $this->request->get('end_year');
+			$options['end_year']   = $this->request->get('end_year');
 			$paramPath .= 'start_year=' . $options['start_year'] . '&end_year=' . $options['end_year'] . '&';
 		}
 
 		if($this->request->has('category')) {
-			$categories = explode(',', $this->request->get('category'));
+			$categories  = explode(',', $this->request->get('category'));
 			$arrCategory = [];
 			foreach ($categories as $category) {
 				$listCategories = $this->categoryRepository->getCategoryTreeId($category);
@@ -144,8 +144,7 @@ class LibraryController extends Controller
 
 		$client            = ClientBuilder::create()->build();
 		$response          = $client->search($params);
-        // dd($params);
-		$bibliotheques = [];
+		$bibliotheques     = [];
 		if (!empty($response)) {
             $bibliotheques['total'] = $response['hits']['total'];
             $bibliotheques['hits']  = $response['hits']['hits'];
@@ -192,10 +191,10 @@ class LibraryController extends Controller
         $result['status'] = 0;
         $result['data'] = "";
         if($request->has("user_id") && $request->has("library_id")) {
-            $userId = Auth::user()->id;
+            $userId = $request->get("user_id");
             $libraryId = $request->get("library_id");
             $libraryDetail = $this->libraryDetailRepository->checkLiked($userId, $libraryId)->toArray();
-            
+
             if(sizeof($libraryDetail) > 0) {
                 $result['status'] = 1;
                 $result['data'] = $libraryDetail;
@@ -205,35 +204,39 @@ class LibraryController extends Controller
 
             if($request->has("change")) {
                 $change = $request->get("change");
-                if($change == 1) {
-                    if(sizeof($libraryDetail) > 0) {
+                if($change ==1){
+                    if(sizeof($libraryDetail) > 0){
                         foreach($libraryDetail as $item) {
                             $data['library_id'] = $item['library_id'];
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = $item['share'];
                             $data['pink'] = $item['pink'];
-                            $data['is_public'] = $item['is_public'];
-                            $data['is_delete'] = 1;
+                            $data['is_like'] = 0;
+                            $data['is_public'] = 1;
+                            $data['is_delete'] = 0;
                             $this->libraryDetailRepository->update($item['_id'], $data);
                         }
                         $result['status'] = 1;
-                    } else {
+                    }else{
                         $libraryDetail = $this->libraryDetailRepository->checkunLiked($userId, $libraryId)->toArray();
-                        if(sizeof($libraryDetail) > 0) {
-                            foreach($libraryDetail as $item) {
+                        
+                        if(sizeof($libraryDetail) > 0){
+                            foreach($libraryDetail as $item){
                                 $data['library_id'] = $item['library_id'];
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = $item['share'];
                                 $data['pink'] = $item['pink'];
-                                $data['is_public'] = $item['is_public'];
+                                $data['is_like'] = 1;
+                                $data['is_public'] = 1;
                                 $data['is_delete'] = 0;
                                 $this->libraryDetailRepository->update($item['_id'], $data);
                             }
-                        } else {
+                        }else{
                             $data['library_id'] = $libraryId;
                             $data['user_id'] = $userId;
                             $data['share'] = 0;
                             $data['pink'] = 0;
+                            $data['is_like'] = 1;
                             $data['is_public'] = 1;
                             $data['is_delete'] = 0;
                             $data = $this->libraryDetailRepository->create($data);
@@ -244,7 +247,6 @@ class LibraryController extends Controller
                 }
             }
         }
-
         $result = json_encode($result);
         print_r($result);die;
     }
@@ -480,7 +482,7 @@ class LibraryController extends Controller
                         }
                         $result['status'] = 1;
                     } else {
-                        $libraryDetail = $this->libraryDetailRepository->checkunLiked($userId, $objectId)->toArray();
+                        $libraryDetail = $this->libraryDetailRepository->checkunShare($userId, $objectId)->toArray();
                         if(sizeof($libraryDetail) > 0){
                             foreach($libraryDetail as $item){
                                 $data['library_id'] = $item['library_id'];
@@ -496,6 +498,71 @@ class LibraryController extends Controller
                             $data['user_id'] = $userId;
                             $data['share'] = 1;
                             $data['pink'] = 0;
+                            $data['is_public'] = 0;
+                            $data['is_delete'] = 0;
+                            $data = $this->libraryDetailRepository->create($data);
+                            $result['data'] = $data;
+                        }
+                        $result['status'] = 2;
+                    }
+                }
+            }
+        }
+
+        return response()->json($result);
+    }
+
+    /**
+     * Check pin
+     * @param Request $request
+     */
+    public function checkPin(Request $request)
+    {
+        $result['status'] = 0;
+        $result['data'] = "";
+        if($request->has("object_id")) {
+            $userId = Auth::user()->id;
+            $objectId = $request->get("object_id");
+            $libraryDetail = $this->libraryDetailRepository->checkPin($userId, $objectId)->toArray();
+
+            if(sizeof($libraryDetail) > 0) {
+                $result['status'] = 1;
+                $result['data'] = $libraryDetail;
+            }else {
+                $result['status'] = 0;
+            }
+
+            if($request->has("change")) {
+                $change = $request->get("change");
+                if($change == 1) {
+                    if(sizeof($libraryDetail) > 0) {
+                        foreach($libraryDetail as $item) {
+                            $data['library_id'] = $item['library_id'];
+                            $data['user_id'] = $item['user_id'];
+                            $data['share'] = $item['share'];
+                            $data['pink'] = 0;
+                            $data['is_public'] = $item['is_public'];
+                            $data['is_delete'] = $item['is_delete'];
+                            $this->libraryDetailRepository->update($item['_id'], $data);
+                        }
+                        $result['status'] = 1;
+                    } else {
+                        $libraryDetail = $this->libraryDetailRepository->checkunPin($userId, $objectId)->toArray();
+                        if(sizeof($libraryDetail) > 0){
+                            foreach($libraryDetail as $item){
+                                $data['library_id'] = $item['library_id'];
+                                $data['user_id'] = $item['user_id'];
+                                $data['pink'] = 1;
+                                $data['share'] = $item['share'];
+                                $data['is_public'] = $item['is_public'];
+                                $data['is_delete'] = $item['is_delete'];
+                                $this->libraryDetailRepository->update($item['_id'], $data);
+                            }
+                        } else {
+                            $data['library_id'] = $objectId;
+                            $data['user_id'] = $userId;
+                            $data['share'] = 0;
+                            $data['pink'] = 1;
                             $data['is_public'] = 0;
                             $data['is_delete'] = 0;
                             $data = $this->libraryDetailRepository->create($data);

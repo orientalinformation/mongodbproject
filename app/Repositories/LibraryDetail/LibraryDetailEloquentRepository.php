@@ -49,8 +49,8 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
         return LibraryDetail::where([
             ['user_id', '=', $userId],
             ['library_id', '=', $libraryId],
-            ['is_delete', '=', 0]
-        ])->get();
+            ['is_like', '=', 1],
+            ['is_delete', '=', 0]])->get();
     }
 
     /**
@@ -101,5 +101,52 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
     {
         $libDetailModel = $this->model;
         return $libDetailModel::where([['library_id', '=', $libraryId]])->first();
+    }
+
+    /**
+     * Get Check unShare
+     *
+     * @param int $userId
+     * @param string $libraryId
+     * @return mixed
+     */
+    public function checkunShare($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 1]
+        ])->get();
+    }
+
+    /**
+     * check pin
+     * @param $userId
+     * @param $libraryId
+     * @return mixed
+     */
+    public function checkPin($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['pink', '=', 1],
+            ['is_delete', '=', 0]
+        ])->get();
+    }
+
+    /**
+     * check unpin
+     * @param $userId
+     * @param $libraryId
+     * @return mixed
+     */
+    public function checkunPin($userId, $libraryId)
+    {
+        return LibraryDetail::where([
+            ['user_id', '=', $userId],
+            ['library_id', '=', $libraryId],
+            ['is_delete', '=', 1]
+        ])->get();
     }
 }
