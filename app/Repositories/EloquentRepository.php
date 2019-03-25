@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+use Auth;
 
 abstract class EloquentRepository implements BaseRepositoryInterface
 {
@@ -172,6 +173,23 @@ abstract class EloquentRepository implements BaseRepositoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * get repository detail item
+     *
+     * @param string $repositoryField
+     * @param string $repositoryId
+     * @return mixed
+     */
+    public function getDataItemRepoUser($repositoryField, $repositoryId)
+    {
+        $item = $this->model->where([
+            'user_id'    => Auth::user()->id,
+            $repositoryField => $repositoryId
+        ])->first();
+
+        return $item;
     }
 
 }
