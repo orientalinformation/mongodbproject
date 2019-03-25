@@ -14,7 +14,7 @@
             <div class="modal-body" id="body-libraryList">
                 @foreach($library as $item)
                 <div class="input-group listWrap">
-                    <input type="checkbox" name="itemList" class="itemList" attr-data="{{ $item['_id'] }}" data-type="{{ $type }}"><label>{{ $item['name'] }}</label>
+                    <input type="checkbox" name="itemList" class="itemList" attr-data="{{ $item['_id'] }}" data-type="{{ $type }}"><label>{{ $item['title'] }}</label>
                 </div>
                 @endforeach
                 <input type="hidden" id="bookID-modal">

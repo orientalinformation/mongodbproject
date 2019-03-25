@@ -73,7 +73,7 @@
                                 <input type="hidden" id="bibliotheque_id" class="bibliotheque-id" value="{{ $product['_id'] }}">
                             </div>
                             <div class="thumb-title">
-                                <span class="title">{{ $product['_source']['name'] }}</span>
+                                <span class="title">{{ $product['_source']['title'] }}</span>
                                 <img src="/image/front/cdd-icon.png" class="cdd-icon">
                             </div>
                             <div class="thumb-author">

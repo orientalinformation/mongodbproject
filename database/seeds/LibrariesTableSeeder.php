@@ -54,8 +54,8 @@ class LibrariesTableSeeder extends Seeder
 
             $faker = Faker::create('fr');
             for ($i = 0; $i < 100; $i++) { 
-                $name = $faker->text(20);
-                $url = str_slug($name);
+                $title = $faker->text(20);
+                $url = str_slug($title);
                 $description = $faker->text(150);
                 $image = '/image/front/Bibliotheque_Web_1.jpg';
                 $view = 2;
@@ -71,7 +71,7 @@ class LibrariesTableSeeder extends Seeder
                 $categoryId = $arrayCategory[$arrayRand];
 
                 $data = [
-                    'name'              => $name,
+                    'title'              => $title,
                     'description'       => $description,
                     'image'             => $image,
                     'user_id'           => $userId,
@@ -99,7 +99,7 @@ class LibrariesTableSeeder extends Seeder
                 foreach ($librarys as $library) {
                     $dataElastic = [
                         'body' => [
-                            'name'             => $library->name,
+                            'title'             => $library->title,
                             'user_id'           => $library->user_id,
                             'category_id'       => $library->category_id,
                             'url'               => $library->url,
