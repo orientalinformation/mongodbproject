@@ -13,7 +13,7 @@ use App\Model\Book;
 use App\Model\BookDetail;
 use App\Model\Category;
 use Elasticsearch\ClientBuilder;
-use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Book\BookRepositoryInterface;
 
 class BookTableSeeder extends Seeder
 {
@@ -29,7 +29,7 @@ class BookTableSeeder extends Seeder
 
         // delete Elastic Product Index
         $param = [
-            'index' => Config::get('constants.elasticsearch.product.index')
+            'index' => Config::get('constants.elasticsearch.book.index')
         ];
         $client = ClientBuilder::create()->build();
 
@@ -38,8 +38,8 @@ class BookTableSeeder extends Seeder
             $client->indices()->delete($param);
         }
 
-        // add data to mongo db product table
-        $productRepository = app(ProductRepositoryInterface::class);
+        // add data to mongo db book table
+        $bookRepository = app(BookRepositoryInterface::class);
         $categories = Category::all();
         if (count($categories) > 0) {
             $arrayCategory = [];
@@ -50,16 +50,22 @@ class BookTableSeeder extends Seeder
             $faker = Faker::create('fr');
             for ($i = 0; $i < 100; $i++) {
                 $title = $faker->text(20);
-                $url = str_slug($title);
+                $alias = str_slug($title);
+                $author = $faker->text(20);
+                $type = Config::get('constants.objectType.book');
                 $description = $faker->text(150);
                 $image = '/image/front/Bibliotheque_Web_1.jpg';
-                $view = 2;
-                $userId = 1;
-                $like = 0;
+                $file = '';
+                $price = 100;
+                $status = 1;
                 $share = 0;
                 $pink = 0;
+                $view = 2;
+                $like = 0;
                 $isPublic = 1;
                 $isDelete = 0;
+                $isDelete = 0;
+                $userId = 1;
 
                 // random category id
                 $arrayRand = array_rand($arrayCategory);
@@ -67,54 +73,65 @@ class BookTableSeeder extends Seeder
 
                 $data = [
                     'title'             => $title,
-                    'url'               => $url,
+                    'alias'             => $alias,
+                    'author'            => $author,
+                    'type'              => $type,
                     'description'       => $description,
                     'image'             => $image,
+                    'file'              => $file,
+                    'price'             => $price,
+                    'status'            => $status,
+                    'share'             => $share,
+                    'cat_id'            => $categoryId,
                     'view'              => $view,
                     'like'              => $like,
-                    'category_id'       => $categoryId,
+                    'is_public'         => $isPublic,
                     'is_delete'         => $isDelete,
                 ];
 
-                $productCreate = Product::create($data);
-                $dataProductDetail = [
-                    'product_id' => $productCreate->id,
-                    'user_id' => $userId,
-                    'share' => $share,
-                    'pink' => $pink,
-                    'is_public' => $isPublic,
+                $bookCreate = Book::create($data);
+                $dataBookDetail = [
+                    'book_id'   => $bookCreate->id,
+                    'user_id'   => $userId,
+                    'share'     => $share,
+                    'pink'      => $pink,
+                    'is_like'   => $isPublic,
                     'is_delete' => $isDelete,
                 ];
 
-                ProductDetail::create($dataProductDetail);
+                BookDetail::create($dataBookDetail);
             }
 
             // insert data to Elastic
-            $products = $productRepository->all();
-            if (count($products) > 0) {
-                foreach ($products as $product) {
-                    $productDetail = ProductDetail::where('product_id', $product->id)->first();
-                    if ($productDetail) {
+            $books = $bookRepository->all();
+            if (count($books) > 0) {
+                foreach ($books as $book) {
+                    $bookDetail = BookDetail::where('book_id', $book->id)->first();
+                    if ($bookDetail) {
                         $dataElastic = [
                             'body' => [
-                                'title'             => $product->title,
-                                'url'               => $product->url,
-                                'description'       => $product->description,
-                                'image'             => $product->image,
-                                'view'              => $product->view,
-                                'category_id'       => $product->category_id,
-                                'like'              => $product->like,
-                                'user_id'           => $productDetail->user_id,
-                                'share'             => $productDetail->share,
-                                'pink'              => $productDetail->pink,
-                                'is_public'         => $productDetail->is_public,
-                                'is_delete'         => $product->is_delete,
-                                'updated_at'        => $product->updated_at->format('Y-m-d H:i:s'),
-                                'created_at'        => $product->created_at->format('Y-m-d H:i:s'),
+                                'id'               => $book->id,
+                                'title'             => $book->title,
+                                'alias'             => $book->alias,
+                                'author'            => $book->author,
+                                'type'              => $book->type,
+                                'description'       => $book->description,
+                                'image'             => $book->image,
+                                'file'              => $book->file,
+                                'price'             => $book->price,
+                                'status'            => $book->status,
+                                'share'             => $book->share,
+                                'cat_id'            => $book->cat_id,
+                                'view'              => $book->view,
+                                'like'              => $book->like,
+                                'is_public'         => $book->is_public,
+                                'is_delete'         => $book->is_delete,
+                                'updated_at'        => $book->updated_at->format('Y-m-d H:i:s'),
+                                'created_at'        => $book->created_at->format('Y-m-d H:i:s'),
                             ],
-                            'index' => Config::get('constants.elasticsearch.product.index'),
-                            'type' => Config::get('constants.elasticsearch.product.type'),
-                            'id' => $product->id,
+                            'index' => Config::get('constants.elasticsearch.book.index'),
+                            'type' => Config::get('constants.elasticsearch.book.type'),
+                            'id' => $book->id,
                         ];
 
                         $client = ClientBuilder::create()->build();

@@ -10,6 +10,8 @@ use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductDetail\ProductDetailRepositoryInterface;
 use App\Repositories\Library\LibraryRepositoryInterface;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
+use App\Repositories\Book\BookRepositoryInterface;
+use App\Repositories\BookDetail\BookDetailRepositoryInterface;
 
 class AjaxController extends Controller
 {
@@ -37,6 +39,16 @@ class AjaxController extends Controller
      * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $libraryDetailRepository;
+
+    /**
+     * @var BookRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bookRepository;
+
+    /**
+     * @var BookDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $bookdetailRepository;
 
 	/**
      * Instantiate Ajax controller.
@@ -160,6 +172,8 @@ class AjaxController extends Controller
 					break;
 				case 'library':
 					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->libraryRepository, $this->libraryDetailRepository);
+				case 'book':
+					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->bookRepository, $this->bookdetailRepository);
 					break;
 			}
 

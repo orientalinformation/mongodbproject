@@ -16,7 +16,7 @@ class CreateBookDetailCollection extends Migration
         Schema::connection('mongodb')->table('book_details', function (Blueprint $collection) {
             $collection->index('id');
             $collection->string('book_id');
-            $collection->string('user_id');
+            $collection->integer('user_id');
             $collection->boolean('share');
             $collection->boolean('pink');
             $collection->boolean('is_like');

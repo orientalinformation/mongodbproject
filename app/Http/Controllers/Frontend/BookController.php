@@ -13,6 +13,8 @@ use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
 use Elasticsearch\ClientBuilder;
+use Illuminate\Support\Facades\Route;
+use Auth;
 
 
 class BookController extends Controller
@@ -20,21 +22,21 @@ class BookController extends Controller
     /**
      * @var CategoryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
-    protected $cateogryRepository;
+    protected $categoryRepository;
 
     /**
      * CategoryController constructor.
-     * @param CategoryRepositoryInterface $cateogryRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      */
 
-    public function __construct(CategoryRepositoryInterface $cateogryRepository,
+    public function __construct(CategoryRepositoryInterface $categoryRepository,
                                 BookRepositoryInterface $bookRepository,
                                 BookDetailRepositoryInterface $bookdetailRepository,
                                 ReadAfterRepositoryInterface $readafterRepository,
                                 LibraryRepositoryInterface $libraryRepository,
                                 LibraryDetailRepositoryInterface $librarydetailRepository)
     {
-        $this->cateogryRepository = $cateogryRepository;
+        $this->categoryRepository = $categoryRepository;
         $this->bookRepository = $bookRepository;
         $this->bookdetailRepository = $bookdetailRepository;
         $this->readafterRepository = $readafterRepository;
@@ -49,43 +51,66 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
-        $rowPage = Config::get('constants.rowPageBook');
-        //Searching value
-        $q = null;
-
+        $q = $request->has('q') ? $request->get('q') : null;
+        $limit = Config::get('constants.rowPage');
+        $currentPath = Route::getFacadeRoot()->current()->uri();
         $page = $request->get('page');
         if (is_null($page)) {
             $page = 1;
         }
-        $category = $this->cateogryRepository->parentOrderByPath()->toArray();
+
+        $options = null;
+        $options['page'] = $page;
+        $options['limit'] = $limit;
+        if ($q != null) {
+            $options['q'] = $q;
+        }
+
+        $sort = 'desc';
+        if ($request->has('sort')) {
+            $sort = $request->get('sort');
+            $options['sort'] = $request->get('sort');
+        }
+
+        // url ordering
+        $paramPath = '';
+        if ($q != null) {
+            $paramPath = 'q=' . $q . '&';
+        }
+
+        $category = $this->categoryRepository->parentOrderByPath()->toArray();
         if ($request->has('start_year') && $request->has('end_year')) {
             $start_year = $request->get('start_year');
             $end_year = $request->get('end_year');
-            $book = $this->bookRepository->getRange($start_year, $end_year, $rowPage)->toArray();
-        } else if ($request->has('txtSearch')) {
+            $book = $this->bookRepository->getRange($start_year, $end_year, $limit)->toArray();
+
+            $options['start_year'] = $request->get('start_year');
+            $options['end_year'] = $request->get('end_year');
+            $paramPath .= 'start_year=' . $options['start_year'] . '&end_year=' . $options['end_year'] . '&';
+        } else if ($request->has('q')) {
+            if($request->has('category')) {
+                $categories = explode(',', $request->get('category'));
+                $arrCategory = [];
+                foreach ($categories as $category) {
+                    $listCategories = $this->categoryRepository->getCategoryTreeId($category);
+                    foreach ($listCategories as $listCategory) {
+                        $arrCategory[] = $listCategory;
+                    }
+                }
+
+                $arrCategory = array_values(array_unique($arrCategory));
+                $options['category_query'] = $request->get('category');
+                $options['category'] = $arrCategory;
+                $paramPath .= 'category=' . $request->get('category') . '&';
+            }
+
+            $indexName = Config::get('constants.elasticsearch.book.index');
+            $typeName = Config::get('constants.elasticsearch.book.type');
+
+            $params = Ulities::getElasticParams($indexName, $typeName, $options);
             $client = ClientBuilder::create()->build();
-            $searchValue = $request->get('txtSearch');
-            $matchAll = [
-                'match_all' => new \stdClass()
-            ];
+            $response = $client->search($params);
 
-            $matchPrefix = [
-                'match_phrase_prefix' => [
-                    'title' => $searchValue
-                ]
-            ];
-            $param = [
-                'index' => Config::get('constants.elasticsearch.book.index'),
-                'type' => Config::get('constants.elasticsearch.book.type'),
-                'body' => [
-                    'from' => ($page - 1) * $rowPage,
-                    'size' => $rowPage,
-                    'query' => is_null($searchValue) ? $matchAll : $matchPrefix
-
-                ]
-            ];
-
-            $response = $client->search($param);
             $book['total'] = $response["hits"]["total"];
             $book['data'] = [];
             if ($response["hits"]["total"] > 0) {
@@ -95,13 +120,32 @@ class BookController extends Controller
             }
         } else if ($request->has('catID')){
             $catID = $request->get('catID');
-            $book = $this->bookRepository->getByCatID($catID, $rowPage)->toArray();
+            $book = $this->bookRepository->getByCatID($catID, $limit)->toArray();
         }else{
-            $book = $this->bookRepository->paginate($rowPage)->toArray();
+//            $book = $this->bookRepository->paginate($limit)->toArray();
+            $book = $this->bookRepository->paginateByTitleSort($sort, $limit)->toArray();
         }
-        $paginate = Ulities::calculatorPage(null, $page, $book['total'], $rowPage);
-        $library = $this->libraryRepository->getAllLibraryByUserID("1")->toArray();
-        return view('Frontend.Book.index', compact(['category', 'book', 'paginate', 'q', 'library']));
+        $paginate = Ulities::calculatorPage(null, $page, $book['total'], $limit);
+
+        $urlSort = [];
+        $urlSort['latest'] = '/' . $currentPath . '?' . $paramPath . 'sort=desc';
+        $urlSort['oldest'] = '/' . $currentPath . '?' . $paramPath . 'sort=asc';
+        if($request->has('page')) {
+            $urlSort['latest'] .= '&page=' . $request->get('page');
+            $urlSort['oldest'] .= '&page=' . $request->get('page');
+        }
+
+        // check login
+        $user = Auth::user();
+        if($user){
+            $library = $this->libraryRepository->getAllLibraryByUserID($user->id)->toArray();
+        }else{
+            $library = [];
+        }
+
+        // list category left
+        $category = $this->categoryRepository->parentOrderByPath()->toArray();
+        return view('Frontend.Book.index', compact(['category', 'book', 'paginate', 'q', 'library', 'urlSort']));
     }
 
     /**
@@ -201,8 +245,9 @@ class BookController extends Controller
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = $item['share'];
                             $data['pink'] = $item['pink'];
-                            $data['is_public'] = $item['is_public'];
-                            $data['is_delete'] = 1;
+                            $data['is_like'] = 0;
+                            $data['is_public'] = 1;
+                            $data['is_delete'] = 0;
                             $this->bookdetailRepository->update($item['_id'], $data);
                         }
                         $result['status'] = 1;
@@ -214,7 +259,8 @@ class BookController extends Controller
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = $item['share'];
                                 $data['pink'] = $item['pink'];
-                                $data['is_public'] = $item['is_public'];
+                                $data['is_like'] = 1;
+                                $data['is_public'] = 1;
                                 $data['is_delete'] = 0;
                                 $this->bookdetailRepository->update($item['_id'], $data);
                             }
@@ -223,7 +269,8 @@ class BookController extends Controller
                             $data['user_id'] = $user_id;
                             $data['share'] = 0;
                             $data['pink'] = 0;
-                            $data['is_public'] = 0;
+                            $data['is_like'] = 1;
+                            $data['is_public'] = 1;
                             $data['is_delete'] = 0;
                             $data = $this->bookdetailRepository->create($data);
                             $result['data'] = $data;
@@ -269,9 +316,9 @@ class BookController extends Controller
                             $data['user_id'] = $item['user_id'];
                             $data['type_name'] = $type;
                             $data['is_delete'] = 1;
-                            $this->bookdetailRepository->update($item['_id'], $data);
+                            $this->readafterRepository->update($item['_id'], $data);
                         }
-                        $result['status'] = $item['object_id'];
+                        $result['status'] = 1;
                     }else{
                         $bookDetail = $this->readafterRepository->checkunRead($user_id, $object_id, $type)->toArray();
                         if(sizeof($bookDetail) > 0){
@@ -381,22 +428,27 @@ class BookController extends Controller
 
         if($request->has('name') && $request->has('user_id')) {
             $name = $request->get('name');
-            $userId = $request->get('user_id');
+            $userId = (int)$request->get('user_id');
 
             $checkName = $this->libraryRepository->checkName($userId,$name)->toArray();
 
             if(sizeof($checkName) <= 0){
-                $data = [];
-                $data['name'] = $name;
-                $data['alias'] = Ulities::to_slug($name);
-                $data['share'] = 0;
-                $data['user_id'] = $userId;
-                $data['view'] = 0;
-                $data['is_delete'] = 0;
-                $data_result = $this->libraryRepository->create($data);
+                $library_data = [];
+                $library_data['title'] = $name;
+                $library_data['alias'] = Ulities::to_slug($name);
+                $library_data['description'] = '';
+                $library_data['image'] = '';
+                $library_data['url'] = '';
+                $library_data['view'] = 0;
+                $library_data['price'] = 0;
+                $library_data['like'] = 0;
+                $library_data['category_id'] = 0;
+                $library_data['user_id'] = $userId;
+                $library_data['is_delete'] = 0;
+                $library_data_result = $this->libraryRepository->create($library_data);
 
                 $result['status'] = 1;
-                $result['data'] = $data_result;
+                $result['data'] = $library_data_result;
             }else{
                 $result['status'] = 0;
                 $result['data'] = 'Name is exist';
@@ -411,7 +463,7 @@ class BookController extends Controller
     /**
      * Check status share
      *
-     * @param  int  $id
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function checkShare(Request $request)
@@ -439,21 +491,21 @@ class BookController extends Controller
                             $data['user_id'] = $item['user_id'];
                             $data['share'] = 0;
                             $data['pink'] = $item['pink'];
-                            $data['is_public'] = $item['is_public'];
-                            $data['is_delete'] = $item['is_delete'];
+                            $data['is_public'] = 1;
+                            $data['is_delete'] = 0;
                             $this->bookdetailRepository->update($item['_id'], $data);
                         }
                         $result['status'] = 1;
                     }else{
-                        $bookDetail = $this->bookdetailRepository->checkunLiked($user_id, $book_id)->toArray();
+                        $bookDetail = $this->bookdetailRepository->checkunShared($user_id, $book_id)->toArray();
                         if(sizeof($bookDetail) > 0){
                             foreach($bookDetail as $item){
                                 $data['book_id'] = $item['book_id'];
                                 $data['user_id'] = $item['user_id'];
                                 $data['share'] = 1;
                                 $data['pink'] = $item['pink'];
-                                $data['is_public'] = $item['is_public'];
-                                $data['is_delete'] = $item['is_delete'];
+                                $data['is_public'] = 1;
+                                $data['is_delete'] = 0;
                                 $this->bookdetailRepository->update($item['_id'], $data);
                             }
                         }else{
@@ -461,7 +513,7 @@ class BookController extends Controller
                             $data['user_id'] = $user_id;
                             $data['share'] = 1;
                             $data['pink'] = 0;
-                            $data['is_public'] = 0;
+                            $data['is_public'] = 1;
                             $data['is_delete'] = 0;
                             $data = $this->bookdetailRepository->create($data);
                             $result['data'] = $data;
@@ -471,6 +523,103 @@ class BookController extends Controller
                 }
             }
         }
+        $result = json_encode($result);
+        print_r($result);die;
+    }
+
+    /**
+     * Check pin
+     * @param Request $request
+     */
+    public function checkPin(Request $request)
+    {
+        $result['status'] = 0;
+        $result['data'] = "";
+        if($request->has("user_id") && $request->has("book_id")){
+            $user_id = $request->get("user_id");
+            $book_id = $request->get("book_id");
+            $bookDetail = $this->bookdetailRepository->checkPin($user_id, $book_id)->toArray();
+
+            if(sizeof($bookDetail) > 0){
+                $result['status'] = 1;
+                $result['data'] = $bookDetail;
+            }else{
+                $result['status'] = 0;
+            }
+
+            if($request->has("change")){
+                $change = $request->get("change");
+                if($change ==1){
+                    if(sizeof($bookDetail) > 0){
+                        foreach($bookDetail as $item){
+                            $data['book_id'] = $item['book_id'];
+                            $data['user_id'] = $item['user_id'];
+                            $data['share'] = $item['share'];
+                            $data['pink'] = 0;
+                            $data['is_public'] = 1;
+                            $data['is_delete'] = 0;
+                            $this->bookdetailRepository->update($item['_id'], $data);
+                        }
+                        $result['status'] = 1;
+                    }else{
+                        $bookDetail = $this->bookdetailRepository->checkunPin($user_id, $book_id)->toArray();
+                        if(sizeof($bookDetail) > 0){
+                            foreach($bookDetail as $item){
+                                $data['book_id'] = $item['book_id'];
+                                $data['user_id'] = $item['user_id'];
+                                $data['share'] = 0;
+                                $data['pink'] = 1;
+                                $data['is_public'] = 1;
+                                $data['is_delete'] = 0;
+                                $this->bookdetailRepository->update($item['_id'], $data);
+                            }
+                        }else{
+                            $data['book_id'] = $book_id;
+                            $data['user_id'] = $user_id;
+                            $data['share'] = 0;
+                            $data['pink'] = 1;
+                            $data['is_public'] = 1;
+                            $data['is_delete'] = 0;
+                            $data = $this->bookdetailRepository->create($data);
+                            $result['data'] = $data;
+                        }
+                        $result['status'] = 2;
+                    }
+                }
+            }
+        }
+        $result = json_encode($result);
+        print_r($result);die;
+    }
+
+    public function libraryCheckedList(Request $request){
+        $result['status'] = 0;
+        $result['data'] = "";
+        if($request->has("user_id") && $request->has("object_id")){
+            $userId = $request->get("user_id");
+            $object_id = $request->get("object_id");
+            $library_data = [];
+            $library = $this->libraryRepository->getAllLibraryByUserID($userId)->toArray();
+            foreach($library as $item){
+                $item_data = [];
+
+                $library_id = $item['_id'];
+                $type = Config::get('constants.objectType.book');
+                $library_detail = $this->libraryDetailRepository->getLibraryDetail($library_id, $object_id, $type)->toArray();
+
+                $item_data['checked'] = 0;
+                if(sizeof($library_detail) > 0){
+                    $item_data['checked'] = 1;
+                }
+
+                $item_data['title'] = $item['title'];
+                $item_data['id'] = $item['_id'];
+                $library_data[] = $item_data;
+            }
+            $result['status'] = 1;
+            $result['data'] = $library_data;
+        }
+
         $result = json_encode($result);
         print_r($result);die;
     }

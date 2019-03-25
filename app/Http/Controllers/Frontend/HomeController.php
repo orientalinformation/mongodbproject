@@ -182,13 +182,19 @@ class HomeController extends Controller
 
     public function index_login()
     {
-        $userId = 1;
-        $perPage = 3;
-        $web = $this->webdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
-        $book = $this->bookdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
-        $product = $this->productdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
-        $library = $this->librarydetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
-        return view('Frontend.Home.index_login', compact(['web','book','product','library']));
+        if (Auth::check()) {
+            $user = Auth::user();
+            $userId = $user->id;
+            $perPage = 3;
+            $web = $this->webRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+            $book = $this->bookdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+            $product = $this->productdetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+            $library = $this->librarydetailRepository->getAllPublicByUserID($userId, $perPage)->toArray();
+            return view('Frontend.Home.index_login', compact(['web','book','product','library']));
+        }else {
+            return redirect()->action('Frontend\AuthController@login');
+        }
+
     }
 
     /**

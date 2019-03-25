@@ -11,5 +11,5 @@ namespace App\Repositories\WebDetail;
 
 interface WebDetailRepositoryInterface
 {
-    public function getAllPublicByUserID($userId, $perPage);
+
 }

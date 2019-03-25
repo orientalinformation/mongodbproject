@@ -8,7 +8,6 @@
 
 namespace App\Repositories\Web;
 
-
 use App\Model\Web;
 use App\Repositories\EloquentRepository;
 
@@ -34,4 +33,17 @@ class WebEloquentRepository extends EloquentRepository implements WebRepositoryI
 
 		return $items;
 	}
+
+    /**
+     * get all web by user id
+     * @param $userId
+     * @param $perPage
+     * @return mixed
+     */
+    public function getAllPublicByUserID($userId, $perPage)
+    {
+        return Web::where([['user_id', '=', $userId],
+            ['is_public', '=', 1],
+            ['is_delete', '=', 0]])->paginate($perPage);
+    }
 }

@@ -70,4 +70,9 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
     {
         return Book::where([['cat_id', '=', $catID]])->paginate($perPage);
     }
+
+    public function paginateByTitleSort($sort, $perPage = 15)
+    {
+        return $this->model->orderBy('title', $sort)->paginate($perPage);
+    }
 }
