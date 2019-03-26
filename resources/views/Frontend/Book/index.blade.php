@@ -24,19 +24,7 @@
                 </div>
 
                 <div class="col-lg-9 col-sm-9">
-                    <ul class="horizontal-menu-library pull-left">
-                        <li> <a href="#">Toutes</a></li>
-                        <li> <a href="#">Web</a></li>
-                        <li class="active"> <a href="#">Étude/Synthese</a></li>
-                        <li> <a href="#">Produit</a></li>
-                        <li> <a href="#">Preporting/Evenement</a></li>
-                        <li> <a href="#">Librairie Compagnons</a></li>
-                    </ul>
-                    <?php if(isset($_GET["q"])): ?>
-                    <div class="btn-research pull-right">
-                        <a href="#" class="btn btn-warning text-uppercase" data-toggle="modal" data-target=".bd-save-keyword-modal-md"><i class="fa fa-level-down" aria-hidden="true"></i> @lang('common.saveSearch')</a>
-                    </div>
-                    <?php endif; ?>
+                   @include('Frontend.layout.pagemenu')
                 </div>
             </div>
             <div class="container-fluid">

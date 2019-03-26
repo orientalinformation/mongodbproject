@@ -20,19 +20,7 @@
 
             </div>
             <div class="col-lg-9 col-sm-9">
-                <ul class="horizontal-menu-library pull-left">
-                    <li> <a href="#">Toutes</a></li>
-                    <li> <a href="#">Web</a></li>
-                    <li> <a href="#">Étude/Synthese</a></li>
-                    <li class="active"> <a href="#">Produit</a></li>
-                    <li> <a href="#">Preporting/Evenement</a></li>
-                    <li> <a href="#">Librairie Compagnons</a></li>
-                </ul>
-                @if (app('request')->input('q') != '')
-                <div class="btn-research pull-right">
-                    <a href="#" class="btn btn-warning text-uppercase" data-toggle="modal" data-target=".bd-save-keyword-modal-md"><i class="fa fa-level-down" aria-hidden="true"></i> @lang('common.saveSearch')</a>
-                </div>
-                @endif
+                @include('Frontend.layout.pagemenu')
             </div>
         </div>
         <div class="container-fluid">
@@ -98,29 +86,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade bd-save-keyword-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">@lang('common.saveSearch')</h4>
-            </div>
-            <div class="modal-body">
-                <form name="frmSaveKeyword" action="{{ route('frontResearchSave') }}">
-                    <div class="form-group rechercher">
-                        <div class="input-group">
-                            <input type="text" name="research_name" class="form-control">
-                            <span class="input-group-btn">
-                                <button id="btn-save-keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
-                                </span> @lang('common.btnSave')!</button>
-                            </span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+@include('Frontend.layout.modal-savekeyword')
 @include('Frontend.layout.modal-searchadvance')
 @include('Frontend.layout.modal-tooltip', ['library'])
 @endsection
