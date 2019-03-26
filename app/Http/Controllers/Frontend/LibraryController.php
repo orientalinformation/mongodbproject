@@ -140,14 +140,15 @@ class LibraryController extends Controller
 		    }
 		}
 
-		$paginate = Ulities::calculatorPage($q, $page, $bibliotheques['total'], $limit);
+		$paginate = Ulities::calculatorPage($q, $page, $bibliotheques['total'], $limit, $options);
         $result   = $this->libraryRepository->paginate($limit)->toArray();
 
 		// list category left
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
 
 		// list researches
-		$researches = $this->researchRepository->getListItem(5)->toArray();
+        $researches = $this->researchRepository->getListItem(5);
+
 		$library    = $this->libraryRepository->getAllLibraryByUserID(1)->toArray();
 
 		return view(

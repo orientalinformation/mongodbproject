@@ -37,9 +37,9 @@ Route::namespace('Frontend')->group(function () {
     Route::post('password/reset', ['uses' => 'AuthController@resetPassword', 'as' => 'frontResetPassword']);
 
     // Bibliotheque routes
-    Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
-
-    Route::prefix('bibliotheque/')->group(function () {
+    // Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware('auth');
+    Route::get('library', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
+    Route::prefix('library/')->group(function () {
         Route::get('/check_liked', [
             'uses' => 'LibraryController@checkLiked',
         ]);
@@ -69,8 +69,6 @@ Route::namespace('Frontend')->group(function () {
     // Research routes
     Route::post('save-research', ['uses' => 'ResearchController@saveKeyword', 'as' => 'frontResearchSave'])->middleware(CheckAdminFrontend::class);
     Route::delete('delete-research', ['uses' => 'ResearchController@destroy', 'as' => 'frontResearchDestroy'])->middleware(CheckAdminFrontend::class);
-    // Bibliotheque routes
-    // Route::get('bibliotheque', ['uses' => 'LibraryController@index', 'as' => 'frontBibliotheque'])->middleware(CheckAdminFrontend::class);
 
     //====Web start=============
     Route::resource('web', 'WebController');
