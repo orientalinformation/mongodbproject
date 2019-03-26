@@ -20,7 +20,7 @@ if ($paginate['pageNum'] > $limitPage) {
 }
 ?>
 
-<div class="ht-80 d-flex align-items-center justify-content-center">
+<div class="ht-80 d-flex align-items-center justify-content-center float-right">
     <nav aria-label="Page navigation">
         <ul class="pagination pagination-basic mg-b-0">
             @if (!is_null($paginate['prev']))

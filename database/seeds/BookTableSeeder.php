@@ -38,6 +38,17 @@ class BookTableSeeder extends Seeder
             $client->indices()->delete($param);
         }
 
+        $bookPath     = storage_path().'/book';
+        // check folder library exist, if not then create one
+        \File::isDirectory($bookPath) or \File::makeDirectory($bookPath, 0777, true, true);
+        // copy image to storage/book
+        $sourceFilePath  = public_path() . '/image/front/Bibliotheque_Web_1.jpg';
+        $destinationPath = $bookPath . '/Bibliotheque_Web_1.jpg';
+        $success         = \File::copy($sourceFilePath,$destinationPath);
+        if($success) {
+            echo 'Copy file complete!\n';
+        }
+
         // add data to mongo db book table
         $bookRepository = app(BookRepositoryInterface::class);
         $categories = Category::all();
