@@ -33,6 +33,13 @@
                                 <div class="col-lg-3 col-sm-3">
                                     <div class="checkbox">
                                         <label>
+                                          <input type="checkbox" name="kind[]" value="library"@php if ($controller == 'LibraryController') echo ' checked' @endphp> Bibliotheque
+                                        </label>
+                                      </div>
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <div class="checkbox">
+                                        <label>
                                           <input type="checkbox" name="kind[]" value="report"> Reporting/Evenements
                                         </label>
                                     </div>

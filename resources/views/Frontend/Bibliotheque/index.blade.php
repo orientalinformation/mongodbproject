@@ -38,7 +38,8 @@
         <div class="container-fluid">
             <!-- Left menu -->
             <div class="col-lg-3 col-sm-3">
-                @include('Frontend.Bibliotheque.partials.leftmenu', ['category'])
+                {{-- @include('Frontend.Bibliotheque.partials.leftmenu', ['category']) --}}
+                @include('Frontend.layout.leftmenu', ['category'])
             </div>
             <div class="col-lg-9 col-sm-9">
                     <div class="row">
@@ -90,7 +91,8 @@
                         @endforeach
                     </div>
                     @endforeach
-                    <div class="text-center">@include('Frontend.Bibliotheque.partials.pagination', ['paginator' => $result])</div>
+                    {{-- <div class="text-center">@include('Frontend.Bibliotheque.partials.pagination', ['paginator' => $result])</div> --}}
+                    <div class="text-center">@include('Frontend.partials.pagination', ['paginator' => $result])</div>
                 @else 
                 <div class="alert alert-warning">@lang('common.noResult')</div>
                 @endif
@@ -121,7 +123,8 @@
         </div>
     </div>
 </div>
-@include('Frontend.Bibliotheque.partials.modal-searchadvance')
+{{-- @include('Frontend.Bibliotheque.partials.modal-searchadvance') --}}
+@include('Frontend.layout.modal-searchadvance')
 @include('Frontend.Bibliotheque.partials.modal-tooltip', ['library'])
 @endsection
 
