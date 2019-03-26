@@ -40,7 +40,7 @@ class ProductTableSeeder extends Seeder
         \File::isDirectory($productPath) or \File::makeDirectory($productPath, 0777, true, true);
         // copy image to storage/library
         $sourceFilePath  = public_path() . '/image/front/' . $fileName;
-        $destinationPath = $productPath . $fileName;
+        $destinationPath = $productPath . '/' . $fileName;
         \File::copy($sourceFilePath,$destinationPath);
         
         // add data to mongo db product table
