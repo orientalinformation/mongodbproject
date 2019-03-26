@@ -58,7 +58,7 @@
                         <?php endif; ?>
                             <div class="col-lg-2 col-sm-2 <?= $i ?>">
                                 <div class="wrap">
-                                    <img src="<?= URL::to('/upload/book/') . "/" . $item['image'] ?>" class="library-thumb">
+                                    <img src="<?= $item['image'] ?>" class="library-thumb">
                                     <?php if (!empty(Auth::user())): ?>
                                     <?php
                                         if(!isset($_GET["q"])){

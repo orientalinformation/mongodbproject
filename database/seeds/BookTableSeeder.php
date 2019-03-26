@@ -38,12 +38,13 @@ class BookTableSeeder extends Seeder
             $client->indices()->delete($param);
         }
 
+        $fileName = '/Bibliotheque_Web_1.jpg';
         $bookPath     = storage_path().'/book';
         // check folder library exist, if not then create one
         \File::isDirectory($bookPath) or \File::makeDirectory($bookPath, 0777, true, true);
         // copy image to storage/book
-        $sourceFilePath  = public_path() . '/image/front/Bibliotheque_Web_1.jpg';
-        $destinationPath = $bookPath . '/Bibliotheque_Web_1.jpg';
+        $sourceFilePath  = public_path() . '/image/front' . $fileName;
+        $destinationPath = $bookPath . $fileName;
         $success         = \File::copy($sourceFilePath,$destinationPath);
         if($success) {
             echo 'Copy file complete!\n';
@@ -65,7 +66,7 @@ class BookTableSeeder extends Seeder
                 $author = $faker->text(20);
                 $type = Config::get('constants.objectType.book');
                 $description = $faker->text(150);
-                $image = '/image/front/Bibliotheque_Web_1.jpg';
+                $image = '/storage/book/' . $fileName;
                 $file = '';
                 $price = 100;
                 $status = 1;
