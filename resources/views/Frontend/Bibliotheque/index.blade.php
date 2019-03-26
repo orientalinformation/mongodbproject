@@ -26,7 +26,6 @@
         <div class="container-fluid">
             <!-- Left menu -->
             <div class="col-lg-3 col-sm-3">
-                {{-- @include('Frontend.Bibliotheque.partials.leftmenu', ['category']) --}}
                 @include('Frontend.layout.leftmenu', ['category'])
             </div>
             <div class="col-lg-9 col-sm-9">
@@ -101,7 +100,7 @@
                         <div class="input-group">
                             <input type="text" name="research_name" class="form-control">
                             <span class="input-group-btn">
-                                <button id="btn_save_search_keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
+                                <button id="btn-save-keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
                                 </span> @lang('common.btnSave')!</button>
                             </span>
                         </div>

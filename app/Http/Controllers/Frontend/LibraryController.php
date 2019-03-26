@@ -147,7 +147,8 @@ class LibraryController extends Controller
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
 
 		// list researches
-		$researches = $this->researchRepository->getListItem(5)->toArray();
+        $researches = $this->researchRepository->getListItem(5);
+
 		$library    = $this->libraryRepository->getAllLibraryByUserID(1)->toArray();
 
 		return view(
