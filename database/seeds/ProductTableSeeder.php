@@ -32,9 +32,18 @@ class ProductTableSeeder extends Seeder
             $client->indices()->delete($param);
         }
 
+        // add data to mongo db library table
+        $productRepository = app(ProductRepositoryInterface::class);
+        $productPath     = storage_path().'/product';
+        // check folder library exist, if not then create one
+        \File::isDirectory($productPath) or \File::makeDirectory($productPath, 0777, true, true);
+        // copy image to storage/library
+        $sourceFilePath  = public_path() . '/image/front/Bibliotheque_Web_1.jpg';
+        $destinationPath = $productPath . '/Bibliotheque_Web_1.jpg';
+        \File::copy($sourceFilePath,$destinationPath);
+        
         // add data to mongo db product table
-    	$productRepository = app(ProductRepositoryInterface::class);
-        $categories = Category::all();
+        $categories        = Category::all();
         if (count($categories) > 0) {
             $arrayCategory = [];
             foreach ($categories as $category) {
@@ -46,7 +55,7 @@ class ProductTableSeeder extends Seeder
                 $title = $faker->text(20);
                 $url = str_slug($title);
                 $description = $faker->text(150);
-                $image = '/image/front/Bibliotheque_Web_1.jpg';
+                $image = '/storage/product/Bibliotheque_Web_1.jpg';
                 $view = 2;
                 $userId = 1;
                 $like = 0;
