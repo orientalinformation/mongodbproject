@@ -20,6 +20,10 @@
     @section('script-left-menu')
     @show
 
+    <!-- This script only use tooltip-->
+    @section('script-tooltip')
+    @show
+
     @section('script')
 
     @show
