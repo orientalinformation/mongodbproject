@@ -2858,7 +2858,7 @@ ul.horizontal-menu-library > li a{
 
 /* slider range time */
 .flat-slider {
-    width: 20em;
+    width: 90%;
     padding: 0;
     position: relative;
 }
@@ -2892,17 +2892,17 @@ ul.horizontal-menu-library > li a{
     text-align: left;
 }
 
-.flat-slider .ui-slider-horizontal { height: 0.4rem; }
+.flat-slider .ui-slider-horizontal { height: 5px; }
 
 .flat-slider .ui-slider-handle {
     cursor: pointer;
     position: absolute;
     z-index: 2;
-    background-color: #fff;
+    background-color: #f77409;
     background-image: none;
-    border-color: #fff;
+    border-color: #f77409;
     border-radius: 20px;
-    height: 1rem;
+    height: 10px;
     top: -0.3rem;
     width: 1rem;
 }
@@ -2913,7 +2913,7 @@ ul.horizontal-menu-library > li a{
 .flat-slider .max_value,
 .flat-slider .value {
     margin-top: 0.3em;
-    font-size: 0.8rem;
+    font-size: 10px;
     white-space: nowrap;
     -webkit-transition-duration: 0.35s;
     -moz-transition-duration: 0.35s;
@@ -2927,7 +2927,7 @@ ul.horizontal-menu-library > li a{
 
 .flat-slider .min,
 .flat-slider .max {
-    font-size: 0.7rem;
+    font-size: 10px;
     color: #c4c4c4;
 }
 
