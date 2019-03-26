@@ -157,8 +157,6 @@ $('.menu-tooltips').click(function() {
 			type: "GET",
 			data: {user_id: 1, library_id: libraryId},
 			success: function(result) {
-				result = JSON.parse(result);
-				// console.log(result);
 				if(result.status == 1) {
 					heart.removeClass("fa-heart-o");
 					heart.addClass("fa-heart");
@@ -175,7 +173,6 @@ $('.menu-tooltips').click(function() {
 			type: "GET",
 			data: {user_id: 1, library_id: libraryId},
 			success: function(result){
-				result = JSON.parse(result);
 				if(result.status == 1){
 					read.removeClass("fa-bookmark-o");
 					read.addClass("fa-bookmark");
@@ -239,7 +236,6 @@ $('.like-line').click(function(){
 		type: "GET",
 		data: {user_id: 1, library_id: libraryId, change: 1},
 		success: function(result){
-			result = JSON.parse(result);
 			if(result.status == 1){
 				heart.removeClass("fa-heart");
 				heart.addClass("fa-heart-o");
@@ -261,7 +257,6 @@ $('.read-line').click(function(){
 		type: "GET",
 		data: {user_id: 1, library_id: libraryId, change: 1},
 		success: function(result) {
-			result = JSON.parse(result);
 			console.log(result.status);
 			if(result.status == 1) {
 				read.removeClass("fa-bookmark");
