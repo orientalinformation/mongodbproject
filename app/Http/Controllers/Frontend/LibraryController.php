@@ -248,7 +248,7 @@ class LibraryController extends Controller
             }
         }
         $result = json_encode($result);
-        print_r($result);die;
+        return response()->json($result);
     }
 
     /**
@@ -309,9 +309,9 @@ class LibraryController extends Controller
                 }
             }
         }
-
         $result = json_encode($result);
-        print_r($result);die;
+
+        return response()->json($result);
     }
 
     /**
