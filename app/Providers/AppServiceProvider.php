@@ -137,11 +137,6 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(
-            \App\Repositories\Bibliotheque\BibliothequeRepositoryInterface::class,
-            \App\Repositories\Bibliotheque\BibliothequeEloquentRepository::class
-        );
-
-        $this->app->singleton(
             \App\Repositories\ReadAfter\ReadAfterRepositoryInterface::class,
             \App\Repositories\ReadAfter\ReadAfterEloquentRepository::class
         );
@@ -160,9 +155,6 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\ProductDetail\ProductDetailRepositoryInterface::class,
             \App\Repositories\ProductDetail\ProductDetailEloquentRepository::class
         );
-        $this->app->singleton(
-            \App\Repositories\BibliothequeDetail\BibliothequeDetailRepositoryInterface::class,
-            \App\Repositories\BibliothequeDetail\BibliothequeDetailEloquentRepository::class
-        );
+
     }
 }
