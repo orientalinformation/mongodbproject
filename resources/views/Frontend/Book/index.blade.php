@@ -220,7 +220,7 @@
 
 
     </script>
-    @include('Frontend.layout.modal-savekeyword')
+    {{--@include('Frontend.layout.modal-savekeyword')--}}
     @include('Frontend.layout.modal-searchadvance')
     @include('Frontend.layout.modal-tooltip', ['library'])
 @endsection
