@@ -46,10 +46,11 @@ class LibrariesTableSeeder extends Seeder
         // add data to mongo db library table
     	$libraryRepository = app(LibraryRepositoryInterface::class);
         $categories = Category::all();
+        
         if (count($categories) > 0) {
             $arrayCategory = [];
             foreach ($categories as $category) {
-                $arrayCategory[] = $category->_id;
+                $arrayCategory[] = $category->id;
             }
 
             $faker = Faker::create('fr');
@@ -71,7 +72,7 @@ class LibrariesTableSeeder extends Seeder
                 $categoryId = $arrayCategory[$arrayRand];
 
                 $data = [
-                    'title'              => $title,
+                    'title'             => $title,
                     'description'       => $description,
                     'image'             => $image,
                     'user_id'           => $userId,

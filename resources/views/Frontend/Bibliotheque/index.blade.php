@@ -63,14 +63,16 @@
                         <div class="col-lg-2 col-sm-2">
                             <div class="wrap">
                                 <img src="{{ $product['_source']['image'] }}" class="library-thumb">
-                                <div class="menu-tooltips" data-type="bibliotheque"></div>
-                                <div class="content-panel" data-type="bibliotheque">
-                                    <div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
-                                    <div class="content-line read-line"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
-                                    <div class="content-line share-line"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>
-                                    <div class="content-line pink-line" data-element="pink"><i class="fa fa fa-thumb-tack pinkIcon" aria-hidden="true"></i> <span>Pink</span></div>
+                                <div class="box-toolips" data-type="library" data-id="{{ $product['_id'] }}">
+                                    <div class="menu-tooltips"></div>
+                                    <div class="content-panel">
+                                        <div class="content-line like-line object-tooltip" data-element="like"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>
+                                        <div class="content-line read-line object-tooltip" data-element="read"><i class="fa fa-bookmark-o readIcon" aria-hidden="true"></i> <span>À lire plus tard</span></div>
+                                        <div class="content-line share-line object-tooltip" data-element="share"><i class="fa fa-share-alt shareIcon" aria-hidden="true"></i> <span>Partager</span></div>
+                                        <div class="content-line pink-line object-tooltip" data-element="pink"><i class="fa fa fa-thumb-tack pinkIcon" aria-hidden="true"></i> <span>Pink</span></div>
+                                    </div>
                                 </div>
-                                <input type="hidden" id="bibliotheque_id" class="bibliotheque-id" value="{{ $product['_id'] }}">
+                                
                             </div>
                             <div class="thumb-title">
                                 <span class="title">{{ $product['_source']['title'] }}</span>
@@ -134,7 +136,7 @@ if(!!window.jQuery) {
 }
 </script>
 
-<script src="{{ asset('/assets/js/front-bibliotheque.js') }}"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#input').bind('blur', function () {
