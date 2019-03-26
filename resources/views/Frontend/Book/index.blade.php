@@ -108,7 +108,7 @@
                     @endforeach
                     @include('Backend.partials.pagination', ['paginator' => $book])
                     <?php else: ?>
-                    <div>not result</div>
+                    <div class="alert alert-warning">@lang('common.noResult')</div>
                     <?php endif; ?>
                 </div>
             </div>

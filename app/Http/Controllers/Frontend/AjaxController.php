@@ -273,7 +273,7 @@ class AjaxController extends Controller
                     $data['image'] = $path['data'];
                 }
 
-                $data['user_id'] = $userId;
+                $data['user_id'] = (int)$userId;
                 $data['category_id'] = $categoryId;
                 $data['alias'] = $alias;
                 $data['share'] = 0;
