@@ -1,3 +1,4 @@
+<?php $url=strtok($_SERVER["REQUEST_URI"],'?'); ?>
 <ul class="profile-menu-left menu-home menu-library">
 <?php if(sizeof($category) >0 ): ?>
     @foreach($category as $item)
