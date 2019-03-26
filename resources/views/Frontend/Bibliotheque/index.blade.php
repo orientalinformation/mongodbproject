@@ -78,7 +78,6 @@
                         @endforeach
                     </div>
                     @endforeach
-                    {{-- <div class="text-center">@include('Frontend.Bibliotheque.partials.pagination', ['paginator' => $result])</div> --}}
                     <div class="text-center">@include('Frontend.partials.pagination', ['paginator' => $result])</div>
                 @else 
                 <div class="alert alert-warning">@lang('common.noResult')</div>
@@ -110,7 +109,6 @@
         </div>
     </div>
 </div>
-{{-- @include('Frontend.Bibliotheque.partials.modal-searchadvance') --}}
 @include('Frontend.layout.modal-searchadvance')
 @include('Frontend.Bibliotheque.partials.modal-tooltip', ['library'])
 @endsection
@@ -139,11 +137,9 @@ if(!!window.jQuery) {
         $('#input').bind('focus', function () {
             $('#input_img').hide();
         });
-
+        // bind value query to popup
         $('.bd-search-advance-modal-lg').on('show.bs.modal', function(e) {
             var queryParam = $("input[name='q']").val();
-
-            //populate the textbox
             $(e.currentTarget).find('#rechercher').val(queryParam);
         });
     });
