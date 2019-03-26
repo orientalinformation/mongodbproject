@@ -11,18 +11,11 @@ use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Route;
 use App\Repositories\Research\ResearchRepositoryInterface;
 use App\Repositories\Category\CategoryRepositoryInterface;
-use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
-use App\Repositories\BibliothequeDetail\BibliothequeDetailRepositoryInterface;
 use App\Repositories\Library\LibraryRepositoryInterface;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
-use App\Repositories\ReadAfter\ReadAfterRepositoryInterface;
 
 class LibraryController extends Controller
 {
-    /**
-     * @var BibliothequeRepositoryInterface|\App\Repositories\BaseRepositoryInterface
-     */
-    protected $bibliothequetRepository;
 
 	/**
      * @var CategoryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
@@ -38,21 +31,11 @@ class LibraryController extends Controller
      * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
 	protected $libraryRepository;
-
-	/**
-     * @var BibliothequeDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
-     */
-    protected $bibliothequeDetailRepository;
     
     /**
      * @var LibraryDetailRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
     protected $libraryDetailRepository;
-
-    /**
-     * @var ReadAfterRepositoryInterface|\App\Repositories\BaseRepositoryInterface
-     */
-    protected $readafterRepository;
 	
 	/**
      * Instantiate Bibliotheque controller.
@@ -61,29 +44,21 @@ class LibraryController extends Controller
 	 * @param CategoryRepositoryInterface $categoryRepository
 	 * @param ResearchRepositoryInterface $researchRepository
 	 * @param LibraryRepositoryInterface $libraryRepository
-     * @param BibliothequeRepositoryInterface $bibliothequeRepository
-	 * @param BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository
 	 * @param LibraryDetailRepositoryInterface $libraryDetailRepository
      * @return void
      */
     public function __construct(
         Request $request,
-        BibliothequeRepositoryInterface $bibliothequeRepository,
 		CategoryRepositoryInterface $categoryRepository,
 		ResearchRepositoryInterface $researchRepository,
 		LibraryRepositoryInterface $libraryRepository,
-        BibliothequeDetailRepositoryInterface $bibliothequeDetailRepository,
-        LibraryDetailRepositoryInterface $libraryDetailRepository,
-        ReadAfterRepositoryInterface $readafterRepository
+        LibraryDetailRepositoryInterface $libraryDetailRepository
     ) {
         $this->request = $request;
-        $this->bibliothequeRepository = $bibliothequeRepository;
         $this->categoryRepository = $categoryRepository;
 		$this->researchRepository = $researchRepository;
 		$this->libraryRepository = $libraryRepository;
-        $this->bibliothequeDetailRepository = $bibliothequeDetailRepository;
         $this->libraryDetailRepository = $libraryDetailRepository;
-        $this->readafterRepository = $readafterRepository;
     }
 
     /** 
@@ -166,7 +141,7 @@ class LibraryController extends Controller
 		}
 
 		$paginate = Ulities::calculatorPage($q, $page, $bibliotheques['total'], $limit);
-        $result   = $this->bibliothequeRepository->paginate($limit)->toArray();
+        $result   = $this->libraryRepository->paginate($limit)->toArray();
 
 		// list category left
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
