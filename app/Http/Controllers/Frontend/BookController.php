@@ -629,21 +629,29 @@ class BookController extends Controller
     public function libraryCheckedList(Request $request){
         $result['status'] = 0;
         $result['data'] = "";
-        if($request->has("user_id") && $request->has("object_id")){
-            $userId = $request->get("user_id");
-            $object_id = $request->get("object_id");
+
+        $user = Auth::user();
+        $userId = 0;
+        if($user){
+            $userId = $user->id;
+        }
+
+        if($userId > 0){
             $library_data = [];
             $library = $this->libraryRepository->getAllLibraryByUserID($userId)->toArray();
             foreach($library as $item){
                 $item_data = [];
 
                 $library_id = $item['_id'];
-                $type = Config::get('constants.objectType.book');
-                $library_detail = $this->libraryDetailRepository->getLibraryDetail($library_id, $object_id, $type)->toArray();
-
                 $item_data['checked'] = 0;
-                if(sizeof($library_detail) > 0){
-                    $item_data['checked'] = 1;
+                if($request->has('object_id')){
+                    $object_id = $request->get("object_id");
+                    $type = Config::get('constants.objectType.book');
+                    $library_detail = $this->libraryDetailRepository->getLibraryDetail($library_id, $object_id, $type)->toArray();
+
+                    if(sizeof($library_detail) > 0){
+                        $item_data['checked'] = 1;
+                    }
                 }
 
                 $item_data['title'] = $item['title'];
@@ -652,6 +660,9 @@ class BookController extends Controller
             }
             $result['status'] = 1;
             $result['data'] = $library_data;
+        }else{
+            $result['status'] = 1;
+            $result['data'] = 'not login';
         }
 
         $result = json_encode($result);

@@ -95,6 +95,12 @@
                         <div class="container-fluid">
                             <input type="file" class="form-control" id="libraryImage" name="image">
                             <img id="libraryThumb" src="#" alt="your image" />
+                            <style>
+                                #libraryThumb {
+                                    max-width: 80%;
+                                    margin-top: 10px;
+                                }
+                            </style>
                         </div>
                     </div>
                     <input type="hidden" value="{{ $userId }}" id="userId" name="user_id">
@@ -172,6 +178,8 @@
                         if (result['status'] == 1) {
                             $('.alert-success-library').show();
                             $('.alert-success-library').text("create success");
+                            $(".modal .close").click();
+                            $(".modal .close").click()
                         } else {
                             $('.alert-danger-library').show();
                             $('.alert-danger-library').text(result['data']);

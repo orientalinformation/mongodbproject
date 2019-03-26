@@ -114,3 +114,27 @@ $(document).mouseup(function (e) {
         popup.hide(500);
     }
 });
+
+$('.list-line').click(function(){
+    let bookID = $(this).closest(".wrap").find(".bookID").val();
+    $.ajax({
+        url: "/library_checked_list",
+        cache: false,
+        type: "GET",
+        data: {object_id: bookID},
+        success: function(result){
+            result = JSON.parse(result);
+            if(result['status'] == 1) {
+                let data = result['data'];
+                let data_html = "";
+                data.map(function(item){
+                    data_html += '<div class="input-group listWrap">';
+                    data_html += '<input type="checkbox" name="itemList" class="itemList" attr-data="' + item['id'] + '"><label>' + item['title'] + '</label>';
+                    data_html += '</div>';
+                })
+                $('#body-libraryList').html(data_html);
+            }
+        }
+    });
+})
+

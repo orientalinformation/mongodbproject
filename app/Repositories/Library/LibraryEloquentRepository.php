@@ -39,7 +39,7 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
      */
     public function getAllLibraryByUserID($userID)
     {
-        return $this->model->where([['user_id', '=', $userID]])->get();
+        return $this->model->where([['user_id', '=', (int)$userID]])->get();
     }
 
     /**
