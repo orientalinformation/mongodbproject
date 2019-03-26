@@ -154,28 +154,28 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="libraryCreate" role="dialog">
-        <div class="modal-dialog">
+    {{--<div class="modal fade" id="libraryCreate" role="dialog">--}}
+        {{--<div class="modal-dialog">--}}
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Create list</h4>
-                </div>
-                <div class="modal-body">
-                    <label>Name:</label>
-                    <div class="alert alert-success alertCreatelist"></div>
-                    <input type="text" class="form-control" placeholder="Name" id="nameLibrary">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success btnCreateLibrary">Create</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+            {{--<!-- Modal content-->--}}
+            {{--<div class="modal-content">--}}
+                {{--<div class="modal-header">--}}
+                    {{--<button type="button" class="close" data-dismiss="modal">&times;</button>--}}
+                    {{--<h4 class="modal-title">Create list</h4>--}}
+                {{--</div>--}}
+                {{--<div class="modal-body">--}}
+                    {{--<label>Name:</label>--}}
+                    {{--<div class="alert alert-success alertCreatelist"></div>--}}
+                    {{--<input type="text" class="form-control" placeholder="Name" id="nameLibrary">--}}
+                {{--</div>--}}
+                {{--<div class="modal-footer">--}}
+                    {{--<button type="button" class="btn btn-success btnCreateLibrary">Create</button>--}}
+                    {{--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-        </div>
-    </div>
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="modal fade bd-save-keyword-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md">

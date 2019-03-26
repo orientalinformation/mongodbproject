@@ -12,6 +12,8 @@ use App\Repositories\Library\LibraryRepositoryInterface;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\BookDetail\BookDetailRepositoryInterface;
+use App\Helpers\Envato\Ulities;
+use Illuminate\Support\Facades\Config;
 
 class AjaxController extends Controller
 {
@@ -223,5 +225,64 @@ class AjaxController extends Controller
 			return response()->json($response);
 		}
 	}
+
+	public function createLibrary(Request $request){
+        $response = [
+            'status' => 0,
+            'data' => false
+        ];
+        $error = "";
+        if ($request->isMethod('post')){
+            if(!$request->has('title') || $request->get('title')==''){
+                $error = "title is invalid";
+            }else if(!$request->has('alias') || $request->get('alias')==''){
+                $error = "alias is invalid";
+            }
+
+            if(!empty($error)){
+                $response = [
+                    'status' => 0,
+                    'data' => $error
+                ];
+            }else{
+                $userId = $request->get('user_id');
+                $title = $request->get('title');
+                $alias = $request->get('alias');
+                $price = $request->get('price');
+                $description = $request->get('description');
+
+                $data = [];
+                $data['title'] = $title;
+                $data['description'] = $description;
+
+                $fileImage = $request->image;
+                $libraryPath = Config::get('constants.bookPath');
+                $ext = ['jpg','jpeg','gif','png','bmp'];
+                $path = Ulities::uploadFile($fileImage, $libraryPath, $ext);
+
+                $data['image'] = $path['data'];
+                $data['user_id'] = $userId;
+                $data['category_id'] = 1;
+                $data['alias'] = $alias;
+                $data['share'] = 0;
+                $data['price'] = $price;
+                $data['like'] = 0;
+                $data['view'] = 0;
+                $data['is_public'] = 1;
+                $data['is_delete'] = 0;
+                $data['is_video'] = 0;
+                $data['is_image'] = 0;
+                $data['is_sound'] = 0;
+
+                $result = $this->bookRepository->create($data);
+
+                $response = [
+                    'status' => 1,
+                    'data' => $result
+                ];
+            }
+        }
+        return response()->json($response);
+    }
 
 }

@@ -2993,3 +2993,8 @@ ul.horizontal-menu-library > li a{
 .title a{
     color: #000000;
 }
+
+#libraryThumb{
+    max-width: 100px;
+    margin-top: 10px;
+}

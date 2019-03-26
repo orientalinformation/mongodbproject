@@ -29,6 +29,12 @@
     </div>
 </div>
 
+<?php
+    $userId = 0;
+    if (!empty(Auth::user())){
+        $userId = Auth::user()->id;
+    }
+?>
 <div class="modal fade" id="libraryCreate" role="dialog">
     <div class="modal-dialog">
 
@@ -39,9 +45,31 @@
                 <h4 class="modal-title">Create list</h4>
             </div>
             <div class="modal-body">
-                <label>Name:</label>
-                <!-- <div class="alert alert-success alertCreatelist"></div> -->
-                <input type="text" class="form-control" placeholder="Name" id="nameLibrary">
+                <div class="alert alert-success alertCreatelist"></div>
+                <div class="form-group">
+                    <label>Title (*):</label>
+                    <input class="form-control" type="text" name="title" id="libraryTitle" value="" placeholder="Enter title" onblur="aliasCovert(this)" required>
+                </div><!-- form-group -->
+                <div class="form-group">
+                    <label>Alias (*):</label>
+                    <input class="form-control" type="text" name="alias" id="libraryAlias" value="" placeholder="Enter alias" required>
+                </div><!-- form-group -->
+                <div class="form-group">
+                    <label>Price:</label>
+                    <input class="form-control" type="text" name="price" id="libraryPrice" value="" placeholder="Enter price">
+                </div><!-- form-group -->
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea rows="2" class="form-control" name="description" id="libraryDescription"></textarea>
+                </div><!-- form-group -->
+                <div class="form-group">
+                    <label>Image:</label>
+                    <div class="container-fluid">
+                        <input type="file" class="form-control" id="libraryImage" name="image">
+                        <img id="libraryThumb" src="#" alt="your image" />
+                    </div>
+                </div>
+                <input type="hidden" value="{{ $userId }}" id="userId">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btnCreateLibrary">Create</button>
@@ -51,3 +79,39 @@
 
     </div>
 </div>
+
+@section('script-tooltip')
+<script>
+    $(document).ready(function(){
+        $('.alertCreatelist').hide();
+        //hide image thumb
+        $('#libraryThumb').hide();
+    })
+    function aliasCovert(tag) {
+        let aliasTxt = $(tag).val();
+        aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
+        $('#libraryAlias').val(aliasTxt.replace(/\s/g, "-"));
+    }
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#libraryThumb').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#libraryImage").change(function () {
+        readURL(this);
+        $('#libraryThumb').show();
+    });
+    $('.btnCreateLibrary').click(function () {
+        let userId = $('#userId').val();
+        alert(userId);
+    })
+</script>
+@endsection
