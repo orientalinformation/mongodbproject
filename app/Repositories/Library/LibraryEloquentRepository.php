@@ -30,7 +30,7 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
      */
     public function getLibraryByUserID($userID, $perPage)
     {
-        return Library::where([['userID', '=', $userID]])->paginate($perPage);
+        return $this->model->where([['userID', '=', $userID]])->paginate($perPage);
     }
 
     /**
@@ -50,7 +50,7 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
      */
     public function checkShare($id, $share)
     {
-        return Library::where([['_id', '=', $id],
+        return $this->model->where([['_id', '=', $id],
                                 ['share', '=', (int)$share]])->get();
     }
 
@@ -60,7 +60,7 @@ class LibraryEloquentRepository extends EloquentRepository implements LibraryRep
      */
     public function checkName($user_id, $name)
     {
-        return Library::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['name', '=', $name]])->get();
     }
 }

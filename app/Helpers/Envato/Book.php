@@ -77,7 +77,7 @@ class BookHelper
      * @return mixed
      */
     public static function getBookDetail($id) {
-        $result = self::$bookRepository->getBookByID($id)->toArray();
+        $result = Book::getBookByID($id)->toArray();
         return $result;
     }
 }

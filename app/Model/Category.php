@@ -21,14 +21,4 @@ class Category extends Model
     protected $fillable = [
         'name', 'alias', 'description', 'parent_id', 'path'
     ];
-
-    /**
-     * get child cat
-     * @param $catID
-     * @return mixed
-     */
-    static function getChildCat($catID)
-    {
-        return Category::where([['parent_id', '=', $catID]])->get();
-    }
 }

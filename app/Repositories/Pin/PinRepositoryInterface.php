@@ -11,5 +11,12 @@ namespace App\Repositories\Pin;
 
 interface PinRepositoryInterface
 {
+    /**
+     * find by multi where
+     * @param $itemID
+     * @param $userID
+     * @param $type
+     * @return mixed
+     */
     public function findByMultiWhere($itemID, $userID, $type);
 }

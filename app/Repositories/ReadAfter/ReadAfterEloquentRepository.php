@@ -20,17 +20,31 @@ class ReadAfterEloquentRepository extends EloquentRepository implements ReadAfte
         return ReadAfter::class;
     }
 
+    /**
+     * check read
+     * @param $user_id
+     * @param $object_id
+     * @param $type
+     * @return mixed
+     */
     public function checkRead($user_id, $object_id, $type)
     {
-        return ReadAfter::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],
             ['is_delete', '=', 0]])->get();
     }
 
+    /**
+     * check unread
+     * @param $user_id
+     * @param $object_id
+     * @param $type
+     * @return mixed
+     */
     public function checkunRead($user_id, $object_id, $type)
     {
-        return ReadAfter::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],
             ['is_delete', '=', 1]])->get();

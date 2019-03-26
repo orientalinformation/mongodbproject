@@ -8,25 +8,18 @@
 
 namespace App\Helpers\Envato;
 use App\Model\Category;
+use App\Repositories\BaseRepositoryInterface;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryHelper
 {
     /**
-     * @var CategoryRepositoryInterface|BaseRepositoryInterface
-     */
-    private static $categoryRepository;
-
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
-    {
-        self::$categoryRepository = $categoryRepository;
-    }
-
-    /**
      * get sub category
-     * @param $parent_id
+     * @param $parentId
      * @return mixed
      */
-    public static function getSubCategory($parent_id) {
-        return self::$categoryRepository->getChildCat($parent_id)->toArray();
+    public static function getSubCategory($parentId) {
+        $result = Category::where([['parent_id', '=', $parentId]])->get()->toArray();
+        return $result;
     }
 }

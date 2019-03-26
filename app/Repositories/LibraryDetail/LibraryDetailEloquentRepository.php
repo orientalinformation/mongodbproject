@@ -23,15 +23,29 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
         return LibraryDetail::class;
     }
 
+    /**
+     * get library detail
+     * @param $library_id
+     * @param $object_id
+     * @param $type
+     * @return mixed
+     */
     public function getLibraryDetail($library_id, $object_id, $type){
-        return LibraryDetail::where([['library_id', '=', $library_id],
+        return $this->model->where([['library_id', '=', $library_id],
                                     ['object_id', '=', $object_id],
                                     ['type_name', '=', $type],
                                     ['is_delete', '=', 0]])->get();
     }
 
+    /**
+     * get library detail exist
+     * @param $library_id
+     * @param $object_id
+     * @param $type
+     * @return mixed
+     */
     public function getLibraryDetailExist($library_id, $object_id, $type){
-        return LibraryDetail::where([['library_id', '=', $library_id],
+        return $this->model->where([['library_id', '=', $library_id],
             ['object_id', '=', $object_id],
             ['type_name', '=', $type],
             ['is_delete', '=', 1]])->get();
@@ -46,7 +60,7 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
      */
     public function checkLiked($userId, $libraryId)
     {
-        return LibraryDetail::where([
+        return $this->model->where([
             ['user_id', '=', $userId],
             ['library_id', '=', $libraryId],
             ['is_like', '=', 1],
@@ -62,7 +76,7 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
      */
     public function checkunLiked($userId, $libraryId)
     {
-        return LibraryDetail::where([['user_id', '=', $userId],
+        return $this->model->where([['user_id', '=', $userId],
             ['library_id', '=', $libraryId],
             ['is_delete', '=', 1]])->get();
     }
@@ -84,10 +98,16 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
             ['is_delete', '=', 0]
         ])->get();
     }
-    
+
+    /**
+     * get all public by user id
+     * @param $userId
+     * @param $perPage
+     * @return mixed
+     */
     public function getAllPublicByUserID($userId, $perPage)
     {
-        return LibraryDetail::where([['user_id', '=', $userId],
+        return $this->model->where([['user_id', '=', $userId],
             ['is_public', '=', 1],
             ['is_delete', '=', 0]])->paginate($perPage);
     }
@@ -112,7 +132,7 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
      */
     public function checkunShare($userId, $libraryId)
     {
-        return LibraryDetail::where([
+        return $this->model->where([
             ['user_id', '=', $userId],
             ['library_id', '=', $libraryId],
             ['is_delete', '=', 1]
@@ -127,7 +147,7 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
      */
     public function checkPin($userId, $libraryId)
     {
-        return LibraryDetail::where([
+        return $this->model->where([
             ['user_id', '=', $userId],
             ['library_id', '=', $libraryId],
             ['pink', '=', 1],
@@ -143,7 +163,7 @@ class LibraryDetailEloquentRepository extends EloquentRepository implements Libr
      */
     public function checkunPin($userId, $libraryId)
     {
-        return LibraryDetail::where([
+        return $this->model->where([
             ['user_id', '=', $userId],
             ['library_id', '=', $libraryId],
             ['is_delete', '=', 1]

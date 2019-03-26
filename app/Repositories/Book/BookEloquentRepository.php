@@ -29,23 +29,41 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
                             ->get();
     }
 
+    /**
+     * check status
+     * @param $bookID
+     * @param $status
+     * @return mixed
+     */
     public function checkStatus($bookID, $status)
     {
-        return Book::where([['_id', '=', $bookID],
+        return $this->model->where([['_id', '=', $bookID],
             ['status', '=', (int)$status]])->get();
     }
 
+    /**
+     * get draft
+     * @param int $perPage
+     * @return mixed
+     */
     public function getDraft($perPage = 15)
     {
-        return Book::where([['status', '=', 'DRAFT']])->paginate($perPage);
+        return $this->model->where([['status', '=', 'DRAFT']])->paginate($perPage);
     }
 
+    /**
+     * get range
+     * @param $start_year
+     * @param $end_year
+     * @param $perPage
+     * @return mixed
+     */
     public function getRange($start_year, $end_year, $perPage)
     {
         $startDate = Carbon::createFromDate($start_year, 1, 1);
         $endDate = Carbon::createFromDate($end_year, 12, 1);
 
-        return Book::whereBetween('created_at', array($startDate, $endDate))->paginate($perPage);
+        return $this->model->whereBetween('created_at', array($startDate, $endDate))->paginate($perPage);
     }
 
     /**
@@ -57,7 +75,7 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
      */
     public function getItemsByadmin($listAdminIds, $limit)
     {
-        $items = BookDetail::with('book')
+        $items = $this->model->with('book')
                             ->whereIn('user_id', $listAdminIds)
                             ->orderBy('_id', 'desc')
                             ->limit($limit)
@@ -74,7 +92,7 @@ class BookEloquentRepository extends EloquentRepository implements BookRepositor
      */
     public function getByCatID($catID, $perPage = 15)
     {
-        return Book::where([['cat_id', '=', $catID]])->paginate($perPage);
+        return $this->model->where([['cat_id', '=', $catID]])->paginate($perPage);
     }
 
     /**

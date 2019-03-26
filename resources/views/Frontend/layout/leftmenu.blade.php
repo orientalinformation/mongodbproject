@@ -4,7 +4,7 @@
         @foreach($category as $item)
         <?php $subCat = EnvatoCategory::getSubCategory($item['id']); ?>
             <?php if(sizeof($subCat) > 0): ?>
-            <li><a class="accordion-toggle" href="#colMenu<?= $item['id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
+            <li><a class="accordion-toggle collapsed" href="#colMenu<?= $item['id'] ?>" data-toggle="collapse">{{ $item['name'] }}</a></li>
             <div id="colMenu<?= $item['id'] ?>" class="panel-collapse collapse">
                 <ul class="sub-menu-library">
                     @foreach($subCat as $subItem)

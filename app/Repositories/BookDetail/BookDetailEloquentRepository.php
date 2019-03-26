@@ -28,7 +28,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkLiked($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
             ['is_like', '=', 1],
             ['is_delete', '=', 0]])->get();
@@ -42,7 +42,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkunLiked($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
             ['is_delete', '=', 1]])->get();
     }
@@ -55,7 +55,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkShared($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
             ['share', '=', 1],
             ['is_delete', '=', 0]])->get();
@@ -69,7 +69,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkunShared($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
             ['is_delete', '=', 1]])->get();
     }
@@ -82,7 +82,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkPin($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', (int)$user_id],
+        return $this->model->where([['user_id', '=', (int)$user_id],
             ['book_id', '=', $book_id],
             ['is_delete', '=', 0]])->get();
     }
@@ -95,7 +95,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function checkunPin($user_id, $book_id)
     {
-        return BookDetail::where([['user_id', '=', $user_id],
+        return $this->model->where([['user_id', '=', $user_id],
             ['book_id', '=', $book_id],
             ['is_delete', '=', 1]])->get();
     }
@@ -108,7 +108,7 @@ class BookDetailEloquentRepository extends EloquentRepository implements BookDet
      */
     public function getAllPublicByUserID($userId, $perPage)
     {
-        return BookDetail::where([['user_id', '=', $userId],
+        return $this->model->where([['user_id', '=', $userId],
             ['is_delete', '=', 0]])->paginate($perPage);
     }
 

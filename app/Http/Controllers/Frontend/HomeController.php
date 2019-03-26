@@ -15,7 +15,7 @@ use App\Repositories\Library\LibraryRepositoryInterface;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
 
 use App\Repositories\User\UserRepositoryInterface;
-use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
+//use App\Repositories\Bibliotheque\BibliothequeRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use Elasticsearch\ClientBuilder;
 use App\Helpers\Envato\Ulities;
@@ -51,7 +51,7 @@ class HomeController extends Controller
     /**
      * @var BibliothequeRepositoryInterface|\App\Repositories\BaseRepositoryInterface
      */
-    protected $bibliothequetRepository;
+//    protected $bibliothequetRepository;
 
     /**
      * @var LibraryRepositoryInterface|\App\Repositories\BaseRepositoryInterface
@@ -84,7 +84,7 @@ class HomeController extends Controller
                                 ProductDetailRepositoryInterface $productdetailRepository,
                                 Request $request,
                                 UserRepositoryInterface $userRepository,
-                                BibliothequeRepositoryInterface $bibliothequetRepository,
+//                                BibliothequeRepositoryInterface $bibliothequetRepository,
                                 LibraryRepositoryInterface $libraryRepository,
                                 LibraryDetailRepositoryInterface $librarydetailRepository)
     {
@@ -96,7 +96,7 @@ class HomeController extends Controller
         $this->productdetailRepository = $productdetailRepository;
         $this->request = $request;
         $this->userRepository = $userRepository;
-        $this->bibliothequetRepository = $bibliothequetRepository;
+//        $this->bibliothequetRepository = $bibliothequetRepository;
         $this->libraryRepository = $libraryRepository;
         $this->librarydetailRepository = $librarydetailRepository;
     }

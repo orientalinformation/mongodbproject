@@ -19,6 +19,12 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
         return Category::class;
     }
 
+    /**
+     * get all by limit
+     * @param $offset
+     * @param $limit
+     * @return mixed
+     */
     public function allByLimit($offset, $limit)
     {
         return $this->model->offset($offset)
@@ -26,24 +32,32 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
             ->get();
     }
 
-    public function getChildCat($catID)
-    {
-        return Category::where([['parent_id', '=', $catID]])->get();
-    }
-
+    /**
+     * paginate order by path
+     * @param int $perPage
+     * @return mixed
+     */
     public function paginateOrderByPath($perPage = 15)
     {
         return $this->model->orderBy('path', 'ASC')->paginate($perPage);
     }
 
+    /**
+     * get all order by path
+     * @return mixed
+     */
     public function allOrderByPath()
     {
         return $this->model->orderBy('path', 'ASC')->get();
     }
 
+    /**
+     * get parent category order by path
+     * @return mixed
+     */
     public function parentOrderByPath()
     {
-        return Category::where([['parent_id', '=', null]])->orderBy('path', 'ASC')->get();
+        return $this->model->where([['parent_id', '=', null]])->orderBy('path', 'ASC')->get();
     }
 
     /**
@@ -61,7 +75,7 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
             $trees = [];
         }
         
-        $categories = Category::where('parent_id', $parent_id)->orderBy('path', 'ASC')->get();
+        $categories = $this->model->where('parent_id', $parent_id)->orderBy('path', 'ASC')->get();
         $trees_obj = array();
         if (count($categories) > 0) {
             $level++;
@@ -94,7 +108,7 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
             $trees[] = $parent_id;
         }
 
-        $categories = Category::where('parent_id', $parent_id)->get();
+        $categories = $this->model->where('parent_id', $parent_id)->get();
         if (count($categories) > 0) {
             foreach ($categories as $category) {
                 $trees[] = $category->_id;

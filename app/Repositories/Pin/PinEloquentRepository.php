@@ -25,7 +25,7 @@ class PinEloquentRepository extends EloquentRepository implements PinRepositoryI
      */
     public function findByMultiWhere($itemID, $userID, $type)
     {
-        return Pin::where([['itemID', '=', $itemID],
+        return $this->model->where([['itemID', '=', $itemID],
                             ['userID', '=', (int)$userID],
                             ['type', '=', $type]])->get();
     }

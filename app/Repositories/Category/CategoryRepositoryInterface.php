@@ -11,12 +11,6 @@ namespace App\Repositories\Category;
 
 interface CategoryRepositoryInterface
 {
-    /**
-     * Get child category
-     * @param $id
-     * @return mixed
-     */
-    public function getChildCat($catID);
 
     /**
      * Get category order by path with pagination

@@ -70,7 +70,14 @@
                                 <div class="wrap">
                                     <img src="<?= URL::to('/upload/book/') . "/" . $item['image'] ?>" class="library-thumb">
                                     <?php if (!empty(Auth::user())): ?>
-                                    <div class="box-toolips" data-type="book" data-id="{{ $item['_id'] }}">
+                                    <?php
+                                        if(!isset($_GET["q"])){
+                                            $itemId =  $item['_id'];
+                                        }else{
+                                            $itemId =  $item['id'];
+                                        }
+                                    ?>
+                                    <div class="box-toolips" data-type="book" data-id="{{ $itemId }}">
                                         <div class="menu-tooltips"></div>
                                         {{--<div class="content-panel">--}}
                                             {{--<div class="content-line like-line"><i class="fa fa-heart-o likeIcon" aria-hidden="true"></i> <span>Liker</span></div>--}}
@@ -89,11 +96,7 @@
                                             <div class="content-line pink-line object-tooltip" data-element="pink"><i class="fa fa fa-thumb-tack pinkIcon" aria-hidden="true"></i> <span>Pink</span></div>
                                         </div>
                                     </div>
-                                    <?php endif; ?>
-                                    <?php if(!isset($_GET["q"])): ?>
-                                    <input type="hidden" class="bookID" value="{{ $item['_id'] }}"/>
-                                    <?php else: ?>
-                                    <input type="hidden" class="bookID" value="{{ $item['id'] }}"/>
+                                    <input type="hidden" class="bookID" value="{{ $itemId }}"/>
                                     <?php endif; ?>
                                 </div>
                                 <div class="thumb-title">
