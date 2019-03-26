@@ -20,19 +20,7 @@
               
             </div>
             <div class="col-lg-9">
-                <ul class="horizontal-menu-library">
-                    <li> <a href="#">Toutes</a></li>
-                    <li> <a href="#">Web</a></li>
-                    <li> <a href="#">Étude/Synthese</a></li>
-                    <li> <a href="#">Produit</a></li>
-                    <li> <a href="#">Preporting/Evenement</a></li>
-                    <li class="active"> <a href="#">Librairie Compagnons</a></li>
-                </ul>
-                @if (app('request')->input('q') != '')
-                <div class="btn-research pull-right">
-                    <a href="#" class="btn btn-warning text-uppercase" data-toggle="modal" data-target=".bd-save-keyword-modal-md"><i class="fa fa-level-down" aria-hidden="true"></i> @lang('common.saveSearch')</a>
-                </div>
-                @endif
+                @include('Frontend.layout.pagemenu')
             </div>
         </div>
         <div class="container-fluid">
