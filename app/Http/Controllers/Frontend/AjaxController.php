@@ -144,6 +144,8 @@ class AjaxController extends Controller
 		if ($this->request->ajax()) {
 			$id = $this->request->get('id');
 			$type = $this->request->get('type');
+			$idFieldName = null;
+			$detailRepositoryName = null;
 			switch ($type) {
 				case 'product':
 					$idFieldName = 'product_id';
@@ -183,6 +185,9 @@ class AjaxController extends Controller
 			$type = $this->request->get('type');
 			$element = $this->request->get('element');
 			$result = false;
+			$idFieldName = null;
+			$repositoryName = null;
+			$detailRepositoryName = null;
 			switch ($type) {
 				case 'product':
 					$idFieldName = 'product_id';
