@@ -44,7 +44,7 @@ class BookTableSeeder extends Seeder
         if (count($categories) > 0) {
             $arrayCategory = [];
             foreach ($categories as $category) {
-                $arrayCategory[] = $category->_id;
+                $arrayCategory[] = $category->id;
             }
 
             $faker = Faker::create('fr');
