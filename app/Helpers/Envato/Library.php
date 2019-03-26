@@ -11,8 +11,23 @@ use App\Model\Library;
 
 class LibraryHelper
 {
+    /**
+     * @var LibraryRepositoryInterface|BaseRepositoryInterface
+     */
+    private static $libraryRepository;
+
+    public function __construct(LibraryRepositoryInterface $libraryRepository)
+    {
+        self::$libraryRepository = $libraryRepository;
+    }
+
+    /**
+     * get library detail
+     * @param $id
+     * @return mixed
+     */
     public static function getLibraryDetail($id) {
-        $result = Library::getLibraryByID($id)->toArray();
+        $result = self::$libraryRepository->getLibraryByID($id)->toArray();
         return $result;
     }
 }

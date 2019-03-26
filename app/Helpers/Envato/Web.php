@@ -24,7 +24,7 @@ class WebHelper
     }
 
     /**
-     *
+     * get eweb detail
      * @param $id
      * @return mixed
      */

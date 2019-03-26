@@ -11,7 +11,22 @@ use App\Model\Category;
 
 class CategoryHelper
 {
+    /**
+     * @var CategoryRepositoryInterface|BaseRepositoryInterface
+     */
+    private static $categoryRepository;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        self::$categoryRepository = $categoryRepository;
+    }
+
+    /**
+     * get sub category
+     * @param $parent_id
+     * @return mixed
+     */
     public static function getSubCategory($parent_id) {
-        return Category::getChildCat($parent_id)->toArray();
+        return self::$categoryRepository->getChildCat($parent_id)->toArray();
     }
 }
