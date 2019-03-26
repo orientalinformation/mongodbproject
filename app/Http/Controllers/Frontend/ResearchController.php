@@ -49,7 +49,8 @@ class ResearchController extends Controller
 	        ]);
 
 			if ($validator->fails()) {
-			    return response()->json(['errors'=>$validator->errors()->all()]);
+                $errors = $validator->errors()->all();
+                return response()->json(compact(['errors']), 422);
 			}
 			
 			$result = $this->researchRepository->saveKeySearchingValue($request);
