@@ -1,4 +1,9 @@
 $('.menu-tooltips').click(function(){
+    $('.alert-success-library').hide();
+    $('.alert-success-library').text("");
+    $('.alert-danger-library').hide();
+    $('.alert-danger-library').text("");
+
     var type = $(this).closest('.box-toolips').data('type');
     var id = $(this).closest('.box-toolips').data('id');
     var display = $(this).closest(".box-toolips").find(".content-panel");
@@ -45,7 +50,7 @@ $('.menu-tooltips').click(function(){
 
 $('.object-tooltip').click(function() {
     var type = $(this).closest('.box-toolips').data('type');
-    var id = $(this).closest('.box-toolips').data('id'); 
+    var id = $(this).closest('.box-toolips').data('id');
     var element = $(this).data('element');
     var heart = $(this).closest(".box-toolips").find(".likeIcon");
     var read = $(this).closest(".box-toolips").find(".readIcon");
@@ -58,42 +63,42 @@ $('.object-tooltip').click(function() {
         data: {'id':id, 'type':type, 'element':element, '_token':$('meta[name="csrf-token"]').attr('content')},
         success:function(result) {
             if (result.status == 1) {
-                switch (element) { 
-                    case 'like': 
+                switch (element) {
+                    case 'like':
                         heart.removeClass("fa-heart-o");
                         heart.addClass("fa-heart");
                         break;
 
-                    case 'read': 
+                    case 'read':
                         read.removeClass("fa-bookmark-o");
                         read.addClass("fa-bookmark");
                         break;
 
-                    case 'share': 
+                    case 'share':
                         share.css('color','red');
                         break;
 
-                    case 'pink': 
+                    case 'pink':
                         pink.css('color','red');
                         break;
                 }
             } else {
-                switch (element) { 
-                    case 'like': 
+                switch (element) {
+                    case 'like':
                         heart.removeClass("fa-heart");
                         heart.addClass("fa-heart-o");
                         break;
 
-                    case 'read': 
+                    case 'read':
                         read.removeClass("fa-bookmark");
                         read.addClass("fa-bookmark-o");
                         break;
 
-                    case 'share': 
+                    case 'share':
                         share.css('color','black');
                         break;
 
-                    case 'pink': 
+                    case 'pink':
                         pink.css('color','black');
                         break;
                 }

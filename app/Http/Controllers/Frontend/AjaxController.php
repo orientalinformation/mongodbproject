@@ -250,19 +250,23 @@ class AjaxController extends Controller
                 $alias = $request->get('alias');
                 $price = $request->get('price');
                 $description = $request->get('description');
+                $categoryId = $request->get('category_id');
 
                 $data = [];
                 $data['title'] = $title;
                 $data['description'] = $description;
+                $data['image'] = "";
 
-                $fileImage = $request->image;
-                $libraryPath = Config::get('constants.bookPath');
-                $ext = ['jpg','jpeg','gif','png','bmp'];
-                $path = Ulities::uploadFile($fileImage, $libraryPath, $ext);
+                if($request->has('image')) {
+                    $fileImage = $request->image;
+                    $libraryPath = Config::get('constants.libraryPath');
+                    $ext = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
+                    $path = Ulities::uploadFile($fileImage, $libraryPath, $ext);
+                    $data['image'] = $path['data'];
+                }
 
-                $data['image'] = $path['data'];
                 $data['user_id'] = $userId;
-                $data['category_id'] = 1;
+                $data['category_id'] = $categoryId;
                 $data['alias'] = $alias;
                 $data['share'] = 0;
                 $data['price'] = $price;
@@ -274,7 +278,7 @@ class AjaxController extends Controller
                 $data['is_image'] = 0;
                 $data['is_sound'] = 0;
 
-                $result = $this->bookRepository->create($data);
+                $result = $this->libraryRepository->create($data);
 
                 $response = [
                     'status' => 1,

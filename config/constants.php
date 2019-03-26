@@ -11,10 +11,10 @@ return [
     'rowPage'       => 24,
     'rowPageBook'   => 24,
     'itemSearchHome' => 3,
-    'bookPath'  => '/public/upload/book/',
-    'bookFilePath'  => '/public/upload/book/file/',
-    'libraryPath'  => '/public/upload/book/',
-    'avatarPath'  => '/public/upload/avatar/',
+    'bookPath'  => '/storage/book/',
+    'bookFilePath'  => '/storage/book/file/',
+    'libraryPath'  => '/storage/book/',
+    'avatarPath'  => '/storage/avatar/',
     'elasticsearch' => [
         'web'       =>  [
             'index' =>  'web_compagnons',

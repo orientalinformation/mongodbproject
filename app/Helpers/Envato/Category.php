@@ -22,4 +22,9 @@ class CategoryHelper
         $result = Category::where([['parent_id', '=', $parentId]])->get()->toArray();
         return $result;
     }
+
+    public static function getAllOrderByPath() {
+        $result = Category::orderBy('path', 'ASC')->get()->toArray();
+        return $result;
+    }
 }

@@ -35,6 +35,13 @@
         $userId = Auth::user()->id;
     }
 ?>
+<script>
+    function aliasCovert(tag) {
+        let aliasTxt = $(tag).val();
+        aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
+        $('#libraryAlias').val(aliasTxt.replace(/\s/g, "-"));
+    }
+</script>
 <div class="modal fade" id="libraryCreate" role="dialog">
     <div class="modal-dialog">
 
@@ -45,31 +52,53 @@
                 <h4 class="modal-title">Create list</h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-success alertCreatelist"></div>
-                <div class="form-group">
-                    <label>Title (*):</label>
-                    <input class="form-control" type="text" name="title" id="libraryTitle" value="" placeholder="Enter title" onblur="aliasCovert(this)" required>
-                </div><!-- form-group -->
-                <div class="form-group">
-                    <label>Alias (*):</label>
-                    <input class="form-control" type="text" name="alias" id="libraryAlias" value="" placeholder="Enter alias" required>
-                </div><!-- form-group -->
-                <div class="form-group">
-                    <label>Price:</label>
-                    <input class="form-control" type="text" name="price" id="libraryPrice" value="" placeholder="Enter price">
-                </div><!-- form-group -->
-                <div class="form-group">
-                    <label>Description:</label>
-                    <textarea rows="2" class="form-control" name="description" id="libraryDescription"></textarea>
-                </div><!-- form-group -->
-                <div class="form-group">
-                    <label>Image:</label>
-                    <div class="container-fluid">
-                        <input type="file" class="form-control" id="libraryImage" name="image">
-                        <img id="libraryThumb" src="#" alt="your image" />
+                <form id="data" method="post" enctype="multipart/form-data">
+                    <div class="alert alert-success alert-success-library"></div>
+                    <div class="alert alert-danger alert-danger-library"></div>
+                    <div class="form-group">
+                        <label>Title (*):</label>
+                        <input class="form-control" type="text" name="title" id="libraryTitle" value="" placeholder="Enter title" onblur="aliasCovert(this)" required>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Alias (*):</label>
+                        <input class="form-control" type="text" name="alias" id="libraryAlias" value="" placeholder="Enter alias" required>
+                    </div><!-- form-group -->
+                    <?php $category_list = EnvatoCategory::getAllOrderByPath(); ?>
+                    <div class="form-group">
+                        <label>Category (*):</label>
+                        <select class="form-control select2" id="catId" name="category_id" data-placeholder="Choose category" tabindex="-1" aria-hidden="true" required>
+                            <option label="Choose category"></option>
+                            @foreach($category_list as $item)
+                                <option value="{{ $item['id'] }}" data-path="{{ $item['path'] }}">
+                                    <?php
+                                    $path = explode("/",$item['path']);
+                                    $path_html = "";
+                                    foreach($path as $path_item){
+                                        echo '<i style="color: #a5a5a5;font-weight: bold;margin-right: 5px; font-style: normal;">|—</i>';
+                                    }
+                                    echo $item['name'];
+                                    ?>
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
-                </div>
-                <input type="hidden" value="{{ $userId }}" id="userId">
+                    <div class="form-group">
+                        <label>Price:</label>
+                        <input class="form-control" type="text" name="price" id="libraryPrice" value="" placeholder="Enter price">
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <textarea rows="2" class="form-control" name="description" id="libraryDescription"></textarea>
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label>Image:</label>
+                        <div class="container-fluid">
+                            <input type="file" class="form-control" id="libraryImage" name="image">
+                            <img id="libraryThumb" src="#" alt="your image" />
+                        </div>
+                    </div>
+                    <input type="hidden" value="{{ $userId }}" id="userId" name="user_id">
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btnCreateLibrary">Create</button>
@@ -83,35 +112,75 @@
 @section('script-tooltip')
 <script>
     $(document).ready(function(){
-        $('.alertCreatelist').hide();
         //hide image thumb
         $('#libraryThumb').hide();
-    })
-    function aliasCovert(tag) {
-        let aliasTxt = $(tag).val();
-        aliasTxt = aliasTxt.replace(/^[ ]+|[ ]+$/g,'')
-        $('#libraryAlias').val(aliasTxt.replace(/\s/g, "-"));
-    }
-    function readURL(input) {
+        function readURL(input) {
 
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function(e) {
-                $('#libraryThumb').attr('src', e.target.result);
+                reader.onload = function(e) {
+                    $('#libraryThumb').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#libraryImage").change(function () {
+            readURL(this);
+            $('#libraryThumb').show();
+        });
+        $('.btnCreateLibrary').click(function () {
+            let userId = $('#userId').val();
+            let title = $('#libraryTitle').val();
+            let alias = $('#libraryAlias').val();
+            let image = $('#libraryImage').val();
+            let catId = $('#catId').val();
+            let error = "";
+
+            if(title == ""){
+                error = "title not valid";
+            }else if(alias == ""){
+                error = "alias not valid";
+            }else if(catId == ""){
+                error = "category not valid";
             }
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+            if(error != ""){
+                $('.alert-danger-library').show();
+                $('.alert-danger-library').text(error);
+            }else {
+                // Get form
+                var form = $('#data')[0];
 
-    $("#libraryImage").change(function () {
-        readURL(this);
-        $('#libraryThumb').show();
-    });
-    $('.btnCreateLibrary').click(function () {
-        let userId = $('#userId').val();
-        alert(userId);
+                // Create an FormData object
+                var data = new FormData(form);
+
+                $.ajax({
+                    enctype: 'multipart/form-data',
+                    url: "<?= URL::to('/'); ?>/ajax/createLibrary",
+                    type: 'POST',
+                    cache: false,
+                    // data: {user_id: userId, title: title, alias: alias, image: image, category_id: catId},
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (result) {
+                        if (result['status'] == 1) {
+                            $('.alert-success-library').show();
+                            $('.alert-success-library').text("create success");
+                        } else {
+                            $('.alert-danger-library').show();
+                            $('.alert-danger-library').text(result['data']);
+                        }
+                    }
+                });
+            }
+        })
+
     })
 </script>
 @endsection
