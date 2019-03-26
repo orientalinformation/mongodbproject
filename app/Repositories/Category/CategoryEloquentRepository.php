@@ -80,8 +80,8 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
         if (count($categories) > 0) {
             $level++;
             foreach ($categories as $category) {
-                $trees[] = ['id' => $category->_id, 'parent_id' => $category->parent_id, 'name' => $space . $category->name, 'path' => $category->path, 'level' => $level];
-                $trees = $this->recursiveCategory($category->_id, $level, $space, $trees);
+                $trees[] = ['id' => $category->id, 'parent_id' => $category->parent_id, 'name' => $space . $category->name, 'path' => $category->path, 'level' => $level];
+                $trees = $this->recursiveCategory($category->id, $level, $space, $trees);
             }
         }
 
@@ -105,14 +105,14 @@ class CategoryEloquentRepository extends EloquentRepository implements CategoryR
     public function getCategoryTreeId($parent_id = null, $trees = [])
     {
         if ($parent_id != null) {
-            $trees[] = $parent_id;
+            $trees[] = (int) $parent_id;
         }
 
         $categories = $this->model->where('parent_id', $parent_id)->get();
         if (count($categories) > 0) {
             foreach ($categories as $category) {
-                $trees[] = $category->_id;
-                $trees = $this->getCategoryTreeId($category->_id, $trees);
+                $trees[] = $category->id;
+                $trees = $this->getCategoryTreeId($category->id, $trees);
             }
         }
 

@@ -111,7 +111,7 @@
                         <div class="input-group">
                             <input type="text" name="research_name" class="form-control">
                             <span class="input-group-btn">
-                                <buttonn id="btn-save-keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
+                                <button id="btn-save-keyword" class="btn btn-primary" type="button"><span class="glyphicon glyphicon-ok" aria-hidden="true">
                                 </span> @lang('common.btnSave')!</button>
                             </span>
                         </div>

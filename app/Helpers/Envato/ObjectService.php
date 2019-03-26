@@ -72,8 +72,8 @@ class ObjectService
         $result = false;
         $typeConst = strtoupper($type);
 
-        $product = $repositoryName->find($id);
-        $objectDetail = $repositoryDetailName->getDataItemUser($id);
+        $object = $repositoryName->find($id);
+        $objectDetail = $repositoryDetailName->getDataItemRepoUser($idFieldName, $id);
         switch ($element) {
             case 'like':
                 if ($objectDetail) {
@@ -83,13 +83,13 @@ class ObjectService
                     //update product count like
                     if ($objectDetail->is_like == 1) {
                         $result = true;
-                        $product->like = $product->like + 1;
+                        $object->like = $object->like + 1;
                     } else {
                         $result = false;
-                        $product->like = $product->like - 1;
+                        $object->like = $object->like - 1;
                     }
 
-                    $product->save();
+                    $object->save();
                 } else {
                     $data[$idFieldName] = $id;
                     $data['user_id'] = Auth::user()->id;
@@ -103,8 +103,8 @@ class ObjectService
                     $repositoryDetailName->create($data);
                     
                     //update product count like
-                    $product->like = $product->like + 1;
-                    $product->save();
+                    $object->like = $object->like + 1;
+                    $object->save();
                     $result=  true;
                 }
 
