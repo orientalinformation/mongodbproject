@@ -146,12 +146,22 @@ class AjaxController extends Controller
 			$type = $this->request->get('type');
 			switch ($type) {
 				case 'product':
-					$object = $this->objectService->getDataObjectDetail($id, $type, $this->productdetailRepository);
+					$idFieldName = 'product_id';
+					$detailRepositoryName = $this->productdetailRepository;
 					break;
+
                 case 'book':
-                    $object = $this->objectService->getDataObjectDetail($id, $type, $this->bookdetailRepository);
+                    $idFieldName = 'book_id';
+					$detailRepositoryName = $this->bookdetailRepository;
+                    break;
+
+                case 'library':
+                    $idFieldName = 'library_id';
+					$detailRepositoryName = $this->libraryDetailRepository;
                     break;
 			}
+
+			$object = $this->objectService->getDataObjectDetail($id, $idFieldName, $type, $detailRepositoryName);
 
 			return response()->json($object);
 		}
@@ -167,7 +177,7 @@ class AjaxController extends Controller
 		if ($this->request->ajax()) {
 			$response = [
 				'status' => 0,
-				'data' => ''
+				'data' => false
 			];
 			$id = $this->request->get('id');
 			$type = $this->request->get('type');
@@ -175,15 +185,24 @@ class AjaxController extends Controller
 			$result = false;
 			switch ($type) {
 				case 'product':
-					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->productRepository, $this->productdetailRepository);
+					$idFieldName = 'product_id';
+					$repositoryName = $this->productRepository;
+					$detailRepositoryName = $this->productdetailRepository;
 					break;
-				case 'library':
-					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->libraryRepository, $this->libraryDetailRepository);
+				
 				case 'book':
-					$result = $this->objectService->setDataObjectDetail($id, $type, $element, $this->bookRepository, $this->bookdetailRepository);
+					$idFieldName = 'book_id';
+					$repositoryName = $this->bookRepository;
+					$detailRepositoryName = $this->bookdetailRepository;
 					break;
+
+				case 'library':
+					$idFieldName = 'library_id';
+					$repositoryName = $this->libraryRepository;
+					$detailRepositoryName = $this->libraryDetailRepository;
 			}
 
+			$result = $this->objectService->setDataObjectDetail($id, $idFieldName, $type, $element, $repositoryName, $detailRepositoryName);
 			if ($result) {
 				$response = [
 					'status' => 1,
