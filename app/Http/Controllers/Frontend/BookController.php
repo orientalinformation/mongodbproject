@@ -10,6 +10,7 @@ use App\Repositories\BookDetail\BookDetailRepositoryInterface;
 use App\Repositories\ReadAfter\ReadAfterRepositoryInterface;
 use App\Repositories\Library\LibraryRepositoryInterface;
 use App\Repositories\LibraryDetail\LibraryDetailRepositoryInterface;
+use App\Repositories\Research\ResearchRepositoryInterface;
 use Illuminate\Support\Facades\Config;
 use App\Helpers\Envato\Ulities;
 use Elasticsearch\ClientBuilder;
@@ -25,6 +26,11 @@ class BookController extends Controller
     protected $categoryRepository;
 
     /**
+     * @var ResearchRepositoryInterface|\App\Repositories\BaseRepositoryInterface
+     */
+    protected $researchRepository;
+
+    /**
      * CategoryController constructor.
      * @param CategoryRepositoryInterface $categoryRepository
      */
@@ -34,7 +40,8 @@ class BookController extends Controller
                                 BookDetailRepositoryInterface $bookdetailRepository,
                                 ReadAfterRepositoryInterface $readafterRepository,
                                 LibraryRepositoryInterface $libraryRepository,
-                                LibraryDetailRepositoryInterface $librarydetailRepository)
+                                LibraryDetailRepositoryInterface $librarydetailRepository,
+                                ResearchRepositoryInterface $researchRepository)
     {
         $this->categoryRepository = $categoryRepository;
         $this->bookRepository = $bookRepository;
@@ -42,6 +49,7 @@ class BookController extends Controller
         $this->readafterRepository = $readafterRepository;
         $this->libraryRepository = $libraryRepository;
         $this->libraryDetailRepository = $librarydetailRepository;
+        $this->researchRepository = $researchRepository;
     }
 
     /**
@@ -146,7 +154,9 @@ class BookController extends Controller
 
         // list category left
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
-        return view('Frontend.Book.index', compact(['category', 'book', 'paginate', 'q', 'library', 'urlSort', 'pageName']));
+        // list researches
+        $researches = $this->researchRepository->getListItem(5);
+        return view('Frontend.Book.index', compact(['category', 'researches', 'book', 'paginate', 'q', 'library', 'urlSort', 'pageName']));
     }
 
     /**

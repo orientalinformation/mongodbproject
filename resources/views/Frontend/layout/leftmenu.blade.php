@@ -14,7 +14,7 @@
                             <div id="colMenuSub<?= $subItem['id'] ?>" class="panel-collapse collapse in">
                                 <ul class="sub-menu-library">
                                     @foreach($sub2Cat as $sub2Item)
-                                        <li><a href="<?= $url . '?catID=' . $subItem['id'] ?>">{{ $sub2Item['name'] }}</a></li>
+                                        <li><a href="<?= $url . '?catID=' . $sub2Item['id'] ?>">{{ $sub2Item['name'] }}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
