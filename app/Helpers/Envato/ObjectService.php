@@ -33,7 +33,7 @@ class ObjectService
      * @param object $repositoryName
      * @return array
      */
-    public function getDataObjectDetail($id, $type, $repositoryName)
+    public function getDataObjectDetail($id, $idFieldName, $type, $repositoryName)
     {
         $result = [
             'read' => 0,
@@ -47,26 +47,7 @@ class ObjectService
             $result['read'] = $readAfter->is_delete == 0 ? 1 : 0;
         }
 
-        switch ($type) {
-            case 'product':
-                $idFieldName = 'product_id';
-                break;
-            
-            case 'book':
-                $idFieldName = 'book_id';
-                break;
-
-            case 'library':
-                $idFieldName = 'library_id';
-                break;
-
-            case 'web':
-                $idFieldName = 'web_id';
-                break;
-        }
-
         $objectDetail = $repositoryName->getDataItemRepoUser($idFieldName, $id);
-
         if ($objectDetail) {
             $result['like'] = $objectDetail->is_like;
             $result['share'] = $objectDetail->share;
@@ -86,27 +67,10 @@ class ObjectService
      * @param object $repositoryDetailName
      * @return array
      */
-    public function setDataObjectDetail($id, $type, $element, $repositoryName, $repositoryDetailName)
+    public function setDataObjectDetail($id, $idFieldName, $type, $element, $repositoryName, $repositoryDetailName)
     {
-        $result = true;
+        $result = false;
         $typeConst = strtoupper($type);
-        switch ($type) {
-            case 'product':
-                $idFieldName = 'product_id';
-                break;
-            
-            case 'book':
-                $idFieldName = 'book_id';
-                break;
-
-            case 'library':
-                $idFieldName = 'library_id';
-                break;
-
-            case 'web':
-                $idFieldName = 'web_id';
-                break;
-        }
 
         $product = $repositoryName->find($id);
         $objectDetail = $repositoryDetailName->getDataItemUser($id);
