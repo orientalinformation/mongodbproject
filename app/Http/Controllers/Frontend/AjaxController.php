@@ -106,10 +106,14 @@ class AjaxController extends Controller
 	        	}
 	        	
 	        	if ($this->request->has('q')) {
-        			$url .= 'q=' . $this->request->get('q') . '&';
+        			$url .= 'q=' . $this->request->get('q');
 	        	}
 	        	
 	        	if ($this->request->has('catID')) {
+                    if ($this->request->has('q') && $this->request->get('q') != null) {
+                        $url .= '&';
+                    }
+                    
 	        		$url .= '&catID=' . implode(',', $this->request->get('catID'));
 	        	}
 
@@ -124,10 +128,14 @@ class AjaxController extends Controller
 	        	}
 
 	        	if ($this->request->has('q') && $this->request->get('q') != null) {
-	        		$url .=  'q=' . $this->request->get('q') . '&';
+	        		$url .=  'q=' . $this->request->get('q');
 	        	}
 
 	        	if ($this->request->has('catID')) {
+                    if ($this->request->has('q') && $this->request->get('q') != null) {
+                        $url .= '&';
+                    }
+
 	        		$url .= 'catID=' . implode(',', $this->request->get('catID'));
 	        	}
 	        	
