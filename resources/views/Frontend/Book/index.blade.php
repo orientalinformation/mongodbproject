@@ -16,9 +16,9 @@
             <div class="container-fluid">
                 <div class="col-lg-3 col-sm-3">
                     <div id="input_container">
-                        <input type="text" id="input" value="<?= app('request')->input('q'); ?>" class="normanSearch">
+                        <input type="text" name="q" id="input" value="<?= app('request')->input('q'); ?>" class="normanSearch">
                         <i class="fa fa-search" aria-hidden="true" id="input_img"></i>
-                        <button id="btnSearch" data-toggle="modal" data-target=".bd-search-advance-modal-lg">Recherche avancée</button>
+                        <button type="button" id="btnSearch" data-toggle="modal" data-target=".bd-search-advance-modal-lg">Recherche avancée</button>
                     </div>
 
                 </div>
@@ -220,6 +220,7 @@
 
 
     </script>
+    @include('Frontend.layout.modal-savekeyword')
     @include('Frontend.layout.modal-searchadvance')
     @include('Frontend.layout.modal-tooltip', ['library'])
 @endsection

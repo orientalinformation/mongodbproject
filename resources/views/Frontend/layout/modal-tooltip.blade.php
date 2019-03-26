@@ -180,7 +180,10 @@
                 });
             }
         })
-
+        $("#btnSearch").click(function () {
+            let value = $('.normanSearch').val();
+            $('#rechercher').val(value);
+        })
     })
 </script>
 @endsection
