@@ -115,6 +115,22 @@ $(document).mouseup(function (e) {
     }
 });
 
+function updateList(library_id,bookID){
+    // let bookID = $(obj).closest(".modal-body").find("#bookID-modal").val();
+    // let library_id = $(obj).attr('attr-data');
+    console.log(bookID);
+    console.log(library_id);
+    $.ajax({
+        url  : '/update_list',
+        cache: false,
+        type : "GET",
+        data : { library_id: library_id, object_id: bookID },
+        success: function(result) {
+            console.log(result);
+        }
+    });
+}
+
 $('.list-line').click(function(){
     let bookID = $(this).closest(".wrap").find(".bookID").val();
     $.ajax({
@@ -128,8 +144,12 @@ $('.list-line').click(function(){
                 let data = result['data'];
                 let data_html = "";
                 data.map(function(item){
+                    let checked = '';
+                    if(item['checked'] == 1){
+                        checked = 'checked';
+                    }
                     data_html += '<div class="input-group listWrap">';
-                    data_html += '<input type="checkbox" name="itemList" class="itemList" attr-data="' + item['id'] + '"><label>' + item['title'] + '</label>';
+                    data_html += '<input onclick="updateList(\'' + item['id'] + '\',\'' + bookID + '\')" type="checkbox" name="itemList" class="itemList" attr-data="' + item['id'] + '" ' + checked + '><label>' + item['title'] + '</label>';
                     data_html += '</div>';
                 })
                 $('#body-libraryList').html(data_html);
