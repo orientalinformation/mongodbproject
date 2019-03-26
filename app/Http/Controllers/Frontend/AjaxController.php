@@ -63,7 +63,9 @@ class AjaxController extends Controller
     	ProductRepositoryInterface $productRepository, 
         ProductDetailRepositoryInterface $productdetailRepository,
         BookRepositoryInterface $bookRepository,
-        BookDetailRepositoryInterface $bookdetailRepository
+		BookDetailRepositoryInterface $bookdetailRepository,
+		LibraryDetailRepositoryInterface $libraryDetailRepository,
+		LibraryRepositoryInterface $libraryRepository
     )
     {
         $this->request = $request;
@@ -71,7 +73,9 @@ class AjaxController extends Controller
         $this->productRepository = $productRepository;
         $this->productdetailRepository = $productdetailRepository;
         $this->bookdetailRepository = $bookdetailRepository;
-        $this->bookRepository = $bookRepository;
+		$this->bookRepository = $bookRepository;
+		$this->libraryRepository = $libraryRepository;
+		$this->libraryDetailRepository = $libraryDetailRepository;
     }
 	/**
 	 * Popup search advance
