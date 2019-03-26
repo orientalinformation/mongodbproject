@@ -49,15 +49,23 @@ class ObjectService
 
         switch ($type) {
             case 'product':
-                $objectDetail = $repositoryName->getDataItemRepoUser('product_id', $id);
+                $idFieldName = 'product_id';
                 break;
+            
             case 'book':
-                $objectDetail = $repositoryName->getDataItemRepoUser('book_id', $id);
+                $idFieldName = 'book_id';
                 break;
-            case 'bibliotheque':
-                $objectDetail = $repositoryName->getDataItemRepoUser('library_id', $id);
-            break;
+
+            case 'library':
+                $idFieldName = 'library_id';
+                break;
+
+            case 'web':
+                $idFieldName = 'web_id';
+                break;
         }
+
+        $objectDetail = $repositoryName->getDataItemRepoUser($idFieldName, $id);
 
         if ($objectDetail) {
             $result['like'] = $objectDetail->is_like;
@@ -82,6 +90,23 @@ class ObjectService
     {
         $result = true;
         $typeConst = strtoupper($type);
+        switch ($type) {
+            case 'product':
+                $idFieldName = 'product_id';
+                break;
+            
+            case 'book':
+                $idFieldName = 'book_id';
+                break;
+
+            case 'library':
+                $idFieldName = 'library_id';
+                break;
+
+            case 'web':
+                $idFieldName = 'web_id';
+                break;
+        }
 
         $product = $repositoryName->find($id);
         $objectDetail = $repositoryDetailName->getDataItemUser($id);
@@ -102,7 +127,7 @@ class ObjectService
 
                     $product->save();
                 } else {
-                    $data['product_id'] = $id;
+                    $data[$idFieldName] = $id;
                     $data['user_id'] = Auth::user()->id;
                     $data['is_like'] = 1;
                     $data['share'] = 0;
@@ -132,7 +157,7 @@ class ObjectService
                         $result = false;
                     }
                 } else {
-                    $data['product_id'] = $id;
+                    $data[$idFieldName] = $id;
                     $data['user_id'] = Auth::user()->id;
                     $data['is_like'] = 0;
                     $data['share'] = 1;
@@ -158,7 +183,7 @@ class ObjectService
                         $result = false;
                     }
                 } else {
-                    $data['product_id'] = $id;
+                    $data[$idFieldName] = $id;
                     $data['user_id'] = Auth::user()->id;
                     $data['is_like'] = 0;
                     $data['share'] = 0;
