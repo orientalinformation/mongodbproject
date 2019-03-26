@@ -10,8 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Illuminate\Routing\Router;
-use App\Http\Middleware\CheckAdminFrontend;
+
 
 //===========FONTEND==========
 include_once ('frontend.php');

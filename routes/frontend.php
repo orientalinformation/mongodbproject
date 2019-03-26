@@ -1,4 +1,6 @@
 <?php
+use Illuminate\Routing\Router;
+use App\Http\Middleware\CheckAdminFrontend;
 
 Route::namespace('Frontend')->group(function () {
 
