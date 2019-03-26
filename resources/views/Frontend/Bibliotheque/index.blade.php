@@ -149,6 +149,13 @@ if(!!window.jQuery) {
         $('#input').bind('focus', function () {
             $('#input_img').hide();
         });
+
+        $('.bd-search-advance-modal-lg').on('show.bs.modal', function(e) {
+            var queryParam = $("input[name='q']").val();
+
+            //populate the textbox
+            $(e.currentTarget).find('#rechercher').val(queryParam);
+        });
     });
     
 </script>
