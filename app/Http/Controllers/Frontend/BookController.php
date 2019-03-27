@@ -148,14 +148,15 @@ class BookController extends Controller
         $user = Auth::user();
         if($user){
             $library = $this->libraryRepository->getAllLibraryByUserID($user->id)->toArray();
+            // list researches
+            $researches = $this->researchRepository->getListItem(5);
         }else{
             $library = [];
+            $researches = [];
         }
 
         // list category left
         $category = $this->categoryRepository->parentOrderByPath()->toArray();
-        // list researches
-        $researches = $this->researchRepository->getListItem(5);
         return view('Frontend.Book.index', compact(['category', 'researches', 'book', 'paginate', 'q', 'library', 'urlSort', 'pageName']));
     }
 

@@ -14,6 +14,7 @@ use App\Repositories\Book\BookRepositoryInterface;
 use App\Repositories\BookDetail\BookDetailRepositoryInterface;
 use App\Helpers\Envato\Ulities;
 use Illuminate\Support\Facades\Config;
+use Elasticsearch\ClientBuilder;
 
 class AjaxController extends Controller
 {
@@ -287,6 +288,19 @@ class AjaxController extends Controller
                 $data['is_sound'] = 0;
 
                 $result = $this->libraryRepository->create($data);
+
+                $id = $result->_id;
+                if ($id != '') {
+                    $dataElastic = [
+                        'body' => $data,
+                        'index' => Config::get('constants.elasticsearch.library.index'),
+                        'type' => Config::get('constants.elasticsearch.library.type'),
+                        'id' => $id,
+                    ];
+
+                    $client = ClientBuilder::create()->build();
+                    $response = $client->index($dataElastic);
+                }
 
                 $response = [
                     'status' => 1,

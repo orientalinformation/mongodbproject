@@ -137,7 +137,6 @@ class BookController extends Controller
                 $id = $result->_id;
 
                 if ($id != '') {
-                    $book = new BookElastic();
                     $dataElastic = [
                         'body' => [
                             'type' => $request->get('type'),
