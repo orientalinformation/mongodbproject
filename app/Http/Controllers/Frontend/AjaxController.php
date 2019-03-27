@@ -271,7 +271,7 @@ class AjaxController extends Controller
                     $libraryPath = Config::get('constants.libraryPath');
                     $ext = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
                     $path = Ulities::uploadFile($fileImage, $libraryPath, $ext);
-                    $data['image'] = $path['data'];
+                    $data['image'] = '/storage/library/' . $path['data'];
                 }
 
                 $data['user_id'] = (int)$userId;

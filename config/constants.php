@@ -13,7 +13,7 @@ return [
     'itemSearchHome' => 3,
     'bookPath'  => '/storage/book/',
     'bookFilePath'  => '/storage/book/file/',
-    'libraryPath'  => '/storage/book/',
+    'libraryPath'  => '/storage/library/',
     'avatarPath'  => '/storage/avatar/',
     'elasticsearch' => [
         'web'       =>  [
